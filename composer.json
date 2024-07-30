@@ -163,7 +163,7 @@
 		"ci:tests:create-directories": "mkdir -p .Build/public/typo3temp/var/tests",
 		"ci:tests:functional": [
 			"@ci:tests:create-directories",
-			"paratest -f -c Build/phpunit/FunctionalTests.xml Tests/Functional"
+			"paratest -c Build/phpunit/FunctionalTests.xml Tests/Functional"
 		],
 		"ci:tests:unit": "phpunit -c Build/phpunit/UnitTests.xml Tests/Unit",
 		"ci:typoscript:lint": "typoscript-lint -c Configuration/TsLint.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript",
