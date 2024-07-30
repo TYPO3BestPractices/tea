@@ -555,7 +555,7 @@ case ${TEST_SUITE} in
         ;;
     functional)
         [ -z "${TEST_FILE}" ] && TEST_FILE="Tests/Functional"
-        COMMAND=".Build/bin/phpunit -c Build/phpunit/FunctionalTests.xml --exclude-group not-${DBMS} ${EXTRA_TEST_OPTIONS} ${TEST_FILE}"
+        COMMAND=".Build/bin/paratest -c Build/phpunit/FunctionalTests.xml --exclude-group not-${DBMS} ${EXTRA_TEST_OPTIONS} ${TEST_FILE}"
         case ${DBMS} in
             mariadb)
                 echo "Using driver: ${DATABASE_DRIVER}"
@@ -583,6 +583,7 @@ case ${TEST_SUITE} in
             sqlite)
                 CONTAINERPARAMS="-e typo3DatabaseDriver=pdo_sqlite"
                 ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name functional-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${CONTAINERPARAMS} ${IMAGE_PHP} ${COMMAND}
+                echo "{CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name functional-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG=\"${XDEBUG_CONFIG}\" ${CONTAINERPARAMS} ${IMAGE_PHP} ${COMMAND}"
                 SUITE_EXIT_CODE=$?
                 ;;
         esac
