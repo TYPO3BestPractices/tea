@@ -68,7 +68,7 @@ final class TeaControllerTest extends FunctionalTestCase
      */
     public function showActionRendersTheGivenTeas(): void
     {
-        $request = (new InternalRequest())->withPageId(1)->withQueryParameters(["tx_tea_teashow[tea]" => 1]);
+        $request = (new InternalRequest())->withPageId(1)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
 
         $html = (string)$this->executeFrontendSubRequest($request)->getBody();
 
