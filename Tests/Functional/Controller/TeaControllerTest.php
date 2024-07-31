@@ -28,7 +28,7 @@ final class TeaControllerTest extends FunctionalTestCase
                 'cacheHash' => [
                     'enforceValidation' => false,
                 ],
-            ]
+            ],
         ]);
 
         parent::setUp();
