@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TTN\Tea\Tests\Functional\Controller;
 
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -22,6 +23,14 @@ final class TeaControllerTest extends FunctionalTestCase
 
     protected function setUp(): void
     {
+        ArrayUtility::mergeRecursiveWithOverrule($this->configurationToUseInTestInstance, [
+            'FE' => [
+                'cacheHash' => [
+                    'enforceValidation' => false,
+                ],
+            ]
+        ]);
+
         parent::setUp();
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.csv');
@@ -37,6 +46,8 @@ final class TeaControllerTest extends FunctionalTestCase
                 'EXT:tea/Tests/Functional/Controller/Fixtures/TypoScript/Setup/Rendering.typoscript',
             ],
         ]);
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/ContentElementTeaIndex.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
     }
 
     /**
@@ -44,14 +55,24 @@ final class TeaControllerTest extends FunctionalTestCase
      */
     public function indexActionRendersAllAvailableTeas(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/ContentElementTeaIndex.csv');
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
-
         $request = (new InternalRequest())->withPageId(1);
 
         $html = (string)$this->executeFrontendSubRequest($request)->getBody();
 
         self::assertStringContainsString('Godesberger Burgtee', $html);
         self::assertStringContainsString('Oolong', $html);
+    }
+
+    /**
+     * @test
+     */
+    public function showActionRendersTheGivenTeas(): void
+    {
+        $request = (new InternalRequest())->withPageId(1)->withQueryParameters(["tx_tea_teashow[tea]" => 1]);
+
+        $html = (string)$this->executeFrontendSubRequest($request)->getBody();
+
+        self::assertStringContainsString('Godesberger Burgtee', $html);
+        self::assertStringNotContainsString('Oolong', $html);
     }
 }
