@@ -7,7 +7,6 @@
 /.gitlab/ export-ignore
 /.npmrc export-ignore
 /.nvmrc export-ignore
-/.php-cs-fixer.php export-ignore
 /.prettierrc.js export-ignore
 /Build/ export-ignore
 /Configuration/FunctionalTests.xml export-ignore
