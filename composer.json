@@ -145,7 +145,7 @@
 			"@ci:php:stan"
 		],
 		"ci:php:cs-fixer": "php-cs-fixer fix --config ./Build/php-cs-fixer/php-cs-fixer.php -v --dry-run --diff",
-		"ci:php:lint": "parallel-lint .*.php *.php Classes Configuration Tests",
+		"ci:php:lint": "parallel-lint *.php Classes Configuration Tests",
 		"ci:php:mess": "phpmd Classes text Build/phpmd/phpmd.xml",
 		"ci:php:rector": "rector --dry-run",
 		"ci:php:sniff": "phpcs --standard=Build/phpcs/phpcs.xml Classes Configuration Tests",
