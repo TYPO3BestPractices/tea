@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TTN\Tea\Tests\Functional\Controller;
 
-use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -21,16 +20,16 @@ final class TeaControllerTest extends FunctionalTestCase
         'typo3conf/ext/tea/Tests/Functional/Controller/Fixtures/Sites/' => 'typo3conf/sites',
     ];
 
+    protected array $configurationToUseInTestInstance = [
+        'FE' => [
+            'cacheHash' => [
+                'enforceValidation' => false,
+            ],
+        ],
+    ];
+
     protected function setUp(): void
     {
-        ArrayUtility::mergeRecursiveWithOverrule($this->configurationToUseInTestInstance, [
-            'FE' => [
-                'cacheHash' => [
-                    'enforceValidation' => false,
-                ],
-            ],
-        ]);
-
         parent::setUp();
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.csv');
@@ -68,7 +67,7 @@ final class TeaControllerTest extends FunctionalTestCase
      */
     public function showActionRendersTheGivenTeas(): void
     {
-        $request = (new InternalRequest())->withPageId(1)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
+        $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
 
         $html = (string)$this->executeFrontendSubRequest($request)->getBody();
 
