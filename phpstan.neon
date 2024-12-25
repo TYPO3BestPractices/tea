@@ -16,6 +16,7 @@ parameters:
     - Classes
     - Configuration
     - Tests
+    - ext_localconf.php
 
   # Allow instanceof checks, particularly in tests
   checkAlwaysTrueCheckTypeFunctionCall: false
