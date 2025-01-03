@@ -20,6 +20,14 @@ final class TeaControllerTest extends FunctionalTestCase
         'typo3conf/ext/tea/Tests/Functional/Controller/Fixtures/Sites/' => 'typo3conf/sites',
     ];
 
+    protected array $configurationToUseInTestInstance = [
+        'FE' => [
+            'cacheHash' => [
+                'enforceValidation' => false,
+            ],
+        ],
+    ];
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -37,6 +45,8 @@ final class TeaControllerTest extends FunctionalTestCase
                 'EXT:tea/Tests/Functional/Controller/Fixtures/TypoScript/Setup/Rendering.typoscript',
             ],
         ]);
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/ContentElementTeaIndex.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
     }
 
     /**
@@ -44,14 +54,24 @@ final class TeaControllerTest extends FunctionalTestCase
      */
     public function indexActionRendersAllAvailableTeas(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/ContentElementTeaIndex.csv');
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
-
         $request = (new InternalRequest())->withPageId(1);
 
         $html = (string)$this->executeFrontendSubRequest($request)->getBody();
 
         self::assertStringContainsString('Godesberger Burgtee', $html);
         self::assertStringContainsString('Oolong', $html);
+    }
+
+    /**
+     * @test
+     */
+    public function showActionRendersTheGivenTeas(): void
+    {
+        $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
+
+        $html = (string)$this->executeFrontendSubRequest($request)->getBody();
+
+        self::assertStringContainsString('Godesberger Burgtee', $html);
+        self::assertStringNotContainsString('Oolong', $html);
     }
 }

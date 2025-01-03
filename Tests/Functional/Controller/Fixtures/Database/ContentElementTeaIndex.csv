@@ -1,3 +1,4 @@
 "tt_content"
 ,"uid","pid","CType","header","list_type"
 ,1,1,"list","Tea index","tea_teaindex"
+,2,3,"list","Tea show","tea_teashow"
