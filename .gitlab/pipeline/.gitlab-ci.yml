@@ -20,6 +20,8 @@ include:
   - '/.gitlab/pipeline/jobs/func-v12-php8.2-lowest.yml'
   - '/.gitlab/pipeline/jobs/func-v12-php8.3-highest.yml'
   - '/.gitlab/pipeline/jobs/func-v12-php8.3-lowest.yml'
+  - '/.gitlab/pipeline/jobs/func-v12-php8.4-highest.yml'
+  - '/.gitlab/pipeline/jobs/func-v12-php8.4-lowest.yml'
   - '/.gitlab/pipeline/jobs/javascript-lint.yml'
   - '/.gitlab/pipeline/jobs/json-lint.yml'
   - '/.gitlab/pipeline/jobs/php-cs-fixer.yml'
@@ -34,6 +36,7 @@ include:
   - '/.gitlab/pipeline/jobs/unit-v12-php8.2-lowest.yml'
   - '/.gitlab/pipeline/jobs/unit-v12-php8.3-highest.yml'
   - '/.gitlab/pipeline/jobs/unit-v12-php8.3-lowest.yml'
+  - '/.gitlab/pipeline/jobs/unit-v12-php8.4-highest.yml'
   - '/.gitlab/pipeline/jobs/xliff-lint.yml'
   - '/.gitlab/pipeline/jobs/yaml-lint.yml'
   - template: Security/Secret-Detection.gitlab-ci.yml
