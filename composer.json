@@ -144,8 +144,8 @@
 			"@ci:php:sniff",
 			"@ci:php:stan"
 		],
-		"ci:php:cs-fixer": "php-cs-fixer fix --config .php-cs-fixer.php -v --dry-run --diff",
-		"ci:php:lint": "parallel-lint .*.php *.php Classes Configuration Tests",
+		"ci:php:cs-fixer": "php-cs-fixer fix --config ./Build/php-cs-fixer/php-cs-fixer.php -v --dry-run --diff",
+		"ci:php:lint": "parallel-lint *.php Build Classes Configuration Tests",
 		"ci:php:mess": "phpmd Classes text Build/phpmd/phpmd.xml",
 		"ci:php:rector": "rector --dry-run",
 		"ci:php:sniff": "phpcs --standard=Build/phpcs/phpcs.xml Classes Configuration Tests",
@@ -184,7 +184,7 @@
 			"@fix:php:cs",
 			"@fix:php:sniff"
 		],
-		"fix:php:cs": "php-cs-fixer fix --config .php-cs-fixer.php",
+		"fix:php:cs": "php-cs-fixer fix --config ./Build/php-cs-fixer/php-cs-fixer.php",
 		"fix:php:rector": "rector",
 		"fix:php:sniff": "phpcbf --standard=Build/phpcs/phpcs.xml Classes Configuration Tests",
 		"phpstan:baseline": "phpstan --generate-baseline --allow-empty-baseline",
@@ -203,7 +203,6 @@
 			"rm .gitignore",
 			"rm .npmrc",
 			"rm .nvmrc",
-			"rm .php-cs-fixer.php",
 			"rm .prettierrc.js",
 			"rm package-lock.json",
 			"rm package.json",
