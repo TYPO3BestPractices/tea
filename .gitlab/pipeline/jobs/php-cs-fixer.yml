@@ -3,7 +3,6 @@ php-cs-fixer:
   stage: codestyle
   needs:
     - build-composer-dependencies
-    - php-lint-php8.0
     - php-lint-php8.1
     - php-lint-php8.2
   script:
