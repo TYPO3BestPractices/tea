@@ -14,12 +14,9 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  */
 class TeaController extends ActionController
 {
-    private TeaRepository $teaRepository;
-
-    public function __construct(TeaRepository $teaRepository)
-    {
-        $this->teaRepository = $teaRepository;
-    }
+    public function __construct(
+        private readonly TeaRepository $teaRepository,
+    ) {}
 
     public function indexAction(): ResponseInterface
     {

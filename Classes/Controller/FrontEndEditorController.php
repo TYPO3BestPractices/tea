@@ -17,15 +17,10 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  */
 class FrontEndEditorController extends ActionController
 {
-    private Context $context;
-
-    private TeaRepository $teaRepository;
-
-    public function __construct(Context $context, TeaRepository $teaRepository)
-    {
-        $this->context = $context;
-        $this->teaRepository = $teaRepository;
-    }
+    public function __construct(
+        private readonly Context $context,
+        private readonly TeaRepository $teaRepository,
+    ) {}
 
     public function indexAction(): ResponseInterface
     {
@@ -48,9 +43,7 @@ class FrontEndEditorController extends ActionController
         return $userUid;
     }
 
-    /**
-     * @Extbase\IgnoreValidation("tea")
-     */
+    #[Extbase\IgnoreValidation(['argumentName' => 'tea'])]
     public function editAction(Tea $tea): ResponseInterface
     {
         $this->checkIfUserIsOwner($tea);
@@ -79,9 +72,7 @@ class FrontEndEditorController extends ActionController
         return $this->redirect('index');
     }
 
-    /**
-     * @Extbase\IgnoreValidation("tea")
-     */
+    #[Extbase\IgnoreValidation(['argumentName' => 'tea'])]
     public function newAction(?Tea $tea = null): ResponseInterface
     {
         // Note: We are using `makeInstance` here instead of `new` to allow for XCLASSing.
@@ -100,9 +91,7 @@ class FrontEndEditorController extends ActionController
         return $this->redirect('index');
     }
 
-    /**
-     * @Extbase\IgnoreValidation("tea")
-     */
+    #[Extbase\IgnoreValidation(['argumentName' => 'tea'])]
     public function deleteAction(Tea $tea): ResponseInterface
     {
         $this->checkIfUserIsOwner($tea);
