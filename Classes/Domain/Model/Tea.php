@@ -21,17 +21,11 @@ class Tea extends AbstractEntity
     #[Extbase\Validate(['validator' => 'StringLength', 'options' => ['maximum' => 2000]])]
     protected string $description = '';
 
-    /**
-     * @var FileReference|null
-     * @phpstan-var FileReference|LazyLoadingProxy|null
-     */
     #[Extbase\ORM\Lazy]
-    protected $image;
-
-    // Note: We cannot use `@var` for the more specific type annotation here as this confuses the Extbase type mapper.
+    protected FileReference|LazyLoadingProxy|null $image = null;
 
     /**
-     * @phpstan-var int<0, max>
+     * @var int<0, max>
      */
     protected int $ownerUid = 0;
 
