@@ -14,22 +14,18 @@ use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
  */
 class Tea extends AbstractEntity
 {
-    /**
-     * @Extbase\Validate("StringLength", options={"maximum": 255})
-     * @Extbase\Validate("NotEmpty")
-     */
+    #[Extbase\Validate(['validator' => 'StringLength', 'options' => ['maximum' => 255]])]
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
     protected string $title = '';
 
-    /**
-     * @Extbase\Validate("StringLength", options={"maximum": 2000})
-     */
+    #[Extbase\Validate(['validator' => 'StringLength', 'options' => ['maximum' => 2000]])]
     protected string $description = '';
 
     /**
      * @var FileReference|null
      * @phpstan-var FileReference|LazyLoadingProxy|null
-     * @Extbase\ORM\Lazy
      */
+    #[Extbase\ORM\Lazy]
     protected $image;
 
     // Note: We cannot use `@var` for the more specific type annotation here as this confuses the Extbase type mapper.
