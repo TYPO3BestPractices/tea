@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## x.y.z
 
 ### Added
+- Add support for PHP 8.4 (#1536)
 - Add support for PostgreSQL 16 (#1271)
 
 ### Changed

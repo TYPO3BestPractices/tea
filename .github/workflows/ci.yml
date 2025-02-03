@@ -44,6 +44,7 @@ jobs:
           - "8.1"
           - "8.2"
           - "8.3"
+          - "8.4"
   code-quality:
     name: "Code quality checks"
     runs-on: ubuntu-24.04
@@ -174,6 +175,12 @@ jobs:
           - typo3-version: "^12.4"
             php-version: "8.3"
             composer-dependencies: highest
+          - typo3-version: "^12.4"
+            php-version: "8.4"
+            composer-dependencies: lowest
+          - typo3-version: "^12.4"
+            php-version: "8.4"
+            composer-dependencies: highest
   functional-tests:
     name: "Functional tests"
     runs-on: ubuntu-24.04
@@ -250,6 +257,12 @@ jobs:
             composer-dependencies: lowest
           - typo3-version: "^12.4"
             php-version: "8.3"
+            composer-dependencies: highest
+#          - typo3-version: "^12.4"
+#            php-version: "8.4"
+#            composer-dependencies: lowest
+          - typo3-version: "^12.4"
+            php-version: "8.4"
             composer-dependencies: highest
   shellcheck:
     name: Check shell scripts
