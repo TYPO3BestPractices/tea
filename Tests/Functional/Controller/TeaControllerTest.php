@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace TTN\Tea\Tests\Functional\Controller;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
+use TTN\Tea\Controller\TeaController;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
-/**
- * @covers \TTN\Tea\Controller\TeaController
- */
+#[CoversClass(TeaController::class)]
 final class TeaControllerTest extends FunctionalTestCase
 {
     protected array $testExtensionsToLoad = ['ttn/tea'];
@@ -49,9 +50,7 @@ final class TeaControllerTest extends FunctionalTestCase
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function indexActionRendersAllAvailableTeas(): void
     {
         $request = (new InternalRequest())->withPageId(1);
@@ -62,9 +61,7 @@ final class TeaControllerTest extends FunctionalTestCase
         self::assertStringContainsString('Oolong', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function showActionRendersTheGivenTeas(): void
     {
         $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);

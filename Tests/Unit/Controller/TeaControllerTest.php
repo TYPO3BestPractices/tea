@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace TTN\Tea\Tests\Unit\Controller;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TTN\Tea\Controller\TeaController;
 use TTN\Tea\Domain\Model\Tea;
@@ -18,9 +20,8 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 /**
  * Note: Unit tests for controllers are not considered best practice anymore. Instead, functional tests should be used.
  * We're currently in the process of migrating all controller tests to functional tests.
- *
- * @covers \TTN\Tea\Controller\TeaController
  */
+#[CoversClass(TeaController::class)]
 final class TeaControllerTest extends UnitTestCase
 {
     /**
@@ -50,33 +51,27 @@ final class TeaControllerTest extends UnitTestCase
         $this->viewMock = $this->createMock(TemplateView::class);
         $this->subject->_set('view', $this->viewMock);
 
-        $responseStub = $this->createStub(HtmlResponse::class);
+        $responseStub = self::createStub(HtmlResponse::class);
         $this->subject->method('htmlResponse')->willReturn($responseStub);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isActionController(): void
     {
         self::assertInstanceOf(ActionController::class, $this->subject);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function indexActionAssignsAllTeaAsTeasToView(): void
     {
-        $teas = $this->createStub(QueryResultInterface::class);
+        $teas = self::createStub(QueryResultInterface::class);
         $this->teaRepositoryMock->method('findAll')->willReturn($teas);
         $this->viewMock->expects(self::once())->method('assign')->with('teas', $teas);
 
         $this->subject->indexAction();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function indexActionReturnsHtmlResponse(): void
     {
         $result = $this->subject->indexAction();
@@ -84,9 +79,7 @@ final class TeaControllerTest extends UnitTestCase
         self::assertInstanceOf(HtmlResponse::class, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function showActionAssignsPassedTeaAsTeaToView(): void
     {
         $tea = new Tea();
@@ -95,9 +88,7 @@ final class TeaControllerTest extends UnitTestCase
         $this->subject->showAction($tea);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function showActionAssignsReturnsHtmlResponse(): void
     {
         $result = $this->subject->showAction(new Tea());

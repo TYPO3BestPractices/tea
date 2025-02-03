@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace TTN\Tea\Tests\Functional\Command;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use TTN\Tea\Command\CreateTestDataCommand;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
-/**
- * @covers \TTN\Tea\Command\CreateTestDataCommand
- */
+#[CoversClass(CreateTestDataCommand::class)]
 final class CreateTestDataCommandTest extends FunctionalTestCase
 {
     /**
@@ -38,35 +38,27 @@ final class CreateTestDataCommandTest extends FunctionalTestCase
         $this->commandTester = new CommandTester($command);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isConsoleCommand(): void
     {
         self::assertInstanceOf(Command::class, $this->subject);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hasDescription(): void
     {
         $expected = 'Create test data for the tea extension in an already existing page (sysfolder).';
         self::assertSame($expected, $this->subject->getHelp());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hasHelpText(): void
     {
         $expected = 'Create test data for the tea extension in an already existing page (sysfolder).';
         self::assertSame($expected, $this->subject->getHelp());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function runReturnsSuccessStatus(): void
     {
         $result = $this->commandTester->execute(
@@ -78,9 +70,7 @@ final class CreateTestDataCommandTest extends FunctionalTestCase
         self::assertSame(Command::SUCCESS, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function createsTestData(): void
     {
         $this->commandTester->execute([
@@ -90,9 +80,7 @@ final class CreateTestDataCommandTest extends FunctionalTestCase
         $this->assertCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function deletesExistingDataOnGivenPidBeforeCreatingNewData(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/ExistingTeas.csv');
@@ -106,9 +94,7 @@ final class CreateTestDataCommandTest extends FunctionalTestCase
         $this->assertCSVDataSet(__DIR__ . '/Fixtures/Database/TeasAfterDelete.csv');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotDeleteDataOnOtherPid(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/OtherExistingTeas.csv');

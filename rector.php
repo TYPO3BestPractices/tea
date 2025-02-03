@@ -64,13 +64,7 @@ return RectorConfig::configure()
         // PHPUnit sets
 
         // PHPUnitSetList::PHPUNIT80_DMS,
-        // PHPUnitSetList::PHPUNIT_40,
-        // PHPUnitSetList::PHPUNIT_50,
-        // PHPUnitSetList::PHPUNIT_60,
-        // PHPUnitSetList::PHPUNIT_70,
-        // PHPUnitSetList::PHPUNIT_80,
-        // PHPUnitSetList::PHPUNIT_90,
-        // PHPUnitSetList::PHPUNIT_100,
+        PHPUnitSetList::PHPUNIT_100,
         // PHPUnitSetList::PHPUNIT_CODE_QUALITY,
 
         // TYPO3 Sets
