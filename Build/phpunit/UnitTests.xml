@@ -1,38 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
     beStrictAboutTestsThatDoNotTestAnything="false"
+    bootstrap="../../.Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTestsBootstrap.php"
+    cacheDirectory=".phpunit.cache"
     cacheResult="false"
     colors="true"
-    convertDeprecationsToExceptions="true"
-    convertErrorsToExceptions="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
     failOnRisky="true"
     failOnWarning="true"
-    forceCoversAnnotation="false"
-    processIsolation="false"
-    stopOnError="false"
-    stopOnFailure="false"
-    stopOnIncomplete="false"
-    stopOnSkipped="false"
-    verbose="false"
 >
-    <coverage/>
-    <testsuites>
-        <testsuite name="Unit tests">
-            <!--
-                This path either needs an adaption in extensions, or an extension's
-                test location path needs to be given to phpunit.
-            -->
-            <directory suffix="Test.php">./</directory>
-        </testsuite>
-    </testsuites>
     <php>
-        <!-- @deprecated: will be removed with next major version, constant TYPO3_MODE is deprecated -->
-        <const name="TYPO3_MODE" value="BE"/>
         <ini name="display_errors" value="1"/>
         <env name="TYPO3_CONTEXT" value="Testing"/>
     </php>
+    <source restrictDeprecations="true" restrictNotices="true" restrictWarnings="true">
+        <include>
+            <directory>../../Classes</directory>
+        </include>
+    </source>
 </phpunit>

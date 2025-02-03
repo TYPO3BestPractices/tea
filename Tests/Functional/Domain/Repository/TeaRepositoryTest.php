@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace TTN\Tea\Tests\Functional\Domain\Repository;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use TTN\Tea\Domain\Model\Tea;
 use TTN\Tea\Domain\Repository\TeaRepository;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -11,10 +13,8 @@ use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
-/**
- * @covers \TTN\Tea\Domain\Repository\TeaRepository
- * @covers \TTN\Tea\Domain\Model\Tea
- */
+#[CoversClass(TeaRepository::class)]
+#[CoversClass(Tea::class)]
 final class TeaRepositoryTest extends FunctionalTestCase
 {
     protected array $testExtensionsToLoad = ['ttn/tea'];
@@ -32,17 +32,13 @@ final class TeaRepositoryTest extends FunctionalTestCase
         $this->subject = $this->get(TeaRepository::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isRepository(): void
     {
         self::assertInstanceOf(Repository::class, $this->subject);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function findAllForNoRecordsReturnsEmptyContainer(): void
     {
         $result = $this->subject->findAll();
@@ -50,9 +46,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
         self::assertCount(0, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function findAllSortsByTitleInAscendingOrder(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/TwoUnsortedTeas.csv');
@@ -63,9 +57,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
         self::assertSame(2, $result->current()->getUid());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function findByUidForInexistentRecordReturnsNull(): void
     {
         $model = $this->subject->findByUid(1);
@@ -73,9 +65,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
         self::assertNull($model);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function findByUidForExistingRecordReturnsModel(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithAllScalarData.csv');
@@ -85,9 +75,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
         self::assertInstanceOf(Tea::class, $model);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function findByUidForExistingRecordMapsAllScalarData(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithAllScalarData.csv');
@@ -100,9 +88,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
         self::assertSame(2, $model->getOwnerUid());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function fillsImageRelation(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithImage.csv');
@@ -115,9 +101,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
         self::assertSame(1, $image->getUid());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function MapsDeletedImageRelationToNull(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/propertyMapping/TeaWithDeletedImage.csv');
@@ -128,9 +112,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
         self::assertNull($model->getImage());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addAndPersistAllCreatesNewRecord(): void
     {
         $title = 'Godesberger Burgtee';
@@ -143,9 +125,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
         $this->assertCSVDataSet(__DIR__ . '/Fixtures/PersistedTea.csv');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function findByOwnerUidFindsTeaWithTheGivenOwnerUid(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithOwner.csv');
@@ -155,9 +135,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
         self::assertCount(1, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function findByOwnerUidFindsTeaWithTheGivenOwnerUidOnPage(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithOwnerOnPage.csv');
@@ -167,9 +145,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
         self::assertCount(1, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function findByOwnerUidFindsIgnoresTeaWithNonMatchingOwnerUid(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithOwner.csv');
@@ -179,9 +155,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
         self::assertCount(0, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function findByOwnerUidFindsIgnoresTeaWithZeroOwnerUid(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithoutOwner.csv');
@@ -191,9 +165,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
         self::assertCount(0, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function findByOwnerUidSortsByTitleInAscendingOrder(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/TwoTeasWithOwner.csv');

@@ -47,7 +47,7 @@
 		"typo3/cms-frontend": "^12.4.26"
 	},
 	"require-dev": {
-		"brianium/paratest": "6.11.1",
+		"brianium/paratest": "7.3.1 || 7.4.8",
 		"ergebnis/composer-normalize": "2.45.0",
 		"friendsofphp/php-cs-fixer": "3.75.0",
 		"helmich/typo3-typoscript-lint": "^3.3.0",
@@ -58,7 +58,7 @@
 		"phpstan/phpstan": "1.12.14",
 		"phpstan/phpstan-phpunit": "1.4.2",
 		"phpstan/phpstan-strict-rules": "1.6.1",
-		"phpunit/phpunit": "9.6.22",
+		"phpunit/phpunit": "10.5.31 || 10.5.44",
 		"rector/type-perfect": "1.0.0",
 		"saschaegerer/phpstan-typo3": "1.10.2",
 		"seld/jsonlint": "1.11.0",
@@ -128,7 +128,7 @@
 		"ci:coverage:functional": [
 			"@ci:tests:create-directories",
 			"@coverage:create-directories",
-			"paratest -c Build/phpunit/FunctionalTests.xml --whitelist Classes --coverage-php=build/coverage/functional.cov Tests/Functional"
+			"paratest -c Build/phpunit/FunctionalTests.xml --coverage-php=build/coverage/functional.cov Tests/Functional"
 		],
 		"ci:coverage:merge": [
 			"@coverage:create-directories",
@@ -136,7 +136,7 @@
 		],
 		"ci:coverage:unit": [
 			"@coverage:create-directories",
-			"paratest -c Build/phpunit/UnitTests.xml --whitelist Classes --coverage-php=build/coverage/unit.cov Tests/Unit"
+			"paratest -c Build/phpunit/UnitTests.xml --coverage-php=build/coverage/unit.cov Tests/Unit"
 		],
 		"ci:json:lint": "find . ! -path '*/.cache/*' ! -path '*/.Build/*' ! -path '*/node_modules/*' -name '*.json' | xargs -r php .Build/bin/jsonlint -q",
 		"ci:php": [

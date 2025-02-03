@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace TTN\Tea\Tests\Functional\Controller;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
+use TTN\Tea\Controller\TeaController;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
-/**
- * @covers \TTN\Tea\Controller\TeaController
- */
+#[CoversClass(TeaController::class)]
 final class TeaControllerTest extends FunctionalTestCase
 {
     protected array $testExtensionsToLoad = ['ttn/tea'];
@@ -48,9 +49,7 @@ final class TeaControllerTest extends FunctionalTestCase
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/ContentElementTeaIndex.csv');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function indexActionShowsMessageWhenNoTeasAreAvailable(): void
     {
         $request = (new InternalRequest())->withPageId(1);
@@ -60,9 +59,7 @@ final class TeaControllerTest extends FunctionalTestCase
         self::assertStringContainsString('No teas available.', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function indexActionShowsNoTableMarkupWhenNoTeasAreAvailable(): void
     {
         $request = (new InternalRequest())->withPageId(1);
@@ -72,9 +69,7 @@ final class TeaControllerTest extends FunctionalTestCase
         self::assertStringNotContainsString('table', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function indexActionRendersAllAvailableTeas(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
@@ -87,9 +82,7 @@ final class TeaControllerTest extends FunctionalTestCase
         self::assertStringContainsString('Oolong', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function showActionRendersTheGivenTeas(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
@@ -102,9 +95,7 @@ final class TeaControllerTest extends FunctionalTestCase
         self::assertStringNotContainsString('Oolong', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function showActionTriggers404ForMissingTeaArgument(): void
     {
         $request = (new InternalRequest())->withPageId(3);
@@ -114,9 +105,7 @@ final class TeaControllerTest extends FunctionalTestCase
         self::assertSame(404, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function showActionTriggers404ForUnavailableTea(): void
     {
         $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
@@ -126,9 +115,7 @@ final class TeaControllerTest extends FunctionalTestCase
         self::assertSame(404, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function showActionFor404RendersReasonFor404(): void
     {
         $request = (new InternalRequest())->withPageId(3);
