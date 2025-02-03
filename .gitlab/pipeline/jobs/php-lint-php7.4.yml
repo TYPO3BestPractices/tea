@@ -1,7 +1,0 @@
-php-lint-php7.4:
-  extends: .composer-update
-  image: ghcr.io/typo3/core-testing-php74:latest
-  stage: lint
-  needs: [ ]
-  script:
-    - composer ci:php:lint
