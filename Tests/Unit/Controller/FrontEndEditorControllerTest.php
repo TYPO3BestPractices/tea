@@ -12,10 +12,8 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Http\RedirectResponse;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Fluid\View\TemplateView;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
@@ -55,9 +53,6 @@ final class FrontEndEditorControllerTest extends UnitTestCase
 
         // We need to create an accessible mock in order to be able to set the protected `view`.
         $methodsToMock = ['htmlResponse', 'redirect', 'redirectToUri'];
-        if ((new Typo3Version())->getMajorVersion() < 12) {
-            $methodsToMock[] = 'forward';
-        }
         $this->subject = $this->getAccessibleMock(
             FrontEndEditorController::class,
             $methodsToMock,
@@ -214,32 +209,15 @@ final class FrontEndEditorControllerTest extends UnitTestCase
 
     private function mockRedirect(string $actionName): void
     {
-        if ((new Typo3Version())->getMajorVersion() < 12) {
-            $this->subject->expects(self::once())->method('redirect')
-                ->with($actionName)
-                // @phpstan-ignore-next-line This class does not exist in V12 anymore, but this branch is V11-only.
-                ->willThrowException(new StopActionException('redirectToUri', 1476045828));
-            // @phpstan-ignore-next-line This class does not exist in V12 anymore, but this branch is V11-only.
-            $this->expectException(StopActionException::class);
-        } else {
-            $redirectResponse = $this->createStub(RedirectResponse::class);
-            $this->subject->expects(self::once())->method('redirect')->with($actionName)
-                ->willReturn($redirectResponse);
-        }
+        $redirectResponse = $this->createStub(RedirectResponse::class);
+        $this->subject->expects(self::once())->method('redirect')->with($actionName)
+            ->willReturn($redirectResponse);
     }
 
     private function stubRedirect(string $actionName): void
     {
-        if ((new Typo3Version())->getMajorVersion() < 12) {
-            $this->subject->method('redirect')
-                // @phpstan-ignore-next-line This class does not exist in V12 anymore, but this branch is V11-only.
-                ->willThrowException(new StopActionException('redirectToUri', 1476045828));
-            // @phpstan-ignore-next-line This class does not exist in V12 anymore, but this branch is V11-only.
-            $this->expectException(StopActionException::class);
-        } else {
-            $redirectResponse = $this->createStub(RedirectResponse::class);
-            $this->subject->method('redirect')->willReturn($redirectResponse);
-        }
+        $redirectResponse = $this->createStub(RedirectResponse::class);
+        $this->subject->method('redirect')->willReturn($redirectResponse);
     }
 
     /**

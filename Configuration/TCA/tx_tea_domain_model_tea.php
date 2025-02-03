@@ -1,9 +1,6 @@
 <?php
 
-use TYPO3\CMS\Core\Information\Typo3Version;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-
-$tca = [
+return [
     'ctrl' => [
         'title' => 'LLL:EXT:tea/Resources/Private/Language/locallang_db.xlf:tx_tea_domain_model_tea',
         'label' => 'title',
@@ -208,84 +205,3 @@ $tca = [
         ],
     ],
 ];
-
-$typo3Version = new Typo3Version();
-if ($typo3Version->getMajorVersion() < 12) {
-    $tca = array_replace_recursive(
-        $tca,
-        [
-            'ctrl' => [
-                'cruser_id' => 'cruser_id',
-            ],
-            'columns' => [
-                'title' => [
-                    'config' => [
-                        'eval' => 'trim,required',
-                    ],
-                ],
-            ],
-        ]
-    );
-    unset($tca['columns']['title']['required']);
-
-    $tca['columns']['l18n_parent']['config']['items'] = [
-        [
-            0 => '',
-            1 => 0,
-        ],
-    ];
-    $tca['columns']['image'] = [
-        'label' => 'LLL:EXT:tea/Resources/Private/Language/locallang_db.xlf:tx_tea_domain_model_tea.image',
-        'config' => ExtensionManagementUtility::getFileFieldTCAConfig(
-            'image',
-            [
-                'maxitems' => 1,
-                'appearance' => [
-                    'collapseAll' => true,
-                    'useSortable' => false,
-                    'enabledControls' => [
-                        'hide' => false,
-                    ],
-                ],
-            ]
-        ),
-    ];
-    $tca['columns']['hidden']['config'] = [
-        'type' => 'check',
-        'label' => 'LLL:EXT:tea/Resources/Private/Language/locallang_db.xlf:tx_tea_domain_model_tea.hidden',
-        'items' => [
-            [
-                0 => '',
-                'invertStateDisplay' => true,
-            ],
-        ],
-    ];
-    $tca['columns']['starttime']['config'] = [
-        'type' => 'input',
-        'renderType' => 'inputDateTime',
-        'eval' => 'datetime,int',
-        'default' => 0,
-    ];
-    $tca['columns']['endtime']['config'] = [
-        'type' => 'input',
-        'renderType' => 'inputDateTime',
-        'eval' => 'datetime,int',
-        'default' => 0,
-    ];
-    $tca['columns']['fe_group']['config']['items'] = [
-        [
-            0 => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hide_at_login',
-            1 => -1,
-        ],
-        [
-            0 => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.any_login',
-            1 => -2,
-        ],
-        [
-            0 => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.usergroups',
-            1 => '--div--',
-        ],
-    ];
-}
-
-return $tca;

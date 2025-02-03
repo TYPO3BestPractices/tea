@@ -41,10 +41,10 @@
 	"require": {
 		"php": "~8.1.0 || ~8.2.0 || ~8.3.0",
 		"psr/http-message": "^1.0.1",
-		"typo3/cms-core": "^11.5.41 || ^12.4.26",
-		"typo3/cms-extbase": "^11.5.41 || ^12.4.26",
-		"typo3/cms-fluid": "^11.5.41 || ^12.4.26",
-		"typo3/cms-frontend": "^11.5.41 || ^12.4.26"
+		"typo3/cms-core": "^12.4.26",
+		"typo3/cms-extbase": "^12.4.26",
+		"typo3/cms-fluid": "^12.4.26",
+		"typo3/cms-frontend": "^12.4.26"
 	},
 	"require-dev": {
 		"ergebnis/composer-normalize": "2.45.0",
@@ -69,7 +69,7 @@
 		"symfony/yaml": "5.4.45 || 6.4.18 || 7.2.3",
 		"tomasvotruba/cognitive-complexity": "0.2.3",
 		"tomasvotruba/type-coverage": "1.0.0",
-		"typo3/cms-fluid-styled-content": "^11.5.41 || ^12.4.26",
+		"typo3/cms-fluid-styled-content": "^12.4.26",
 		"typo3/coding-standards": "0.6.1 || 0.8.0",
 		"typo3/testing-framework": "7.1.1",
 		"webmozart/assert": "^1.11.0"
