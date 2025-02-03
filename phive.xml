@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phive xmlns="https://phar.io/phive">
-  <phar name="phpcov" version="^8.2.1" installed="8.2.1" location="./tools/phpcov" copy="false"/>
+  <phar name="phpcov" version="^9.0.2" installed="9.0.2" location="./tools/phpcov" copy="false"/>
 </phive>

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace TTN\Tea\Tests\Unit\Controller;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TTN\Tea\Controller\FrontEndEditorController;
 use TTN\Tea\Domain\Model\Tea;
@@ -22,9 +24,8 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 /**
  * Note: Unit tests for controllers are not considered best practice anymore. Instead, functional tests should be used.
  * We're currently in the process of migrating all controller tests to functional tests.
- *
- * @covers \TTN\Tea\Controller\FrontEndEditorController
  */
+#[CoversClass(FrontEndEditorController::class)]
 final class FrontEndEditorControllerTest extends UnitTestCase
 {
     /**
@@ -62,7 +63,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->viewMock = $this->createMock(TemplateView::class);
         $this->subject->_set('view', $this->viewMock);
 
-        $responseStub = $this->createStub(HtmlResponse::class);
+        $responseStub = self::createStub(HtmlResponse::class);
         $this->subject->method('htmlResponse')->willReturn($responseStub);
     }
 
@@ -84,17 +85,13 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->context->setAspect('frontend.user', $userAspectMock);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isActionController(): void
     {
         self::assertInstanceOf(ActionController::class, $this->subject);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function indexActionForNoLoggedInUserAssignsNothingToView(): void
     {
         $this->setUidOfLoggedInUser(0);
@@ -104,24 +101,20 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->indexAction();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function indexActionForLoggedInUserAssignsTeasOwnedByTheLoggedInUserToView(): void
     {
         $userUid = 5;
         $this->setUidOfLoggedInUser($userUid);
 
-        $teas = $this->createStub(QueryResultInterface::class);
+        $teas = self::createStub(QueryResultInterface::class);
         $this->teaRepositoryMock->method('findByOwnerUid')->with($userUid)->willReturn($teas);
         $this->viewMock->expects(self::once())->method('assign')->with('teas', $teas);
 
         $this->subject->indexAction();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function indexActionReturnsHtmlResponse(): void
     {
         $result = $this->subject->indexAction();
@@ -129,9 +122,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         self::assertInstanceOf(HtmlResponse::class, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function editActionWithOwnTeaAssignsProvidedTeaToView(): void
     {
         $userUid = 5;
@@ -144,9 +135,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->editAction($tea);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function editActionWithTeaFromOtherUserThrowsException(): void
     {
         $this->setUidOfLoggedInUser(1);
@@ -160,9 +149,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->editAction($tea);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function editActionWithTeaWithoutOwnerThrowsException(): void
     {
         $this->setUidOfLoggedInUser(1);
@@ -176,9 +163,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->editAction($tea);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function editActionForOwnTeaReturnsHtmlResponse(): void
     {
         $userUid = 5;
@@ -191,9 +176,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         self::assertInstanceOf(HtmlResponse::class, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function updateActionWithOwnTeaPersistsProvidedTea(): void
     {
         $userUid = 5;
@@ -209,20 +192,18 @@ final class FrontEndEditorControllerTest extends UnitTestCase
 
     private function mockRedirect(string $actionName): void
     {
-        $redirectResponse = $this->createStub(RedirectResponse::class);
+        $redirectResponse = self::createStub(RedirectResponse::class);
         $this->subject->expects(self::once())->method('redirect')->with($actionName)
             ->willReturn($redirectResponse);
     }
 
     private function stubRedirect(string $actionName): void
     {
-        $redirectResponse = $this->createStub(RedirectResponse::class);
+        $redirectResponse = self::createStub(RedirectResponse::class);
         $this->subject->method('redirect')->willReturn($redirectResponse);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function updateActionWithOwnTeaRedirectsToIndexAction(): void
     {
         $userUid = 5;
@@ -235,9 +216,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->updateAction($tea);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function updateActionWithTeaFromOtherUserThrowsException(): void
     {
         $this->setUidOfLoggedInUser(1);
@@ -251,9 +230,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->updateAction($tea);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function updateActionWithTeaWithoutOwnerThrowsException(): void
     {
         $this->setUidOfLoggedInUser(1);
@@ -267,9 +244,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->updateAction($tea);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function newActionWithTeaAssignsProvidedTeaToView(): void
     {
         $tea = new Tea();
@@ -279,9 +254,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->newAction($tea);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function newActionWithNullTeaAssignsProvidedNewTeaToView(): void
     {
         $tea = new Tea();
@@ -292,9 +265,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->newAction(null);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function newActionWithoutTeaAssignsProvidedNewTeaToView(): void
     {
         $tea = new Tea();
@@ -305,9 +276,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->newAction();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function newActionReturnsHtmlResponse(): void
     {
         $result = $this->subject->newAction();
@@ -315,9 +284,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         self::assertInstanceOf(HtmlResponse::class, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function createActionSetsLoggedInUserAsOwnerOfProvidedTea(): void
     {
         $userUid = 5;
@@ -330,9 +297,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         self::assertSame($userUid, $tea->getOwnerUid());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function createActionPersistsProvidedTea(): void
     {
         $tea = new Tea();
@@ -343,9 +308,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->createAction($tea);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function createActionRedirectsToIndexAction(): void
     {
         $tea = new Tea();
@@ -355,9 +318,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->updateAction($tea);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function deleteActionWithOwnTeaRemovesProvidedTea(): void
     {
         $userUid = 5;
@@ -371,9 +332,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->deleteAction($tea);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function deleteActionWithOwnTeaRedirectsToIndexAction(): void
     {
         $userUid = 5;
@@ -386,9 +345,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->deleteAction($tea);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function deleteActionWithTeaFromOtherUserThrowsException(): void
     {
         $this->setUidOfLoggedInUser(1);
@@ -402,9 +359,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->deleteAction($tea);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function deleteActionWithTeaWithoutOwnerThrowsException(): void
     {
         $this->setUidOfLoggedInUser(1);
