@@ -20,14 +20,28 @@ Composer scripts
 ================
 
 For most development-related tasks, this extension provides Composer scripts.
-If you are working locally, you can run them using :bash:`composer <scriptname>`.
-
-The code-quality-related Composer scripts make use of the PHIVE-installed tools.
+If you are working locally (Composer needs to be installed on your local
+machine), you can run them using :bash:`composer <scriptname>`.
 
 You can run :bash:`composer` or :bash:`./Build/Scripts/runTests.sh -s composer` to
 display a list of all available Composer commands and scripts. For all custom
 Composer scripts there are descriptions in the `script-description` section of
 the `composer.json`.
+
+If you have problems with missing dependencies on your local machine, it is
+recommended to execute tests with the usage of the `runTests.sh` script.
+
+Example: `./Build/Scripts/runTests.sh -s composer ci:php:lint`
+
+It is not necessary to executing the tests only with the composer scripts.
+You can also use the `runTests.sh`. This makes your life easier because you
+don't have to worry about local dependencies.
+
+.. note::
+
+    It's always a good idea to look into the `runTests.sh` "Examples" section to
+    get an idea how it works. In the "Options" section you can find all
+    available options.
 
 .. _running-code-checks:
 
@@ -136,11 +150,11 @@ Running unit and functional tests
 
    Executing tests on Windows via `runTests.sh` should be done within the
    [Windows Subsystem for Linux (WSL 2)](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux).
-   Before running any commands you need to install all dependencies with
 
-.. code-block:: bash
+.. important::
 
-    runTests.sh -s composer install
+    Before running any commands you need to install all dependencies with
+    `runTests.sh -s composer update`
 
 You can currently run these tests and coverages on the command line:
 
@@ -178,6 +192,12 @@ Generates the code coverage report for unit tests.
     composer ci:tests:functional
 
 Runs the functional tests.
+
+On executing functional tests a database connection is needed. Therefore you
+should execute functional tests directly with the command in the `runTests.sh`.
+Otherwise you have to take care of the database connection by yourself.
+
+Example: `./Build/Scripts/runTests.sh -s functional`
 
 .. index:: Commands; composer ci:tests:unit
 .. code-block:: bash
