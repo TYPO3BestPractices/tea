@@ -3,9 +3,9 @@ phpstan:
   stage: codestyle
   needs:
     - build-composer-dependencies
-    - php-lint-php7.4
-    - php-lint-php8.0
     - php-lint-php8.1
     - php-lint-php8.2
+    - php-lint-php8.3
+    - php-lint-php8.4
   script:
     - composer ci:php:stan
