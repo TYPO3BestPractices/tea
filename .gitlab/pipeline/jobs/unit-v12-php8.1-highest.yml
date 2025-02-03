@@ -1,10 +1,10 @@
-unit-php8.2-v12-highest:
+unit-v12-php8.1-highest:
   extends: .default
-  image: ghcr.io/typo3/core-testing-php82:latest
+  image: ghcr.io/typo3/core-testing-php81:latest
   stage: test
   needs:
     - build-composer-dependencies
-    - php-lint-php8.2
+    - php-lint-php8.1
   script:
     - echo "Job ${CI_JOB_NAME}"
     - composer require --no-progress typo3/cms-core:"^12.4"

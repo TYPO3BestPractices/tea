@@ -1,4 +1,4 @@
-unit-php8.3-v12-highest:
+unit-v12-php8.3-highest:
   extends: .default
   image: ghcr.io/typo3/core-testing-php83:latest
   stage: test
