@@ -6,7 +6,7 @@
 Dependency manager
 ==================
 
-To keep things simple, most development tools, for example PHP_CodeSniffer, are
+To keep things simple, most development tools, for example php-cs-fixer, are
 installed by Composer as development requirements and in some cases where
 installation via Composer is not possible, we use `PHIVE <https://phar.io/>`__.
 

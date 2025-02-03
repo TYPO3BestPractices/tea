@@ -71,13 +71,6 @@ Checks the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer).
 
 Lints the PHP files for syntax errors.
 
-.. index:: Commands; composer ci:php:sniff
-.. code-block:: bash
-
-    composer ci:php:sniff
-
-Checks the code style with PHP_CodeSniffer (PHPCS).
-
 .. index:: Commands; composer ci:php:stan
 .. code-block:: bash
 
@@ -126,13 +119,6 @@ Runs all fixers for the PHP code.
     composer fix:php:cs
 
 Fixes the code style with PHP-CS-Fixer.
-
-.. index:: Commands; composer fix:php:sniff
-.. code-block:: bash
-
-    composer fix:php:sniff
-
-Fixes the code style with PHP_CodeSniffer.
 
 .. index:: Commands; composer phpstan:baseline
 .. code-block:: bash
