@@ -9,6 +9,4 @@ apk add icu-dev
 docker-php-ext-configure intl
 docker-php-ext-install intl
 docker-php-ext-enable intl
-docker-php-ext-install pdo pdo_mysql
-docker-php-ext-install mysqli
-docker-php-ext-install pdo_mysql
+docker-php-ext-install pdo pdo_mysql mysqli
