@@ -82,7 +82,6 @@ jobs:
           - "php:cs-fixer"
           - "php:mess"
           - "php:rector"
-          - "php:sniff"
           - "php:stan"
           - "typoscript:lint"
           - "yaml:lint"
