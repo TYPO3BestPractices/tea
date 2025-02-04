@@ -118,6 +118,19 @@ final class TeaRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
+    public function MapsDeletedImageRelationToNull(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/propertyMapping/TeaWithDeletedImage.csv');
+
+        $model = $this->subject->findByUid(1);
+        self::assertInstanceOf(Tea::class, $model);
+
+        self::assertNull($model->getImage());
+    }
+
+    /**
+     * @test
+     */
     public function addAndPersistAllCreatesNewRecord(): void
     {
         $title = 'Godesberger Burgtee';
