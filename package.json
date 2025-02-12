@@ -20,7 +20,7 @@
 		"fix:lint:css": "stylelint Resources/Public/**/*.css --fix"
 	},
 	"devDependencies": {
-		"eslint": "^9.20.0",
+		"eslint": "^9.20.1",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-prettier": "^5.2.3",
 		"install": "^0.13.0",
