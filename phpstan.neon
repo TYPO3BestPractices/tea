@@ -30,6 +30,13 @@ parameters:
     class: 10
     function: 5
 
+  type_perfect:
+    no_mixed_property: true
+    no_mixed_caller: true
+    null_over_false: true
+    narrow_param: true
+    narrow_return: true
+
   disallowedFunctionCalls:
     -
       function:
@@ -40,12 +47,14 @@ parameters:
     -
       function: 'header()'
       message: 'Use PSR-7 API instead'
+
   disallowedStaticCalls:
     -
       method:
         - 'TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump()'
         - 'TYPO3\CMS\Core\Utility\DebugUtility::debug()'
       message: 'Use logging instead or remove if it was for debugging purposes.'
+
   disallowedSuperglobals:
     -
       superglobal:
@@ -54,6 +63,7 @@ parameters:
         - '$_FILES'
         - '$_SERVER'
       message: 'Use PSR-7 API instead'
+
   ignoreErrors:
     -
       message: '#Out of 1 possible constant types#'
