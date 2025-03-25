@@ -6,6 +6,8 @@ includes:
   - .Build/vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
 
 parameters:
+  phpVersion: 80100
+
   parallel:
     # Don't be overly greedy on machines with more CPU's to be a good neighbor especially on CI
     maximumNumberOfProcesses: 5
