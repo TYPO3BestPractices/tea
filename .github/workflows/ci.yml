@@ -89,6 +89,30 @@ jobs:
           - "xliff:lint"
         php-version:
           - "8.3"
+  prepare-release:
+    name: "Check prepare release script"
+    runs-on: ubuntu-24.04
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+      - name: "Install PHP"
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "${{ matrix.php-version }}"
+          ini-file: development
+          coverage: none
+          tools: composer:v2
+      - name: "Show Composer version"
+        run: "composer --version"
+      - name: "Show the Composer configuration"
+        run: "composer config --global --list"
+      - name: "Run command"
+        run: "composer prepare-release"
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - "8.3"
   code-quality-frontend:
     name: "Code quality frontend checks"
     runs-on: ubuntu-24.04
