@@ -1,6 +1,5 @@
 /.Build/ export-ignore
 /.editorconfig export-ignore
-/.eslintignore export-ignore
 /.gitattributes export-ignore
 /.github/ export-ignore
 /.gitignore export-ignore
@@ -9,8 +8,6 @@
 /.nvmrc export-ignore
 /.prettierrc.js export-ignore
 /Build/ export-ignore
-/Configuration/FunctionalTests.xml export-ignore
-/Configuration/UnitTests.xml export-ignore
 /Tests/ export-ignore
 /composer-unused.php export-ignore
 /eslint.config.json export-ignore
