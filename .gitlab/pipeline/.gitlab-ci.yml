@@ -29,6 +29,7 @@ include:
   - '/.gitlab/pipeline/jobs/php-lint-php8.2.yml'
   - '/.gitlab/pipeline/jobs/php-lint-php8.3.yml'
   - '/.gitlab/pipeline/jobs/php-lint-php8.4.yml'
+  - '/.gitlab/pipeline/jobs/prepare-release.yml'
   - '/.gitlab/pipeline/jobs/rector.yml'
   - '/.gitlab/pipeline/jobs/typoscript-lint.yml'
   - '/.gitlab/pipeline/jobs/unit-v12-php8.1-highest.yml'

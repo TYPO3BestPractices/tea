@@ -1,0 +1,5 @@
+prepare-release:
+  extends: .default
+  stage: test
+  script:
+    - composer prepare-release
