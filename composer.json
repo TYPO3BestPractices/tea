@@ -183,7 +183,7 @@
 		],
 		"fix:php:cs": "php-cs-fixer fix --config ./Build/php-cs-fixer/php-cs-fixer.php",
 		"fix:php:rector": "rector",
-		"phpstan:baseline": "phpstan --generate-baseline --allow-empty-baseline --configuration=Build/phpstan/phpstan.neon",
+		"phpstan:baseline": "phpstan --generate-baseline=Build/phpstan/phpstan-baseline.neon --allow-empty-baseline --configuration=Build/phpstan/phpstan.neon",
 		"prepare-release": [
 			"rm -rf .Build",
 			"rm -rf .ddev",
