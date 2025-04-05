@@ -333,7 +333,7 @@ NETWORK="typo3-best-practices-tea-${SUFFIX}"
 CI_PARAMS="${CI_PARAMS:-}"
 CONTAINER_HOST="host.docker.internal"
 # shellcheck disable=SC2034 # This variable will be needed when we try to clean up the root folder
-PHPSTAN_CONFIG_FILE="phpstan.neon"
+PHPSTAN_CONFIG_FILE="Build/phpstan/phpstan.neon"
 IS_CORE_CI=0
 
 # Option parsing updates above default vars

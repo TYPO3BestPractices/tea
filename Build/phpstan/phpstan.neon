@@ -1,9 +1,9 @@
 includes:
   - phpstan-baseline.neon
-  - .Build/vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
-  - .Build/vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
-  - .Build/vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
-  - .Build/vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
+  - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+  - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
+  - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
+  - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
 
 parameters:
   phpVersion: 80100
@@ -15,10 +15,10 @@ parameters:
   level: 9
 
   paths:
-    - Classes
-    - Configuration
-    - Tests
-    - ext_localconf.php
+    - ../../Classes
+    - ../../Configuration
+    - ../../Tests
+    - ../../ext_localconf.php
 
   # Allow instanceof checks, particularly in tests
   checkAlwaysTrueCheckTypeFunctionCall: false
@@ -69,4 +69,4 @@ parameters:
   ignoreErrors:
     -
       message: '#Out of 1 possible constant types#'
-      path: Tests/Functional/Command/CreateTestDataCommandTest.php
+      path: ../../Tests/Functional/Command/CreateTestDataCommandTest.php
