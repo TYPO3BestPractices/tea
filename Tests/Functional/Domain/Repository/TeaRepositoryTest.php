@@ -23,6 +23,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
 
     private PersistenceManagerInterface $persistenceManager;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
