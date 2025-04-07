@@ -129,7 +129,7 @@ final class TeaControllerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function showActionTriggering404ReasonIsRendered(): void
+    public function showActionFor404RendersReasonFor404(): void
     {
         $request = (new InternalRequest())->withPageId(3);
 
