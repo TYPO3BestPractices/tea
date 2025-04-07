@@ -35,7 +35,9 @@ final class TTNTeaCTypeMigration extends AbstractListTypeToCTypeUpdate
     protected function getListTypeToCTypeMapping(): array
     {
         return [
-            // TODO: Add this mapping yourself!
+            'tea_teaindex' => 'tea_teaindex',
+            'tea_teashow' => 'tea_teashow',
+            'tea_teafrontendeditor' => 'tea_teafrontendeditor'
         ];
     }
 }
