@@ -41,7 +41,7 @@ class TeaController extends ActionController
     }
 
     /**
-     * Will throw exception to trigger 404.
+     * @throws PropagateResponseException
      *
      * @throws PropagateResponseException
      *
