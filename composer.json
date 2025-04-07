@@ -72,7 +72,7 @@
 		"tomasvotruba/type-coverage": "1.0.0",
 		"typo3/cms-fluid-styled-content": "^12.4.26",
 		"typo3/coding-standards": "0.6.1 || 0.8.0",
-		"typo3/testing-framework": "^8.2.7",
+		"typo3/testing-framework": "8.2.7",
 		"webmozart/assert": "^1.11.0"
 	},
 	"replace": {
