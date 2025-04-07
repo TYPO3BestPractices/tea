@@ -1,13 +1,10 @@
 plugin.tx_tea {
   persistence {
-    # cat=plugin.tx_tea//a; type=string; label=Default storage PID
-    storagePid =
     # cat=plugin.tx_tea//a; type=int; label=UID of the page/folder where all new records will be created
     newRecordStoragePid =
   }
 
   settings {
-    # cat=plugin.tx_tea//a; type=int; label=UID of the page with the single view
-    singleViewPageUid =
+
   }
 }
