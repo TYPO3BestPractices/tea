@@ -105,12 +105,36 @@ final class TeaControllerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function showActionTriggers404ForMissingTea(): void
+    public function showActionTriggers404ForMissingTeaArgument(): void
+    {
+        $request = (new InternalRequest())->withPageId(3);
+
+        $response = $this->executeFrontendSubRequest($request);
+
+        self::assertSame(404, $response->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
+    public function showActionTriggers404ForUnavailableTea(): void
     {
         $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
 
         $response = $this->executeFrontendSubRequest($request);
 
         self::assertSame(404, $response->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
+    public function showActionTriggering404ReasonIsRendered(): void
+    {
+        $request = (new InternalRequest())->withPageId(3);
+
+        $html = (string)$this->executeFrontendSubRequest($request)->getBody();
+
+        self::assertStringContainsString('Reason: No tea given.', $html);
     }
 }

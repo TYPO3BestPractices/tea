@@ -27,6 +27,9 @@ class TeaController extends ActionController
         return $this->htmlResponse();
     }
 
+    /**
+     * @throws PropagateResponseException
+     */
     public function showAction(?Tea $tea = null): ResponseInterface
     {
         if ($tea === null) {
@@ -39,6 +42,8 @@ class TeaController extends ActionController
 
     /**
      * Will throw exception to trigger 404.
+     *
+     * @throws PropagateResponseException
      *
      * @return never
      */
