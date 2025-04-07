@@ -7,6 +7,5 @@ use ComposerUnused\ComposerUnused\Configuration\NamedFilter;
 
 return static function (Configuration $config): Configuration {
     $config->addNamedFilter(NamedFilter::fromString('typo3/cms-fluid'));
-    $config->addNamedFilter(NamedFilter::fromString('typo3/cms-frontend'));
     return $config;
 };
