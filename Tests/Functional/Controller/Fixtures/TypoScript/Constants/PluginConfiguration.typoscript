@@ -1,5 +1,0 @@
-plugin.tx_tea {
-  persistence {
-    storagePid = 2
-  }
-}

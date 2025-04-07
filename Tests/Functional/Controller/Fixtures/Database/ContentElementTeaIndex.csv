@@ -1,4 +1,21 @@
 "tt_content"
-,"uid","pid","CType","header","list_type"
-,1,1,"list","Tea index","tea_teaindex"
-,2,3,"list","Tea show","tea_teashow"
+,"uid","pid","CType","header","list_type","pi_flexform"
+,1,1,"list","Tea index","tea_teaindex","<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?>
+                                           <T3FlexForms>
+                                               <data>
+                                                   <sheet index=""pagesAndFolders"">
+                                                       <language index=""lDEF"">
+                                                           <field index=""persistence.storagePid"">
+                                                               <value index=""vDEF"">2</value>
+                                                           </field>
+                                                           <field index=""persistence.recursive"">
+                                                               <value index=""vDEF"">4</value>
+                                                           </field>
+                                                           <field index=""settings.singleViewPage"">
+                                                               <value index=""vDEF"">3</value>
+                                                           </field>
+                                                        </language>
+                                                    </sheet>
+                                               </data>
+                                           </T3FlexForms>"
+,2,3,"list","Tea show","tea_teashow",""
