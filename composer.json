@@ -47,7 +47,6 @@
 		"typo3/cms-frontend": "^12.4.26"
 	},
 	"require-dev": {
-		"brianium/paratest": "7.3.1 || 7.4.8",
 		"ergebnis/composer-normalize": "2.45.0",
 		"friendsofphp/php-cs-fixer": "3.75.0",
 		"helmich/typo3-typoscript-lint": "^3.3.0",
@@ -58,7 +57,7 @@
 		"phpstan/phpstan": "1.12.14",
 		"phpstan/phpstan-phpunit": "1.4.2",
 		"phpstan/phpstan-strict-rules": "1.6.1",
-		"phpunit/phpunit": "10.5.31 || 10.5.44",
+		"phpunit/phpunit": "^10.5",
 		"rector/type-perfect": "1.0.0",
 		"saschaegerer/phpstan-typo3": "1.10.2",
 		"seld/jsonlint": "1.11.0",
@@ -128,7 +127,7 @@
 		"ci:coverage:functional": [
 			"@ci:tests:create-directories",
 			"@coverage:create-directories",
-			"paratest -c Build/phpunit/FunctionalTests.xml --coverage-php=build/coverage/functional.cov Tests/Functional"
+			"phpunit -c Build/phpunit/FunctionalTests.xml --coverage-php=build/coverage/functional.cov Tests/Functional"
 		],
 		"ci:coverage:merge": [
 			"@coverage:create-directories",
@@ -136,7 +135,7 @@
 		],
 		"ci:coverage:unit": [
 			"@coverage:create-directories",
-			"paratest -c Build/phpunit/UnitTests.xml --coverage-php=build/coverage/unit.cov Tests/Unit"
+			"phpunit -c Build/phpunit/UnitTests.xml --coverage-php=build/coverage/unit.cov Tests/Unit"
 		],
 		"ci:json:lint": "find . ! -path '*/.cache/*' ! -path '*/.Build/*' ! -path '*/node_modules/*' -name '*.json' | xargs -r php .Build/bin/jsonlint -q",
 		"ci:php": [
@@ -164,9 +163,9 @@
 		"ci:tests:create-directories": "mkdir -p .Build/public/typo3temp/var/tests",
 		"ci:tests:functional": [
 			"@ci:tests:create-directories",
-			"paratest -c Build/phpunit/FunctionalTests.xml Tests/Functional"
+			"phpunit -c Build/phpunit/FunctionalTests.xml Tests/Functional"
 		],
-		"ci:tests:unit": "paratest -c Build/phpunit/UnitTests.xml Tests/Unit",
+		"ci:tests:unit": "phpunit -c Build/phpunit/UnitTests.xml Tests/Unit",
 		"ci:typoscript:lint": "typoscript-lint -c Configuration/TsLint.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript",
 		"ci:xliff:lint": "php Build/xliff/xliff-lint lint:xliff Resources/Private/Language",
 		"ci:yaml:lint": "find . ! -path '*.Build/*' ! -path '*node_modules/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r php ./.Build/bin/yaml-lint",
