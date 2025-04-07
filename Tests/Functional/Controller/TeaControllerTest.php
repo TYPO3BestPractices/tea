@@ -51,13 +51,24 @@ final class TeaControllerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function indexActionHandlesNoAvailableTeas(): void
+    public function indexActionShowsMessageWhenNoTeasAreAvailable(): void
     {
         $request = (new InternalRequest())->withPageId(1);
 
         $html = (string)$this->executeFrontendSubRequest($request)->getBody();
 
         self::assertStringContainsString('No teas available.', $html);
+    }
+
+    /**
+     * @test
+     */
+    public function indexActionShowsNoTableMarkupWhenNoTeasAreAvailable(): void
+    {
+        $request = (new InternalRequest())->withPageId(1);
+
+        $html = (string)$this->executeFrontendSubRequest($request)->getBody();
+
         self::assertStringNotContainsString('table', $html);
     }
 

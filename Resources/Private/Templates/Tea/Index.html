@@ -9,10 +9,10 @@
 
         <f:if condition="{teas}">
             <f:then>
-                {f:render(section: 'Teas', arguments: {teas: teas})}
+                <f:render section="Teas" arguments="{teas: teas}" />
             </f:then>
             <f:else>
-                <p>{f:translate(id: 'plugin.tea.noTeasAvailable')}</p>
+                <p><f:translate id="plugin.tea.noTeasAvailable" /></p>
             </f:else>
         </f:if>
     </f:section>
