@@ -6,6 +6,18 @@
 			<trans-unit id="plugin.tea_index">
 				<source>Tea list</source>
 			</trans-unit>
+			<trans-unit id="plugin.tea_index.settings.tab.pagesAndFolders">
+				<source>Pages and folders</source>
+			</trans-unit>
+			<trans-unit id="plugin.tea_index.settings.pagesAndFolders.singleViewPageUid">
+				<source>Page with the single view</source>
+			</trans-unit>
+			<trans-unit id="plugin.tea_index.settings.pagesAndFolders.storagePid">
+				<source>Folders with the tea records</source>
+			</trans-unit>
+			<trans-unit id="plugin.tea_index.settings.pagesAndFolders.recursive">
+				<source>Recursion into subfolders</source>
+			</trans-unit>
 			<trans-unit id="plugin.tea_show">
 				<source>Tea single view</source>
 			</trans-unit>

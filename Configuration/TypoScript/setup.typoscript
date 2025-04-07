@@ -12,12 +12,4 @@ plugin.tx_tea {
       0 = EXT:tea/Resources/Private/Layouts/
     }
   }
-
-  persistence {
-    storagePid = {$plugin.tx_tea.persistence.storagePid}
-  }
-
-  settings {
-    singleViewPageUid = {$plugin.tx_tea.settings.singleViewPageUid}
-  }
 }

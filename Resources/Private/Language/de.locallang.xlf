@@ -7,6 +7,22 @@
 				<source>Tea list</source>
 				<target>Teeliste</target>
 			</trans-unit>
+			<trans-unit id="plugin.tea_index.settings.tab.pagesAndFolders" approved="yes">
+				<source>Pages and folders</source>
+				<target>Seiten und Ordner</target>
+			</trans-unit>
+			<trans-unit id="plugin.tea_index.settings.pagesAndFolders.singleViewPageUid" approved="yes">
+				<source>Page with the single view</source>
+				<target>Seite mit der Einzelansicht</target>
+			</trans-unit>
+			<trans-unit id="plugin.tea_index.settings.pagesAndFolders.storagePid" approved="yes">
+				<source>Folders with the tea records</source>
+				<target>Ordner mit den Teedatensätzen</target>
+			</trans-unit>
+			<trans-unit id="plugin.tea_index.settings.pagesAndFolders.recursive" approved="yes">
+				<source>Recursion into subfolders</source>
+				<target>Rekursion in Unterordner</target>
+			</trans-unit>
 			<trans-unit id="plugin.tea_show" approved="yes">
 				<source>Tea single view</source>
 				<target>Tee-Einzelansicht</target>

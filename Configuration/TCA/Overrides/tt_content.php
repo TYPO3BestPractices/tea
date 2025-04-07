@@ -1,5 +1,6 @@
 <?php
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 defined('TYPO3') || die();
@@ -16,6 +17,13 @@ call_user_func(
             'LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_index',
             // the icon visible in the drop-down in the BE
             'EXT:tea/Resources/Public/Icons/Extension.svg'
+        );
+
+        // These two commands add the flexform configuration for the plugin.
+        $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['tea_teaindex'] = 'pi_flexform';
+        ExtensionManagementUtility::addPiFlexFormValue(
+            'tea_teaindex',
+            'FILE:EXT:tea/Configuration/FlexForms/TeaIndex.xml'
         );
 
         ExtensionUtility::registerPlugin(
