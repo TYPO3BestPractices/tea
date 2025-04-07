@@ -7,6 +7,17 @@
             <f:translate key="plugin.tea.heading"/>
         </h2>
 
+        <f:if condition="{teas}">
+            <f:then>
+                {f:render(section: 'Teas', arguments: {teas: teas})}
+            </f:then>
+            <f:else>
+                <p>{f:translate(id: 'plugin.tea.noTeasAvailable')}</p>
+            </f:else>
+        </f:if>
+    </f:section>
+
+    <f:section name="Teas">
         <table class="table">
             <thead>
                 <tr>

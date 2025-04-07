@@ -46,7 +46,19 @@ final class TeaControllerTest extends FunctionalTestCase
             ],
         ]);
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/ContentElementTeaIndex.csv');
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
+    }
+
+    /**
+     * @test
+     */
+    public function indexActionHandlesNoAvailableTeas(): void
+    {
+        $request = (new InternalRequest())->withPageId(1);
+
+        $html = (string)$this->executeFrontendSubRequest($request)->getBody();
+
+        self::assertStringContainsString('No teas available.', $html);
+        self::assertStringNotContainsString('table', $html);
     }
 
     /**
@@ -54,6 +66,8 @@ final class TeaControllerTest extends FunctionalTestCase
      */
     public function indexActionRendersAllAvailableTeas(): void
     {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
+
         $request = (new InternalRequest())->withPageId(1);
 
         $html = (string)$this->executeFrontendSubRequest($request)->getBody();
@@ -67,6 +81,8 @@ final class TeaControllerTest extends FunctionalTestCase
      */
     public function showActionRendersTheGivenTeas(): void
     {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
+
         $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
 
         $html = (string)$this->executeFrontendSubRequest($request)->getBody();

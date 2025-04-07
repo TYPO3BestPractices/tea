@@ -19,6 +19,10 @@
 				<source>Our selection of assorted teas</source>
 				<target>Unsere Auswahl an erlesenen Tees</target>
 			</trans-unit>
+			<trans-unit id="plugin.tea.noTeasAvailable" approved="yes">
+				<source>No teas available.</source>
+				<target>Keine Tees verfügbar.</target>
+			</trans-unit>
 			<trans-unit id="plugin.tea.property.uid" approved="yes">
 				<source>UID</source>
 				<target>UID</target>

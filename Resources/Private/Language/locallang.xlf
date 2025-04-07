@@ -15,6 +15,9 @@
 			<trans-unit id="plugin.tea.heading">
 				<source>Our selection of assorted teas</source>
 			</trans-unit>
+			<trans-unit id="plugin.tea.noTeasAvailable">
+				<source>No teas available.</source>
+			</trans-unit>
 			<trans-unit id="plugin.tea.property.uid">
 				<source>UID</source>
 			</trans-unit>
