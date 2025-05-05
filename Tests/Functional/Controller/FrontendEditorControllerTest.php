@@ -75,4 +75,22 @@ final class FrontendEditorControllerTest extends FunctionalTestCase
         self::assertStringNotContainsString('Oolong', $html);
     }
 
+    #[Test]
+    public function editActionWithOwnTeaAssignsProvidedTeaToView(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeasAssignedToUser.csv');
+
+        $request = (new InternalRequest())->withPageId(1)->withQueryParameters([
+            'tx_tea_teafrontendeditor[action]' => 'edit',
+            'tx_tea_teafrontendeditor[tea]' => '1',
+        ]);
+        $context = (new InternalRequestContext())->withFrontendUserId(1);
+
+        $html = (string)$this->executeFrontendSubRequest($request, $context)->getBody();
+
+        self::assertStringContainsString('<input type="hidden" name="tx_tea_teafrontendeditor[tea][__identity]" value="1" />', $html);
+        self::assertStringContainsString('Godesberger Burgtee', $html);
+        self::assertStringNotContainsString('Oolong', $html);
+    }
+
 }
