@@ -8,6 +8,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use TTN\Tea\Controller\FrontEndEditorController;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
+use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestContext;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 #[CoversClass(FrontEndEditorController::class)]
@@ -47,6 +48,7 @@ final class FrontendEditorControllerTest extends FunctionalTestCase
             ],
         ]);
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/ContentElementTeaFrontEndEditor.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontendUsers.csv');
     }
 
     #[Test]
@@ -57,6 +59,20 @@ final class FrontendEditorControllerTest extends FunctionalTestCase
         $html = (string)$this->executeFrontendSubRequest($request)->getBody();
 
         self::assertStringContainsString('Please configure this plugin to be only visible if a website user is logged in.', $html);
+    }
+
+    #[Test]
+    public function indexActionForLoggedInUserRendersTeasOwnedByTheLoggedInUser(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeasAssignedToUser.csv');
+
+        $request = (new InternalRequest())->withPageId(1);
+        $context = (new InternalRequestContext())->withFrontendUserId(1);
+
+        $html = (string)$this->executeFrontendSubRequest($request, $context)->getBody();
+
+        self::assertStringContainsString('Godesberger Burgtee', $html);
+        self::assertStringNotContainsString('Oolong', $html);
     }
 
 }
