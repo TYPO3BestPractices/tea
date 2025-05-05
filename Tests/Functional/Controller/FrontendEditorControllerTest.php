@@ -172,7 +172,7 @@ final class FrontendEditorControllerTest extends FunctionalTestCase
 
         $this->executeFrontendSubRequest($request, $context);
 
-        self::assertSame(1, $this->getAllRecords('tx_tea_domain_model_tea')[0]['owner']);
+        $this->assertCSVDataSet(__DIR__ . '/Fixtures/Database/Create/CreatedWithOwner.csv');
     }
 
     #[Test]
