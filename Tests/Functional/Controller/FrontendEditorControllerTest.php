@@ -147,6 +147,19 @@ final class FrontendEditorControllerTest extends FunctionalTestCase
         self::assertSame('Darjeeling', $this->getAllRecords('tx_tea_domain_model_tea')[0]['title']);
     }
 
+    #[Test]
+    public function newActionWithNoProvidedTeaCanBeRendered(): void
+    {
+        $request = (new InternalRequest())->withPageId(1)->withQueryParameters([
+            'tx_tea_teafrontendeditor[action]' => 'new',
+        ]);
+        $context = (new InternalRequestContext())->withFrontendUserId(1);
+
+        $html = (string)$this->executeFrontendSubRequest($request, $context)->getBody();
+
+        self::assertStringContainsString('Create new tea', $html);
+    }
+
     private function getTrustedPropertiesFromEditForm(int $tea, int $userId): string
     {
         $request = (new InternalRequest())->withPageId(1)->withQueryParameters([
