@@ -144,7 +144,7 @@ final class FrontendEditorControllerTest extends FunctionalTestCase
 
         $this->executeFrontendSubRequest($request, $context);
 
-        self::assertSame('Darjeeling', $this->getAllRecords('tx_tea_domain_model_tea')[0]['title']);
+        $this->assertCSVDataSet(__DIR__ . '/Fixtures/Database/Update/UpdatedOwnTea.csv');
     }
 
     #[Test]
