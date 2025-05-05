@@ -2,4 +2,21 @@ page = PAGE
 page {
   10 < styles.content.get
 }
-tt_content.list.20.tea_teashow < tt_content.tea_teashow
+tt_content.list =< lib.contentElement
+tt_content.list.20 {
+  tea_teafrontendeditor = EXTBASEPLUGIN 
+  tea_teafrontendeditor {
+    extensionName = Tea
+    pluginName = TeaFrontEndEditor
+  }
+  tea_teaindex = EXTBASEPLUGIN 
+  tea_teaindex {
+    extensionName = Tea
+    pluginName = TeaIndex
+  }
+  tea_teashow = EXTBASEPLUGIN 
+  tea_teashow {
+    extensionName = Tea
+    pluginName =  TeaShow    
+  }
+}
