@@ -188,7 +188,7 @@ final class FrontendEditorControllerTest extends FunctionalTestCase
 
         $this->executeFrontendSubRequest($request, $context);
 
-        self::assertSame(1, $this->getAllRecords('tx_tea_domain_model_tea')[0]['deleted']);
+        $this->assertCSVDataSet(__DIR__ . '/Fixtures/Database/Delete/Deleted.csv');
     }
 
     private function getTrustedPropertiesFromEditForm(int $tea, int $userId): string
