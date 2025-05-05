@@ -175,6 +175,22 @@ final class FrontendEditorControllerTest extends FunctionalTestCase
         self::assertSame(1, $this->getAllRecords('tx_tea_domain_model_tea')[0]['owner']);
     }
 
+    #[Test]
+    public function deleteActionWithOwnTeaRemovesProvidedTea(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeasAssignedToUser.csv');
+
+        $request = (new InternalRequest())->withPageId(1)->withQueryParameters([
+            'tx_tea_teafrontendeditor[action]' => 'delete',
+            'tx_tea_teafrontendeditor[tea][__identity]' => '1',
+        ]);
+        $context = (new InternalRequestContext())->withFrontendUserId(1);
+
+        $this->executeFrontendSubRequest($request, $context);
+
+        self::assertSame(1, $this->getAllRecords('tx_tea_domain_model_tea')[0]['deleted']);
+    }
+
     private function getTrustedPropertiesFromEditForm(int $tea, int $userId): string
     {
         $request = (new InternalRequest())->withPageId(1)->withQueryParameters([
