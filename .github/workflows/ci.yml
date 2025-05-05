@@ -65,19 +65,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "${{ matrix.php-version }}"
-          ini-file: development
-          coverage: none
-          tools: composer:v2
-      - name: Show Composer version
-        run: "composer --version"
-      - name: Show the Composer configuration
-        run: "composer config --global --list"
-      - name: Run command
-        run: "composer prepare-release"
+      - name: Run prepare release
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composer prepare-release
     strategy:
       fail-fast: false
       matrix:
