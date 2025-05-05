@@ -191,6 +191,24 @@ final class FrontendEditorControllerTest extends FunctionalTestCase
         $this->assertCSVDataSet(__DIR__ . '/Fixtures/Database/Delete/Deleted.csv');
     }
 
+    #[Test]
+    public function updateActionWithOwnTeaRendersPluginAfterRedirect(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeasAssignedToUser.csv');
+
+        $request = (new InternalRequest())->withPageId(1)->withQueryParameters([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(1, 1),
+            'tx_tea_teafrontendeditor[action]' => 'update',
+            'tx_tea_teafrontendeditor[tea][__identity]' => '1',
+            'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
+        ]);
+        $context = (new InternalRequestContext())->withFrontendUserId(1);
+
+        $html = (string)$this->executeFrontendSubRequest($request, $context, true)->getBody();
+
+        $this->assertStringContainsString('Tea FrontEnd Editor', $html);
+    }
+
     private function getTrustedPropertiesFromEditForm(int $tea, int $userId): string
     {
         $request = (new InternalRequest())->withPageId(1)->withQueryParameters([

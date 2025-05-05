@@ -92,22 +92,6 @@ final class FrontEndEditorControllerTest extends UnitTestCase
 
     #[Test]
     /**
-     * Extbase calls `header()` functions instead of using PSR.
-     */
-    public function updateActionWithOwnTeaRedirectsToIndexAction(): void
-    {
-        $userUid = 5;
-        $this->setUidOfLoggedInUser($userUid);
-        $tea = new Tea();
-        $tea->setOwnerUid($userUid);
-
-        $this->mockRedirect('index');
-
-        $this->subject->updateAction($tea);
-    }
-
-    #[Test]
-    /**
      * Not possible to test with functionals due to hmac security.
      */
     public function updateActionWithTeaFromOtherUserThrowsException(): void
