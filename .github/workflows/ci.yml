@@ -16,27 +16,13 @@ jobs:
     name: "PHP linter"
     runs-on: ubuntu-24.04
     steps:
-      - name: "Checkout"
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: "Install PHP"
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "${{ matrix.php-version }}"
-          ini-file: development
-          coverage: none
-          tools: composer:v2
-      - name: "Cache dependencies installed with composer"
-        uses: actions/cache@v4
-        with:
-          key: "php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}"
-          path: ~/.cache/composer
-          restore-keys: "php${{ matrix.php-version }}-composer-\n"
-      - name: "Install Composer dependencies"
-        run: "composer update --no-progress"
-      - name: "Show the Composer configuration"
-        run: "composer config --global --list"
-      - name: "Run PHP lint"
-        run: "composer ci:php:lint"
+      - name: Install Composer dependencies
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composerUpdateMax
+      - name: "PHP Lint"
+        run: |
+          Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s lintPhp
     strategy:
       fail-fast: false
       matrix:
