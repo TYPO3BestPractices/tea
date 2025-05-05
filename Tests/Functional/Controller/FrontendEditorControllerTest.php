@@ -160,11 +160,38 @@ final class FrontendEditorControllerTest extends FunctionalTestCase
         self::assertStringContainsString('Create new tea', $html);
     }
 
+    #[Test]
+    public function createActionSetsLoggedInUserAsOwnerOfProvidedTea(): void
+    {
+        $request = (new InternalRequest())->withPageId(1)->withQueryParameters([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromNewForm(1),
+            'tx_tea_teafrontendeditor[action]' => 'create',
+            'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
+        ]);
+        $context = (new InternalRequestContext())->withFrontendUserId(1);
+
+        $this->executeFrontendSubRequest($request, $context);
+
+        self::assertSame(1, $this->getAllRecords('tx_tea_domain_model_tea')[0]['owner']);
+    }
+
     private function getTrustedPropertiesFromEditForm(int $tea, int $userId): string
     {
         $request = (new InternalRequest())->withPageId(1)->withQueryParameters([
             'tx_tea_teafrontendeditor[action]' => 'edit',
             'tx_tea_teafrontendeditor[tea]' => $tea,
+        ]);
+        $context = (new InternalRequestContext())->withFrontendUserId($userId);
+
+        $html = (string)$this->executeFrontendSubRequest($request, $context)->getBody();
+
+        return $this->getTrustedPropertiesFromHtml($html);
+    }
+
+    private function getTrustedPropertiesFromNewForm(int $userId): string
+    {
+        $request = (new InternalRequest())->withPageId(1)->withQueryParameters([
+            'tx_tea_teafrontendeditor[action]' => 'new',
         ]);
         $context = (new InternalRequestContext())->withFrontendUserId($userId);
 
