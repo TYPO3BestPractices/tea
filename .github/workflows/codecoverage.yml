@@ -10,7 +10,7 @@ permissions:
   contents: read
 jobs:
   code-coverage:
-    name: "Calculate code coverage"
+    name: Calculate code coverage
     permissions:
       actions: write
     runs-on: ubuntu-24.04
@@ -20,9 +20,9 @@ jobs:
       DB_PASSWORD: root
       DB_HOST: localhost
     steps:
-      - name: "Checkout"
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: "Install PHP"
+      - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: "${{ matrix.php-version }}"
@@ -30,54 +30,54 @@ jobs:
           tools: composer:v2, phive
           extensions: mysqli
           coverage: xdebug
-      - name: "Install development tools"
+      - name: Install development tools
         run: phive --no-progress install --trust-gpg-keys D8406D0D82947747293778314AA394086372C20A
-      - name: "Show Composer version"
+      - name: Show Composer version
         run: composer --version
-      - name: "Show the Composer configuration"
+      - name: Show the Composer configuration
         run: composer config --global --list
-      - name: "Cache dependencies installed with composer"
+      - name: Cache dependencies installed with composer
         uses: actions/cache@v4
         with:
           key: "php${{ matrix.php-version }}-typo3${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
           path: ~/.cache/composer
           restore-keys: "php${{ matrix.php-version }}-typo3${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
-      - name: "Install TYPO3 Core"
+      - name: Install TYPO3 Core
         env:
           TYPO3: "${{ matrix.typo3-version }}"
         run: |
           composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:"$TYPO3"
           composer show
-      - name: "Install lowest dependencies with composer"
+      - name: Install lowest dependencies with composer
         if: "matrix.composer-dependencies == 'lowest'"
         run: |
           composer update --no-ansi --no-interaction --no-progress --with-dependencies --prefer-lowest
           composer show
-      - name: "Install highest dependencies with composer"
+      - name: Install highest dependencies with composer
         if: "matrix.composer-dependencies == 'highest'"
         run: |
           composer update --no-ansi --no-interaction --no-progress --with-dependencies
           composer show
-      - name: "Start MySQL"
+      - name: Start MySQL
         run: "sudo /etc/init.d/mysql start"
-      - name: "Run unit tests with coverage"
+      - name: Run unit tests with coverage
         run: composer ci:coverage:unit
-      - name: "Show generated coverage files"
+      - name: Show generated coverage files
         run: "ls -lahR build/coverage/"
-      - name: "Run functional tests with coverage"
+      - name: Run functional tests with coverage
         run: |
           export typo3DatabaseName="$DB_DATABASE";
           export typo3DatabaseHost="$DB_HOST";
           export typo3DatabaseUsername="$DB_USER";
           export typo3DatabasePassword="$DB_PASSWORD";
           composer ci:coverage:functional
-      - name: "Show generated coverage files"
+      - name: Show generated coverage files
         run: "ls -lahR build/coverage/"
-      - name: "Merge coverage results"
+      - name: Merge coverage results
         run: composer ci:coverage:merge
-      - name: "Show combined coverage files"
+      - name: Show combined coverage files
         run: "ls -lahR build/logs/"
-      - name: "Upload coverage results to Coveralls"
+      - name: Upload coverage results to Coveralls
         uses: coverallsapp/github-action@v2
         env:
           github-token: ${{ secrets.GITHUB_TOKEN }}
