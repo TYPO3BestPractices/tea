@@ -129,4 +129,45 @@ final class FrontendEditorControllerTest extends FunctionalTestCase
         $this->executeFrontendSubRequest($request, $context);
     }
 
+    #[Test]
+    public function updateActionWithOwnTeaUpdatesTea(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeasAssignedToUser.csv');
+
+        $request = (new InternalRequest())->withPageId(1)->withQueryParameters([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(1, 1),
+            'tx_tea_teafrontendeditor[action]' => 'update',
+            'tx_tea_teafrontendeditor[tea][__identity]' => '1',
+            'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
+        ]);
+        $context = (new InternalRequestContext())->withFrontendUserId(1);
+
+        $this->executeFrontendSubRequest($request, $context);
+
+        self::assertSame('Darjeeling', $this->getAllRecords('tx_tea_domain_model_tea')[0]['title']);
+    }
+
+    private function getTrustedPropertiesFromEditForm(int $tea, int $userId): string
+    {
+        $request = (new InternalRequest())->withPageId(1)->withQueryParameters([
+            'tx_tea_teafrontendeditor[action]' => 'edit',
+            'tx_tea_teafrontendeditor[tea]' => $tea,
+        ]);
+        $context = (new InternalRequestContext())->withFrontendUserId($userId);
+
+        $html = (string)$this->executeFrontendSubRequest($request, $context)->getBody();
+
+        return $this->getTrustedPropertiesFromHtml($html);
+    }
+
+    private function getTrustedPropertiesFromHtml(string $html): string
+    {
+        $matches = [];
+        preg_match('/__trustedProperties]" value="([a-zA-Z0-9&{};:,_]+)"/', $html, $matches);
+        if (isset($matches[1]) === false) {
+            throw new \RuntimeException('Could not fetch trustedProperties from returned HTML.', 1744028933);
+        }
+
+        return html_entity_decode($matches[1]);
+    }
 }
