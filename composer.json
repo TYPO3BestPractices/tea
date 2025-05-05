@@ -47,7 +47,7 @@
 		"typo3/cms-frontend": "^12.4.26 || ^13.4"
 	},
 	"require-dev": {
-		"ergebnis/composer-normalize": "2.45.0",
+		"ergebnis/composer-normalize": "2.47.0",
 		"friendsofphp/php-cs-fixer": "3.75.0",
 		"helmich/typo3-typoscript-lint": "^3.3.0",
 		"icanhazstring/composer-unused": "0.8.11",
@@ -61,7 +61,7 @@
 		"rector/type-perfect": "1.0.0",
 		"saschaegerer/phpstan-typo3": "1.10.2",
 		"seld/jsonlint": "1.11.0",
-		"spaze/phpstan-disallowed-calls": "4.4.1",
+		"spaze/phpstan-disallowed-calls": "4.5.0",
 		"ssch/typo3-rector": "2.12.2",
 		"ssch/typo3-rector-testing-framework": "2.0.1",
 		"symfony/console": "6.4.17 || 7.2.1",

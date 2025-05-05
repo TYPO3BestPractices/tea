@@ -39,7 +39,6 @@ final class TeaControllerTest extends FunctionalTestCase
             'constants' => [
                 'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript',
                 'EXT:tea/Configuration/TypoScript/constants.typoscript',
-                'EXT:tea/Tests/Functional/Controller/Fixtures/TypoScript/Constants/PluginConfiguration.typoscript',
             ],
             'setup' => [
                 'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
@@ -71,7 +70,7 @@ final class TeaControllerTest extends FunctionalTestCase
     }
 
     #[Test]
-    public function indexActionRendersAllAvailableTeas(): void
+    public function indexActionRendersAllAvailableTeasOnStoragePage(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
 
@@ -81,6 +80,18 @@ final class TeaControllerTest extends FunctionalTestCase
 
         self::assertStringContainsString('Godesberger Burgtee', $html);
         self::assertStringContainsString('Oolong', $html);
+    }
+
+    #[Test]
+    public function indexActionWithRecursionCanRenderTeaInStoragePageSubfolder(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaInSubfolder.csv');
+
+        $request = (new InternalRequest())->withPageId(1);
+
+        $html = (string)$this->executeFrontendSubRequest($request)->getBody();
+
+        self::assertStringContainsString('Tea in subfolder', $html);
     }
 
     #[Test]
