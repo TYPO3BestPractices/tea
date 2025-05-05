@@ -37,7 +37,7 @@ final class TTNTeaCTypeMigration extends AbstractListTypeToCTypeUpdate
         return [
             'tea_teaindex' => 'tea_teaindex',
             'tea_teashow' => 'tea_teashow',
-            'tea_teafrontendeditor' => 'tea_teafrontendeditor'
+            'tea_teafrontendeditor' => 'tea_teafrontendeditor',
         ];
     }
 }
