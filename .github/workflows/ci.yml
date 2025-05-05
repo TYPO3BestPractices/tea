@@ -32,31 +32,31 @@ jobs:
           - "8.3"
           - "8.4"
   code-quality:
-    name: "Code quality checks"
+    name: Code quality checks
     runs-on: ubuntu-24.04
     steps:
-      - name: "Checkout"
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: "Install PHP"
+      - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: "${{ matrix.php-version }}"
           ini-file: development
           coverage: none
           tools: composer:v2
-      - name: "Show Composer version"
+      - name: Show Composer version
         run: "composer --version"
-      - name: "Show the Composer configuration"
+      - name: Show the Composer configuration
         run: "composer config --global --list"
-      - name: "Cache dependencies installed with composer"
+      - name: Cache dependencies installed with composer
         uses: actions/cache@v4
         with:
           key: "php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}"
           path: ~/.cache/composer
           restore-keys: "php${{ matrix.php-version }}-composer-\n"
-      - name: "Install Composer dependencies"
+      - name: Install Composer dependencies
         run: "composer update --no-progress"
-      - name: "Run command"
+      - name: Run command
         run: "composer ci:${{ matrix.command }}"
     strategy:
       fail-fast: false
@@ -76,23 +76,23 @@ jobs:
         php-version:
           - "8.3"
   prepare-release:
-    name: "Check prepare release script"
+    name: Check prepare release script
     runs-on: ubuntu-24.04
     steps:
-      - name: "Checkout"
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: "Install PHP"
+      - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: "${{ matrix.php-version }}"
           ini-file: development
           coverage: none
           tools: composer:v2
-      - name: "Show Composer version"
+      - name: Show Composer version
         run: "composer --version"
-      - name: "Show the Composer configuration"
+      - name: Show the Composer configuration
         run: "composer config --global --list"
-      - name: "Run command"
+      - name: Run command
         run: "composer prepare-release"
     strategy:
       fail-fast: false
@@ -100,7 +100,7 @@ jobs:
         php-version:
           - "8.3"
   code-quality-frontend:
-    name: "Code quality frontend checks"
+    name: Code quality frontend checks
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
@@ -109,59 +109,59 @@ jobs:
           - "css"
           - "js"
     steps:
-      - name: "Checkout"
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: "Set up Node.js"
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22.5.1"
-      - name: "Install modules"
+      - name: Install modules
         run: |
           npm ci
-      - name: "Run command"
+      - name: Run command
         run: |
           npm run ci:lint:${{ matrix.command }}
   unit-tests:
-    name: "Unit tests"
+    name: Unit tests
     runs-on: ubuntu-24.04
     needs: php-lint
     steps:
-      - name: "Checkout"
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: "Install PHP"
+      - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: "${{ matrix.php-version }}"
           ini-file: development
           coverage: none
           tools: composer:v2
-      - name: "Show Composer version"
+      - name: Show Composer version
         run: "composer --version"
-      - name: "Show the Composer configuration"
+      - name: Show the Composer configuration
         run: "composer config --global --list"
-      - name: "Cache dependencies installed with composer"
+      - name: Cache dependencies installed with composer
         uses: actions/cache@v4
         with:
           key: "php${{ matrix.php-version }}-typo3${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
           path: ~/.cache/composer
           restore-keys: "php${{ matrix.php-version }}-typo3${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
-      - name: "Install TYPO3 Core"
+      - name: Install TYPO3 Core
         env:
           TYPO3: "${{ matrix.typo3-version }}"
         run: |
           composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:"$TYPO3"
           composer show
-      - name: "Install lowest dependencies with composer"
+      - name: Install lowest dependencies with composer
         if: "matrix.composer-dependencies == 'lowest'"
         run: |
           composer update --no-ansi --no-interaction --no-progress --with-dependencies --prefer-lowest
           composer show
-      - name: "Install highest dependencies with composer"
+      - name: Install highest dependencies with composer
         if: "matrix.composer-dependencies == 'highest'"
         run: |
           composer update --no-ansi --no-interaction --no-progress --with-dependencies
           composer show
-      - name: "Run unit tests"
+      - name: Run unit tests
         run: "composer ci:tests:unit"
     strategy:
       fail-fast: false
@@ -192,7 +192,7 @@ jobs:
             php-version: "8.4"
             composer-dependencies: highest
   functional-tests:
-    name: "Functional tests"
+    name: Functional tests
     runs-on: ubuntu-24.04
     needs: php-lint
     env:
@@ -201,9 +201,9 @@ jobs:
       DB_PASSWORD: root
       DB_HOST: localhost
     steps:
-      - name: "Checkout"
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: "Install PHP"
+      - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: "${{ matrix.php-version }}"
@@ -211,35 +211,35 @@ jobs:
           tools: composer:v2
           extensions: mysqli
           coverage: none
-      - name: "Show Composer version"
+      - name: Show Composer version
         run: "composer --version"
-      - name: "Show the Composer configuration"
+      - name: Show the Composer configuration
         run: "composer config --global --list"
-      - name: "Cache dependencies installed with composer"
+      - name: Cache dependencies installed with composer
         uses: actions/cache@v4
         with:
           key: "php${{ matrix.php-version }}-typo3${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
           path: ~/.cache/composer
           restore-keys: "php${{ matrix.php-version }}-typo3${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
-      - name: "Install TYPO3 Core"
+      - name: Install TYPO3 Core
         env:
           TYPO3: "${{ matrix.typo3-version }}"
         run: |
           composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:"$TYPO3"
           composer show
-      - name: "Install lowest dependencies with composer"
+      - name: Install lowest dependencies with composer
         if: "matrix.composer-dependencies == 'lowest'"
         run: |
           composer update --no-ansi --no-interaction --no-progress --with-dependencies --prefer-lowest
           composer show
-      - name: "Install highest dependencies with composer"
+      - name: Install highest dependencies with composer
         if: "matrix.composer-dependencies == 'highest'"
         run: |
           composer update --no-ansi --no-interaction --no-progress --with-dependencies
           composer show
-      - name: "Start MySQL"
+      - name: Start MySQL
         run: "sudo /etc/init.d/mysql start"
-      - name: "Run functional tests"
+      - name: Run functional tests
         run: |
           export typo3DatabaseName="$DB_DATABASE";
           export typo3DatabaseHost="$DB_HOST";
