@@ -37,27 +37,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "${{ matrix.php-version }}"
-          ini-file: development
-          coverage: none
-          tools: composer:v2
-      - name: Show Composer version
-        run: "composer --version"
-      - name: Show the Composer configuration
-        run: "composer config --global --list"
-      - name: Cache dependencies installed with composer
-        uses: actions/cache@v4
-        with:
-          key: "php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}"
-          path: ~/.cache/composer
-          restore-keys: "php${{ matrix.php-version }}-composer-\n"
       - name: Install Composer dependencies
-        run: "composer update --no-progress"
-      - name: Run command
-        run: "composer ci:${{ matrix.command }}"
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composerUpdateMax
+      - name: Run code quality checks
+        run: |
+          Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composer ci:${{ matrix.command }}
     strategy:
       fail-fast: false
       matrix:
