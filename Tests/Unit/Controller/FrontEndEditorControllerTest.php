@@ -90,26 +90,11 @@ final class FrontEndEditorControllerTest extends UnitTestCase
             ->willReturn($redirectResponse);
     }
 
-    #[Test]
-    /**
-     * Not possible to test with functionals due to hmac security.
-     */
-    public function updateActionWithTeaFromOtherUserThrowsException(): void
-    {
-        $this->setUidOfLoggedInUser(1);
-        $tea = new Tea();
-        $tea->setOwnerUid(2);
-
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
-        $this->expectExceptionCode(1687363749);
-
-        $this->subject->updateAction($tea);
-    }
 
     #[Test]
     /**
      * Not possible to test with functionals due to hmac security.
+     * Stay with strategy
      */
     public function updateActionWithTeaWithoutOwnerThrowsException(): void
     {
@@ -127,6 +112,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
     #[Test]
     /**
      * This feature is not implemented in Templates yet, therefore we can't test it with functional tests due to hmac.
+     * Test can be dropped together with simplified newAction (drop $tea parameter)
      */
     public function newActionWithTeaAssignsProvidedTeaToView(): void
     {
@@ -140,6 +126,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
     #[Test]
     /**
      * Extbase calls `header()` functions instead of using PSR.
+     * Test rendering result instead of redirect
      */
     public function createActionRedirectsToIndexAction(): void
     {

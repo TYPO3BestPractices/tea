@@ -7,6 +7,7 @@ namespace TTN\Tea\Tests\Functional\Controller;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use TTN\Tea\Controller\FrontEndEditorController;
+use TTN\Tea\Domain\Model\Tea;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestContext;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
@@ -207,6 +208,25 @@ final class FrontendEditorControllerTest extends FunctionalTestCase
         $html = (string)$this->executeFrontendSubRequest($request, $context, true)->getBody();
 
         $this->assertStringContainsString('Tea FrontEnd Editor', $html);
+    }
+
+    #[Test]
+    public function updateActionWithTeaNotOwnedByUserRendersErrorMessage(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeasAssignedToUser.csv');
+
+        $request = (new InternalRequest())->withPageId(1)->withQueryParameters([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(1, 1),
+            'tx_tea_teafrontendeditor[action]' => 'update',
+            'tx_tea_teafrontendeditor[tea][__identity]' => '1',
+            'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
+        ]);
+        $context = (new InternalRequestContext())->withFrontendUserId(2);
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
+        $this->expectExceptionCode(1687363749);
+
+        $this->executeFrontendSubRequest($request, $context, true);
     }
 
     private function getTrustedPropertiesFromEditForm(int $tea, int $userId): string
