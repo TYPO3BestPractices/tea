@@ -111,4 +111,22 @@ final class FrontendEditorControllerTest extends FunctionalTestCase
         $this->executeFrontendSubRequest($request, $context);
     }
 
+    #[Test]
+    public function editActionWithTeaWithoutOwnerThrowsException(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeasAssignedToUser.csv');
+
+        $request = (new InternalRequest())->withPageId(1)->withQueryParameters([
+            'tx_tea_teafrontendeditor[action]' => 'edit',
+            'tx_tea_teafrontendeditor[tea]' => '2',
+        ]);
+        $context = (new InternalRequestContext())->withFrontendUserId(1);
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
+        $this->expectExceptionCode(1687363749);
+
+        $this->executeFrontendSubRequest($request, $context);
+    }
+
 }
