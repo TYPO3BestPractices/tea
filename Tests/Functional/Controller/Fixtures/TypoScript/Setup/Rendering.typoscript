@@ -2,3 +2,4 @@ page = PAGE
 page {
   10 < styles.content.get
 }
+tt_content.list.20.tea_teashow < tt_content.tea_teashow
