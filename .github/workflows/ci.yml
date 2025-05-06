@@ -134,55 +134,17 @@ jobs:
     name: Functional tests
     runs-on: ubuntu-24.04
     needs: php-lint
-    env:
-      DB_DATABASE: typo3
-      DB_USER: root
-      DB_PASSWORD: root
-      DB_HOST: localhost
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "${{ matrix.php-version }}"
-          ini-file: development
-          tools: composer:v2
-          extensions: mysqli
-          coverage: none
       - name: Show the Composer configuration
-        run: "composer config --global --list"
-      - name: Cache dependencies installed with composer
-        uses: actions/cache@v4
-        with:
-          key: "php${{ matrix.php-version }}-typo3${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
-          path: ~/.cache/composer
-          restore-keys: "php${{ matrix.php-version }}-typo3${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
-      - name: Install TYPO3 Core
-        env:
-          TYPO3: "${{ matrix.typo3-version }}"
+        run:  ./Build/Scripts/runTests.sh -s composer config --global --list
+      - name: Install composer dependencies
         run: |
-          composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:^"$TYPO3"
-          composer show
-      - name: Install lowest dependencies with composer
-        if: "matrix.composer-dependencies == 'Min'"
-        run: |
-          composer update --no-ansi --no-interaction --no-progress --with-dependencies --prefer-lowest
-          composer show
-      - name: Install highest dependencies with composer
-        if: "matrix.composer-dependencies == 'Max'"
-        run: |
-          composer update --no-ansi --no-interaction --no-progress --with-dependencies
-          composer show
-      - name: Start MySQL
-        run: "sudo /etc/init.d/mysql start"
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
       - name: Run functional tests
         run: |
-          export typo3DatabaseName="$DB_DATABASE";
-          export typo3DatabaseHost="$DB_HOST";
-          export typo3DatabaseUsername="$DB_USER";
-          export typo3DatabasePassword="$DB_PASSWORD";
-          composer ci:tests:functional
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s functional
     strategy:
       fail-fast: false
       matrix:
