@@ -94,39 +94,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "${{ matrix.php-version }}"
-          ini-file: development
-          coverage: none
-          tools: composer:v2
       - name: Show the Composer configuration
-        run: "composer config --global --list"
-      - name: Cache dependencies installed with composer
-        uses: actions/cache@v4
-        with:
-          key: "php${{ matrix.php-version }}-typo3${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
-          path: ~/.cache/composer
-          restore-keys: "php${{ matrix.php-version }}-typo3${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
-      - name: Install TYPO3 Core
-        env:
-          TYPO3: "${{ matrix.typo3-version }}"
+        run:  ./Build/Scripts/runTests.sh -s composer config --global --list
+      - name: Install composer dependencies
         run: |
-          composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:^"$TYPO3"
-          composer show
-      - name: Install lowest dependencies with composer
-        if: "matrix.composer-dependencies == 'Min'"
-        run: |
-          composer update --no-ansi --no-interaction --no-progress --with-dependencies --prefer-lowest
-          composer show
-      - name: Install highest dependencies with composer
-        if: "matrix.composer-dependencies == 'Max'"
-        run: |
-          composer update --no-ansi --no-interaction --no-progress --with-dependencies
-          composer show
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
       - name: Run unit tests
-        run: "composer ci:tests:unit"
+        run: |
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s unit
     strategy:
       fail-fast: false
       matrix:
