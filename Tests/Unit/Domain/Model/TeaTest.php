@@ -16,6 +16,7 @@ final class TeaTest extends UnitTestCase
 {
     private Tea $subject;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

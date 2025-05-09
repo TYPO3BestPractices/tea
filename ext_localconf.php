@@ -21,7 +21,8 @@ ExtensionUtility::configurePlugin(
     // non-cacheable actions
     [
         TeaController::class => '',
-    ]
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 ExtensionUtility::configurePlugin(
     'Tea',
@@ -31,7 +32,8 @@ ExtensionUtility::configurePlugin(
     ],
     [
         TeaController::class => '',
-    ]
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
 // This makes the plugin available for front-end rendering.
@@ -49,5 +51,6 @@ ExtensionUtility::configurePlugin(
         // All actions need to be non-cacheable because they either contain dynamic data,
         // or because they are specific to the logged-in FE user (while FE content is cached by FE groups).
         FrontEndEditorController::class => 'index, edit, update, create, new, delete',
-    ]
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
