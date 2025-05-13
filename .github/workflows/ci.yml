@@ -79,21 +79,14 @@ jobs:
       fail-fast: false
       matrix:
         command:
-          - "css"
-          - "js"
+          - "Css"
+          - "Js"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22.5.1"
-      - name: Install modules
+      - name: Run code quality frontend
         run: |
-          npm ci
-      - name: Run command
-        run: |
-          npm run ci:lint:${{ matrix.command }}
+          Build/Scripts/runTests.sh -s lint${{ matrix.command }}
   unit-tests:
     name: Unit tests
     runs-on: ubuntu-24.04
