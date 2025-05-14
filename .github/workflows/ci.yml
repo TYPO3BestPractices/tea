@@ -101,8 +101,6 @@ jobs:
           ini-file: development
           coverage: none
           tools: composer:v2
-      - name: Show Composer version
-        run: "composer --version"
       - name: Show the Composer configuration
         run: "composer config --global --list"
       - name: Cache dependencies installed with composer
@@ -177,8 +175,6 @@ jobs:
           tools: composer:v2
           extensions: mysqli
           coverage: none
-      - name: Show Composer version
-        run: "composer --version"
       - name: Show the Composer configuration
         run: "composer config --global --list"
       - name: Cache dependencies installed with composer
