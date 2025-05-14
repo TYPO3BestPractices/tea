@@ -115,15 +115,15 @@ jobs:
         env:
           TYPO3: "${{ matrix.typo3-version }}"
         run: |
-          composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:"$TYPO3"
+          composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:^"$TYPO3"
           composer show
       - name: Install lowest dependencies with composer
-        if: "matrix.composer-dependencies == 'lowest'"
+        if: "matrix.composer-dependencies == 'Min'"
         run: |
           composer update --no-ansi --no-interaction --no-progress --with-dependencies --prefer-lowest
           composer show
       - name: Install highest dependencies with composer
-        if: "matrix.composer-dependencies == 'highest'"
+        if: "matrix.composer-dependencies == 'Max'"
         run: |
           composer update --no-ansi --no-interaction --no-progress --with-dependencies
           composer show
@@ -133,30 +133,30 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - typo3-version: "^12.4"
+          - typo3-version: "12.4"
             php-version: "8.1"
-            composer-dependencies: lowest
-          - typo3-version: "^12.4"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
             php-version: "8.1"
-            composer-dependencies: highest
-          - typo3-version: "^12.4"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
             php-version: "8.2"
-            composer-dependencies: lowest
-          - typo3-version: "^12.4"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
             php-version: "8.2"
-            composer-dependencies: highest
-          - typo3-version: "^12.4"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
             php-version: "8.3"
-            composer-dependencies: lowest
-          - typo3-version: "^12.4"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
             php-version: "8.3"
-            composer-dependencies: highest
-          - typo3-version: "^12.4"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
             php-version: "8.4"
-            composer-dependencies: lowest
-          - typo3-version: "^12.4"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
             php-version: "8.4"
-            composer-dependencies: highest
+            composer-dependencies: Max
   functional-tests:
     name: Functional tests
     runs-on: ubuntu-24.04
@@ -191,15 +191,15 @@ jobs:
         env:
           TYPO3: "${{ matrix.typo3-version }}"
         run: |
-          composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:"$TYPO3"
+          composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:^"$TYPO3"
           composer show
       - name: Install lowest dependencies with composer
-        if: "matrix.composer-dependencies == 'lowest'"
+        if: "matrix.composer-dependencies == 'Min'"
         run: |
           composer update --no-ansi --no-interaction --no-progress --with-dependencies --prefer-lowest
           composer show
       - name: Install highest dependencies with composer
-        if: "matrix.composer-dependencies == 'highest'"
+        if: "matrix.composer-dependencies == 'Max'"
         run: |
           composer update --no-ansi --no-interaction --no-progress --with-dependencies
           composer show
@@ -216,30 +216,30 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - typo3-version: "^12.4"
+          - typo3-version: "12.4"
             php-version: "8.1"
-            composer-dependencies: lowest
-          - typo3-version: "^12.4"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
             php-version: "8.1"
-            composer-dependencies: highest
-          - typo3-version: "^12.4"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
             php-version: "8.2"
-            composer-dependencies: lowest
-          - typo3-version: "^12.4"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
             php-version: "8.2"
-            composer-dependencies: highest
-          - typo3-version: "^12.4"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
             php-version: "8.3"
-            composer-dependencies: lowest
-          - typo3-version: "^12.4"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
             php-version: "8.3"
-            composer-dependencies: highest
-#          - typo3-version: "^12.4"
+            composer-dependencies: Max
+#          - typo3-version: "12.4"
 #            php-version: "8.4"
-#            composer-dependencies: lowest
-          - typo3-version: "^12.4"
+#            composer-dependencies: Min
+          - typo3-version: "12.4"
             php-version: "8.4"
-            composer-dependencies: highest
+            composer-dependencies: Max
   shellcheck:
     name: Check shell scripts
     runs-on: ubuntu-24.04
