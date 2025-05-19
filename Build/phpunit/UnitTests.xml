@@ -19,4 +19,9 @@
             <directory>../../Classes</directory>
         </include>
     </source>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>../../Tests/Unit</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
