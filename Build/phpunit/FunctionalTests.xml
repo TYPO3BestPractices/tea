@@ -27,4 +27,9 @@
             <directory>../../Classes</directory>
         </include>
     </source>
+    <testsuites>
+        <testsuite name="Functional">
+            <directory>../../Tests/Functional</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
