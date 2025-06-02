@@ -29,6 +29,7 @@ final class TeaControllerTest extends FunctionalTestCase
         ],
     ];
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

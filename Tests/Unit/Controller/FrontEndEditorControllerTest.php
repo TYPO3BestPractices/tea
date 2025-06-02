@@ -45,6 +45,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
      */
     private TeaRepository $teaRepositoryMock;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -67,6 +68,7 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         $this->subject->method('htmlResponse')->willReturn($responseStub);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         // empty FIFO queue

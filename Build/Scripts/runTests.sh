@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+#Activate for debug
+#set -x
 
 #
 # TYPO3 extension tea test runner based on docker.
@@ -373,7 +375,7 @@ while getopts "a:b:s:d:i:p:e:t:xy:o:nhu" OPT; do
             ;;
         t)
             CORE_VERSION=${OPTARG}
-            if ! [[ ${CORE_VERSION} =~ ^(12.4)$ ]]; then
+            if ! [[ ${CORE_VERSION} =~ ^(12.4|13.4)$ ]]; then
                 INVALID_OPTIONS+=("-t ${OPTARG}")
             fi
             ;;
@@ -510,12 +512,16 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     composerUpdateMax)
-        COMMAND="composer config --unset platform.php; composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:"^${CORE_VERSION}"; composer update --no-progress --no-interaction; composer dumpautoload; composer show"
+        # we need typo3/cms-install cause in Classes/Updates/TTNTeaCTypeMigration.php we use TYPO3\CMS\Install\Updates\AbstractListTypeToCTypeUpdate
+        # cms-install needs nikic/php-parser v5 but that`s conflict with ssch/typo3-rector https://github.com/sabbelasichon/typo3-rector/pull/4260
+        # so we remove ssch/typo3-rector 
+        COMMAND="composer config --unset platform.php; composer remove ssch/typo3-rector; composer require --no-ansi --no-interaction --no-progress --no-install --with-all-dependencies --ignore-platform-reqs typo3/cms-core:"^${CORE_VERSION}" typo3/cms-install:"^${CORE_VERSION}"; composer update --no-progress --no-interaction; composer dumpautoload; composer show"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-max-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
     composerUpdateMin)
-        COMMAND="composer config platform.php ${PHP_VERSION}.0; composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:"^${CORE_VERSION}"; composer update --prefer-lowest --no-progress --no-interaction; composer dumpautoload; composer show"
+        # we need to install ssch/typo3-rector again
+        COMMAND="composer config platform.php ${PHP_VERSION}.0; composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:"^${CORE_VERSION}" ssch/typo3-rector:"2.12.2"; composer update --prefer-lowest --no-progress --no-interaction; composer dumpautoload; composer show"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-min-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
