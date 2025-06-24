@@ -184,8 +184,8 @@ Options:
 
     -b <docker|podman>
         Container environment:
-            - docker (default)
-            - podman
+            - docker
+            - podman (default)
 
     -d <sqlite|mariadb|mysql|postgres>
         Only with -s functional|functionalDeprecated
