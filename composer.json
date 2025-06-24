@@ -166,7 +166,7 @@
 			"phpunit -c Build/phpunit/FunctionalTests.xml"
 		],
 		"ci:tests:unit": "phpunit -c Build/phpunit/UnitTests.xml",
-		"ci:typoscript:lint": "typoscript-lint -c Configuration/TsLint.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript",
+		"ci:typoscript:lint": "typoscript-lint -c Build/typoscript-lint/TypoScriptLint.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript",
 		"ci:xliff:lint": "php Build/xliff/xliff-lint lint:xliff Resources/Private/Language",
 		"ci:yaml:lint": "find . ! -path '*.Build/*' ! -path '*node_modules/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r php ./.Build/bin/yaml-lint",
 		"coverage:create-directories": "mkdir -p build/coverage build/logs",
