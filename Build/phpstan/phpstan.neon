@@ -66,7 +66,11 @@ parameters:
         - '$_SERVER'
       message: 'Use PSR-7 API instead'
 
+  excludePaths:
+    - ../../Classes/Updates/TTNTeaCTypeMigration.php
+    - ../../Tests/Functional/Command/CreateTestDataCommandTest.php  
+
   ignoreErrors:
     -
-      message: '#Out of 1 possible constant types#'
+      message: '#Class constants with native types are supported only on PHP#'
       path: ../../Tests/Functional/Command/CreateTestDataCommandTest.php
