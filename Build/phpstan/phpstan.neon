@@ -68,5 +68,5 @@ parameters:
 
   ignoreErrors:
     -
-      message: '#Out of 1 possible constant types#'
-      path: ../../Tests/Functional/Command/CreateTestDataCommandTest.php
+      # Ignore for now, as we still support PHP < 8.3
+      message: '#Out of \d possible constant types#'
