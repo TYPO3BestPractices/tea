@@ -91,60 +91,6 @@ final class FrontEndEditorControllerTest extends UnitTestCase
     }
 
     #[Test]
-    public function editActionWithOwnTeaAssignsProvidedTeaToView(): void
-    {
-        $userUid = 5;
-        $this->setUidOfLoggedInUser($userUid);
-        $tea = new Tea();
-        $tea->setOwnerUid($userUid);
-
-        $this->viewMock->expects(self::once())->method('assign')->with('tea', $tea);
-
-        $this->subject->editAction($tea);
-    }
-
-    #[Test]
-    public function editActionWithTeaFromOtherUserThrowsException(): void
-    {
-        $this->setUidOfLoggedInUser(1);
-        $tea = new Tea();
-        $tea->setOwnerUid(2);
-
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
-        $this->expectExceptionCode(1687363749);
-
-        $this->subject->editAction($tea);
-    }
-
-    #[Test]
-    public function editActionWithTeaWithoutOwnerThrowsException(): void
-    {
-        $this->setUidOfLoggedInUser(1);
-        $tea = new Tea();
-        $tea->setOwnerUid(0);
-
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
-        $this->expectExceptionCode(1687363749);
-
-        $this->subject->editAction($tea);
-    }
-
-    #[Test]
-    public function editActionForOwnTeaReturnsHtmlResponse(): void
-    {
-        $userUid = 5;
-        $this->setUidOfLoggedInUser($userUid);
-        $tea = new Tea();
-        $tea->setOwnerUid($userUid);
-
-        $result = $this->subject->editAction($tea);
-
-        self::assertInstanceOf(HtmlResponse::class, $result);
-    }
-
-    #[Test]
     public function updateActionWithOwnTeaPersistsProvidedTea(): void
     {
         $userUid = 5;

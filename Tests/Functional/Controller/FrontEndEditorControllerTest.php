@@ -99,6 +99,44 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         ]);
     }
 
+    #[Test]
+    public function editActionWithOwnTeaAssignsProvidedTeaToView(): void
+    {
+        $html = $this->getHtmlWithLoggedInUser([
+            'tx_tea_teafrontendeditor[action]' => 'edit',
+            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA_OWNED_BY_LOGGED_IN_USER,
+        ]);
+
+        self::assertStringContainsString('<input type="hidden" name="tx_tea_teafrontendeditor[tea][__identity]" value="1" />', $html);
+        self::assertStringContainsString('Godesberger Burgtee', $html);
+    }
+
+    #[Test]
+    public function editActionWithTeaFromOtherUserThrowsException(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
+        $this->expectExceptionCode(1687363749);
+
+        $this->executeRequestWithLoggedInUser([
+            'tx_tea_teafrontendeditor[action]' => 'edit',
+            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA_OWNED_BY_FOREIGN_USER,
+        ]);
+    }
+
+    #[Test]
+    public function editActionWithTeaWithoutOwnerThrowsException(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
+        $this->expectExceptionCode(1687363749);
+
+        $this->executeRequestWithLoggedInUser([
+            'tx_tea_teafrontendeditor[action]' => 'edit',
+            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA_WITHOUT_OWNER,
+        ]);
+    }
+
     /**
      * @param array<string, string> $queryParameters
      */
