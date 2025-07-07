@@ -121,30 +121,10 @@ final class FrontEndEditorControllerTest extends UnitTestCase
     }
 
     #[Test]
-    public function createActionSetsLoggedInUserAsOwnerOfProvidedTea(): void
-    {
-        $userUid = 5;
-        $this->setUidOfLoggedInUser($userUid);
-        $tea = new Tea();
-        $this->stubRedirect('index');
-
-        $this->subject->createAction($tea);
-
-        self::assertSame($userUid, $tea->getOwnerUid());
-    }
-
-    #[Test]
-    public function createActionPersistsProvidedTea(): void
-    {
-        $tea = new Tea();
-        $this->stubRedirect('index');
-
-        $this->teaRepositoryMock->expects(self::once())->method('add')->with($tea);
-
-        $this->subject->createAction($tea);
-    }
-
-    #[Test]
+    /**
+     * Extbase calls `header()` functions instead of using PSR.
+     * No idea how to functional test this right now.
+     */
     public function createActionRedirectsToIndexAction(): void
     {
         $tea = new Tea();

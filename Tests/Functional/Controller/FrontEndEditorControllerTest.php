@@ -190,6 +190,48 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         self::assertStringContainsString('Create new tea', $html);
     }
 
+    #[Test]
+    public function createActionStoresNewTeaWithProvidedTitle(): void
+    {
+        $this->truncateExistingTeas();
+
+        $this->executeRequestWithLoggedInUser([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromNewForm(),
+            'tx_tea_teafrontendeditor[action]' => 'create',
+            'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
+        ]);
+
+        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Create/WithProvidedTitle.csv');
+    }
+
+    #[Test]
+    public function createActionSetsLoggedInUserAsOwnerOfProvidedTea(): void
+    {
+        $this->truncateExistingTeas();
+
+        $this->executeRequestWithLoggedInUser([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromNewForm(),
+            'tx_tea_teafrontendeditor[action]' => 'create',
+            'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
+        ]);
+
+        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Create/WithOwner.csv');
+    }
+
+    #[Test]
+    public function createActionSetsDefaultStoragePidOfProvidedTea(): void
+    {
+        $this->truncateExistingTeas();
+
+        $this->executeRequestWithLoggedInUser([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromNewForm(),
+            'tx_tea_teafrontendeditor[action]' => 'create',
+            'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
+        ]);
+
+        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Create/WithDefaultStoragePid.csv');
+    }
+
     /**
      * @param array<string, string> $queryParameters
      */
@@ -223,6 +265,15 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         return $this->getTrustedPropertiesFromHtml($html);
     }
 
+    private function getTrustedPropertiesFromNewForm(): string
+    {
+        $html = $this->getHtmlWithLoggedInUser([
+            'tx_tea_teafrontendeditor[action]' => 'new',
+        ]);
+
+        return $this->getTrustedPropertiesFromHtml($html);
+    }
+
     private function getTrustedPropertiesFromHtml(string $html): string
     {
         $matches = [];
@@ -232,5 +283,12 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         }
 
         return html_entity_decode($matches[1]);
+    }
+
+    private function truncateExistingTeas(): void
+    {
+        $this->getConnectionPool()
+            ->getConnectionForTable('tx_tea_domain_model_tea')
+            ->truncate('tx_tea_domain_model_tea');
     }
 }
