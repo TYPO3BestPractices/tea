@@ -31,7 +31,9 @@ the `composer.json`.
 If you have problems with missing dependencies on your local machine, it is
 recommended to execute tests with the usage of the `runTests.sh` script.
 
-Example: `./Build/Scripts/runTests.sh -s composer ci:php:lint`
+.. code-block:: bash
+
+    ./Build/Scripts/runTests.sh -s composer ci:php:lint
 
 It is not necessary to executing the tests only with the composer scripts.
 You can also use the `runTests.sh`. This makes your life easier because you
@@ -53,91 +55,91 @@ You can currently run these code checks on the command line:
 .. index:: Commands; composer ci:composer:normalize
 .. code-block:: bash
 
-    composer ci:composer:normalize
+    ./Build/Scripts/runTests.sh -s composer ci:composer:normalize
 
 Checks the composer.json.
 
 .. index:: Commands; composer ci:json:lint
 .. code-block:: bash
 
-    composer ci:json:lint
+    ./Build/Scripts/runTests.sh -s composer ci:json:lint
 
 Lints the JSON files.
 
 .. index:: Commands; composer ci:php
 .. code-block:: bash
 
-    composer ci:php
+    ./Build/Scripts/runTests.sh -s composer ci:php
 
 Runs all static checks for the PHP files.
 
 .. index:: Commands; composer ci:php:cs-fixer
 .. code-block:: bash
 
-    composer ci:php:cs-fixer
+    ./Build/Scripts/runTests.sh -s composer ci:php:cs-fixer
 
 Checks the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer).
 
 .. index:: Commands; composer ci:php:lint
 .. code-block:: bash
 
-    composer ci:php:lint
+    ./Build/Scripts/runTests.sh -s composer ci:php:lint
 
 Lints the PHP files for syntax errors.
 
 .. index:: Commands; composer ci:php:stan
 .. code-block:: bash
 
-    composer ci:php:stan
+    ./Build/Scripts/runTests.sh -s composer ci:php:stan
 
 Checks the PHP types using PHPStan.
 
 .. index:: Commands; composer ci:static
 .. code-block:: bash
 
-    composer ci:static
+    ./Build/Scripts/runTests.sh -s composer ci:static
 
 Runs all static code checks (syntax, style, types).
 
 .. index:: Commands; composer ci:typoscript:lint
 .. code-block:: bash
 
-    composer ci:typoscript:lint
+    ./Build/Scripts/runTests.sh -scomposer ci:typoscript:lint
 
 Lints the TypoScript files.
 
 .. index:: Commands; composer ci:yaml:lint
 .. code-block:: bash
 
-    composer ci:yaml:lint
+    ./Build/Scripts/runTests.sh -s composer ci:yaml:lint
 
 Lints the YAML files.
 
 .. index:: Commands; composer fix
 .. code-block:: bash
 
-    composer fix
+    ./Build/Scripts/runTests.sh -s composer fix
 
 Runs all fixers (except for the ones that need JavaScript).
 
 .. index:: Commands; composer fix:php
 .. code-block:: bash
 
-    composer fix:php
+    ./Build/Scripts/runTests.sh -s composer fix:php
 
 Runs all fixers for the PHP code.
 
 .. index:: Commands; composer fix:php:cs
 .. code-block:: bash
 
-    composer fix:php:cs
+    ./Build/Scripts/runTests.sh -s composer fix:php:cs
 
 Fixes the code style with PHP-CS-Fixer.
 
 .. index:: Commands; composer phpstan:baseline
 .. code-block:: bash
 
-    composer phpstan:baseline
+    ./Build/Scripts/runTests.sh -s composer phpstan:baseline
 
 Updates the PHPStan baseline file to match the code.
 
