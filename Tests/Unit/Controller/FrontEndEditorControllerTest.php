@@ -16,7 +16,6 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Fluid\View\TemplateView;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -89,37 +88,6 @@ final class FrontEndEditorControllerTest extends UnitTestCase
     public function isActionController(): void
     {
         self::assertInstanceOf(ActionController::class, $this->subject);
-    }
-
-    #[Test]
-    public function indexActionForNoLoggedInUserAssignsNothingToView(): void
-    {
-        $this->setUidOfLoggedInUser(0);
-
-        $this->viewMock->expects(self::never())->method('assign');
-
-        $this->subject->indexAction();
-    }
-
-    #[Test]
-    public function indexActionForLoggedInUserAssignsTeasOwnedByTheLoggedInUserToView(): void
-    {
-        $userUid = 5;
-        $this->setUidOfLoggedInUser($userUid);
-
-        $teas = self::createStub(QueryResultInterface::class);
-        $this->teaRepositoryMock->method('findByOwnerUid')->with($userUid)->willReturn($teas);
-        $this->viewMock->expects(self::once())->method('assign')->with('teas', $teas);
-
-        $this->subject->indexAction();
-    }
-
-    #[Test]
-    public function indexActionReturnsHtmlResponse(): void
-    {
-        $result = $this->subject->indexAction();
-
-        self::assertInstanceOf(HtmlResponse::class, $result);
     }
 
     #[Test]

@@ -16,7 +16,7 @@ final class TeaControllerTest extends AbstractFrontendControllerTestCase
     {
         parent::setUp();
 
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/ContentElementTeaIndex.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/ContentElements.csv');
     }
 
     #[Test]
@@ -42,7 +42,7 @@ final class TeaControllerTest extends AbstractFrontendControllerTestCase
     #[Test]
     public function indexActionRendersAllAvailableTeasOnStoragePage(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/Teas.csv');
 
         $request = (new InternalRequest())->withPageId(1);
 
@@ -55,7 +55,7 @@ final class TeaControllerTest extends AbstractFrontendControllerTestCase
     #[Test]
     public function indexActionWithRecursionCanRenderTeaInStoragePageSubfolder(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaInSubfolder.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/TeaInSubfolder.csv');
 
         $request = (new InternalRequest())->withPageId(1);
 
@@ -67,7 +67,7 @@ final class TeaControllerTest extends AbstractFrontendControllerTestCase
     #[Test]
     public function showActionRendersTheGivenTeas(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/Teas.csv');
 
         $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
 
