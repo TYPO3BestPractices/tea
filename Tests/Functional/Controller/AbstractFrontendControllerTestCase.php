@@ -42,6 +42,7 @@ abstract class AbstractFrontendControllerTestCase extends FunctionalTestCase
                 'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
                 'EXT:tea/Configuration/TypoScript/setup.typoscript',
                 'EXT:tea/Tests/Functional/Controller/Fixtures/TypoScript/Setup/Rendering.typoscript',
+                'EXT:tea/Tests/Functional/Controller/Fixtures/TypoScript/Setup/Storage.typoscript',
             ],
         ]);
     }
