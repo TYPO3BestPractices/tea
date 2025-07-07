@@ -156,35 +156,7 @@ Running unit and functional tests
     Before running any commands you need to install all dependencies with
     `runTests.sh -s composer update`
 
-You can currently run these tests and coverages on the command line:
-
-.. index:: Commands; composer ci:coverage
-.. code-block:: bash
-
-    composer ci:coverage
-
-Runs the ci:coverage script as defined in composer.json.
-
-.. index:: Commands; composer ci:coverage:functional
-.. code-block:: bash
-
-    composer ci:coverage:functional
-
-Generates the code coverage report for functional tests.
-
-.. index:: Commands; composer ci:coverage:merge
-.. code-block:: bash
-
-    composer ci:coverage:merge
-
-Merges the code coverage reports for unit and functional tests.
-
-.. index:: Commands; composer ci:coverage:unit
-.. code-block:: bash
-
-    composer ci:coverage:unit
-
-Generates the code coverage report for unit tests.
+You can currently run these tests on the command line:
 
 .. index:: Commands; composer ci:tests:functional
 .. code-block:: bash
