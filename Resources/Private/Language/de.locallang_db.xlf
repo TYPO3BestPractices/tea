@@ -35,6 +35,10 @@
 				<source>Visible</source>
 				<target>Sichtbar</target>
 			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.pluginGroup">
+				<source>Tea plugins</source>
+				<target>Tea Plugins</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

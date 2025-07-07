@@ -27,6 +27,9 @@
 			<trans-unit id="tx_tea_domain_model_tea.hidden">
 				<source>Visible</source>
 			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.pluginGroup">
+				<source>Tea plugins</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
