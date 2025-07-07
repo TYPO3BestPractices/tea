@@ -137,6 +137,49 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         ]);
     }
 
+    #[Test]
+    public function updateActionWithOwnTeaPersistsProvidedTea(): void
+    {
+        $this->executeRequestWithLoggedInUser([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(self::UID_OF_TEA_OWNED_BY_LOGGED_IN_USER),
+            'tx_tea_teafrontendeditor[action]' => 'update',
+            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA_OWNED_BY_LOGGED_IN_USER,
+            'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
+        ]);
+
+        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Update/OwnTea.csv');
+    }
+
+    #[Test]
+    public function updateActionWithTeaFromOtherUserThrowsException(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
+        $this->expectExceptionCode(1687363749);
+
+        $this->executeRequestWithLoggedInUser([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(self::UID_OF_TEA_OWNED_BY_LOGGED_IN_USER),
+            'tx_tea_teafrontendeditor[action]' => 'update',
+            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA_OWNED_BY_FOREIGN_USER,
+            'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
+        ]);
+    }
+
+    #[Test]
+    public function updateActionWithTeaWithoutOwnerThrowsException(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
+        $this->expectExceptionCode(1687363749);
+
+        $this->executeRequestWithLoggedInUser([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(self::UID_OF_TEA_OWNED_BY_LOGGED_IN_USER),
+            'tx_tea_teafrontendeditor[action]' => 'update',
+            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA_WITHOUT_OWNER,
+            'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
+        ]);
+    }
+
     /**
      * @param array<string, string> $queryParameters
      */
@@ -158,5 +201,26 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $context = (new InternalRequestContext())->withFrontendUserId(1);
 
         return $this->executeFrontendSubRequest($request, $context);
+    }
+
+    private function getTrustedPropertiesFromEditForm(string $teaUid): string
+    {
+        $html = $this->getHtmlWithLoggedInUser([
+            'tx_tea_teafrontendeditor[action]' => 'edit',
+            'tx_tea_teafrontendeditor[tea]' => $teaUid,
+        ]);
+
+        return $this->getTrustedPropertiesFromHtml($html);
+    }
+
+    private function getTrustedPropertiesFromHtml(string $html): string
+    {
+        $matches = [];
+        preg_match('/__trustedProperties]" value="([a-zA-Z0-9&{};:,_\\[\\]]+)"/', $html, $matches);
+        if (!isset($matches[1])) {
+            throw new \RuntimeException('Could not fetch trustedProperties from returned HTML.', 1744028933);
+        }
+
+        return html_entity_decode($matches[1]);
     }
 }
