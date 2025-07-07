@@ -154,29 +154,42 @@ Running unit and functional tests
 .. important::
 
     Before running any commands you need to install all dependencies with
-    `runTests.sh -s composer update`
+
+.. code-block:: bash
+
+    ./Build/Scripts/runTests.sh -s composer update
 
 You can currently run these tests on the command line:
 
 .. index:: Commands; composer ci:tests:functional
 .. code-block:: bash
 
-    composer ci:tests:functional
+    ./Build/Scripts/runTests.sh -s functional
 
 Runs the functional tests.
 
-On executing functional tests a database connection is needed. Therefore you
-should execute functional tests directly with the command in the `runTests.sh`.
-Otherwise you have to take care of the database connection by yourself.
+.. note::
 
-Example: `./Build/Scripts/runTests.sh -s functional`
+    For executing functional tests, a database connection is needed. Therefore,
+    it is recommended to run the functional tests using :code:`runTests.sh`
+    instead of locally.
 
 .. index:: Commands; composer ci:tests:unit
 .. code-block:: bash
 
-    composer ci:tests:unit
+    ./Build/Scripts/runTests.sh -s unit
 
 Runs the unit tests.
+
+.. tip::
+
+    With the option :code:`-p`, you can specify which PHP version will be used to
+    execute the tests. If you don't specify a PHP version, the default PHP
+    version will be used.
+
+    .. code-block:: bash
+
+        ./Build/Scripts/runTests.sh -p 8.2 -s unit
 
 .. _running-unit-and-functional-tests-in-phpstorm:
 
