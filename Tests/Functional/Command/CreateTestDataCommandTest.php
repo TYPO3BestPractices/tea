@@ -18,7 +18,7 @@ final class CreateTestDataCommandTest extends FunctionalTestCase
     /**
      * @var non-empty-string
      */
-    private const string COMMAND_NAME = 'tea:create-test-data';
+    private const COMMAND_NAME = 'tea:create-test-data';
 
     protected array $testExtensionsToLoad = ['ttn/tea'];
 
