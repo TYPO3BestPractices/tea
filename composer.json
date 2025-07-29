@@ -150,6 +150,7 @@
 		"ci:php:stan": "phpstan --no-progress -v --configuration=Build/phpstan/phpstan.neon",
 		"ci:static": [
 			"@ci:composer:normalize",
+			"@ci:composer:unused",
 			"@ci:json:lint",
 			"@ci:php:lint",
 			"@ci:php:rector",
