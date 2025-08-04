@@ -1,0 +1,16 @@
+mod.wizards.newContentElement.wizardItems.ext-tea {
+  header = LLL:EXT:tea/Resources/Private/Language/locallang_db.xlf:tx_tea_domain_model_tea.pluginGroup
+  after = common
+  elements {
+    tea_index {
+      #iconIdentifier =
+      title = LLL:EXT:tea/Resources/Private/Language/locallang_db.xlf:plugin.tea_index.title
+      description = LLL:EXT:tea/Resources/Private/Language/locallang_db.xlf:plugin.tea_index.description
+      tt_content_defValues {
+        CType = tea_index
+      }
+    }
+  }
+
+  show = *
+}

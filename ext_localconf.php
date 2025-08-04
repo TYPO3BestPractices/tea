@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use TTN\Tea\Controller\FrontEndEditorController;
 use TTN\Tea\Controller\TeaController;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 defined('TYPO3') or die('Access denied.');
@@ -54,3 +55,5 @@ ExtensionUtility::configurePlugin(
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
+
+ExtensionManagementUtility::addPageTSConfig('@import \'EXT:tea/Configuration/TSconfig/Page/ContentElementWizard.tsconfig\'');

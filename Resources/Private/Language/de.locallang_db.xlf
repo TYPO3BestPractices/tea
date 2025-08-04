@@ -39,6 +39,14 @@
 				<source>Tea plugins</source>
 				<target>Tea Plugins</target>
 			</trans-unit>
+			<trans-unit id="plugin.tea_index.title">
+				<source>Tea Index</source>
+				<target>Tea Index</target>
+			</trans-unit>
+			<trans-unit id="plugin.tea_index.description">
+				<source>Tea plugin to show the listview.</source>
+				<target>Tea Plugin für eine Listenansicht.</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
