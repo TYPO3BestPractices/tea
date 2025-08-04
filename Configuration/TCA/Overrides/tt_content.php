@@ -22,12 +22,12 @@ call_user_func(
         /**
          * Register all plugins
          */
-        $plugins = ['tea_index','tea_show','tea_front_end_editor'];
+        $plugins = ['tea_index', 'tea_show', 'tea_front_end_editor'];
 
         foreach ($plugins as $contentType) {
             // This makes the plugin selectable in the BE.
             ExtensionUtility::registerPlugin(
-            // extension name, matching the PHP namespaces (but without the vendor)
+                // extension name, matching the PHP namespaces (but without the vendor)
                 'Tea',
                 // arbitrary, but unique plugin name (not visible in the BE)
                 GeneralUtility::underscoredToUpperCamelCase($contentType),
@@ -39,7 +39,6 @@ call_user_func(
             );
 
         }
-
 
         // Add the FlexForm to the show item list
         ExtensionManagementUtility::addToAllTCAtypes(
