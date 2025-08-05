@@ -55,8 +55,8 @@ jobs:
           - "php:rector"
           - "php:stan"
           - "typoscript:lint"
-          - "yaml:lint"
           - "xliff:lint"
+          - "yaml:lint"
         php-version:
           - "8.3"
   prepare-release:
