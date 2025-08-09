@@ -21,7 +21,7 @@
 			<trans-unit id="plugin.tea_show">
 				<source>Tea single view</source>
 			</trans-unit>
-			<trans-unit id="plugin.tea_frontend_editor">
+			<trans-unit id="plugin.tea_front_end_editor">
 				<source>Tea front-end editor</source>
 			</trans-unit>
 			<trans-unit id="plugin.tea.heading">
