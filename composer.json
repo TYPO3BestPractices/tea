@@ -155,6 +155,7 @@
 			"@ci:composer:unused",
 			"@ci:json:lint",
 			"@ci:php:lint",
+			"@ci:composer:psr-verify",
 			"@ci:php:rector",
 			"@ci:php:stan",
 			"@ci:php:cs-fixer",
