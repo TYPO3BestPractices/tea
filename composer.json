@@ -119,7 +119,7 @@
 	"scripts": {
 		"ci:composer:normalize": "@composer normalize --no-check-lock --dry-run",
 		"ci:composer:psr-verify": "@composer dumpautoload --optimize --strict-psr --no-plugins",
-		"ci:composer:unused": "composer-unused",
+		"ci:composer:unused": "composer-unused --configuration=Build/composer-unused/composer-unused.php",
 		"ci:coverage": [
 			"@ci:coverage:unit",
 			"@ci:coverage:functional"
@@ -198,7 +198,6 @@
 			"rm .npmrc",
 			"rm .nvmrc",
 			"rm .prettierrc.js",
-			"rm composer-unused.php",
 			"rm eslint.config.js",
 			"rm package-lock.json",
 			"rm package.json",
