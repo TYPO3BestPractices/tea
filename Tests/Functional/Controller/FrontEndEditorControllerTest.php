@@ -153,7 +153,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     }
 
     #[Test]
-    public function updateActionWithOwnTeaPersistsProvidedTea(): void
+    public function updateActionWithOwnTeaPersistsNewTitle(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
 
@@ -164,7 +164,22 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
 
-        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTea.csv');
+        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithTitle.csv');
+    }
+
+    #[Test]
+    public function updateActionWithOwnTeaPersistsNewDescription(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+
+        $this->executeRequestWithLoggedInUser([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm((int)self::UID_OF_TEA),
+            'tx_tea_teafrontendeditor[action]' => 'update',
+            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][description]' => 'The new description.',
+        ]);
+
+        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithDescription.csv');
     }
 
     #[Test]
