@@ -211,6 +211,42 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         self::assertStringContainsString('Create new tea', $html);
     }
 
+    #[Test]
+    public function createActionStoresNewTeaWithProvidedTitle(): void
+    {
+        $this->executeRequestWithLoggedInUser([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromNewForm(),
+            'tx_tea_teafrontendeditor[action]' => 'create',
+            'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
+        ]);
+
+        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithProvidedTitle.csv');
+    }
+
+    #[Test]
+    public function createActionSetsLoggedInUserAsOwnerOfProvidedTea(): void
+    {
+        $this->executeRequestWithLoggedInUser([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromNewForm(),
+            'tx_tea_teafrontendeditor[action]' => 'create',
+            'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
+        ]);
+
+        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithOwner.csv');
+    }
+
+    #[Test]
+    public function createActionSetsDefaultStoragePidOfProvidedTea(): void
+    {
+        $this->executeRequestWithLoggedInUser([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromNewForm(),
+            'tx_tea_teafrontendeditor[action]' => 'create',
+            'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
+        ]);
+
+        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithDefaultStoragePid.csv');
+    }
+
     /**
      * @param array<string, string> $queryParameters
      */
@@ -242,6 +278,15 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $html = $this->getHtmlWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
             'tx_tea_teafrontendeditor[tea]' => (string)$teaUid,
+        ]);
+
+        return $this->getTrustedPropertiesFromHtml($html);
+    }
+
+    private function getTrustedPropertiesFromNewForm(): string
+    {
+        $html = $this->getHtmlWithLoggedInUser([
+            'tx_tea_teafrontendeditor[action]' => 'new',
         ]);
 
         return $this->getTrustedPropertiesFromHtml($html);
