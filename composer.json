@@ -202,8 +202,7 @@
 			"rm .prettierrc.js",
 			"rm package-lock.json",
 			"rm package.json",
-			"rm phive.xml",
-			"rm stylelint.config.js"
+			"rm phive.xml"
 		]
 	},
 	"scripts-descriptions": {
