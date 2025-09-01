@@ -15,16 +15,13 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestCon
 final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestCase
 {
     private const UID_OF_PAGE = 1;
-    private const UID_OF_TEA_OWNED_BY_LOGGED_IN_USER = '1';
-    private const UID_OF_TEA_OWNED_BY_FOREIGN_USER = '2';
-    private const UID_OF_TEA_WITHOUT_OWNER = '3';
+    private const UID_OF_TEA = '1';
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/ContentElement.csv');
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/Teas.csv');
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/FrontendUser.csv');
     }
 
@@ -41,6 +38,8 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     #[Test]
     public function indexActionForLoggedInUserRendersTeaOwnedByTheLoggedInUser(): void
     {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+
         $html = $this->getHtmlWithLoggedInUser();
 
         self::assertStringContainsString('Godesberger Burgtee', $html);
@@ -49,6 +48,8 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     #[Test]
     public function indexActionForLoggedInUserDoesNotRenderTeaOwnedByOtherUser(): void
     {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToOtherUser.csv');
+
         $html = $this->getHtmlWithLoggedInUser();
 
         self::assertStringNotContainsString('Oolong', $html);
@@ -57,6 +58,8 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     #[Test]
     public function indexActionForLoggedInUserDoesNotRenderTeaWithoutOwner(): void
     {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToNoUser.csv');
+
         $html = $this->getHtmlWithLoggedInUser();
 
         self::assertStringNotContainsString('Sencha', $html);
@@ -65,46 +68,54 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     #[Test]
     public function deleteActionWithOwnTeaRemovesProvidedTea(): void
     {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
-            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA_OWNED_BY_LOGGED_IN_USER,
+            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
         ]);
 
-        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Delete/Deleted.csv');
+        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Delete/SoftDeletedTea.csv');
     }
 
     #[Test]
     public function deleteActionWithTeaFromOtherUserThrowsException(): void
     {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToOtherUser.csv');
+
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
         $this->expectExceptionCode(1687363749);
 
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
-            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA_OWNED_BY_FOREIGN_USER,
+            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
         ]);
     }
 
     #[Test]
     public function deleteActionWithTeaWithoutOwnerThrowsException(): void
     {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToNoUser.csv');
+
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
         $this->expectExceptionCode(1687363749);
 
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
-            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA_WITHOUT_OWNER,
+            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
         ]);
     }
 
     #[Test]
     public function editActionWithOwnTeaAssignsProvidedTeaToView(): void
     {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+
         $html = $this->getHtmlWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA_OWNED_BY_LOGGED_IN_USER,
+            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA,
         ]);
 
         self::assertStringContainsString('<input type="hidden" name="tx_tea_teafrontendeditor[tea][__identity]" value="1" />', $html);
@@ -114,26 +125,30 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     #[Test]
     public function editActionWithTeaFromOtherUserThrowsException(): void
     {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToOtherUser.csv');
+
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
         $this->expectExceptionCode(1687363749);
 
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA_OWNED_BY_FOREIGN_USER,
+            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA,
         ]);
     }
 
     #[Test]
     public function editActionWithTeaWithoutOwnerThrowsException(): void
     {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToNoUser.csv');
+
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
         $this->expectExceptionCode(1687363749);
 
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA_WITHOUT_OWNER,
+            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA,
         ]);
     }
 
