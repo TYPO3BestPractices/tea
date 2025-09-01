@@ -200,7 +200,6 @@
 			"rm .npmrc",
 			"rm .nvmrc",
 			"rm .prettierrc.js",
-			"rm eslint.config.js",
 			"rm package-lock.json",
 			"rm package.json",
 			"rm phive.xml",
