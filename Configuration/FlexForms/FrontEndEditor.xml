@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<T3DataStructure>
+    <sheets>
+        <pagesAndFolders>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>
+                        LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_frontend_editor.settings.tab.pagesAndFolders
+                    </sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <persistence.storagePid>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_frontend_editor.settings.pagesAndFolders.storagePid
+                            </label>
+                            <config>
+                                <type>group</type>
+                                <internal_type>db</internal_type>
+                                <allowed>pages</allowed>
+                                <size>1</size>
+                                <minitems>1</minitems>
+                                <maxitems>1</maxitems>
+                                <hideSuggest>1</hideSuggest>
+                            </config>
+                        </TCEforms>
+                    </persistence.storagePid>
+                </el>
+            </ROOT>
+        </pagesAndFolders>
+    </sheets>
+</T3DataStructure>

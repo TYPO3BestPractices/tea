@@ -24,6 +24,12 @@
 			<trans-unit id="plugin.tea_frontend_editor">
 				<source>Tea front-end editor</source>
 			</trans-unit>
+			<trans-unit id="plugin.tea_frontend_editor.settings.tab.pagesAndFolders">
+				<source>Pages and folders</source>
+			</trans-unit>
+			<trans-unit id="plugin.tea_frontend_editor.settings.pagesAndFolders.storagePid">
+				<source>Folder for new tea records</source>
+			</trans-unit>
 			<trans-unit id="plugin.tea.heading">
 				<source>Our selection of assorted teas</source>
 			</trans-unit>
