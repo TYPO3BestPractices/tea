@@ -14,7 +14,9 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestCon
 #[CoversClass(FrontEndEditorController::class)]
 final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestCase
 {
+    /** @var positive-int */
     private const UID_OF_PAGE = 1;
+    /** @var numeric-string */
     private const UID_OF_TEA = '1';
 
     protected function setUp(): void
@@ -32,7 +34,10 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         $html = (string)$this->executeFrontendSubRequest($request)->getBody();
 
-        self::assertStringContainsString('Please configure this plugin to be only visible if a website user is logged in.', $html);
+        self::assertStringContainsString(
+            'Please configure this plugin to be only visible if a website user is logged in.',
+            $html
+        );
     }
 
     #[Test]
@@ -118,7 +123,10 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
             'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA,
         ]);
 
-        self::assertStringContainsString('<input type="hidden" name="tx_tea_teafrontendeditor[tea][__identity]" value="1" />', $html);
+        self::assertStringContainsString(
+            '<input type="hidden" name="tx_tea_teafrontendeditor[tea][__identity]" value="1" />',
+            $html
+        );
         self::assertStringContainsString('Godesberger Burgtee', $html);
     }
 
@@ -158,13 +166,17 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
 
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm((int)self::UID_OF_TEA),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
+                (int)self::UID_OF_TEA
+            ),
             'tx_tea_teafrontendeditor[action]' => 'update',
             'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
 
-        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithTitle.csv');
+        $this->assertCSVDataSet(
+            __DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithTitle.csv'
+        );
     }
 
     #[Test]
@@ -173,13 +185,17 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
 
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm((int)self::UID_OF_TEA),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
+                (int)self::UID_OF_TEA
+            ),
             'tx_tea_teafrontendeditor[action]' => 'update',
             'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][description]' => 'The new description.',
         ]);
 
-        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithDescription.csv');
+        $this->assertCSVDataSet(
+            __DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithDescription.csv'
+        );
     }
 
     #[Test]
@@ -192,7 +208,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $this->expectExceptionCode(1687363749);
 
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm((int)self::UID_OF_TEA),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
+                (int)self::UID_OF_TEA
+            ),
             'tx_tea_teafrontendeditor[action]' => 'update',
             'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
@@ -209,7 +227,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $this->expectExceptionCode(1687363749);
 
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm((int)self::UID_OF_TEA),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
+                (int)self::UID_OF_TEA
+            ),
             'tx_tea_teafrontendeditor[action]' => 'update',
             'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
@@ -235,7 +255,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
 
-        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithProvidedTitle.csv');
+        $this->assertCSVDataSet(
+            __DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithProvidedTitle.csv'
+        );
     }
 
     #[Test]
@@ -247,7 +269,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
 
-        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithOwner.csv');
+        $this->assertCSVDataSet(
+            __DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithOwner.csv'
+        );
     }
 
     #[Test]
@@ -259,7 +283,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
 
-        $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithDefaultStoragePid.csv');
+        $this->assertCSVDataSet(
+            __DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithDefaultStoragePid.csv'
+        );
     }
 
     /**
@@ -277,8 +303,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     {
         $request = (new InternalRequest())
             ->withPageId(self::UID_OF_PAGE)
-            ->withQueryParameters($queryParameters)
-        ;
+            ->withQueryParameters($queryParameters);
 
         $context = (new InternalRequestContext())->withFrontendUserId(1);
 
