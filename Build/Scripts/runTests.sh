@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Uncomment for debugging
+# set -x
+
 #
 # TYPO3 extension tea test runner based on docker.
 #
