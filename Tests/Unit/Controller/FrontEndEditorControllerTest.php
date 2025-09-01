@@ -104,46 +104,6 @@ final class FrontEndEditorControllerTest extends UnitTestCase
     }
 
     #[Test]
-    public function newActionWithTeaAssignsProvidedTeaToView(): void
-    {
-        $tea = new Tea();
-
-        $this->viewMock->expects(self::once())->method('assign')->with('tea', $tea);
-
-        $this->subject->newAction($tea);
-    }
-
-    #[Test]
-    public function newActionWithNullTeaAssignsProvidedNewTeaToView(): void
-    {
-        $tea = new Tea();
-        GeneralUtility::addInstance(Tea::class, $tea);
-
-        $this->viewMock->expects(self::once())->method('assign')->with('tea', $tea);
-
-        $this->subject->newAction(null);
-    }
-
-    #[Test]
-    public function newActionWithoutTeaAssignsProvidedNewTeaToView(): void
-    {
-        $tea = new Tea();
-        GeneralUtility::addInstance(Tea::class, $tea);
-
-        $this->viewMock->expects(self::once())->method('assign')->with('tea', $tea);
-
-        $this->subject->newAction();
-    }
-
-    #[Test]
-    public function newActionReturnsHtmlResponse(): void
-    {
-        $result = $this->subject->newAction();
-
-        self::assertInstanceOf(HtmlResponse::class, $result);
-    }
-
-    #[Test]
     public function createActionSetsLoggedInUserAsOwnerOfProvidedTea(): void
     {
         $userUid = 5;

@@ -72,12 +72,10 @@ class FrontEndEditorController extends ActionController
         return $this->redirect('index');
     }
 
-    #[Extbase\IgnoreValidation(['argumentName' => 'tea'])]
-    public function newAction(?Tea $tea = null): ResponseInterface
+    public function newAction(): ResponseInterface
     {
         // Note: We are using `makeInstance` here instead of `new` to allow for XCLASSing.
-        $teaToAssign = $tea ?? GeneralUtility::makeInstance(Tea::class);
-        $this->view->assign('tea', $teaToAssign);
+        $this->view->assign('tea', GeneralUtility::makeInstance(Tea::class));
 
         return $this->htmlResponse();
     }

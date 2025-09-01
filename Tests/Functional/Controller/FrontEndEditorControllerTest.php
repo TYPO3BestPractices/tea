@@ -201,6 +201,16 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         ]);
     }
 
+    #[Test]
+    public function newActionHasLabelForNewAction(): void
+    {
+        $html = $this->getHtmlWithLoggedInUser([
+            'tx_tea_teafrontendeditor[action]' => 'new',
+        ]);
+
+        self::assertStringContainsString('Create new tea', $html);
+    }
+
     /**
      * @param array<string, string> $queryParameters
      */
