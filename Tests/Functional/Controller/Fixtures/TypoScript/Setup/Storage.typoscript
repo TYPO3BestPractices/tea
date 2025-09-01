@@ -1,5 +1,5 @@
 plugin.tx_tea {
-    persistence {
-        storagePid = 2
-    }
+  persistence {
+    storagePid = 2
+  }
 }
