@@ -25,7 +25,6 @@ updates:
       - dependency-name: "symfony/translation"
       - dependency-name: "symfony/yaml"
       - dependency-name: "typo3/cms-*"
-      - dependency-name: "typo3/coding-standards"
     versioning-strategy: "increase"
     # adjust this number according to your own milestones if used.
     milestone: 12
