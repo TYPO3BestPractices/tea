@@ -146,7 +146,7 @@
 		"ci:php:cs-fixer": "php-cs-fixer fix --config ./Build/php-cs-fixer/php-cs-fixer.php -v --dry-run --diff",
 		"ci:php:lint": "parallel-lint *.php Build Classes Configuration Tests",
 		"ci:php:mess": "phpmd Classes text Build/phpmd/phpmd.xml",
-		"ci:php:rector": "rector --dry-run",
+		"ci:php:rector": "rector --dry-run --config=./Build/rector/rector.php",
 		"ci:php:stan": "phpstan --no-progress -v --configuration=Build/phpstan/phpstan.neon",
 		"ci:static": [
 			"@ci:composer:normalize",
@@ -182,7 +182,7 @@
 			"@fix:php:cs"
 		],
 		"fix:php:cs": "php-cs-fixer fix --config ./Build/php-cs-fixer/php-cs-fixer.php",
-		"fix:php:rector": "rector",
+		"fix:php:rector": "rector --config=./Build/rector/rector.php",
 		"phpstan:baseline": "phpstan --generate-baseline=Build/phpstan/phpstan-baseline.neon --allow-empty-baseline --configuration=Build/phpstan/phpstan.neon",
 		"prepare-release": [
 			"rm -rf .Build",
@@ -202,7 +202,6 @@
 			"rm package-lock.json",
 			"rm package.json",
 			"rm phive.xml",
-			"rm rector.php",
 			"rm stylelint.config.js"
 		]
 	},
