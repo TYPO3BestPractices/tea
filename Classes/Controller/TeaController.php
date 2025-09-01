@@ -41,9 +41,9 @@ class TeaController extends ActionController
     }
 
     /**
-     * @throws PropagateResponseException
-     *
      * @return never
+     *
+     * @throws PropagateResponseException
      */
     protected function trigger404(string $message): void
     {

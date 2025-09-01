@@ -14,7 +14,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\ReferenceIndex;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/*
+/**
  * Command to create test data for the tea extension.
  */
 final class CreateTestDataCommand extends Command
