@@ -202,7 +202,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     }
 
     #[Test]
-    public function newActionCanBeCalledByUser(): void
+    public function newActionHasLabelForNewAction(): void
     {
         $html = $this->getHtmlWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'new',
