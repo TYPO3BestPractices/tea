@@ -6,7 +6,6 @@
 /.gitlab/ export-ignore
 /.npmrc export-ignore
 /.nvmrc export-ignore
-/.prettierrc.js export-ignore
 /Build/ export-ignore
 /Tests/ export-ignore
 /package-lock.json export-ignore
