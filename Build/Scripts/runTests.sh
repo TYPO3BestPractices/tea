@@ -377,10 +377,6 @@ while getopts "a:b:s:d:i:p:e:t:xy:o:nhu" OPT; do
             if ! [[ ${CORE_VERSION} =~ ^(12.4|13.4)$ ]]; then
                 INVALID_OPTIONS+=("-t ${OPTARG}")
             fi
-            case "${OPTARG}" in
-                12.4) RECTOR_VERSION=2.0.1 ;;
-                13.4) RECTOR_VERSION=3.1.1 ;;
-            esac
             ;;
         x)
             PHP_XDEBUG_ON=1
@@ -515,12 +511,12 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     composerUpdateMax)
-        COMMAND="composer config --unset platform.php; composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:"^${CORE_VERSION}";composer require --dev -W ssch/typo3-rector:"^${RECTOR_VERSION}"; composer update --no-progress --no-interaction; composer dumpautoload; composer show"
+        COMMAND="composer config --unset platform.php; composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:"^${CORE_VERSION}"; composer update --no-progress --no-interaction; composer dumpautoload; composer show"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-max-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
     composerUpdateMin)
-        COMMAND="composer config platform.php ${PHP_VERSION}.0; composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:"^${CORE_VERSION}";composer require --dev -W ssch/typo3-rector:"^${RECTOR_VERSION}"; composer update --prefer-lowest --no-progress --no-interaction; composer dumpautoload; composer show"
+        COMMAND="composer config platform.php ${PHP_VERSION}.0; composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:"^${CORE_VERSION}"; composer update --prefer-lowest --no-progress --no-interaction; composer dumpautoload; composer show"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-min-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
