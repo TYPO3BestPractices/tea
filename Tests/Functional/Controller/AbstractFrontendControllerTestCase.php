@@ -36,13 +36,11 @@ abstract class AbstractFrontendControllerTestCase extends FunctionalTestCase
         $this->setUpFrontendRootPage(1, [
             'constants' => [
                 'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript',
-                'EXT:tea/Configuration/TypoScript/constants.typoscript',
             ],
             'setup' => [
                 'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
                 'EXT:tea/Configuration/TypoScript/setup.typoscript',
                 'EXT:tea/Tests/Functional/Controller/Fixtures/TypoScript/Setup/Rendering.typoscript',
-                'EXT:tea/Tests/Functional/Controller/Fixtures/TypoScript/Setup/Storage.typoscript',
             ],
         ]);
     }
