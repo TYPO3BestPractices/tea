@@ -16,8 +16,8 @@
 	"scripts": {
 		"ci:lint:js": "eslint --config ./Build/eslint/eslint.config.js 'Resources/Public/**/*.js'",
 		"fix:lint:js": "eslint --config ./Build/eslint/eslint.config.js 'Resources/Public/**/*.js' --quiet --fix",
-		"ci:lint:css": "stylelint Resources/Public/**/*.css",
-		"fix:lint:css": "stylelint Resources/Public/**/*.css --fix"
+		"ci:lint:css": "stylelint --config ./Build/stylelint/stylelint.config.js Resources/Public/**/*.css",
+		"fix:lint:css": "stylelint --config ./Build/stylelint/stylelint.config.js Resources/Public/**/*.css --fix"
 	},
 	"devDependencies": {
 		"eslint": "^9.34.0",
