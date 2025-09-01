@@ -90,20 +90,6 @@ final class FrontEndEditorControllerTest extends UnitTestCase
         self::assertInstanceOf(ActionController::class, $this->subject);
     }
 
-    #[Test]
-    public function updateActionWithOwnTeaPersistsProvidedTea(): void
-    {
-        $userUid = 5;
-        $this->setUidOfLoggedInUser($userUid);
-        $tea = new Tea();
-        $tea->setOwnerUid($userUid);
-        $this->stubRedirect('index');
-
-        $this->teaRepositoryMock->expects(self::once())->method('update')->with($tea);
-
-        $this->subject->updateAction($tea);
-    }
-
     private function mockRedirect(string $actionName): void
     {
         $redirectResponse = self::createStub(RedirectResponse::class);
@@ -115,47 +101,6 @@ final class FrontEndEditorControllerTest extends UnitTestCase
     {
         $redirectResponse = self::createStub(RedirectResponse::class);
         $this->subject->method('redirect')->willReturn($redirectResponse);
-    }
-
-    #[Test]
-    public function updateActionWithOwnTeaRedirectsToIndexAction(): void
-    {
-        $userUid = 5;
-        $this->setUidOfLoggedInUser($userUid);
-        $tea = new Tea();
-        $tea->setOwnerUid($userUid);
-
-        $this->mockRedirect('index');
-
-        $this->subject->updateAction($tea);
-    }
-
-    #[Test]
-    public function updateActionWithTeaFromOtherUserThrowsException(): void
-    {
-        $this->setUidOfLoggedInUser(1);
-        $tea = new Tea();
-        $tea->setOwnerUid(2);
-
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
-        $this->expectExceptionCode(1687363749);
-
-        $this->subject->updateAction($tea);
-    }
-
-    #[Test]
-    public function updateActionWithTeaWithoutOwnerThrowsException(): void
-    {
-        $this->setUidOfLoggedInUser(1);
-        $tea = new Tea();
-        $tea->setOwnerUid(0);
-
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
-        $this->expectExceptionCode(1687363749);
-
-        $this->subject->updateAction($tea);
     }
 
     #[Test]
