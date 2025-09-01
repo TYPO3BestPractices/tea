@@ -14,8 +14,8 @@
 		"npm": "^9.6.5 || ^10.8.2"
 	},
 	"scripts": {
-		"ci:lint:js": "eslint 'Resources/Public/**/*.js'",
-		"fix:lint:js": "eslint 'Resources/Public/**/*.js' --quiet --fix",
+		"ci:lint:js": "eslint --config ./Build/eslint/eslint.config.js 'Resources/Public/**/*.js'",
+		"fix:lint:js": "eslint --config ./Build/eslint/eslint.config.js 'Resources/Public/**/*.js' --quiet --fix",
 		"ci:lint:css": "stylelint Resources/Public/**/*.css",
 		"fix:lint:css": "stylelint Resources/Public/**/*.css --fix"
 	},
