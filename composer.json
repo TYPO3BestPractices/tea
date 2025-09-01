@@ -197,7 +197,6 @@
 			"rm .gitignore",
 			"rm .npmrc",
 			"rm .nvmrc",
-			"rm .prettierrc.js",
 			"rm package-lock.json",
 			"rm package.json",
 			"rm phive.xml"
