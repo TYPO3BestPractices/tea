@@ -20,7 +20,6 @@ updates:
     ignore:
       - dependency-name: "doctrine/dbal"
       - dependency-name: "icanhazstring/composer-unused"
-      - dependency-name: "nikic/php-parser"
       - dependency-name: "phpstan/phpstan"
       - dependency-name: "phpstan/phpstan-phpunit"
       - dependency-name: "phpstan/phpstan-strict-rules"
