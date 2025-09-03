@@ -14,18 +14,18 @@
 		"npm": "^9.6.5 || ^10.8.2"
 	},
 	"scripts": {
-		"ci:lint:js": "eslint 'Resources/Public/**/*.js'",
-		"fix:lint:js": "eslint 'Resources/Public/**/*.js' --quiet --fix",
-		"ci:lint:css": "stylelint Resources/Public/**/*.css",
-		"fix:lint:css": "stylelint Resources/Public/**/*.css --fix"
+		"ci:lint:js": "eslint --config ./Build/eslint/eslint.config.js 'Resources/Public/**/*.js'",
+		"fix:lint:js": "eslint --config ./Build/eslint/eslint.config.js 'Resources/Public/**/*.js' --quiet --fix",
+		"ci:lint:css": "stylelint --config ./Build/stylelint/stylelint.config.js Resources/Public/**/*.css",
+		"fix:lint:css": "stylelint --config ./Build/stylelint/stylelint.config.js Resources/Public/**/*.css --fix"
 	},
 	"devDependencies": {
-		"eslint": "^9.32.0",
+		"eslint": "^9.34.0",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-prettier": "^5.5.3",
+		"eslint-plugin-prettier": "^5.5.4",
 		"install": "^0.13.0",
 		"prettier": "^3.6.2",
-		"stylelint": "^16.23.0",
+		"stylelint": "^16.23.1",
 		"stylelint-config-standard-scss": "^15.0.1",
 		"stylelint-no-browser-hacks": "^2.0.0"
 	}

@@ -47,8 +47,8 @@
 		"typo3/cms-frontend": "^12.4.31 || ^13.4"
 	},
 	"require-dev": {
-		"ergebnis/composer-normalize": "2.47.0",
-		"friendsofphp/php-cs-fixer": "3.85.1",
+		"ergebnis/composer-normalize": "2.48.1",
+		"friendsofphp/php-cs-fixer": "3.87.1",
 		"helmich/typo3-typoscript-lint": "^3.3.0",
 		"icanhazstring/composer-unused": "0.8.11 || 0.9.3",
 		"php-parallel-lint/php-parallel-lint": "1.4.0",
@@ -121,7 +121,7 @@
 	"scripts": {
 		"ci:composer:normalize": "@composer normalize --no-check-lock --dry-run",
 		"ci:composer:psr-verify": "@composer dumpautoload --optimize --strict-psr --no-plugins",
-		"ci:composer:unused": "composer-unused",
+		"ci:composer:unused": "composer-unused --configuration=Build/composer-unused/composer-unused.php",
 		"ci:coverage": [
 			"@ci:coverage:unit",
 			"@ci:coverage:functional"
@@ -148,12 +148,14 @@
 		"ci:php:cs-fixer": "php-cs-fixer fix --config ./Build/php-cs-fixer/php-cs-fixer.php -v --dry-run --diff",
 		"ci:php:lint": "parallel-lint *.php Build Classes Configuration Tests",
 		"ci:php:mess": "phpmd Classes text Build/phpmd/phpmd.xml",
-		"ci:php:rector": "rector --dry-run",
+		"ci:php:rector": "rector --dry-run --config=./Build/rector/rector.php",
 		"ci:php:stan": "phpstan --no-progress -v --configuration=Build/phpstan/phpstan.neon",
 		"ci:static": [
 			"@ci:composer:normalize",
+			"@ci:composer:unused",
 			"@ci:json:lint",
 			"@ci:php:lint",
+			"@ci:composer:psr-verify",
 			"@ci:php:rector",
 			"@ci:php:stan",
 			"@ci:php:cs-fixer",
@@ -167,7 +169,7 @@
 			"phpunit -c Build/phpunit/FunctionalTests.xml"
 		],
 		"ci:tests:unit": "phpunit -c Build/phpunit/UnitTests.xml",
-		"ci:typoscript:lint": "typoscript-lint -c Build/typoscript-lint/TypoScriptLint.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript",
+		"ci:typoscript:lint": "typoscript-lint -c Build/typoscript-lint/TypoScriptLint.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript Tests/Functional/Controller/Fixtures/TypoScript",
 		"ci:xliff:lint": "php Build/xliff/xliff-lint lint:xliff Resources/Private/Language",
 		"ci:yaml:lint": "find . ! -path '*.Build/*' ! -path '*node_modules/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r php ./.Build/bin/yaml-lint",
 		"coverage:create-directories": "mkdir -p build/coverage build/logs",
@@ -182,7 +184,7 @@
 			"@fix:php:cs"
 		],
 		"fix:php:cs": "php-cs-fixer fix --config ./Build/php-cs-fixer/php-cs-fixer.php",
-		"fix:php:rector": "rector",
+		"fix:php:rector": "rector --config=./Build/rector/rector.php",
 		"phpstan:baseline": "phpstan --generate-baseline=Build/phpstan/phpstan-baseline.neon --allow-empty-baseline --configuration=Build/phpstan/phpstan.neon",
 		"prepare-release": [
 			"rm -rf .Build",
@@ -197,14 +199,9 @@
 			"rm .gitignore",
 			"rm .npmrc",
 			"rm .nvmrc",
-			"rm .prettierrc.js",
-			"rm composer-unused.php",
-			"rm eslint.config.js",
 			"rm package-lock.json",
 			"rm package.json",
-			"rm phive.xml",
-			"rm rector.php",
-			"rm stylelint.config.js"
+			"rm phive.xml"
 		]
 	},
 	"scripts-descriptions": {

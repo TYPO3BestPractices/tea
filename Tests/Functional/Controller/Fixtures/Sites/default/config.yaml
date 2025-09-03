@@ -1,7 +1,6 @@
 base: '/'
 languages:
-  -
-    title: English
+  - title: English
     enabled: true
     languageId: '0'
     base: /
