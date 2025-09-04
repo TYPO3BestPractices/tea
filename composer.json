@@ -105,9 +105,7 @@
 			"*": "dist"
 		},
 		"sort-packages": true,
-		"vendor-dir": ".Build/vendor",
-		"platform": {
-		}
+		"vendor-dir": ".Build/vendor"
 	},
 	"extra": {
 		"branch-alias": {
