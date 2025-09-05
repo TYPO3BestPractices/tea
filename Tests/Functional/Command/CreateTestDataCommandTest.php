@@ -43,7 +43,6 @@ final class CreateTestDataCommandTest extends FunctionalTestCase
     {
         // The CreateTestDataCommand extends Command, so this test is always true
         // This test validates the inheritance structure is correct
-        /** @phpstan-ignore-next-line staticMethod.alreadyNarrowedType */
         self::assertInstanceOf(Command::class, $this->subject);
     }
 

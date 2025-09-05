@@ -36,7 +36,6 @@ final class TeaRepositoryTest extends FunctionalTestCase
     public function isRepository(): void
     {
         // TeaRepository extends Repository, so this test validates the inheritance structure
-        /** @phpstan-ignore-next-line staticMethod.alreadyNarrowedType */
         self::assertInstanceOf(Repository::class, $this->subject);
     }
 
