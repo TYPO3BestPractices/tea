@@ -20,6 +20,9 @@ parameters:
     - ../../Tests
     - ../../ext_localconf.php
 
+  # Don't report errors for ignored patterns that don't match (version-specific ignores)
+  reportUnmatchedIgnoredErrors: false
+
   type_coverage:
     return_type: 100
     param_type: 100
@@ -67,3 +70,7 @@ parameters:
     -
       # Ignore for now, as we still support PHP < 8.3
       message: '#Out of \d possible constant types#'
+    -
+      # Ignore TCA configuration array access - legitimate TYPO3 framework pattern
+      message: '#Cannot access offset .+ on mixed#'
+      path: '**/Configuration/TCA/Overrides/*'

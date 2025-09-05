@@ -20,7 +20,6 @@ call_user_func(
         );
 
         // These two commands add the flexform configuration for the plugin.
-        /** @phpstan-ignore-next-line offsetAccess.nonOffsetAccessible */
         $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$indexPluginSignature] = 'pi_flexform';
         ExtensionManagementUtility::addPiFlexFormValue(
             $indexPluginSignature,
@@ -43,11 +42,8 @@ call_user_func(
 
         // This removes the default controls from the plugins.
         $controlsToRemove = 'recursive,pages';
-        /** @phpstan-ignore-next-line offsetAccess.nonOffsetAccessible */
         $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$indexPluginSignature] = $controlsToRemove;
-        /** @phpstan-ignore-next-line offsetAccess.nonOffsetAccessible */
         $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$showPluginSignature] = $controlsToRemove;
-        /** @phpstan-ignore-next-line offsetAccess.nonOffsetAccessible */
         $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$editorPluginSignature] = $controlsToRemove;
     }
 );
