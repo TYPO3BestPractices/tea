@@ -20,9 +20,6 @@ parameters:
     - ../../Tests
     - ../../ext_localconf.php
 
-  # Allow instanceof checks, particularly in tests
-  # checkAlwaysTrueCheckTypeFunctionCall parameter was removed in newer PHPStan versions
-
   type_coverage:
     return_type: 100
     param_type: 100
