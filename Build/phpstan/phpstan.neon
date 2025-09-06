@@ -20,8 +20,8 @@ parameters:
     - ../../Tests
     - ../../ext_localconf.php
 
-  # Allow instanceof checks, particularly in tests
-  checkAlwaysTrueCheckTypeFunctionCall: false
+  # Don't report errors for ignored patterns that don't match (version-specific ignores)
+  reportUnmatchedIgnoredErrors: false
 
   type_coverage:
     return_type: 100

@@ -19,11 +19,20 @@ updates:
       - dependency-type: "development"
     ignore:
       - dependency-name: "doctrine/dbal"
+      - dependency-name: "icanhazstring/composer-unused"
+      - dependency-name: "phpstan/phpstan"
+      - dependency-name: "phpstan/phpstan-phpunit"
+      - dependency-name: "phpstan/phpstan-strict-rules"
       - dependency-name: "phpunit/phpunit"
         versions: [ "^11.0" ]
+      - dependency-name: "rector/type-perfect"
+      - dependency-name: "saschaegerer/phpstan-typo3"
+      - dependency-name: "ssch/typo3-*"
       - dependency-name: "symfony/console"
       - dependency-name: "symfony/translation"
       - dependency-name: "symfony/yaml"
+      - dependency-name: "tomasvotruba/cognitive-complexity"
+      - dependency-name: "tomasvotruba/type-coverage"
       - dependency-name: "typo3/cms-*"
     versioning-strategy: "increase"
     # adjust this number according to your own milestones if used.
