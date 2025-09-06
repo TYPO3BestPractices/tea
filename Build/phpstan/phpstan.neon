@@ -70,10 +70,3 @@ parameters:
     -
       # Ignore for now, as we still support PHP < 8.3
       message: '#Out of \d possible constant types#'
-    -
-      # Ignore TCA configuration array access - legitimate TYPO3 framework pattern
-      message: '#Cannot access offset .+ on mixed#'
-      path: '../../Configuration/TCA/Overrides/*'
-    -
-      message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) .* will always evaluate to#'
-      path: '../../Tests/' 
