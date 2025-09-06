@@ -20,9 +20,6 @@ parameters:
     - ../../Tests
     - ../../ext_localconf.php
 
-  # Don't report errors for ignored patterns that don't match (version-specific ignores)
-  reportUnmatchedIgnoredErrors: false
-
   type_coverage:
     return_type: 100
     param_type: 100

@@ -1,9 +1,5 @@
 parameters:
 	ignoreErrors:
 		-
-			# Ignore TCA configuration array access - legitimate TYPO3 framework pattern
-			message: '#Cannot access offset .+ on mixed#'
-			path: '../../Configuration/TCA/Overrides/*'
-		-
 			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) .* will always evaluate to#'
 			path: '../../Tests/'
