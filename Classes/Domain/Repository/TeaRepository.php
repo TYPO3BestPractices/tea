@@ -21,7 +21,6 @@ class TeaRepository extends Repository
      *
      * @return QueryResultInterface<Tea>
      */
-    /** @phpstan-ignore-next-line missingType.generics */
     public function findByOwnerUid(int $ownerUid): QueryResultInterface
     {
         $query = $this->createQuery();
