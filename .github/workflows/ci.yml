@@ -19,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Install Composer dependencies
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composerUpdateMax
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composerUpdateMax -t 13.4
       - name: Lint PHP
         run: |
           Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s lintPhp
@@ -42,7 +42,7 @@ jobs:
       - name: Show the Composer configuration
         run:  ./Build/Scripts/runTests.sh -s composer config --global --list
       - name: Install Composer dependencies
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composerUpdateMax
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composerUpdateMax -t 13.4
       - name: Run code quality checks
         run: |
           Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composer ci:${{ matrix.command }}
