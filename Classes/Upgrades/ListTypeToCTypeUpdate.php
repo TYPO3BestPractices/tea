@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TTN\Tea\Upgrades;
 
-use Linawolf\ListTypeMigration\Upgrades\AbstractListTypeToCTypeUpdate;
 use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 
 #[UpgradeWizard('teaListTypeToCTypeUpdate')]
