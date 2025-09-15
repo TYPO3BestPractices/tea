@@ -26,7 +26,6 @@ final class TeaTest extends UnitTestCase
     #[Test]
     public function isAbstractEntity(): void
     {
-        // Tea extends AbstractEntity, so this test validates the inheritance structure
         self::assertInstanceOf(AbstractEntity::class, $this->subject);
     }
 
