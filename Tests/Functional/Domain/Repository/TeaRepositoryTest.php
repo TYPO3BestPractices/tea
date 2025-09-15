@@ -173,6 +173,8 @@ final class TeaRepositoryTest extends FunctionalTestCase
         $result = $this->subject->findByOwnerUid(1);
 
         $result->rewind();
-        self::assertSame('Assam', $result->current()->getTitle());
+        $current = $result->current();
+        self::assertInstanceOf(Tea::class, $current);
+        self::assertSame('Assam', $current->getTitle());
     }
 }
