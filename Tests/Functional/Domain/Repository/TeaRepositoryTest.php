@@ -35,7 +35,6 @@ final class TeaRepositoryTest extends FunctionalTestCase
     #[Test]
     public function isRepository(): void
     {
-        // TeaRepository extends Repository, so this test validates the inheritance structure
         self::assertInstanceOf(Repository::class, $this->subject);
     }
 
