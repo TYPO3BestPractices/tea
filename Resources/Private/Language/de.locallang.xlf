@@ -27,7 +27,7 @@
 				<source>Tea single view</source>
 				<target>Tee-Einzelansicht</target>
 			</trans-unit>
-			<trans-unit id="plugin.tea_frontend_editor" approved="yes">
+			<trans-unit id="plugin.tea_front_end_editor" approved="yes">
 				<source>Tea front-end editor</source>
 				<target>Frontend-Editor für Tee</target>
 			</trans-unit>
