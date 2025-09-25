@@ -8,4 +8,4 @@ rector:
     - php-lint-php8.3
     - php-lint-php8.4
   script:
-    - composer ci:php:rector
+    - composer check:php:rector

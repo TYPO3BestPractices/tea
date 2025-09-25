@@ -4,4 +4,4 @@ xliff-lint:
   needs:
     - build-composer-dependencies
   script:
-    - composer ci:xliff:lint
+    - composer check:xliff:lint

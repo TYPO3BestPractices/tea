@@ -33,7 +33,7 @@ recommended to execute tests with the usage of the `runTests.sh` script.
 
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer ci:php:lint
+    ./Build/Scripts/runTests.sh -s composer check:php:lint
 
 It is not necessary to executing the tests only with the composer scripts.
 You can also use the `runTests.sh`. This makes your life easier because you
@@ -52,66 +52,66 @@ Running code checks
 
 You can currently run these code checks on the command line:
 
-.. index:: Commands; composer ci:composer:normalize
+.. index:: Commands; composer check:composer:normalize
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer ci:composer:normalize
+    ./Build/Scripts/runTests.sh -s composer check:composer:normalize
 
 Checks the composer.json.
 
-.. index:: Commands; composer ci:json:lint
+.. index:: Commands; composer check:json:lint
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer ci:json:lint
+    ./Build/Scripts/runTests.sh -s composer check:json:lint
 
 Lints the JSON files.
 
-.. index:: Commands; composer ci:php
+.. index:: Commands; composer check:php
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer ci:php
+    ./Build/Scripts/runTests.sh -s composer check:php
 
 Runs all static checks for the PHP files.
 
-.. index:: Commands; composer ci:php:cs-fixer
+.. index:: Commands; composer check:php:cs-fixer
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer ci:php:cs-fixer
+    ./Build/Scripts/runTests.sh -s composer check:php:cs-fixer
 
 Checks the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer).
 
-.. index:: Commands; composer ci:php:lint
+.. index:: Commands; composer check:php:lint
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer ci:php:lint
+    ./Build/Scripts/runTests.sh -s composer check:php:lint
 
 Lints the PHP files for syntax errors.
 
-.. index:: Commands; composer ci:php:stan
+.. index:: Commands; composer check:php:stan
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer ci:php:stan
+    ./Build/Scripts/runTests.sh -s composer check:php:stan
 
 Checks the PHP types using PHPStan.
 
-.. index:: Commands; composer ci:static
+.. index:: Commands; composer check:static
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer ci:static
+    ./Build/Scripts/runTests.sh -s composer check:static
 
 Runs all static code checks (syntax, style, types).
 
-.. index:: Commands; composer ci:typoscript:lint
+.. index:: Commands; composer check:typoscript:lint
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -scomposer ci:typoscript:lint
+    ./Build/Scripts/runTests.sh -scomposer check:typoscript:lint
 
 Lints the TypoScript files.
 
-.. index:: Commands; composer ci:yaml:lint
+.. index:: Commands; composer check:yaml:lint
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer ci:yaml:lint
+    ./Build/Scripts/runTests.sh -s composer check:yaml:lint
 
 Lints the YAML files.
 
@@ -163,7 +163,7 @@ Running unit and functional tests
 
 You can currently run these tests on the command line:
 
-.. index:: Commands; composer ci:tests:functional
+.. index:: Commands; composer check:tests:functional
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -s functional
@@ -176,7 +176,7 @@ Runs the functional tests.
     it is recommended to run the functional tests using :code:`runTests.sh`
     instead of locally.
 
-.. index:: Commands; composer ci:tests:unit
+.. index:: Commands; composer check:tests:unit
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -s unit
