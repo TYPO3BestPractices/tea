@@ -27,6 +27,15 @@
 			<trans-unit id="tx_tea_domain_model_tea.hidden">
 				<source>Visible</source>
 			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.pluginGroup">
+				<source>Tea</source>
+			</trans-unit>
+			<trans-unit id="plugin.tea_index.title">
+				<source>Tea Index</source>
+			</trans-unit>
+			<trans-unit id="plugin.tea_index.description">
+				<source>Tea plugin to show the listview.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
