@@ -4,4 +4,4 @@ php-lint-php8.4:
   stage: lint
   needs: [ ]
   script:
-    - composer ci:php:lint
+    - composer check:php:lint

@@ -8,4 +8,4 @@ phpstan:
     - php-lint-php8.3
     - php-lint-php8.4
   script:
-    - composer ci:php:stan
+    - composer check:php:stan

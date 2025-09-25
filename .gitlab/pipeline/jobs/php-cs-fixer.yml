@@ -8,4 +8,4 @@ php-cs-fixer:
     - php-lint-php8.3
     - php-lint-php8.4
   script:
-    - composer ci:php:cs-fixer
+    - composer check:php:cs-fixer

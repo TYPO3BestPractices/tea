@@ -4,4 +4,4 @@ json-lint:
   needs:
     - build-composer-dependencies
   script:
-    - composer ci:json:lint
+    - composer check:json:lint
