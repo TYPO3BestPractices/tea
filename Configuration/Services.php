@@ -11,7 +11,8 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->services()
         ->defaults()
         ->autowire()
-        ->autoconfigure();
+        ->autoconfigure()
+        ->public();
 
     $services
         ->load('TTN\\Tea\\', '../Classes/*')
