@@ -2,4 +2,4 @@ composer-psr-verify:
   extends: .default
   stage: codestyle
   script:
-    - composer ci:composer:psr-verify
+    - composer check:composer:psr-verify

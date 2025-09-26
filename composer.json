@@ -117,59 +117,59 @@
 		}
 	},
 	"scripts": {
-		"ci:composer:normalize": "@composer normalize --no-check-lock --dry-run",
-		"ci:composer:psr-verify": "@composer dumpautoload --optimize --strict-psr --no-plugins",
-		"ci:composer:unused": "composer-unused --configuration=Build/composer-unused/composer-unused.php",
-		"ci:coverage": [
-			"@ci:coverage:unit",
-			"@ci:coverage:functional"
+		"check:composer:normalize": "@composer normalize --no-check-lock --dry-run",
+		"check:composer:psr-verify": "@composer dumpautoload --optimize --strict-psr --no-plugins",
+		"check:composer:unused": "composer-unused --configuration=Build/composer-unused/composer-unused.php",
+		"check:coverage": [
+			"@check:coverage:unit",
+			"@check:coverage:functional"
 		],
-		"ci:coverage:functional": [
-			"@ci:tests:create-directories",
+		"check:coverage:functional": [
+			"@check:tests:create-directories",
 			"@coverage:create-directories",
 			"phpunit -c Build/phpunit/FunctionalTests.xml --coverage-php=build/coverage/functional.cov"
 		],
-		"ci:coverage:merge": [
+		"check:coverage:merge": [
 			"@coverage:create-directories",
 			"@php tools/phpcov merge --clover=build/logs/clover.xml build/coverage/"
 		],
-		"ci:coverage:unit": [
+		"check:coverage:unit": [
 			"@coverage:create-directories",
 			"phpunit -c Build/phpunit/UnitTests.xml --coverage-php=build/coverage/unit.cov"
 		],
-		"ci:json:lint": "find . ! -path '*/.cache/*' ! -path '*/.Build/*' ! -path '*/node_modules/*' -name '*.json' | xargs -r php .Build/bin/jsonlint -q",
-		"ci:php": [
-			"@ci:php:cs-fixer",
-			"@ci:php:lint",
-			"@ci:php:stan"
+		"check:json:lint": "find . ! -path '*/.cache/*' ! -path '*/.Build/*' ! -path '*/node_modules/*' -name '*.json' | xargs -r php .Build/bin/jsonlint -q",
+		"check:php": [
+			"@check:php:cs-fixer",
+			"@check:php:lint",
+			"@check:php:stan"
 		],
-		"ci:php:cs-fixer": "php-cs-fixer fix --config ./Build/php-cs-fixer/php-cs-fixer.php -v --dry-run --diff",
-		"ci:php:lint": "parallel-lint *.php Build Classes Configuration Tests",
-		"ci:php:mess": "phpmd Classes text Build/phpmd/phpmd.xml",
-		"ci:php:rector": "rector --dry-run --config=./Build/rector/rector.php",
-		"ci:php:stan": "phpstan --no-progress -v --configuration=Build/phpstan/phpstan.neon",
-		"ci:static": [
-			"@ci:composer:normalize",
-			"@ci:composer:unused",
-			"@ci:json:lint",
-			"@ci:php:lint",
-			"@ci:composer:psr-verify",
-			"@ci:php:rector",
-			"@ci:php:stan",
-			"@ci:php:cs-fixer",
-			"@ci:typoscript:lint",
-			"@ci:xliff:lint",
-			"@ci:yaml:lint"
+		"check:php:cs-fixer": "php-cs-fixer fix --config ./Build/php-cs-fixer/php-cs-fixer.php -v --dry-run --diff",
+		"check:php:lint": "parallel-lint *.php Build Classes Configuration Tests",
+		"check:php:mess": "phpmd Classes text Build/phpmd/phpmd.xml",
+		"check:php:rector": "rector --dry-run --config=./Build/rector/rector.php",
+		"check:php:stan": "phpstan --no-progress -v --configuration=Build/phpstan/phpstan.neon",
+		"check:static": [
+			"@check:composer:normalize",
+			"@check:composer:unused",
+			"@check:json:lint",
+			"@check:php:lint",
+			"@check:composer:psr-verify",
+			"@check:php:rector",
+			"@check:php:stan",
+			"@check:php:cs-fixer",
+			"@check:typoscript:lint",
+			"@check:xliff:lint",
+			"@check:yaml:lint"
 		],
-		"ci:tests:create-directories": "mkdir -p .Build/public/typo3temp/var/tests",
-		"ci:tests:functional": [
-			"@ci:tests:create-directories",
+		"check:tests:create-directories": "mkdir -p .Build/public/typo3temp/var/tests",
+		"check:tests:functional": [
+			"@check:tests:create-directories",
 			"phpunit -c Build/phpunit/FunctionalTests.xml"
 		],
-		"ci:tests:unit": "phpunit -c Build/phpunit/UnitTests.xml",
-		"ci:typoscript:lint": "typoscript-lint -c Build/typoscript-lint/TypoScriptLint.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript Tests/Functional/Controller/Fixtures/TypoScript",
-		"ci:xliff:lint": "php Build/xliff/xliff-lint lint:xliff Resources/Private/Language",
-		"ci:yaml:lint": "find . ! -path '*.Build/*' ! -path '*node_modules/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r php ./.Build/bin/yaml-lint",
+		"check:tests:unit": "phpunit -c Build/phpunit/UnitTests.xml",
+		"check:typoscript:lint": "typoscript-lint -c Build/typoscript-lint/TypoScriptLint.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript Tests/Functional/Controller/Fixtures/TypoScript",
+		"check:xliff:lint": "php Build/xliff/xliff-lint lint:xliff Resources/Private/Language",
+		"check:yaml:lint": "find . ! -path '*.Build/*' ! -path '*node_modules/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r php ./.Build/bin/yaml-lint",
 		"coverage:create-directories": "mkdir -p build/coverage build/logs",
 		"docs:generate": "docker run --rm --pull always -v $(pwd):/project -it ghcr.io/typo3-documentation/render-guides:latest --config=Documentation",
 		"fix": [
@@ -203,26 +203,26 @@
 		]
 	},
 	"scripts-descriptions": {
-		"ci:composer:normalize": "Checks the composer.json.",
-		"ci:composer:psr-verify": "Verifies PSR-4 namespace correctness.",
-		"ci:composer:unused": "Finds unused Composer packages required in composer.json.",
-		"ci:coverage:functional": "Generates the code coverage report for functional tests.",
-		"ci:coverage:merge": "Merges the code coverage reports for unit and functional tests.",
-		"ci:coverage:unit": "Generates the code coverage report for unit tests.",
-		"ci:json:lint": "Lints the JSON files.",
-		"ci:php": "Runs all static checks for the PHP files.",
-		"ci:php:cs-fixer": "Checks the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer).",
-		"ci:php:lint": "Lints the PHP files for syntax errors.",
-		"ci:php:mess": "Runs PHP mess detection.",
-		"ci:php:rector": "Checks for code for changes by Rector.",
-		"ci:php:stan": "Checks the PHP types using PHPStan.",
-		"ci:static": "Runs all static code checks (syntax, style, types).",
-		"ci:tests:create-directories": "Creates the directories required to smoothely run the functional tests.",
-		"ci:tests:functional": "Runs the functional tests.",
-		"ci:tests:unit": "Runs the unit tests.",
-		"ci:typoscript:lint": "Lints the TypoScript files.",
-		"ci:xliff:lint": "Lints the XLIFF files.",
-		"ci:yaml:lint": "Lints the YAML files.",
+		"check:composer:normalize": "Checks the composer.json.",
+		"check:composer:psr-verify": "Verifies PSR-4 namespace correctness.",
+		"check:composer:unused": "Finds unused Composer packages required in composer.json.",
+		"check:coverage:functional": "Generates the code coverage report for functional tests.",
+		"check:coverage:merge": "Merges the code coverage reports for unit and functional tests.",
+		"check:coverage:unit": "Generates the code coverage report for unit tests.",
+		"check:json:lint": "Lints the JSON files.",
+		"check:php": "Runs all static checks for the PHP files.",
+		"check:php:cs-fixer": "Checks the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer).",
+		"check:php:lint": "Lints the PHP files for syntax errors.",
+		"check:php:mess": "Runs PHP mess detection.",
+		"check:php:rector": "Checks for code for changes by Rector.",
+		"check:php:stan": "Checks the PHP types using PHPStan.",
+		"check:static": "Runs all static code checks (syntax, style, types).",
+		"check:tests:create-directories": "Creates the directories required to smoothely run the functional tests.",
+		"check:tests:functional": "Runs the functional tests.",
+		"check:tests:unit": "Runs the unit tests.",
+		"check:typoscript:lint": "Lints the TypoScript files.",
+		"check:xliff:lint": "Lints the XLIFF files.",
+		"check:yaml:lint": "Lints the YAML files.",
 		"coverage:create-directories": "Creates the directories needed for recording and merging the code coverage reports.",
 		"docs:generate": "Renders the extension ReST documentation.",
 		"fix": "Runs all automatic code style fixes.",
