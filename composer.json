@@ -44,7 +44,8 @@
 		"typo3/cms-core": "^12.4",
 		"typo3/cms-extbase": "^12.4.31 || ^13.4",
 		"typo3/cms-fluid": "^12.4.31 || ^13.4",
-		"typo3/cms-frontend": "^12.4.31 || ^13.4"
+		"typo3/cms-frontend": "^12.4.31 || ^13.4",
+		"typo3/cms-install": "^12.4.31 || ^13.4"
 	},
 	"require-dev": {
 		"ergebnis/composer-normalize": "2.48.2",
