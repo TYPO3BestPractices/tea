@@ -8,4 +8,4 @@ unit-v12-php8.2-highest:
   script:
     - echo "Job ${CI_JOB_NAME}"
     - composer require --no-progress typo3/cms-core:"^12.4"
-    - composer ci:tests:unit
+    - composer check:tests:unit
