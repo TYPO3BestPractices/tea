@@ -19,7 +19,7 @@ class TeaRepository extends Repository
     /**
      * @param positive-int $ownerUid
      *
-     * @return QueryResultInterface<Tea>
+     * @return QueryResultInterface<int, Tea>
      */
     public function findByOwnerUid(int $ownerUid): QueryResultInterface
     {
