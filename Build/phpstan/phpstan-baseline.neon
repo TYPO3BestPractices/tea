@@ -1,2 +1,43 @@
 parameters:
-	ignoreErrors: []
+	ignoreErrors:
+		-
+			message: '#^Method TTN\\Tea\\Domain\\Repository\\TeaRepository\:\:findByOwnerUid\(\) return type with generic interface TYPO3\\CMS\\Extbase\\Persistence\\QueryResultInterface does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: ../../Classes/Domain/Repository/TeaRepository.php
+
+		-
+			message: '#^Cannot access offset ''list'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: ../../Configuration/TCA/Overrides/tt_content.php
+
+		-
+			message: '#^Cannot access offset ''subtypes_addlist'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../../Configuration/TCA/Overrides/tt_content.php
+
+		-
+			message: '#^Cannot access offset ''subtypes_excludelist'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 3
+			path: ../../Configuration/TCA/Overrides/tt_content.php
+
+		-
+			message: '#^Cannot access offset ''tt_content'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: ../../Configuration/TCA/Overrides/tt_content.php
+
+		-
+			message: '#^Cannot access offset ''types'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: ../../Configuration/TCA/Overrides/tt_content.php
+
+		-
+			message: '#^Cannot access offset string on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: ../../Configuration/TCA/Overrides/tt_content.php
