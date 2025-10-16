@@ -43,10 +43,10 @@ jobs:
       - name: Show the Composer configuration
         run:  ./Build/Scripts/runTests.sh -s composer config --global --list
       - name: Install Composer dependencies
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composerUpdateMax
+        run: Build/Scripts/runTests.sh -s composerUpdateMax
       - name: Run code quality checks
         run: |
-          Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composer check:${{ matrix.command }}
+          Build/Scripts/runTests.sh -s composer check:${{ matrix.command }}
     strategy:
       fail-fast: false
       matrix:
@@ -62,8 +62,6 @@ jobs:
           - "typoscript:lint"
           - "xliff:lint"
           - "yaml:lint"
-        php-version:
-          - "8.3"
   prepare-release:
     name: Check prepare release script
     runs-on: ubuntu-24.04
