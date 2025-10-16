@@ -43,7 +43,7 @@ jobs:
       - name: Show the Composer configuration
         run:  ./Build/Scripts/runTests.sh -s composer config --global --list
       - name: Install Composer dependencies
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composerUpdateMax -t 13.4
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composerUpdateMax
       - name: Run code quality checks
         run: |
           Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composer check:${{ matrix.command }}
