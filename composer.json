@@ -72,7 +72,7 @@
 		"typo3/cms-fluid-styled-content": "^12.4.31 || ^13.4",
 		"typo3/coding-standards": "0.8.0",
 		"typo3/testing-framework": "8.2.7",
-		"webmozart/assert": "^1.11.0"
+		"webmozart/assert": "^1.12.0"
 	},
 	"replace": {
 		"typo3-ter/tea": "self.version"
