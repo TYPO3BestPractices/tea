@@ -37,7 +37,7 @@
 			</trans-unit>
 			<trans-unit id="tx_tea_domain_model_tea.pluginGroup">
 				<source>Tea plugins</source>
-				<target>Tea Plugins</target>
+				<target>Tea</target>
 			</trans-unit>
 			<trans-unit id="plugin.tea_index.title">
 				<source>Tea Index</source>
