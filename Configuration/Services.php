@@ -11,7 +11,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->defaults()
         ->autowire()
         ->autoconfigure()
-        ->public('false');
+        ->public();
 
     $services->load('TTN\\Tea\\', '../Classes/*')
         ->exclude('../Classes/Domain/Model/*');
