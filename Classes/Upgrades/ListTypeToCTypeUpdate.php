@@ -6,10 +6,10 @@ namespace TTN\Tea\Upgrades;
 
 use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 
-#[UpgradeWizard('teaListTypeToCTypeUpdate')]
+#[UpgradeWizard('tea_listTypeToCTypeUpdate')]
 final class ListTypeToCTypeUpdate extends AbstractListTypeToCTypeUpdate
 {
-    protected function getListTypeToCTypeMapping(): array
+    public function getListTypeToCTypeMapping(): array
     {
         return [
             'tea_teaindex' => 'tea_teaindex',
