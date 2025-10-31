@@ -24,7 +24,7 @@ updates:
       - dependency-name: "phpstan/phpstan-phpunit"
       - dependency-name: "phpstan/phpstan-strict-rules"
       - dependency-name: "phpunit/phpunit"
-        versions: [ "^11.0" ]
+        versions: [ ">= 11.0" ]
       - dependency-name: "rector/type-perfect"
       - dependency-name: "saschaegerer/phpstan-typo3"
       - dependency-name: "ssch/typo3-*"
