@@ -8,6 +8,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
 use TTN\Tea\Controller\FrontEndEditorController;
+use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestContext;
 
@@ -166,9 +167,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
 
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
-                (int)self::UID_OF_TEA
-            ),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(),
             'tx_tea_teafrontendeditor[action]' => 'update',
             'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
@@ -185,9 +184,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
 
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
-                (int)self::UID_OF_TEA
-            ),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(),
             'tx_tea_teafrontendeditor[action]' => 'update',
             'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][description]' => 'The new description.',
@@ -208,9 +205,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $this->expectExceptionCode(1687363749);
 
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
-                (int)self::UID_OF_TEA
-            ),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(),
             'tx_tea_teafrontendeditor[action]' => 'update',
             'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
@@ -227,9 +222,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $this->expectExceptionCode(1687363749);
 
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
-                (int)self::UID_OF_TEA
-            ),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(),
             'tx_tea_teafrontendeditor[action]' => 'update',
             'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
@@ -310,36 +303,35 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         return $this->executeFrontendSubRequest($request, $context);
     }
 
-    /**
-     * @param positive-int $teaUid
-     */
-    private function getTrustedPropertiesFromEditForm(int $teaUid): string
+    private function getTrustedPropertiesFromEditForm(): string
     {
-        $html = $this->getHtmlWithLoggedInUser([
-            'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => (string)$teaUid,
+        return $this->getTrustedPropertiesForFormInput([
+            'tea' => [
+                'title' => 1,
+                'description' => 1,
+                '__identity' => (int)self::UID_OF_TEA,
+            ],
         ]);
-
-        return $this->getTrustedPropertiesFromHtml($html);
     }
 
     private function getTrustedPropertiesFromNewForm(): string
     {
-        $html = $this->getHtmlWithLoggedInUser([
-            'tx_tea_teafrontendeditor[action]' => 'new',
+        return $this->getTrustedPropertiesForFormInput([
+            'tea' => [
+                'title' => 1,
+                'description' => 1,
+            ],
         ]);
-
-        return $this->getTrustedPropertiesFromHtml($html);
     }
 
-    private function getTrustedPropertiesFromHtml(string $html): string
+    /**
+     * @param array<non-empty-string, array<non-empty-string, int>> $trustedProperties
+     */
+    private function getTrustedPropertiesForFormInput(array $trustedProperties): string
     {
-        $matches = [];
-        preg_match('/__trustedProperties]" value="([a-zA-Z0-9&{};:,_\\[\\]]+)"/', $html, $matches);
-        if (!isset($matches[1])) {
-            throw new \RuntimeException('Could not fetch trustedProperties from returned HTML.', 1744028933);
-        }
-
-        return html_entity_decode($matches[1]);
+        return $this->get(HashService::class)
+            ->appendHmac(
+                \json_encode($trustedProperties, JSON_THROW_ON_ERROR)
+            );
     }
 }
