@@ -637,6 +637,11 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} ${IMAGE_NODE} "${COMMAND_PARTS[@]}"
         SUITE_EXIT_CODE=$?
         ;;
+    phpmess)
+        COMMAND=".Build/bin/phpmd Classes text Build/phpmd/phpmd.xml"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name php-mess-${SUFFIX} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        SUITE_EXIT_CODE=$?
+        ;;
     phpstan)
         COMMAND="composer check:php:stan"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
