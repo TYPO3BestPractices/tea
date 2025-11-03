@@ -145,7 +145,6 @@
 		],
 		"check:php:cs-fixer": "php-cs-fixer fix --config ./Build/php-cs-fixer/php-cs-fixer.php -v --dry-run --diff",
 		"check:php:lint": "parallel-lint *.php Build Classes Configuration Tests",
-		"check:php:mess": "phpmd Classes text Build/phpmd/phpmd.xml",
 		"check:php:rector": "rector --dry-run --config=./Build/rector/rector.php",
 		"check:php:stan": "phpstan --no-progress -v --configuration=Build/phpstan/phpstan.neon",
 		"check:static": [

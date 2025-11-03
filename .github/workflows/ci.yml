@@ -56,12 +56,31 @@ jobs:
           - "composer:unused"
           - "json:lint"
           - "php:cs-fixer"
-          - "php:mess"
           - "php:rector"
           - "php:stan"
           - "typoscript:lint"
           - "xliff:lint"
           - "yaml:lint"
+  static-code-analysis:
+    name: Static code quality checks
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Show the Composer version
+        run: ./Build/Scripts/runTests.sh -s composer -- --version
+      - name: Show the Composer configuration
+        run: ./Build/Scripts/runTests.sh -s composer config --global --list
+      - name: Install Composer dependencies
+        run: Build/Scripts/runTests.sh -s composerUpdateMax
+      - name: Run code quality checks
+        run: |
+          Build/Scripts/runTests.sh -s ${{ matrix.command }}
+    strategy:
+      fail-fast: false
+      matrix:
+        command:
+          - "phpmd"
   prepare-release:
     name: Check prepare release script
     runs-on: ubuntu-24.04
