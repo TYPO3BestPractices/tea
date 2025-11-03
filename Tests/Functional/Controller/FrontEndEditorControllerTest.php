@@ -85,33 +85,29 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     }
 
     #[Test]
-    public function deleteActionWithTeaFromOtherUserThrowsException(): void
+    public function deleteActionWithTeaFromOtherUserReturnsForbiddenResponse(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToOtherUser.csv');
 
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
-        $this->expectExceptionCode(1687363749);
-
-        $this->executeRequestWithLoggedInUser([
+        $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
             'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
         ]);
+
+        self::assertForbiddenResponse($response);
     }
 
     #[Test]
-    public function deleteActionWithTeaWithoutOwnerThrowsException(): void
+    public function deleteActionWithTeaWithoutOwnerReturnsForbiddenResponse(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToNoUser.csv');
 
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
-        $this->expectExceptionCode(1687363749);
-
-        $this->executeRequestWithLoggedInUser([
+        $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
             'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
         ]);
+
+        self::assertForbiddenResponse($response);
     }
 
     #[Test]
@@ -132,33 +128,29 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     }
 
     #[Test]
-    public function editActionWithTeaFromOtherUserThrowsException(): void
+    public function editActionWithTeaFromOtherUserReturnsForbiddenResponse(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToOtherUser.csv');
 
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
-        $this->expectExceptionCode(1687363749);
-
-        $this->executeRequestWithLoggedInUser([
+        $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
             'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA,
         ]);
+
+        self::assertForbiddenResponse($response);
     }
 
     #[Test]
-    public function editActionWithTeaWithoutOwnerThrowsException(): void
+    public function editActionWithTeaWithoutOwnerReturnsForbiddenResponse(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToNoUser.csv');
 
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
-        $this->expectExceptionCode(1687363749);
-
-        $this->executeRequestWithLoggedInUser([
+        $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
             'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA,
         ]);
+
+        self::assertForbiddenResponse($response);
     }
 
     #[Test]
@@ -196,37 +188,33 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     }
 
     #[Test]
-    public function updateActionWithTeaFromOtherUserThrowsException(): void
+    public function updateActionWithTeaFromOtherUserReturnsForbiddenResponse(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToOtherUser.csv');
 
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
-        $this->expectExceptionCode(1687363749);
-
-        $this->executeRequestWithLoggedInUser([
+        $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(),
             'tx_tea_teafrontendeditor[action]' => 'update',
             'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
+
+        self::assertForbiddenResponse($response);
     }
 
     #[Test]
-    public function updateActionWithTeaWithoutOwnerThrowsException(): void
+    public function updateActionWithTeaWithoutOwnerReturnsForbiddenResponse(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToNoUser.csv');
 
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('You do not have the permissions to edit this tea.');
-        $this->expectExceptionCode(1687363749);
-
-        $this->executeRequestWithLoggedInUser([
+        $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(),
             'tx_tea_teafrontendeditor[action]' => 'update',
             'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
+
+        self::assertForbiddenResponse($response);
     }
 
     #[Test]
@@ -333,5 +321,15 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
             ->appendHmac(
                 \json_encode($trustedProperties, JSON_THROW_ON_ERROR)
             );
+    }
+
+    private static function assertForbiddenResponse(ResponseInterface $response): void
+    {
+        self::assertSame(403, $response->getStatusCode());
+        self::assertSame('Forbidden', $response->getReasonPhrase());
+        self::assertStringContainsString(
+            'You do not have the permissions to edit this tea.',
+            $response->getBody()->__toString()
+        );
     }
 }

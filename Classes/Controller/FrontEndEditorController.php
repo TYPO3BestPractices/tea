@@ -8,9 +8,11 @@ use Psr\Http\Message\ResponseInterface;
 use TTN\Tea\Domain\Model\Tea;
 use TTN\Tea\Domain\Repository\TeaRepository;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Frontend\Controller\ErrorController;
 
 /**
  * Controller for a CRUD FE editor for teas.
@@ -19,6 +21,7 @@ class FrontEndEditorController extends ActionController
 {
     public function __construct(
         private readonly Context $context,
+        private readonly ErrorController $errorController,
         private readonly TeaRepository $teaRepository,
     ) {}
 
@@ -53,13 +56,10 @@ class FrontEndEditorController extends ActionController
         return $this->htmlResponse();
     }
 
-    /**
-     * @throws \RuntimeException
-     */
     private function checkIfUserIsOwner(Tea $tea): void
     {
         if ($tea->getOwnerUid() !== $this->getUidOfLoggedInUser()) {
-            throw new \RuntimeException('You do not have the permissions to edit this tea.', 1687363749);
+            $this->trigger403('You do not have the permissions to edit this tea.');
         }
     }
 
@@ -97,5 +97,18 @@ class FrontEndEditorController extends ActionController
         $this->teaRepository->remove($tea);
 
         return $this->redirect('index');
+    }
+
+    /**
+     * @return never
+     *
+     * @throws PropagateResponseException
+     */
+    private function trigger403(string $message): void
+    {
+        throw new PropagateResponseException(
+            $this->errorController->accessDeniedAction($this->request, $message),
+            1687363749
+        );
     }
 }
