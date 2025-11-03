@@ -35,8 +35,7 @@ recommended to execute tests with the usage of the `runTests.sh` script.
 
     ./Build/Scripts/runTests.sh -s composer check:php:lint
 
-It is not necessary to executing the tests only with the composer scripts.
-You can also use the `runTests.sh`. This makes your life easier because you
+This makes your life easier because you
 don't have to worry about local dependencies.
 
 .. note::
@@ -168,13 +167,13 @@ You can currently run these tests on the command line:
 
     ./Build/Scripts/runTests.sh -s functional
 
-Runs the functional tests.
+Runs the functional tests using a database populated from the CSV files in
+`Tests/Functional/Controller/Fixtures/Database` folder.
 
 .. note::
 
     For executing functional tests, a database connection is needed. Therefore,
-    it is recommended to run the functional tests using :code:`runTests.sh`
-    instead of locally.
+    it is recommended to run the functional tests using :code:`runTests.sh`.
 
 .. index:: Commands; composer check:tests:unit
 .. code-block:: bash
