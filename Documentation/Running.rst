@@ -35,8 +35,7 @@ recommended to execute tests with the usage of the `runTests.sh` script.
 
     ./Build/Scripts/runTests.sh -s composer check:php:lint
 
-It is not necessary to executing the tests only with the composer scripts.
-You can also use the `runTests.sh`. This makes your life easier because you
+This makes your life easier because you
 don't have to worry about local dependencies.
 
 .. note::
