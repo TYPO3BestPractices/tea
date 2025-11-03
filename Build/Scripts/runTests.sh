@@ -639,7 +639,7 @@ case ${TEST_SUITE} in
         ;;
     phpmd)
         COMMAND=".Build/bin/phpmd Classes text Build/phpmd/phpmd.xml"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name php-mess-${SUFFIX} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpmd-${SUFFIX} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
     phpstan)
