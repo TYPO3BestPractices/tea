@@ -637,7 +637,7 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} ${IMAGE_NODE} "${COMMAND_PARTS[@]}"
         SUITE_EXIT_CODE=$?
         ;;
-    phpmess)
+    phpmd)
         COMMAND=".Build/bin/phpmd Classes text Build/phpmd/phpmd.xml"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name php-mess-${SUFFIX} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
