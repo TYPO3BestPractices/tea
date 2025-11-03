@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="phpList">
+<ruleset name="tea">
     <description>
         PHPMD rules for Tea
     </description>
