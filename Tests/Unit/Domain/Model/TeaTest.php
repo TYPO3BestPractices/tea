@@ -53,7 +53,7 @@ final class TeaTest extends UnitTestCase
     #[Test]
     public function setDescriptionSetsDescription(): void
     {
-        $value = 'Very refreshing and amoratic.';
+        $value = 'Very refreshing and aromatic.';
         $this->subject->setDescription($value);
 
         self::assertSame($value, $this->subject->getDescription());
