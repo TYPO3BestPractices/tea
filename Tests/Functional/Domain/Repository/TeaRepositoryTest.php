@@ -39,7 +39,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     }
 
     #[Test]
-    public function findAllForNoRecordsReturnsEmptyContainer(): void
+    public function findAllForNoRecordsReturnsEmptyQueryResult(): void
     {
         $result = $this->subject->findAll();
 
