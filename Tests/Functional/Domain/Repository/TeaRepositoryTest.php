@@ -102,7 +102,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     }
 
     #[Test]
-    public function MapsDeletedImageRelationToNull(): void
+    public function mapsDeletedImageRelationToNull(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/propertyMapping/TeaWithDeletedImage.csv');
 
