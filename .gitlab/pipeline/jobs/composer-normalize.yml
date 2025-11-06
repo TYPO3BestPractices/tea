@@ -2,4 +2,4 @@ composer-normalize:
   extends: .default
   stage: codestyle
   script:
-    - composer check:composer:normalize
+    - Build/Scripts/runTests.sh -s composer check:composer:normalize
