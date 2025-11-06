@@ -49,7 +49,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     #[Test]
     public function findAllSortsByTitleInAscendingOrder(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/TwoUnsortedTeas.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/findAll/TwoUnsortedTeas.csv');
 
         $result = $this->subject->findAll();
 
@@ -68,7 +68,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     #[Test]
     public function findByUidForExistingRecordReturnsModel(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithAllScalarData.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/findByUid/Tea.csv');
 
         $model = $this->subject->findByUid(1);
 
@@ -78,7 +78,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     #[Test]
     public function findByUidForExistingRecordMapsAllScalarData(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithAllScalarData.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/propertyMapping/TeaWithAllScalarData.csv');
 
         $model = $this->subject->findByUid(1);
         self::assertInstanceOf(Tea::class, $model);
@@ -91,7 +91,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     #[Test]
     public function fillsImageRelation(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithImage.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/propertyMapping/TeaWithImage.csv');
 
         $model = $this->subject->findByUid(1);
         self::assertInstanceOf(Tea::class, $model);
@@ -122,13 +122,13 @@ final class TeaRepositoryTest extends FunctionalTestCase
         $this->subject->add($model);
         $this->persistenceManager->persistAll();
 
-        $this->assertCSVDataSet(__DIR__ . '/Fixtures/PersistedTea.csv');
+        $this->assertCSVDataSet(__DIR__ . '/Fixtures/persistence/PersistedTea.csv');
     }
 
     #[Test]
     public function findByOwnerUidFindsTeaWithTheGivenOwnerUid(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithOwner.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/findByOwnerUid/TeaWithOwner.csv');
 
         $result = $this->subject->findByOwnerUid(1);
 
@@ -138,7 +138,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     #[Test]
     public function findByOwnerUidFindsTeaWithTheGivenOwnerUidOnPage(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithOwnerOnPage.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/findByOwnerUid/TeaWithOwnerOnPage.csv');
 
         $result = $this->subject->findByOwnerUid(1);
 
@@ -148,7 +148,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     #[Test]
     public function findByOwnerUidFindsIgnoresTeaWithNonMatchingOwnerUid(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithOwner.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/findByOwnerUid/TeaWithOwner.csv');
 
         $result = $this->subject->findByOwnerUid(2);
 
@@ -158,7 +158,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     #[Test]
     public function findByOwnerUidFindsIgnoresTeaWithZeroOwnerUid(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/TeaWithoutOwner.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/findByOwnerUid/TeaWithoutOwner.csv');
 
         $result = $this->subject->findByOwnerUid(1);
 
@@ -168,7 +168,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     #[Test]
     public function findByOwnerUidSortsByTitleInAscendingOrder(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/TwoTeasWithOwner.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/findByOwnerUid/TwoTeasWithOwner.csv');
 
         $result = $this->subject->findByOwnerUid(1);
 
