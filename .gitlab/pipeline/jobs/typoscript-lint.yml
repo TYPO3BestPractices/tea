@@ -1,7 +1,0 @@
-ts-lint:
-  extends: .default
-  stage: lint
-  needs:
-    - build-composer-dependencies
-  script:
-    - composer check:typoscript:lint

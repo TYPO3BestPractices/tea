@@ -1,6 +1,0 @@
-.default:
-  image: ghcr.io/typo3/core-testing-php83:latest
-  before_script:
-    - bash .gitlab/build/docker_install.sh > /dev/null
-  script:
-  - cp $CI_PROJECT_DIR/.gitlab/pipeline/ci/php.ini /usr/local/etc/php/conf.d/z_php.ini; # copy php.ini into image

@@ -187,7 +187,6 @@
 			"rm -rf .Build",
 			"rm -rf .ddev",
 			"rm -rf .github",
-			"rm -rf .gitlab",
 			"rm -rf Build",
 			"rm -rf Tests",
 			"rm -rf tools",

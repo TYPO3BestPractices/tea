@@ -1,7 +1,0 @@
-xliff-lint:
-  extends: .default
-  stage: lint
-  needs:
-    - build-composer-dependencies
-  script:
-    - composer check:xliff:lint
