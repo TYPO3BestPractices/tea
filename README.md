@@ -1,11 +1,11 @@
 # Example TYPO3 extension for code quality checks and automated tests
 
 [![TYPO3 V12](https://img.shields.io/badge/TYPO3-12-orange.svg)](https://get.typo3.org/version/12)
-[![License](https://img.shields.io/github/license/TYPO3-Documentation/tea)](https://packagist.org/packages/ttn/tea)
+[![License](https://img.shields.io/github/license/TYPO3BestPractices/tea)](https://packagist.org/packages/ttn/tea)
 [![Total downloads](https://poser.pugx.org/ttn/tea/downloads.svg)](https://packagist.org/packages/ttn/tea)
 [![GitHub CI status](https://github.com/TYPO3BestPractices/tea/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/TYPO3BestPractices/tea/actions)
 [![GitLab CI status](https://gitlab.typo3.org/qa/example-extension/badges/main/pipeline.svg)](https://gitlab.typo3.org/qa/example-extension/-/pipelines)
-[![Coverage Status](https://coveralls.io/repos/github/TYPO3-Documentation/tea/badge.svg?branch=main)](https://coveralls.io/github/TYPO3-Documentation/tea?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/TYPO3BestPractices/tea/badge.svg?branch=main)](https://coveralls.io/github/TYPO3BestPractices/tea?branch=main)
 
 This TYPO3 extension, based on Extbase and Fluid, is an example of best
 practices in automated code checks, unit/functional/acceptance testing and
