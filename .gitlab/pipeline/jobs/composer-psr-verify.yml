@@ -1,5 +1,0 @@
-composer-psr-verify:
-  extends: .default
-  stage: codestyle
-  script:
-    - composer check:composer:psr-verify

@@ -1,5 +1,0 @@
-composer-normalize:
-  extends: .default
-  stage: codestyle
-  script:
-    - composer check:composer:normalize

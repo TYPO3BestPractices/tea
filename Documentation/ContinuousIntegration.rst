@@ -28,12 +28,3 @@ This extension has a code-checking workflow for
 This workflow uses the development tools installed via Composer and PHIVE and
 calls them using the provided Composer scripts. This allows running the code
 quality checks locally as well as in GitHub Actions.
-
-.. _gitlab-ci:
-
-GitLab CI
-=========
-
-This extension also provides
-`configuration <https://github.com/TYPO3BestPractices/tea/blob/main/.gitlab/pipeline/.gitlab-ci.yml>`__
-for `GitLab CI <https://gitlab.typo3.org/qa/example-extension/-/pipelines>`__.

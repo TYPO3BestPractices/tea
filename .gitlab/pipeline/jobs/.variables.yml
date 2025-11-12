@@ -1,6 +1,0 @@
-variables:
-  MYSQL_ROOT_PASSWORD: root
-  typo3DatabaseName: typo3
-  typo3DatabaseHost: mariadb
-  typo3DatabaseUsername: root
-  typo3DatabasePassword: root

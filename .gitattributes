@@ -3,7 +3,6 @@
 /.gitattributes export-ignore
 /.github/ export-ignore
 /.gitignore export-ignore
-/.gitlab/ export-ignore
 /.npmrc export-ignore
 /.nvmrc export-ignore
 /Build/ export-ignore
