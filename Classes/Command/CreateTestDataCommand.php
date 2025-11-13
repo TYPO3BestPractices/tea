@@ -42,13 +42,13 @@ final class CreateTestDataCommand extends Command
             ->addArgument(
                 'pageUid',
                 InputArgument::REQUIRED,
-                'Existing sysfolder page id.'
+                'Existing sysfolder page id.',
             )
             ->addOption(
                 'delete-data-before',
                 'd',
                 InputOption::VALUE_NONE,
-                'Delete all tea data in the defined pid before creating new data.'
+                'Delete all tea data in the defined pid before creating new data.',
             );
     }
 

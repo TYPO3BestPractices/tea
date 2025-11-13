@@ -8,5 +8,5 @@ ExtensionManagementUtility::addStaticFile('tea', 'Configuration/TypoScript', 'Te
 ExtensionManagementUtility::addStaticFile(
     'tea',
     'Configuration/TypoScript/Frontend/',
-    'Tea frontend (optional)'
+    'Tea frontend (optional)',
 );

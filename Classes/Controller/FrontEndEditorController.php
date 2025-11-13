@@ -108,7 +108,7 @@ class FrontEndEditorController extends ActionController
     {
         throw new PropagateResponseException(
             $this->errorController->accessDeniedAction($this->request, $message),
-            1687363749
+            1687363749,
         );
     }
 }

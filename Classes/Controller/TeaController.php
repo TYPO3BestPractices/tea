@@ -49,7 +49,7 @@ class TeaController extends ActionController
     {
         throw new PropagateResponseException(
             $this->errorController->pageNotFoundAction($this->request, $message),
-            1744021673
+            1744021673,
         );
     }
 }
