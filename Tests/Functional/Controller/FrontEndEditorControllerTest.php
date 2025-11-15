@@ -17,8 +17,15 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 {
     /** @var positive-int */
     private const UID_OF_PAGE = 1;
-    /** @var numeric-string */
-    private const UID_OF_TEA = '1';
+
+    /** @var positive-int */
+    private const UID_OF_TEA = 1;
+
+    /** @var array<non-empty-string, 1> */
+    private const TRUSTED_PROPERTIES = [
+        'title' => 1,
+        'description' => 1,
+    ];
 
     protected function setUp(): void
     {
@@ -78,7 +85,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
-            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
         ]);
 
         $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Delete/SoftDeletedTea.csv');
@@ -91,7 +98,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
-            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
         ]);
 
         self::assertForbiddenResponse($response);
@@ -104,7 +111,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
-            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
         ]);
 
         self::assertForbiddenResponse($response);
@@ -117,7 +124,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         $html = $this->getHtmlWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
         ]);
 
         self::assertStringContainsString(
@@ -134,7 +141,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
         ]);
 
         self::assertForbiddenResponse($response);
@@ -147,7 +154,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
         ]);
 
         self::assertForbiddenResponse($response);
@@ -159,9 +166,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
 
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesForEditForm(),
             'tx_tea_teafrontendeditor[action]' => 'update',
-            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
 
@@ -176,9 +183,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
 
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesForEditForm(),
             'tx_tea_teafrontendeditor[action]' => 'update',
-            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][description]' => 'The new description.',
         ]);
 
@@ -193,9 +200,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToOtherUser.csv');
 
         $response = $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesForEditForm(),
             'tx_tea_teafrontendeditor[action]' => 'update',
-            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
 
@@ -208,9 +215,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToNoUser.csv');
 
         $response = $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesForEditForm(),
             'tx_tea_teafrontendeditor[action]' => 'update',
-            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
 
@@ -231,7 +238,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     public function createActionStoresNewTeaWithProvidedTitle(): void
     {
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromNewForm(),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesForNewForm(),
             'tx_tea_teafrontendeditor[action]' => 'create',
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
@@ -245,7 +252,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     public function createActionSetsLoggedInUserAsOwnerOfProvidedTea(): void
     {
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromNewForm(),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesForNewForm(),
             'tx_tea_teafrontendeditor[action]' => 'create',
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
@@ -259,7 +266,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     public function createActionSetsDefaultStoragePidOfProvidedTea(): void
     {
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromNewForm(),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesForNewForm(),
             'tx_tea_teafrontendeditor[action]' => 'create',
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
@@ -291,37 +298,38 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         return $this->executeFrontendSubRequest($request, $context);
     }
 
-    private function getTrustedPropertiesFromEditForm(): string
+    /**
+     * @return non-empty-string
+     */
+    private function getTrustedPropertiesForEditForm(): string
     {
-        return $this->getTrustedPropertiesForFormInput([
-            'tea' => [
-                'title' => 1,
-                'description' => 1,
-                '__identity' => (int)self::UID_OF_TEA,
-            ],
-        ]);
-    }
+        $properties = self::TRUSTED_PROPERTIES;
+        $properties['__identity'] = self::UID_OF_TEA;
 
-    private function getTrustedPropertiesFromNewForm(): string
-    {
-        return $this->getTrustedPropertiesForFormInput([
-            'tea' => [
-                'title' => 1,
-                'description' => 1,
-            ],
-        ]);
+        return $this->getTrustedPropertiesForFormInput(['tea' => $properties]);
     }
 
     /**
-     * @param array<non-empty-string, array<non-empty-string, int>> $trustedProperties
+     * @return non-empty-string
+     */
+    private function getTrustedPropertiesForNewForm(): string
+    {
+        return $this->getTrustedPropertiesForFormInput(['tea' => self::TRUSTED_PROPERTIES]);
+    }
+
+    /**
+     * @param array<non-empty-string, array<non-empty-string, int<1, max>>> $trustedProperties
+     *
+     * @return non-empty-string
      */
     private function getTrustedPropertiesForFormInput(array $trustedProperties): string
     {
-        return $this
+        $result = $this
             ->get(HashService::class)
-            ->appendHmac(
-                \json_encode($trustedProperties, JSON_THROW_ON_ERROR),
-            );
+            ->appendHmac(\json_encode($trustedProperties, JSON_THROW_ON_ERROR));
+        self::assertNotSame('', $result);
+
+        return $result;
     }
 
     private static function assertForbiddenResponse(ResponseInterface $response): void
