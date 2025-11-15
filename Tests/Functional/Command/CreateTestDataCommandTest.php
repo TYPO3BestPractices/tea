@@ -88,7 +88,7 @@ final class CreateTestDataCommandTest extends FunctionalTestCase
             [
                 'pageUid' => 1,
                 '--delete-data-before' => true,
-            ]
+            ],
         );
 
         $this->assertCSVDataSet(__DIR__ . '/Fixtures/Database/TeasAfterDelete.csv');
@@ -102,7 +102,7 @@ final class CreateTestDataCommandTest extends FunctionalTestCase
             [
                 'pageUid' => 1,
                 '--delete-data-before' => true,
-            ]
+            ],
         );
 
         $this->assertCSVDataSet(__DIR__ . '/Fixtures/Database/TeasAfterDeleteOtherExistingTeas.csv');

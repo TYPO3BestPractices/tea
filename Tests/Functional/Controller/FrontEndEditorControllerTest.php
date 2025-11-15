@@ -37,7 +37,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         self::assertStringContainsString(
             'Please configure this plugin to be only visible if a website user is logged in.',
-            $html
+            $html,
         );
     }
 
@@ -122,7 +122,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         self::assertStringContainsString(
             '<input type="hidden" name="tx_tea_teafrontendeditor[tea][__identity]" value="1" />',
-            $html
+            $html,
         );
         self::assertStringContainsString('Godesberger Burgtee', $html);
     }
@@ -166,7 +166,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         ]);
 
         $this->assertCSVDataSet(
-            __DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithTitle.csv'
+            __DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithTitle.csv',
         );
     }
 
@@ -183,7 +183,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         ]);
 
         $this->assertCSVDataSet(
-            __DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithDescription.csv'
+            __DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithDescription.csv',
         );
     }
 
@@ -237,7 +237,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         ]);
 
         $this->assertCSVDataSet(
-            __DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithProvidedTitle.csv'
+            __DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithProvidedTitle.csv',
         );
     }
 
@@ -251,7 +251,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         ]);
 
         $this->assertCSVDataSet(
-            __DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithOwner.csv'
+            __DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithOwner.csv',
         );
     }
 
@@ -265,7 +265,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         ]);
 
         $this->assertCSVDataSet(
-            __DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithDefaultStoragePid.csv'
+            __DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithDefaultStoragePid.csv',
         );
     }
 
@@ -317,9 +317,10 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
      */
     private function getTrustedPropertiesForFormInput(array $trustedProperties): string
     {
-        return $this->get(HashService::class)
+        return $this
+            ->get(HashService::class)
             ->appendHmac(
-                \json_encode($trustedProperties, JSON_THROW_ON_ERROR)
+                \json_encode($trustedProperties, JSON_THROW_ON_ERROR),
             );
     }
 
@@ -329,7 +330,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         self::assertSame('Forbidden', $response->getReasonPhrase());
         self::assertStringContainsString(
             'You do not have the permissions to edit this tea.',
-            $response->getBody()->__toString()
+            $response->getBody()->__toString(),
         );
     }
 }
