@@ -128,10 +128,10 @@ Runs all fixers (except for the ones that need JavaScript).
 
 Runs all fixers for the PHP code.
 
-.. index:: Commands; composer fix:php:cs
+.. index:: Commands; composer fix:php:cs-fixer
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer fix:php:cs
+    ./Build/Scripts/runTests.sh -s composer fix:php:cs-fixer
 
 Fixes the code style with PHP-CS-Fixer.
 
