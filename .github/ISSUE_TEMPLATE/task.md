@@ -1,17 +1,21 @@
 ---
 name: Task
-about: If you want a new task
-title: "Task: Please add a speaking title"
-labels: 'task'
+about: Something is to be done, and it is neither a bug nor a new feature.
+title: ''
+type: task
 assignees: ''
 
 ---
 
-## Goal
-What would you like to achieve with this task? Maybe in form of a User Story.
+## Story
 
-## Acceptance Criteria
-- [ ] 
+As …, I want …, because ….
 
-## Additional Information
-Anything else that would be helpful to know to complete this task.
+## Acceptance criteria
+
+- [ ] …
+- [ ] …
+
+## Additional information
+
+(additional information that might help understand and implement this task)

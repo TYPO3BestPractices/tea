@@ -1,24 +1,32 @@
 ---
 name: Bug
-about: If you want a new bug
-title: "Bug: Please add a speaking title"
-labels: 'bug'
-type: 'bug'
+about: Something is broken.
+title: ''
+type: bug
 assignees: ''
 
 ---
 
-## Short problem description
-Describe the problem in short
+## Summary
+
+(one or two sentences summarizing the problem)
 
 ## Steps to reproduce the problem
-What steps are necessary to reproduce the problem
 
-## actual behavior
-What is the actual behavior
+1. …
+2. …
+3. …
+4. …
 
-## expected behavior
-What behavior is expected
+## Actual behavior
 
-## Additional Information
-Anything else that would be helpful to know to complete this task.
+(A description of the faulty behavior you're seeing. Add error messages or
+screenshot if possible/helpful.)
+
+## Expected behaviour
+
+(what you expect to happen instead)
+
+## Additional information
+
+(additional information that might help understand and fix this bug)

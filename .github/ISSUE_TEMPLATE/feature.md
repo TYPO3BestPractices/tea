@@ -1,17 +1,21 @@
 ---
 name: Feature
-about: If you want a new feature
-title: "Feature: Please add a speaking title"
-labels: 'feature'
+about: We would like to have something new.
+title: ''
+type: feature
 assignees: ''
 
 ---
 
-## Goal
-What would you like to achieve with this feature? Maybe in form of a User Story.
+## Story
 
-## Acceptance Criteria
-- [ ] 
+As …, I want …, because ….
 
-## Additional Information
-Anything else that would be helpful to know to implement this feature.
+## Acceptance criteria
+
+- [ ] …
+- [ ] …
+
+## Additional information
+
+(additional information that might help understand and implement this feature)
