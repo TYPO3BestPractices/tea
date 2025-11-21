@@ -178,9 +178,9 @@
 		"fix:composer:normalize": "@composer normalize --no-check-lock",
 		"fix:php": [
 			"@fix:php:rector",
-			"@fix:php:cs"
+			"@fix:php:cs-fixer"
 		],
-		"fix:php:cs": "php-cs-fixer fix --config ./Build/php-cs-fixer/php-cs-fixer.php",
+		"fix:php:cs-fixer": "php-cs-fixer fix --config ./Build/php-cs-fixer/php-cs-fixer.php",
 		"fix:php:rector": "rector --config=./Build/rector/rector.php",
 		"phpstan:baseline": "phpstan --generate-baseline=Build/phpstan/phpstan-baseline.neon --allow-empty-baseline --configuration=Build/phpstan/phpstan.neon",
 		"prepare-release": [
@@ -226,7 +226,7 @@
 		"fix": "Runs all automatic code style fixes.",
 		"fix:composer:normalize": "Normalizes composer.json file content.",
 		"fix:php": "Runs all fixers for the PHP code.",
-		"fix:php:cs": "Fixes the code style with PHP-CS-Fixer.",
+		"fix:php:cs-fixer": "Fixes the code style with PHP-CS-Fixer.",
 		"fix:php:rector": "Updates the code with Rector.",
 		"phpstan:baseline": "Updates the PHPStan baseline file to match the code.",
 		"prepare-release": "Removes development-only files in preparation of a TER release."
