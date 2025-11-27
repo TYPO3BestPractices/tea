@@ -15,13 +15,8 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestCon
 #[CoversClass(FrontEndEditorController::class)]
 final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestCase
 {
-    /** @var positive-int */
     private const UID_OF_PAGE = 1;
-
-    /** @var positive-int */
     private const UID_OF_TEA = 1;
-
-    /** @var array<non-empty-string, 1> */
     private const TRUSTED_PROPERTIES = [
         'title' => 1,
         'description' => 1,
