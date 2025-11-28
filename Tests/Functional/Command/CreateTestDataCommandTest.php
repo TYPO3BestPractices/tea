@@ -15,9 +15,6 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 #[CoversClass(CreateTestDataCommand::class)]
 final class CreateTestDataCommandTest extends FunctionalTestCase
 {
-    /**
-     * @var non-empty-string
-     */
     private const COMMAND_NAME = 'tea:create-test-data';
 
     protected array $testExtensionsToLoad = ['ttn/tea'];
