@@ -564,9 +564,9 @@ case ${TEST_SUITE} in
         ;;
     composerNormalize)
         if [ "${CGLCHECK_DRY_RUN}" -eq 1 ]; then
-            COMMAND="composer check:composer:normalize"
+            COMMAND="composer normalize --no-check-lock --dry-run"
         else
-            COMMAND="composer fix:composer:normalize"
+            COMMAND="composer normalize --no-check-lock"
         fi
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
