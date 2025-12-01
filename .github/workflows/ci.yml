@@ -51,7 +51,6 @@ jobs:
       fail-fast: false
       matrix:
         command:
-          - "composer:normalize"
           - "composer:psr-verify"
           - "composer:unused"
           - "json:lint"
@@ -81,6 +80,7 @@ jobs:
       matrix:
         command:
           - "phpmd"
+          - "composerNormalize"
   prepare-release:
     name: Check prepare release script
     runs-on: ubuntu-24.04
