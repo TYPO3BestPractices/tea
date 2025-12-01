@@ -78,6 +78,7 @@
 		"typo3-ter/tea": "self.version"
 	},
 	"conflict": {
+		"symfony/dependency-injection": "7.4.0",
 		"typo3/class-alias-loader": "< 1.1.0"
 	},
 	"prefer-stable": true,
