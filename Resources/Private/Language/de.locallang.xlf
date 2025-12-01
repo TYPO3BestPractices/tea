@@ -31,6 +31,14 @@
 				<source>Tea front-end editor</source>
 				<target>Frontend-Editor für Tee</target>
 			</trans-unit>
+			<trans-unit id="plugin.tea_frontend_editor.settings.tab.pagesAndFolders" approved="yes">
+				<source>Pages and folders</source>
+				<target>Seiten und Ordner</target>
+			</trans-unit>
+			<trans-unit id="plugin.tea_frontend_editor.settings.pagesAndFolders.storagePid" approved="yes">
+				<source>Folder for new tea records</source>
+				<target>Ordner für neue Teedatensätze</target>
+			</trans-unit>
 			<trans-unit id="plugin.tea.heading" approved="yes">
 				<source>Our selection of assorted teas</source>
 				<target>Unsere Auswahl an erlesenen Tees</target>

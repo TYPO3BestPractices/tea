@@ -258,7 +258,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     }
 
     #[Test]
-    public function createActionSetsDefaultStoragePidOfProvidedTea(): void
+    public function createActionSetsPidOfProvidedTeaToStoragePidSetInFlexforms(): void
     {
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesForNewForm(),
@@ -267,7 +267,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         ]);
 
         $this->assertCSVDataSet(
-            __DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithDefaultStoragePid.csv',
+            __DIR__ . '/Assertions/Database/FrontEndEditorController/Create/CreatedTeaWithPid.csv',
         );
     }
 

@@ -40,6 +40,13 @@ call_user_func(
             'EXT:tea/Resources/Public/Icons/Extension.svg',
         );
 
+        // These two commands add the flexform configuration for the plugin.
+        $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$editorPluginSignature] = 'pi_flexform';
+        ExtensionManagementUtility::addPiFlexFormValue(
+            $editorPluginSignature,
+            'FILE:EXT:tea/Configuration/FlexForms/FrontEndEditor.xml'
+        );
+
         // This removes the default controls from the plugins.
         $controlsToRemove = 'recursive,pages';
         $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$indexPluginSignature] = $controlsToRemove;
