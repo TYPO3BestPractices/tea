@@ -11,6 +11,40 @@ if [ "${CI}" != "true" ]; then
     trap 'echo "runTests.sh SIGINT signal emitted";cleanUp;exit 2' SIGINT
 fi
 
+printSummary() {
+    cleanUp
+
+    echo "" >&2
+    echo "###########################################################################" >&2
+    echo "Result of ${TEST_SUITE}" >&2
+    echo "Container runtime: ${CONTAINER_BIN}" >&2
+    echo "Container suffix: ${SUFFIX}"
+    if [[ ${TEST_SUITE} =~ ^(npm|lintCss|lintJs)$ ]]; then
+        echo "NODE: ${NODE_VERSION}" >&2
+    else
+        echo "PHP: ${PHP_VERSION}" >&2
+        echo "TYPO3: ${CORE_VERSION}" >&2
+    fi
+    if [[ ${TEST_SUITE} =~ ^functional$ ]]; then
+        case "${DBMS}" in
+            mariadb|mysql|postgres)
+                echo "DBMS: ${DBMS}  version ${DBMS_VERSION}  driver ${DATABASE_DRIVER}" >&2
+                ;;
+            sqlite)
+                echo "DBMS: ${DBMS}  driver pdo_sqlite" >&2
+                ;;
+        esac
+    fi
+    if [[ ${SUITE_EXIT_CODE} -eq 0 ]]; then
+        echo "SUCCESS" >&2
+    else
+        echo "FAILURE" >&2
+    fi
+    echo "###########################################################################" >&2
+    echo "" >&2
+    exit ${SUITE_EXIT_CODE}
+}
+
 waitFor() {
     local HOST=${1}
     local PORT=${2}
@@ -685,39 +719,5 @@ case ${TEST_SUITE} in
         ;;
 esac
 
-cleanUp
-
-# Print summary
-echo "" >&2
-echo "###########################################################################" >&2
-echo "Result of ${TEST_SUITE}" >&2
-if [[ ${TEST_SUITE} =~ ^(npm|lintCss|lintJs)$ ]]; then
-    echo "NODE: ${NODE_VERSION}" >&2
-else
-    echo "PHP: ${PHP_VERSION}" >&2
-    echo "TYPO3: ${CORE_VERSION}" >&2
-fi
-echo "CONTAINER_BIN: ${CONTAINER_BIN}"
-if [[ ${TEST_SUITE} =~ ^functional$ ]]; then
-    case "${DBMS}" in
-        mariadb|mysql)
-            echo "DBMS: ${DBMS}  version ${DBMS_VERSION}  driver ${DATABASE_DRIVER}" >&2
-            ;;
-        postgres)
-            echo "DBMS: ${DBMS}  version ${DBMS_VERSION}  driver pdo_pgsql" >&2
-            ;;
-        sqlite)
-            echo "DBMS: ${DBMS}  driver pdo_sqlite" >&2
-            ;;
-    esac
-fi
-if [[ ${SUITE_EXIT_CODE} -eq 0 ]]; then
-    echo "SUCCESS" >&2
-else
-    echo "FAILURE" >&2
-fi
-echo "###########################################################################" >&2
-echo "" >&2
-
-# Exit with code of test suite - This script return non-zero if the executed test failed.
-exit $SUITE_EXIT_CODE
+# Cleanup, print summary && exit with exitcode
+printSummary
