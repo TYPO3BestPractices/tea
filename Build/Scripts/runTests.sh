@@ -347,7 +347,6 @@ CI_PARAMS="${CI_PARAMS:-}"
 CONTAINER_HOST="host.docker.internal"
 # shellcheck disable=SC2034 # This variable will be needed when we try to clean up the root folder
 PHPSTAN_CONFIG_FILE="Build/phpstan/phpstan.neon"
-IS_CORE_CI=0
 
 # Option parsing updates above default vars
 # Reset in case getopts has been used previously in the shell
@@ -431,7 +430,6 @@ handleDbmsOptions
 
 # ENV var "CI" is set by gitlab-ci. Use it to force some CI details.
 if [ "${CI}" == "true" ]; then
-    IS_CORE_CI=1
     CONTAINER_INTERACTIVE=""
 fi
 
@@ -693,11 +691,6 @@ cleanUp
 echo "" >&2
 echo "###########################################################################" >&2
 echo "Result of ${TEST_SUITE}" >&2
-if [[ ${IS_CORE_CI} -eq 1 ]]; then
-    echo "Environment: CI" >&2
-else
-    echo "Environment: local" >&2
-fi
 if [[ ${TEST_SUITE} =~ ^(npm|lintCss|lintJs)$ ]]; then
     echo "NODE: ${NODE_VERSION}" >&2
 else
