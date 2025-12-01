@@ -37,7 +37,7 @@
 			</trans-unit>
 			<trans-unit id="plugin.tea_frontend_editor.settings.pagesAndFolders.storagePid" approved="yes">
 				<source>Folder for new tea records</source>
-				<target>Ordner für neue Teedatensätzen</target>
+				<target>Ordner für neue Teedatensätze</target>
 			</trans-unit>
 			<trans-unit id="plugin.tea.heading" approved="yes">
 				<source>Our selection of assorted teas</source>
