@@ -201,8 +201,7 @@ Options:
     -i version
         Specify a specific database version
         With "-d mariadb":
-            - 10.3   short-term, maintained until 2023-05-25 (default)
-            - 10.4   short-term, maintained until 2024-06-18
+            - 10.4   short-term, maintained until 2024-06-18 (default)
             - 10.5   short-term, maintained until 2025-06-24
             - 10.6   long-term, maintained until 2026-06
             - 10.7   short-term, no longer maintained
@@ -211,12 +210,16 @@ Options:
             - 10.10  short-term, maintained until 2023-11
             - 10.11  long-term, maintained until 2028-02
             - 11.0   development series
-            - 11.1   short-term development series
+            - 11.1   short-term development series, maintained until 2024-08
+            - 11.2   short-term development series, maintained until 2024-11
+            - 11.3   short-term development series, rolling release
+            - 11.4   long-term, maintained until 2029-05
         With "-d mysql":
-            - 5.5   unmaintained since 2018-12
-            - 5.6   unmaintained since 2021-02
-            - 5.7   maintained until 2023-10
-            - 8.0   maintained until 2026-04 (default)
+            - 8.0   maintained until 2026-04 (default) LTS
+            - 8.1   unmaintained since 2023-10
+            - 8.2   unmaintained since 2024-01
+            - 8.3   maintained until 2024-04
+            - 8.4   maintained until 2032-04 LTS
         With "-d postgres":
             - 10    unmaintained since 2022-11-10 (default)
             - 11    unmaintained since 2023-11-09
