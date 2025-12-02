@@ -77,9 +77,6 @@
 	"replace": {
 		"typo3-ter/tea": "self.version"
 	},
-	"conflict": {
-		"symfony/dependency-injection": "7.4.0"
-	},
 	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
