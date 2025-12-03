@@ -2,3 +2,9 @@
 ,"uid","pid","CType","list_type"
 ,1,2,"tea_teaindex",""
 ,2,4,"tea_teashow",""
+"be_groups",,
+,"uid","explicit_allowdeny"
+,1,""
+,2,"tt_content:CType:list"
+,3,"tt_content:CType:tea_teaindex"
+,4,"tt_content:CType:list,tt_content:CType:tea_teaindex,tt_content:CType:tea_teashow"

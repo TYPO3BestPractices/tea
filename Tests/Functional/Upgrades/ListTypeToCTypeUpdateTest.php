@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\Test;
 use TTN\Tea\Upgrades\AbstractListTypeToCTypeUpdate;
 use TTN\Tea\Upgrades\ListTypeToCTypeUpdate;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
+use function PHPUnit\Framework\assertTrue;
 
 #[CoversClass(ListTypeToCTypeUpdate::class)]
 final class ListTypeToCTypeUpdateTest extends FunctionalTestCase
@@ -51,7 +52,6 @@ final class ListTypeToCTypeUpdateTest extends FunctionalTestCase
     #[Test]
     public function hasListTypeToCTypeMapping(): void
     {
-
         $expected = [
             'tea_teaindex' => 'tea_teaindex',
             'tea_teashow' => 'tea_teashow',
@@ -61,12 +61,47 @@ final class ListTypeToCTypeUpdateTest extends FunctionalTestCase
     }
 
     #[Test]
-    public function executeUpdate(): void
+    public function updateNecessary(): void
     {
         $this->importCSVDataSet(
             self::FIXTURES_PREFIX . 'PluginAsListType.csv'
         );
+        self::assertTrue($this->subject->updateNecessary());
+    }
+
+    #[Test]
+    public function updateNotNecessary(): void
+    {
+        $this->importCSVDataSet(
+            self::FIXTURES_PREFIX . 'PluginAsCType.csv'
+        );
+        self::assertFalse($this->subject->updateNecessary());
+    }
+
+    #[Test]
+    public function executeUpdateOnListType(): void
+    {
+        $this->importCSVDataSet(
+            self::FIXTURES_PREFIX . 'PluginAsListType.csv'
+        );
+        self::assertTrue($this->subject->updateNecessary());
         $result = $this->subject->executeUpdate();
+        self::assertTrue($result);
+        self::assertFalse($this->subject->updateNecessary());
+        $this->assertCSVDataSet(
+            self::FIXTURES_PREFIX . 'PluginAsCType.csv'
+        );
+    }
+
+    #[Test]
+    public function executeUpdateOnCType(): void
+    {
+        $this->importCSVDataSet(
+            self::FIXTURES_PREFIX . 'PluginAsCType.csv'
+        );
+        self::assertFalse($this->subject->updateNecessary());
+        $result = $this->subject->executeUpdate();
+        self::assertTrue($result);
         $this->assertCSVDataSet(
             self::FIXTURES_PREFIX . 'PluginAsCType.csv'
         );
