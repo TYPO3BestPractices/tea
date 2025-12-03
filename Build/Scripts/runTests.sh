@@ -266,8 +266,8 @@ Options:
     -t <12.4|13.4>
         Only with -s composerUpdateMin|composerUpdateMax
         Specifies the TYPO3 CORE Version to be used
-            - 12.4: (default) use TYPO3 v12 with typo3/cms-composer-installers ^5
-            - 13.4: use TYPO3 v13 with typo3/cms-composer-installers ^5
+            - 12.4: (default) use TYPO3 v12
+            - 13.4: use TYPO3 v13
 
     -p <8.1|8.2|8.3|8.4|8.5>
         Specifies the PHP minor version to be used
