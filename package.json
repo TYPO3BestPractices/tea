@@ -24,7 +24,7 @@
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-prettier": "^5.5.5",
 		"install": "^0.13.0",
-		"prettier": "^3.7.4",
+		"prettier": "^3.8.0",
 		"stylelint": "^16.26.1",
 		"stylelint-config-standard-scss": "^16.0.0",
 		"stylelint-no-browser-hacks": "^2.0.0"
