@@ -1,14 +1,14 @@
 "tt_content"
-,"uid","pid","CType","header","list_type","pi_flexform"
-,1,1,"list","Tea FrontEnd Editor","tea_teafrontendeditor","<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?>
-                                                           <T3FlexForms>
-                                                               <data>
-                                                                   <sheet index=""pagesAndFolders"">
-                                                                       <language index=""lDEF"">
-                                                                           <field index=""persistence.storagePid"">
-                                                                               <value index=""vDEF"">2</value>
-                                                                           </field>
-                                                                        </language>
-                                                                    </sheet>
-                                                               </data>
-                                                           </T3FlexForms>"
+,"uid","pid","CType","header","pi_flexform"
+,1,1,"tea_teafrontendeditor","Tea FrontEnd Editor","<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?>
+                                                    <T3FlexForms>
+                                                        <data>
+                                                            <sheet index=""pagesAndFolders"">
+                                                                <language index=""lDEF"">
+                                                                    <field index=""persistence.storagePid"">
+                                                                        <value index=""vDEF"">2</value>
+                                                                    </field>
+                                                                 </language>
+                                                             </sheet>
+                                                        </data>
+                                                    </T3FlexForms>"
