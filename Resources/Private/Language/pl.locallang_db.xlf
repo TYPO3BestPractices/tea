@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-	<file source-language="en" target-language="pl" datatype="plaintext" original="messages">
-		<header/>
-		<body>
-			<trans-unit id="tx_tea_domain_model_tea" approved="yes">
-				<source>Tea</source>
-				<target>Herbata</target>
-			</trans-unit>
-			<trans-unit id="tx_tea_domain_model_tea.tabs.access" approved="yes">
-				<source>Access</source>
-				<target>Dostęp</target>
-			</trans-unit>
-			<trans-unit id="tx_tea_domain_model_tea.title" approved="yes">
-				<source>Title</source>
-				<target>Tytuł</target>
-			</trans-unit>
-			<trans-unit id="tx_tea_domain_model_tea.description" approved="yes">
-				<source>Description</source>
-				<target>Opis</target>
-			</trans-unit>
-			<trans-unit id="tx_tea_domain_model_tea.image" approved="yes">
-				<source>Image</source>
-				<target>Obraz</target>
-			</trans-unit>
-			<trans-unit id="tx_tea_domain_model_tea.owner" approved="yes">
-				<source>Website user who created this record</source>
-				<target>Użytkownik strony, który utworzył ten rekord</target>
-			</trans-unit>
-			<trans-unit id="tx_tea_domain_model_tea.fe_group" approved="yes">
-				<source>Usergroup Access Rights</source>
-				<target>Prawa dostępu grupy użytkowników</target>
-			</trans-unit>
-		</body>
-	</file>
+  <file source-language="en" target-language="pl" datatype="plaintext" original="messages">
+    <header/>
+    <body>
+      <trans-unit id="tx_tea_domain_model_tea" approved="yes">
+        <source>Tea</source>
+        <target>Herbata</target>
+      </trans-unit>
+      <trans-unit id="tx_tea_domain_model_tea.tabs.access" approved="yes">
+        <source>Access</source>
+        <target>Dostęp</target>
+      </trans-unit>
+      <trans-unit id="tx_tea_domain_model_tea.title" approved="yes">
+        <source>Title</source>
+        <target>Tytuł</target>
+      </trans-unit>
+      <trans-unit id="tx_tea_domain_model_tea.description" approved="yes">
+        <source>Description</source>
+        <target>Opis</target>
+      </trans-unit>
+      <trans-unit id="tx_tea_domain_model_tea.image" approved="yes">
+        <source>Image</source>
+        <target>Obraz</target>
+      </trans-unit>
+      <trans-unit id="tx_tea_domain_model_tea.owner" approved="yes">
+        <source>Website user who created this record</source>
+        <target>Użytkownik strony, który utworzył ten rekord</target>
+      </trans-unit>
+      <trans-unit id="tx_tea_domain_model_tea.fe_group" approved="yes">
+        <source>Usergroup Access Rights</source>
+        <target>Prawa dostępu grupy użytkowników</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
