@@ -1,112 +1,112 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-	<file source-language="en" target-language="de" datatype="plaintext" original="messages">
-		<header/>
-		<body>
-			<trans-unit id="plugin.tea_index" approved="yes">
-				<source>Tea list</source>
-				<target>Teeliste</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea_index.settings.tab.pagesAndFolders" approved="yes">
-				<source>Pages and folders</source>
-				<target>Seiten und Ordner</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea_index.settings.pagesAndFolders.singleViewPageUid" approved="yes">
-				<source>Page with the single view</source>
-				<target>Seite mit der Einzelansicht</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea_index.settings.pagesAndFolders.storagePid" approved="yes">
-				<source>Folders with the tea records</source>
-				<target>Ordner mit den Teedatensätzen</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea_index.settings.pagesAndFolders.recursive" approved="yes">
-				<source>Recursion into subfolders</source>
-				<target>Rekursion in Unterordner</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea_show" approved="yes">
-				<source>Tea single view</source>
-				<target>Tee-Einzelansicht</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea_frontend_editor" approved="yes">
-				<source>Tea front-end editor</source>
-				<target>Frontend-Editor für Tee</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea_frontend_editor.settings.tab.pagesAndFolders" approved="yes">
-				<source>Pages and folders</source>
-				<target>Seiten und Ordner</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea_frontend_editor.settings.pagesAndFolders.storagePid" approved="yes">
-				<source>Folder for new tea records</source>
-				<target>Ordner für neue Teedatensätze</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea.heading" approved="yes">
-				<source>Our selection of assorted teas</source>
-				<target>Unsere Auswahl an erlesenen Tees</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea.noTeasAvailable" approved="yes">
-				<source>No teas available.</source>
-				<target>Keine Tees verfügbar.</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea.property.uid" approved="yes">
-				<source>UID</source>
-				<target>UID</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea.property.title" approved="yes">
-				<source>Title</source>
-				<target>Titel</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.index.heading" approved="yes">
-				<source>My teas</source>
-				<target>Meine Tees</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.message.noTeas" approved="yes">
-				<source>You have not created any teas yet.</source>
-				<target>Du hast noch keine Tees angelegt.</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.property.uid" approved="yes">
-				<source>UID</source>
-				<target>UID</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.property.title" approved="yes">
-				<source>Title</source>
-				<target>Titel</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.property.description" approved="yes">
-				<source>Description</source>
-				<target>Beschreibung</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.edit.heading" approved="yes">
-				<source>Edit tea</source>
-				<target>Tee bearbeiten</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.actions" approved="yes">
-				<source>Actions</source>
-				<target>Aktionen</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.edit" approved="yes">
-				<source>Edit</source>
-				<target>Bearbeiten</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.cancel" approved="yes">
-				<source>Cancel</source>
-				<target>Abbrechen</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.save" approved="yes">
-				<source>Save</source>
-				<target>Speichern</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.new" approved="yes">
-				<source>Create new tea</source>
-				<target>Neuen Tee anlegen</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.delete" approved="yes">
-				<source>Delete</source>
-				<target>Löschen</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.new.heading" approved="yes">
-				<source>Create new tea</source>
-				<target>Neuen Tee anlegen</target>
-			</trans-unit>
-		</body>
-	</file>
+  <file source-language="en" target-language="de" datatype="plaintext" original="messages">
+    <header/>
+    <body>
+      <trans-unit id="plugin.tea_index" approved="yes">
+        <source>Tea list</source>
+        <target>Teeliste</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea_index.settings.tab.pagesAndFolders" approved="yes">
+        <source>Pages and folders</source>
+        <target>Seiten und Ordner</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea_index.settings.pagesAndFolders.singleViewPageUid" approved="yes">
+        <source>Page with the single view</source>
+        <target>Seite mit der Einzelansicht</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea_index.settings.pagesAndFolders.storagePid" approved="yes">
+        <source>Folders with the tea records</source>
+        <target>Ordner mit den Teedatensätzen</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea_index.settings.pagesAndFolders.recursive" approved="yes">
+        <source>Recursion into subfolders</source>
+        <target>Rekursion in Unterordner</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea_show" approved="yes">
+        <source>Tea single view</source>
+        <target>Tee-Einzelansicht</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea_frontend_editor" approved="yes">
+        <source>Tea front-end editor</source>
+        <target>Frontend-Editor für Tee</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea_frontend_editor.settings.tab.pagesAndFolders" approved="yes">
+        <source>Pages and folders</source>
+        <target>Seiten und Ordner</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea_frontend_editor.settings.pagesAndFolders.storagePid" approved="yes">
+        <source>Folder for new tea records</source>
+        <target>Ordner für neue Teedatensätze</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea.heading" approved="yes">
+        <source>Our selection of assorted teas</source>
+        <target>Unsere Auswahl an erlesenen Tees</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea.noTeasAvailable" approved="yes">
+        <source>No teas available.</source>
+        <target>Keine Tees verfügbar.</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea.property.uid" approved="yes">
+        <source>UID</source>
+        <target>UID</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea.property.title" approved="yes">
+        <source>Title</source>
+        <target>Titel</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.index.heading" approved="yes">
+        <source>My teas</source>
+        <target>Meine Tees</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.message.noTeas" approved="yes">
+        <source>You have not created any teas yet.</source>
+        <target>Du hast noch keine Tees angelegt.</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.property.uid" approved="yes">
+        <source>UID</source>
+        <target>UID</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.property.title" approved="yes">
+        <source>Title</source>
+        <target>Titel</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.property.description" approved="yes">
+        <source>Description</source>
+        <target>Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.edit.heading" approved="yes">
+        <source>Edit tea</source>
+        <target>Tee bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.actions" approved="yes">
+        <source>Actions</source>
+        <target>Aktionen</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.edit" approved="yes">
+        <source>Edit</source>
+        <target>Bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.cancel" approved="yes">
+        <source>Cancel</source>
+        <target>Abbrechen</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.save" approved="yes">
+        <source>Save</source>
+        <target>Speichern</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.new" approved="yes">
+        <source>Create new tea</source>
+        <target>Neuen Tee anlegen</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.delete" approved="yes">
+        <source>Delete</source>
+        <target>Löschen</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.new.heading" approved="yes">
+        <source>Create new tea</source>
+        <target>Neuen Tee anlegen</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

@@ -42,7 +42,7 @@ indent_size = 2
 
 # XLF files
 [*.xlf]
-indent_style = tab
+indent_size = 2
 
 # .htaccess
 [.htaccess]
