@@ -673,7 +673,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     phpmd)
-        COMMAND=".Build/bin/phpmd Classes text Build/phpmd/phpmd.xml"
+        COMMAND=".Build/bin/phpmd Classes text Build/phpmd/config.xml"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpmd-${SUFFIX} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
