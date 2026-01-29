@@ -505,11 +505,14 @@ shift $((OPTIND - 1))
 ${CONTAINER_BIN} network create ${NETWORK} >/dev/null
 
 if [ "${CONTAINER_BIN}" == "docker" ]; then
+    # docker needs the add-host for xdebug remote debugging. podman has host.container.internal built in
     CONTAINER_COMMON_PARAMS="${CONTAINER_INTERACTIVE} --rm --network ${NETWORK} --add-host "${CONTAINER_HOST}:host-gateway" ${USERSET} -v ${ROOT_DIR}:${ROOT_DIR} -w ${ROOT_DIR}"
+    TMPFS_MOUNT_OPTIONS="rw,noexec,nosuid,uid=${HOST_UID},gid=${HOST_PID}"
 else
     # podman
     CONTAINER_HOST="host.containers.internal"
     CONTAINER_COMMON_PARAMS="${CONTAINER_INTERACTIVE} ${CI_PARAMS} --rm --network ${NETWORK} -v ${ROOT_DIR}:${ROOT_DIR} -w ${ROOT_DIR}"
+    TMPFS_MOUNT_OPTIONS="rw,noexec,nosuid"
 fi
 
 if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
