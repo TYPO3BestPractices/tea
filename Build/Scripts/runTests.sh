@@ -563,7 +563,6 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     composerNormalize)
-        COMMAND="composer check:composer:normalize"
         if [ "${CGLCHECK_DRY_RUN}" -eq 1 ]; then
             COMMAND="composer check:composer:normalize"
         else
