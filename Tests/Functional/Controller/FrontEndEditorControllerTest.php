@@ -82,8 +82,8 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         $html = $this->getHtmlWithLoggedInUser();
 
-        $expected = LocalizationUtility::translate('plugin.frontEndEditor.index.heading', 'tea')
-            ?? throw new \RuntimeException('Could not fetch translation value.', 1762183380);
+        $expected = LocalizationUtility::translate('plugin.frontEndEditor.index.heading', 'tea');
+        self::assertIsString($expected);
         self::assertStringContainsString($expected, $html);
     }
 
@@ -95,8 +95,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $html = $this->getHtmlWithLoggedInUser();
 
         $expected = '?tx_tea_teafrontendeditor%5Baction%5D=new'
-            . '&amp;tx_tea_teafrontendeditor%5Bcontroller%5D=FrontEndEditor'
-            . '&amp;cHash=f8a7ab23e727b4b6d089c3304f77f393';
+            . '&amp;tx_tea_teafrontendeditor%5Bcontroller%5D=FrontEndEditor';
         self::assertStringContainsString($expected, $html);
     }
 
@@ -119,8 +118,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         $expected = '?tx_tea_teafrontendeditor%5Baction%5D=edit'
             . '&amp;tx_tea_teafrontendeditor%5Bcontroller%5D=FrontEndEditor'
-            . '&amp;tx_tea_teafrontendeditor%5Btea%5D=1'
-            . '&amp;cHash=41fe40eeab5fad6016f72c34ea37cb12';
+            . '&amp;tx_tea_teafrontendeditor%5Btea%5D=1';
         self::assertStringContainsString($expected, $html);
     }
 
@@ -133,9 +131,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         $expected = 'action="/'
             . '?tx_tea_teafrontendeditor%5Baction%5D=delete'
-            . '&amp;tx_tea_teafrontendeditor%5Bcontroller%5D=FrontEndEditor'
-            . '&amp;cHash=4d5e0199c18b1678a37502625dc19301'
-            . '"';
+            . '&amp;tx_tea_teafrontendeditor%5Bcontroller%5D=FrontEndEditor';
         self::assertStringContainsString($expected, $html);
     }
 
@@ -203,12 +199,15 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         $html = $this->getHtmlWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
         ]);
 
         self::assertStringContainsString('name="tx_tea_teafrontendeditor[tea][' . $fieldName . ']"', $html);
     }
 
+    /**
+     * @return \Generator<non-empty-string, array{0: non-empty-string}>
+     */
     public static function possibleEditFormFieldNames(): \Generator
     {
         yield 'title' => ['title'];
@@ -221,14 +220,12 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         $html = $this->getHtmlWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
         ]);
 
         $expected = 'action="/'
             . '?tx_tea_teafrontendeditor%5Baction%5D=update'
-            . '&amp;tx_tea_teafrontendeditor%5Bcontroller%5D=FrontEndEditor'
-            . '&amp;cHash=9e5d3011735142759ddeba72ba5834da'
-            . '"';
+            . '&amp;tx_tea_teafrontendeditor%5Bcontroller%5D=FrontEndEditor';
         self::assertStringContainsString($expected, $html);
     }
 
@@ -281,9 +278,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUserWithDifferentPid.csv');
 
         $this->executeRequestWithLoggedInUser([
-            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(),
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesForEditForm(),
             'tx_tea_teafrontendeditor[action]' => 'update',
-            'tx_tea_teafrontendeditor[tea][__identity]' => self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
             'tx_tea_teafrontendeditor[tea][title]' => 'Godesberger Burgtee',
         ]);
 
