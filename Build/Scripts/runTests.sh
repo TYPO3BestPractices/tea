@@ -493,7 +493,7 @@ mkdir -p .Build/public/typo3temp/var/tests
 IMAGE_PHP="ghcr.io/typo3/core-testing-$(echo "php${PHP_VERSION}" | sed -e 's/\.//'):latest"
 IMAGE_NODE="docker.io/node:${NODE_VERSION}-alpine"
 IMAGE_ALPINE="docker.io/alpine:3.8"
-IMAGE_SHELLCHECK="docker.io/koalaman/shellcheck:v0.10.0"
+IMAGE_SHELLCHECK="docker.io/koalaman/shellcheck:v0.11.0"
 IMAGE_DOCS="ghcr.io/typo3-documentation/render-guides:latest"
 IMAGE_MARIADB="docker.io/mariadb:${DBMS_VERSION}"
 IMAGE_MYSQL="docker.io/mysql:${DBMS_VERSION}"
