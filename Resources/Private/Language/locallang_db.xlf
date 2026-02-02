@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" datatype="plaintext" original="messages">
-    <header/>
-    <body>
-      <trans-unit id="tx_tea_domain_model_tea">
-        <source>Tea</source>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.tabs.access">
-        <source>Access</source>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.title">
-        <source>Title</source>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.description">
-        <source>Description</source>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.image">
-        <source>Image</source>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.owner">
-        <source>Website user who created this record</source>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.fe_group">
-        <source>Usergroup Access Rights</source>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.hidden">
-        <source>Visible</source>
-      </trans-unit>
-    </body>
+	<file source-language="en" datatype="plaintext" original="messages">
+		<header/>
+		<body>
+			<trans-unit id="tx_tea_domain_model_tea">
+				<source>Tea</source>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.tabs.access">
+				<source>Access</source>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.image">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.owner">
+				<source>Website user who created this record</source>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.fe_group">
+				<source>Usergroup Access Rights</source>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.hidden">
+				<source>Visible</source>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.pluginGroup">
+				<source>Tea</source>
+			</trans-unit>
+			<trans-unit id="plugin.tea_index.title">
+				<source>Tea Index</source>
+			</trans-unit>
+			<trans-unit id="plugin.tea_index.description">
+				<source>Tea plugin to show the listview.</source>
+			</trans-unit>
+		</body>
   </file>
 </xliff>

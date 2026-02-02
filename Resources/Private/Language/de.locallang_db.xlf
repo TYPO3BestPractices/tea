@@ -1,40 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="de" datatype="plaintext" original="messages">
-    <header/>
-    <body>
-      <trans-unit id="tx_tea_domain_model_tea" approved="yes">
-        <source>Tea</source>
-        <target>Tee</target>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.tabs.access" approved="yes">
-        <source>Access</source>
-        <target>Zugriff</target>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.title" approved="yes">
-        <source>Title</source>
-        <target>Titel</target>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.description" approved="yes">
-        <source>Description</source>
-        <target>Beschreibung</target>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.image" approved="yes">
-        <source>Image</source>
-        <target>Bild</target>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.owner" approved="yes">
-        <source>Website user who created this record</source>
-        <target>Website-Benutzer, der diesen Datensatz erstellt hat</target>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.fe_group" approved="yes">
-        <source>Usergroup Access Rights</source>
-        <target>Zugriffsrechte für Benutzergruppen</target>
-      </trans-unit>
-      <trans-unit id="tx_tea_domain_model_tea.hidden" approved="yes">
-        <source>Visible</source>
-        <target>Sichtbar</target>
-      </trans-unit>
-    </body>
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages">
+		<header/>
+		<body>
+			<trans-unit id="tx_tea_domain_model_tea" approved="yes">
+				<source>Tea</source>
+				<target>Tee</target>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.tabs.access" approved="yes">
+				<source>Access</source>
+				<target>Zugriff</target>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.title" approved="yes">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.description" approved="yes">
+				<source>Description</source>
+				<target>Beschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.image" approved="yes">
+				<source>Image</source>
+				<target>Bild</target>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.owner" approved="yes">
+				<source>Website user who created this record</source>
+				<target>Website-Benutzer, der diesen Datensatz erstellt hat</target>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.fe_group" approved="yes">
+				<source>Usergroup Access Rights</source>
+				<target>Zugriffsrechte für Benutzergruppen</target>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.hidden" approved="yes">
+				<source>Visible</source>
+				<target>Sichtbar</target>
+			</trans-unit>
+			<trans-unit id="tx_tea_domain_model_tea.pluginGroup">
+				<source>Tea plugins</source>
+				<target>Tea</target>
+			</trans-unit>
+			<trans-unit id="plugin.tea_index.title">
+				<source>Tea Index</source>
+				<target>Teeliste</target>
+			</trans-unit>
+			<trans-unit id="plugin.tea_index.description">
+				<source>Tea plugin to show the listview.</source>
+				<target>Tea Plugin für eine Listenansicht.</target>
+			</trans-unit>
+		</body>
   </file>
 </xliff>
