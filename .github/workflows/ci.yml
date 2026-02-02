@@ -19,6 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Install Composer dependencies
+        # @todo Linting only against ^13.4 - why not against ^12.4 ?
         run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composerUpdateMax -t 13.4
       - name: Lint PHP
         run: |
@@ -27,6 +28,8 @@ jobs:
       fail-fast: false
       matrix:
         php-version:
+          # @todo 8.1 does not make sense with TYPOP3 ^13.4 hard coded in the `composer install` step above.
+          #       Drop it or use `^12.4` above or make core version part of the matrix.
           - "8.1"
           - "8.2"
           - "8.3"
