@@ -137,10 +137,47 @@ jobs:
             php-version: "8.1"
             composer-dependencies: Max
           - typo3-version: "12.4"
+            php-version: "8.2"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.2"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
+            php-version: "8.3"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.3"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
+            php-version: "8.4"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.4"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
             php-version: "8.5"
             composer-dependencies: Min
           - typo3-version: "12.4"
             php-version: "8.5"
+            composer-dependencies: Max
+        exclude:
+          - typo3-version: "12.4"
+            php-version: "8.2"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.2"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
+            php-version: "8.3"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.3"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
+            php-version: "8.4"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.4"
             composer-dependencies: Max
   functional-tests:
     name: Functional tests
@@ -170,10 +207,47 @@ jobs:
             php-version: "8.1"
             composer-dependencies: Max
           - typo3-version: "12.4"
+            php-version: "8.2"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.2"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
+            php-version: "8.3"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.3"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
+            php-version: "8.4"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.4"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
             php-version: "8.5"
             composer-dependencies: Min
           - typo3-version: "12.4"
             php-version: "8.5"
+            composer-dependencies: Max
+        exclude:
+          - typo3-version: "12.4"
+            php-version: "8.2"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.2"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
+            php-version: "8.3"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.3"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
+            php-version: "8.4"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.4"
             composer-dependencies: Max
   shellcheck:
     name: Check shell scripts
