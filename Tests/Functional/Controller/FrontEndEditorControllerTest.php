@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace TTN\Tea\Tests\Functional\Controller;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
 use TTN\Tea\Controller\FrontEndEditorController;
 use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestContext;
 
@@ -74,6 +76,66 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     }
 
     #[Test]
+    public function indexActionHasHeadline(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+
+        $html = $this->getHtmlWithLoggedInUser();
+
+        $expected = LocalizationUtility::translate('plugin.frontEndEditor.index.heading', 'tea');
+        self::assertIsString($expected);
+        self::assertStringContainsString($expected, $html);
+    }
+
+    #[Test]
+    public function indexActionByDefaultHasLinkToNewAction(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+
+        $html = $this->getHtmlWithLoggedInUser();
+
+        $expected = '?tx_tea_teafrontendeditor%5Baction%5D=new'
+            . '&amp;tx_tea_teafrontendeditor%5Bcontroller%5D=FrontEndEditor';
+        self::assertStringContainsString($expected, $html);
+    }
+
+    #[Test]
+    public function indexActionRendersTeaUid(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUserWithHigherUid.csv');
+
+        $html = $this->getHtmlWithLoggedInUser();
+
+        self::assertStringContainsString('1337', $html);
+    }
+
+    #[Test]
+    public function indexActionWithHasEditTeaLink(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+
+        $html = $this->getHtmlWithLoggedInUser();
+
+        $expected = '?tx_tea_teafrontendeditor%5Baction%5D=edit'
+            . '&amp;tx_tea_teafrontendeditor%5Bcontroller%5D=FrontEndEditor'
+            . '&amp;tx_tea_teafrontendeditor%5Btea%5D=1';
+        self::assertStringContainsString($expected, $html);
+    }
+
+    #[Test]
+    public function indexActionWithHasDeleteTeaForm(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+
+        $html = $this->getHtmlWithLoggedInUser();
+
+        $expected = 'action="/'
+            . '?tx_tea_teafrontendeditor%5Baction%5D=delete'
+            . '&amp;tx_tea_teafrontendeditor%5Bcontroller%5D=FrontEndEditor';
+        self::assertStringContainsString($expected, $html);
+    }
+
+    #[Test]
     public function deleteActionWithOwnTeaRemovesProvidedTea(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
@@ -130,6 +192,44 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     }
 
     #[Test]
+    #[DataProvider('possibleEditFormFieldNames')]
+    public function editActionWithOwnTeaHasAllFormFields(string $fieldName): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+
+        $html = $this->getHtmlWithLoggedInUser([
+            'tx_tea_teafrontendeditor[action]' => 'edit',
+            'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
+        ]);
+
+        self::assertStringContainsString('name="tx_tea_teafrontendeditor[tea][' . $fieldName . ']"', $html);
+    }
+
+    /**
+     * @return \Generator<non-empty-string, array{0: non-empty-string}>
+     */
+    public static function possibleEditFormFieldNames(): \Generator
+    {
+        yield 'title' => ['title'];
+    }
+
+    #[Test]
+    public function editActionWithOwnTeaHasUpdateFormAction(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+
+        $html = $this->getHtmlWithLoggedInUser([
+            'tx_tea_teafrontendeditor[action]' => 'edit',
+            'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
+        ]);
+
+        $expected = 'action="/'
+            . '?tx_tea_teafrontendeditor%5Baction%5D=update'
+            . '&amp;tx_tea_teafrontendeditor%5Bcontroller%5D=FrontEndEditor';
+        self::assertStringContainsString($expected, $html);
+    }
+
+    #[Test]
     public function editActionWithTeaFromOtherUserReturnsForbiddenResponse(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToOtherUser.csv');
@@ -169,6 +269,23 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
 
         $this->assertCSVDataSet(
             __DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithTitle.csv',
+        );
+    }
+
+    #[Test]
+    public function updateActionWithOwnTeaKeepsPidUnchanged(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUserWithDifferentPid.csv');
+
+        $this->executeRequestWithLoggedInUser([
+            'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesForEditForm(),
+            'tx_tea_teafrontendeditor[action]' => 'update',
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][title]' => 'Godesberger Burgtee',
+        ]);
+
+        $this->assertCSVDataSet(
+            __DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithDifferentPid.csv'
         );
     }
 
