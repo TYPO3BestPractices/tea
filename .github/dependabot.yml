@@ -42,6 +42,8 @@ updates:
 
   - package-ecosystem: "npm"
     directory: "/"
+    cooldown:
+      default-days: "21"
     schedule:
       interval: "daily"
     versioning-strategy: "increase"
