@@ -1,86 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-	<file source-language="en" datatype="plaintext" original="messages">
-		<header/>
-		<body>
-			<trans-unit id="plugin.tea_index">
-				<source>Tea list</source>
-			</trans-unit>
-			<trans-unit id="plugin.tea_index.settings.tab.pagesAndFolders">
-				<source>Pages and folders</source>
-			</trans-unit>
-			<trans-unit id="plugin.tea_index.settings.pagesAndFolders.singleViewPageUid">
-				<source>Page with the single view</source>
-			</trans-unit>
-			<trans-unit id="plugin.tea_index.settings.pagesAndFolders.storagePid">
-				<source>Folders with the tea records</source>
-			</trans-unit>
-			<trans-unit id="plugin.tea_index.settings.pagesAndFolders.recursive">
-				<source>Recursion into subfolders</source>
-			</trans-unit>
-			<trans-unit id="plugin.tea_show">
-				<source>Tea single view</source>
-			</trans-unit>
-			<trans-unit id="plugin.tea_frontend_editor">
-				<source>Tea front-end editor</source>
-			</trans-unit>
-			<trans-unit id="plugin.tea_frontend_editor.settings.tab.pagesAndFolders">
-				<source>Pages and folders</source>
-			</trans-unit>
-			<trans-unit id="plugin.tea_frontend_editor.settings.pagesAndFolders.storagePid">
-				<source>Folder for new tea records</source>
-			</trans-unit>
-			<trans-unit id="plugin.tea.heading">
-				<source>Our selection of assorted teas</source>
-			</trans-unit>
-			<trans-unit id="plugin.tea.noTeasAvailable">
-				<source>No teas available.</source>
-			</trans-unit>
-			<trans-unit id="plugin.tea.property.uid">
-				<source>UID</source>
-			</trans-unit>
-			<trans-unit id="plugin.tea.property.title">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.property.description">
-				<source>Description</source>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.index.heading">
-				<source>My teas</source>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.message.noTeas">
-				<source>You have not created any teas yet.</source>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.property.uid">
-				<source>UID</source>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.property.title">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.edit.heading">
-				<source>Edit tea</source>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.actions">
-				<source>Actions</source>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.edit">
-				<source>Edit</source>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.cancel">
-				<source>Cancel</source>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.save">
-				<source>Save</source>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.new">
-				<source>Create new tea</source>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.delete">
-				<source>Delete</source>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.new.heading">
-				<source>Create new tea</source>
-			</trans-unit>
-		</body>
-	</file>
+  <file source-language="en" datatype="plaintext" original="messages">
+    <header/>
+    <body>
+      <trans-unit id="plugin.tea_index">
+        <source>Tea list</source>
+      </trans-unit>
+      <trans-unit id="plugin.tea_index.settings.tab.pagesAndFolders">
+        <source>Pages and folders</source>
+      </trans-unit>
+      <trans-unit id="plugin.tea_index.settings.pagesAndFolders.singleViewPageUid">
+        <source>Page with the single view</source>
+      </trans-unit>
+      <trans-unit id="plugin.tea_index.settings.pagesAndFolders.storagePid">
+        <source>Folders with the tea records</source>
+      </trans-unit>
+      <trans-unit id="plugin.tea_index.settings.pagesAndFolders.recursive">
+        <source>Recursion into subfolders</source>
+      </trans-unit>
+      <trans-unit id="plugin.tea_show">
+        <source>Tea single view</source>
+      </trans-unit>
+      <trans-unit id="plugin.tea_frontend_editor">
+        <source>Tea front-end editor</source>
+      </trans-unit>
+      <trans-unit id="plugin.tea_frontend_editor.settings.tab.pagesAndFolders">
+        <source>Pages and folders</source>
+      </trans-unit>
+      <trans-unit id="plugin.tea_frontend_editor.settings.pagesAndFolders.storagePid">
+        <source>Folder for new tea records</source>
+      </trans-unit>
+      <trans-unit id="plugin.tea.heading">
+        <source>Our selection of assorted teas</source>
+      </trans-unit>
+      <trans-unit id="plugin.tea.noTeasAvailable">
+        <source>No teas available.</source>
+      </trans-unit>
+      <trans-unit id="plugin.tea.property.uid">
+        <source>UID</source>
+      </trans-unit>
+      <trans-unit id="plugin.tea.property.title">
+        <source>Title</source>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.property.description">
+        <source>Description</source>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.index.heading">
+        <source>My teas</source>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.message.noTeas">
+        <source>You have not created any teas yet.</source>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.property.uid">
+        <source>UID</source>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.property.title">
+        <source>Title</source>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.edit.heading">
+        <source>Edit tea</source>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.actions">
+        <source>Actions</source>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.edit">
+        <source>Edit</source>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.cancel">
+        <source>Cancel</source>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.save">
+        <source>Save</source>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.new">
+        <source>Create new tea</source>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.delete">
+        <source>Delete</source>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.new.heading">
+        <source>Create new tea</source>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

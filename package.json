@@ -16,15 +16,15 @@
 	"scripts": {
 		"check:lint:js": "eslint --config ./Build/eslint/eslint.config.js 'Resources/Public/**/*.js'",
 		"fix:lint:js": "eslint --config ./Build/eslint/eslint.config.js 'Resources/Public/**/*.js' --quiet --fix",
-		"check:lint:css": "stylelint --config ./Build/stylelint/stylelint.config.js Resources/Public/**/*.css",
-		"fix:lint:css": "stylelint --config ./Build/stylelint/stylelint.config.js Resources/Public/**/*.css --fix"
+		"check:lint:css": "stylelint --config ./Build/stylelint/config.js Resources/Public/**/*.css",
+		"fix:lint:css": "stylelint --config ./Build/stylelint/config.js Resources/Public/**/*.css --fix"
 	},
 	"devDependencies": {
-		"eslint": "^9.39.1",
+		"eslint": "^9.39.2",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-prettier": "^5.5.4",
+		"eslint-plugin-prettier": "^5.5.5",
 		"install": "^0.13.0",
-		"prettier": "^3.7.4",
+		"prettier": "^3.8.1",
 		"stylelint": "^16.26.1",
 		"stylelint-config-standard-scss": "^16.0.0",
 		"stylelint-no-browser-hacks": "^2.0.0"

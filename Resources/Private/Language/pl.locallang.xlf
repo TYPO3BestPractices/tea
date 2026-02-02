@@ -1,84 +1,84 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-	<file source-language="en" target-language="pl" datatype="plaintext" original="messages">
-		<header/>
-		<body>
-			<trans-unit id="plugin.tea_index" approved="yes">
-				<source>Tea list</source>
-				<target>Lista herbat</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea_show" approved="yes">
-				<source>Tea single view</source>
-				<target>Widok pojedynczej herbaty</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea_frontend_editor" approved="yes">
-				<source>Tea front-end editor</source>
-				<target>Front-endowy edytor dla herbat</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea.heading" approved="yes">
-				<source>Our selection of assorted teas</source>
-				<target>Nasz wybór różnorodnych herbat</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea.property.uid" approved="yes">
-				<source>UID</source>
-				<target>UID</target>
-			</trans-unit>
-			<trans-unit id="plugin.tea.property.title" approved="yes">
-				<source>Title</source>
-				<target>Tytuł</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.index.heading" approved="yes">
-				<source>My teas</source>
-				<target>Moje herbaty</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.message.noTeas" approved="yes">
-				<source>You have not created any teas yet.</source>
-				<target>Nie utworzyłeś jeszcze żadnych herbat.</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.property.uid" approved="yes">
-				<source>UID</source>
-				<target>UID</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.property.title" approved="yes">
-				<source>Title</source>
-				<target>Tytuł</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.property.description" approved="yes">
-				<source>Description</source>
-				<target>Opis</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.edit.heading" approved="yes">
-				<source>Edit tea</source>
-				<target>Edytuj herbatę.</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.actions" approved="yes">
-				<source>Actions</source>
-				<target>Akcje</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.edit" approved="yes">
-				<source>Edit</source>
-				<target>Edytuj</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.cancel" approved="yes">
-				<source>Cancel</source>
-				<target>Anuluj</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.save" approved="yes">
-				<source>Save</source>
-				<target>Zapisz</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.new" approved="yes">
-				<source>Create new tea</source>
-				<target>Utwórz nową herbatę</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.action.delete" approved="yes">
-				<source>Delete</source>
-				<target>Usuń</target>
-			</trans-unit>
-			<trans-unit id="plugin.frontEndEditor.new.heading" approved="yes">
-				<source>Create new tea</source>
-				<target>Utwórz nową herbatę.</target>
-			</trans-unit>
-		</body>
-	</file>
+  <file source-language="en" target-language="pl" datatype="plaintext" original="messages">
+    <header/>
+    <body>
+      <trans-unit id="plugin.tea_index" approved="yes">
+        <source>Tea list</source>
+        <target>Lista herbat</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea_show" approved="yes">
+        <source>Tea single view</source>
+        <target>Widok pojedynczej herbaty</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea_frontend_editor" approved="yes">
+        <source>Tea front-end editor</source>
+        <target>Front-endowy edytor dla herbat</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea.heading" approved="yes">
+        <source>Our selection of assorted teas</source>
+        <target>Nasz wybór różnorodnych herbat</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea.property.uid" approved="yes">
+        <source>UID</source>
+        <target>UID</target>
+      </trans-unit>
+      <trans-unit id="plugin.tea.property.title" approved="yes">
+        <source>Title</source>
+        <target>Tytuł</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.index.heading" approved="yes">
+        <source>My teas</source>
+        <target>Moje herbaty</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.message.noTeas" approved="yes">
+        <source>You have not created any teas yet.</source>
+        <target>Nie utworzyłeś jeszcze żadnych herbat.</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.property.uid" approved="yes">
+        <source>UID</source>
+        <target>UID</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.property.title" approved="yes">
+        <source>Title</source>
+        <target>Tytuł</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.property.description" approved="yes">
+        <source>Description</source>
+        <target>Opis</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.edit.heading" approved="yes">
+        <source>Edit tea</source>
+        <target>Edytuj herbatę.</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.actions" approved="yes">
+        <source>Actions</source>
+        <target>Akcje</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.edit" approved="yes">
+        <source>Edit</source>
+        <target>Edytuj</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.cancel" approved="yes">
+        <source>Cancel</source>
+        <target>Anuluj</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.save" approved="yes">
+        <source>Save</source>
+        <target>Zapisz</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.new" approved="yes">
+        <source>Create new tea</source>
+        <target>Utwórz nową herbatę</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.action.delete" approved="yes">
+        <source>Delete</source>
+        <target>Usuń</target>
+      </trans-unit>
+      <trans-unit id="plugin.frontEndEditor.new.heading" approved="yes">
+        <source>Create new tea</source>
+        <target>Utwórz nową herbatę.</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

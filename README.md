@@ -22,14 +22,19 @@ You can also use this extension to manage your collection of delicious teas.
 ## Feedback
 
 We value and welcome feedback of all kinds, including discussions.
-Feedback can be sent via TYPO3 slack within [our channel](https://app.slack.com/client/T024TUMLZ/CSQ8T0VS5) or via direct massages to the team members.
-We also welcome email. All the contact information is available at our [typo3.org team page](https://typo3.org/community/teams/best-practices).
-Another way is to create a [discussion on GitHub](https://github.com/TYPO3BestPractices/tea/discussions).
+Feedback can be sent via TYPO3 slack within
+[our channel](https://app.slack.com/client/T024TUMLZ/CSQ8T0VS5) or via
+direct massages to the team members.
+We also welcome email. All the contact information is available at our
+[team page](https://typo3.community/contribute/teams-committees/best-practices).
+Another way is to create a
+[discussion on GitHub](https://github.com/TYPO3BestPractices/tea/discussions).
 
 ## Philosophies
 
-The following is a list of our code and technical philosophies only.
-https://typo3.org/community/teams/best-practices provides an overview on how we work in general.
+The following is a list of our code and technical philosophies only. Our
+[team page](https://typo3.community/contribute/teams-committees/best-practices)
+provides an overview on how we work in general.
 
 ### Semantic Versioning
 
@@ -38,7 +43,8 @@ The project follows [Semantic Versioning](https://semver.org/).
 ### Align with TYPO3 core
 
 We align all decisions with the TYPO3 core, whenever applicable.
-TYPO3 itself is a mono repository and sometimes needs to make different decisions.
+TYPO3 itself is a mono repository and sometimes needs to make different
+decisions.
 We document all divergences within Documentation/DivergencesToTypo3Core/.
 
 ## Presentation at the TYPO3 Online Days 2021
