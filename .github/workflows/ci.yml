@@ -18,6 +18,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          key: "php-${{ matrix.php-version }}-typo3-12.4-Max-composer-${{ hashFiles('**/composer.json') }}"
+          path: .cache/composer
+          restore-keys: "php${{ matrix.php-version }}-typo312.4-Max-composer-\n"
       - name: Install Composer dependencies
         run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composerUpdateMax -t 13.4
       - name: Lint PHP
@@ -42,6 +46,12 @@ jobs:
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
         run:  ./Build/Scripts/runTests.sh -s composer config --global --list
+      - name: Cache dependencies installed with composer
+        uses: actions/cache@v5
+        with:
+          key: "php-${{ matrix.php-version }}-typo3-12.4-Max-composer-${{ hashFiles('**/composer.json') }}"
+          path: .cache/composer
+          restore-keys: "php-${{ matrix.php-version }}-typo3-12.4-Max-composer-\n"
       - name: Install Composer dependencies
         run: Build/Scripts/runTests.sh -s composerUpdateMax
       - name: Run code quality checks
@@ -71,6 +81,12 @@ jobs:
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
         run: ./Build/Scripts/runTests.sh -s composer config --global --list
+      - name: Cache dependencies installed with composer
+        uses: actions/cache@v5
+        with:
+          key: "php-8.2-typo3-12.4-Max-composer-${{ hashFiles('**/composer.json') }}"
+          path: .cache/composer
+          restore-keys: "php-8.2-typo3-12.4-Max-composer-\n"
       - name: Install Composer dependencies
         run: Build/Scripts/runTests.sh -s composerUpdateMax
       - name: Run code quality checks
@@ -120,6 +136,12 @@ jobs:
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
         run:  ./Build/Scripts/runTests.sh -s composer config --global --list
+      - name: Cache dependencies installed with composer
+        uses: actions/cache@v5
+        with:
+          key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
+          path: .cache/composer
+          restore-keys: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
       - name: Install composer dependencies
         run: |
           ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
@@ -153,6 +175,12 @@ jobs:
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
         run:  ./Build/Scripts/runTests.sh -s composer config --global --list
+      - name: Cache dependencies installed with composer
+        uses: actions/cache@v5
+        with:
+          key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
+          path: .cache/composer
+          restore-keys: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
       - name: Install composer dependencies
         run: |
           ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
