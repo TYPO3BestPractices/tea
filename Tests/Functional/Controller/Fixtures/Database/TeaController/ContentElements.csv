@@ -1,6 +1,6 @@
 "tt_content"
-,"uid","pid","CType","header","list_type","pi_flexform"
-,1,1,"list","Tea index","tea_teaindex","<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?>
+,"uid","pid","CType","header","pi_flexform"
+,1,1,"tea_teaindex","Tea index","<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?>
                                            <T3FlexForms>
                                                <data>
                                                    <sheet index=""pagesAndFolders"">
@@ -18,4 +18,4 @@
                                                     </sheet>
                                                </data>
                                            </T3FlexForms>"
-,2,3,"list","Tea show","tea_teashow",""
+,2,3,"tea_teashow","Tea show",""

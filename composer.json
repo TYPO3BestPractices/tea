@@ -43,7 +43,6 @@
 		"psr/http-message": "^1.0.1",
 		"typo3/cms-core": "^12.4.41",
 		"typo3/cms-extbase": "^12.4.41 || ^13.4",
-		"typo3/cms-fluid": "^12.4.41 || ^13.4",
 		"typo3/cms-frontend": "^12.4.41 || ^13.4"
 	},
 	"require-dev": {
