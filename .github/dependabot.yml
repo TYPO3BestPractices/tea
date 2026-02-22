@@ -25,6 +25,10 @@ updates:
       - dependency-name: "phpstan/phpstan-strict-rules"
       - dependency-name: "phpunit/phpunit"
         versions: [ ">= 11.0" ]
+      # pcov for phpunit 10, version match is currently one version off. Check packagist
+      # requirements again raising phpunit/phpunit version and align it correspondingly.
+      - dependency-name: "phpunit/pcov"
+        versions: [ ">= 10.0" ]
       - dependency-name: "rector/type-perfect"
       - dependency-name: "saschaegerer/phpstan-typo3"
       - dependency-name: "ssch/typo3-*"
