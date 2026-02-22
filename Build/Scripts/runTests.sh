@@ -34,7 +34,16 @@ printSummary() {
                 echo "DBMS: ${DBMS}  driver pdo_sqlite" >&2
                 ;;
         esac
+        if [[ "${CREATE_COVERAGE}" -eq 1 ]]; then
+            echo "COVERAGE-LOG-FILE: ${COVERAGE_LOG_FILE}"
+        fi
     fi
+    if [[ ${TEST_SUITE} =~ ^unit ]]; then
+        if [[ "${CREATE_COVERAGE}" -eq 1 ]]; then
+            echo "COVERAGE-LOG-FILE: ${COVERAGE_LOG_FILE}"
+        fi
+    fi
+
     if [[ ${SUITE_EXIT_CODE} -eq 0 ]]; then
         echo "SUCCESS" >&2
     else
@@ -192,6 +201,7 @@ Options:
             - composerUnused: Finds unused Composer packages.
             - composerUpdateMax: "composer update", with no platform.php config.
             - composerUpdateMin: "composer update --prefer-lowest", with platform.php set to PHP version x.x.0.
+            - coverageMerge: Merge gathered coverage files into one set.
             - docsGenerate: Renders the extension ReST documentation.
             - fix: Runs all automatic code style fixes.
             - functional: PHP functional tests
@@ -308,6 +318,11 @@ Options:
         Only with -s cgl|composerNormalize|npm|lintJs|lintCss
         Activate dry-run in checks so they do not actively change files and only print broken ones.
 
+    -m
+        Only for functional|functionalDeprecated|unit|unitDeprecated|unitRandom
+        Activate collecting coverage metrics for executed test variant. The metrics are saved generic
+        to "Build/coverage/<test-identifier>" to allow merging results later with "-s coverageMerge".
+
     -u
         Update existing typo3/core-testing-*:latest container images and remove dangling local volumes.
         New images are published once in a while and only the latest ones are supported by core testing.
@@ -381,6 +396,9 @@ CI_PARAMS="${CI_PARAMS:-}"
 CONTAINER_HOST="host.docker.internal"
 # shellcheck disable=SC2034 # This variable will be needed when we try to clean up the root folder
 PHPSTAN_CONFIG_FILE="Build/phpstan/phpstan.neon"
+CREATE_COVERAGE=0
+COVERAGE_ADDITIONAL=""
+COVERAGE_LOG_FILE=""
 
 # Option parsing updates above default vars
 # Reset in case getopts has been used previously in the shell
@@ -388,7 +406,7 @@ OPTIND=1
 # Array for invalid options
 INVALID_OPTIONS=()
 # Simple option parsing based on getopts (! not getopt)
-while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
+while getopts "a:b:s:d:i:p:t:xy:o:nmhu" OPT; do
     case ${OPT} in
         s)
             TEST_SUITE=${OPTARG}
@@ -431,6 +449,9 @@ while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
             ;;
         n)
             CGLCHECK_DRY_RUN=1
+            ;;
+        m)
+            CREATE_COVERAGE=1
             ;;
         h)
             loadHelp
@@ -512,6 +533,10 @@ else
     CONTAINER_COMMON_PARAMS="${CONTAINER_INTERACTIVE} ${CI_PARAMS} --rm --network ${NETWORK} -v ${ROOT_DIR}:${ROOT_DIR} -w ${ROOT_DIR}"
 fi
 
+if test ${PHP_XDEBUG_ON} -eq 1 && test ${CREATE_COVERAGE} -eq 1; then
+    echo "Option \"-m\" and \"-x\" cannot be used together. Remove one."
+    exit 1
+fi
 if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
     XDEBUG_MODE="-e XDEBUG_MODE=off"
     XDEBUG_CONFIG=" "
@@ -519,6 +544,15 @@ else
     XDEBUG_MODE="-e XDEBUG_MODE=debug -e XDEBUG_TRIGGER=foo"
     XDEBUG_CONFIG="client_port=${PHP_XDEBUG_PORT} client_host=host.docker.internal"
 fi
+
+if [ ${CREATE_COVERAGE} -eq 1 ]; then
+    XDEBUG_MODE="-e XDEBUG_MODE=coverage"
+    XDEBUG_CONFIG=" "
+else
+    # Ensure to reset even if provided in case collecting coverage is not enabled
+    COVERAGE_ADDITIONAL=""
+fi
+[[ -n "${COVERAGE_ADDITIONAL}" ]] && COVERAGE_ADDITIONAL="${COVERAGE_ADDITIONAL}-"
 
 # Suite execution
 case ${TEST_SUITE} in
@@ -576,6 +610,13 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-unused-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
+    coverageMerge)
+        [[ ! -d "Build/coverage/" ]] && echo "Nothing to merge" && SUITE_EXIT_CODE=1 && printSummary && exit 1
+        [[ ! -d "Build/logs/" ]] && mkdir -p "Build/logs"
+        COMMAND=".Build/bin/phpcov merge --clover=Build/logs/clover.xml Build/coverage/"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-unused-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        SUITE_EXIT_CODE=$?
+        ;;
     docsGenerate)
         mkdir -p Documentation-GENERATED-temp
         chown -R ${HOST_UID}:${HOST_PID} Documentation-GENERATED-temp
@@ -596,9 +637,14 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     functional)
+        # Default COMMAND_ARRAY for non-coverage runs. Will be overridden for coverage runs for functional test type.
         COMMAND_ARRAY=(.Build/bin/phpunit -c Build/phpunit/FunctionalTests.xml --exclude-group not-"${DBMS}" "$@")
+        [[ "${CREATE_COVERAGE}" -eq 1 ]] && mkdir -p Build/coverage Build/logs
         case ${DBMS} in
             mariadb)
+                COVERAGE_LOG_FILE="functional-$(echo "core${CORE_VERSION}" | sed -e 's/\./-/')-$(echo "php${PHP_VERSION}" | sed -e 's/\.//')-$(echo "mariadb${DBMS_VERSION}" | sed -e 's/\./_/')-$(echo "driver${DATABASE_DRIVER}" | sed -e 's/\.//').cov"
+                # shellcheck disable=SC2206 # Fighting shellcheck check moaning about things we need
+                [[ "${CREATE_COVERAGE}" -eq 1 ]] && COMMAND_ARRAY=(.Build/bin/phpunit -c Build/phpunit/FunctionalTests.xml --exclude-group not-"${DBMS}" --coverage-php=Build/coverage/${COVERAGE_LOG_FILE} "$@")
                 echo "Using driver: ${DATABASE_DRIVER}"
                 ${CONTAINER_BIN} run --rm ${CI_PARAMS} --name mariadb-func-${SUFFIX} --network ${NETWORK} -d -e MYSQL_ROOT_PASSWORD=funcp --tmpfs /var/lib/mysql/:rw,noexec,nosuid ${IMAGE_MARIADB} >/dev/null
                 waitFor mariadb-func-${SUFFIX} 3306
@@ -607,6 +653,9 @@ case ${TEST_SUITE} in
                 SUITE_EXIT_CODE=$?
                 ;;
             mysql)
+                COVERAGE_LOG_FILE="functional-$(echo "core${CORE_VERSION}" | sed -e 's/\./-/')-$(echo "php${PHP_VERSION}" | sed -e 's/\.//')-$(echo "mysql${DBMS_VERSION}" | sed -e 's/\./_/')-$(echo "driver${DATABASE_DRIVER}" | sed -e 's/\.//').cov"
+                # shellcheck disable=SC2206 # Fighting shellcheck check moaning about things we need
+                [[ "${CREATE_COVERAGE}" -eq 1 ]] && COMMAND_ARRAY=(.Build/bin/phpunit -c Build/phpunit/FunctionalTests.xml --exclude-group not-"${DBMS}" --coverage-php=Build/coverage/${COVERAGE_LOG_FILE} "$@")
                 echo "Using driver: ${DATABASE_DRIVER}"
                 ${CONTAINER_BIN} run --rm ${CI_PARAMS} --name mysql-func-${SUFFIX} --network ${NETWORK} -d -e MYSQL_ROOT_PASSWORD=funcp --tmpfs /var/lib/mysql/:rw,noexec,nosuid ${IMAGE_MYSQL} >/dev/null
                 waitFor mysql-func-${SUFFIX} 3306
@@ -615,6 +664,9 @@ case ${TEST_SUITE} in
                 SUITE_EXIT_CODE=$?
                 ;;
             postgres)
+                COVERAGE_LOG_FILE="functional-$(echo "core${CORE_VERSION}" | sed -e 's/\./-/')-$(echo "php${PHP_VERSION}" | sed -e 's/\.//')-$(echo "postgres${DBMS_VERSION}" | sed -e 's/\./_/')-$(echo "driver${DATABASE_DRIVER}" | sed -e 's/\.//').cov"
+                # shellcheck disable=SC2206 # Fighting shellcheck check moaning about things we need
+                [[ "${CREATE_COVERAGE}" -eq 1 ]] && COMMAND_ARRAY=(.Build/bin/phpunit -c Build/phpunit/FunctionalTests.xml --exclude-group not-"${DBMS}" --coverage-php=Build/coverage/${COVERAGE_LOG_FILE} "$@")
                 ${CONTAINER_BIN} run --rm ${CI_PARAMS} --name postgres-func-${SUFFIX} --network ${NETWORK} -d -e POSTGRES_PASSWORD=funcp -e POSTGRES_USER=funcu --tmpfs /var/lib/postgresql/data:rw,noexec,nosuid ${IMAGE_POSTGRES} >/dev/null
                 waitFor postgres-func-${SUFFIX} 5432
                 CONTAINERPARAMS="-e typo3DatabaseDriver=pdo_pgsql -e typo3DatabaseName=bamboo -e typo3DatabaseUsername=funcu -e typo3DatabaseHost=postgres-func-${SUFFIX} -e typo3DatabasePassword=funcp"
@@ -622,6 +674,9 @@ case ${TEST_SUITE} in
                 SUITE_EXIT_CODE=$?
                 ;;
             sqlite)
+                COVERAGE_LOG_FILE="functional-$(echo "core${CORE_VERSION}" | sed -e 's/\./-/')-$(echo "php${PHP_VERSION}" | sed -e 's/\.//')-sqlite.cov"
+                # shellcheck disable=SC2206 # Fighting shellcheck check moaning about things we need
+                [[ "${CREATE_COVERAGE}" -eq 1 ]] && COMMAND_ARRAY=(.Build/bin/phpunit -c Build/phpunit/FunctionalTests.xml --exclude-group not-"${DBMS}" --coverage-php=Build/coverage/${COVERAGE_LOG_FILE} "$@")
                 CONTAINERPARAMS="-e typo3DatabaseDriver=pdo_sqlite"
                 ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name functional-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${CONTAINERPARAMS} ${IMAGE_PHP} "${COMMAND_ARRAY[@]}"
                 SUITE_EXIT_CODE=$?
@@ -687,11 +742,17 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     unit)
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml "$@"
+        COVERAGE_LOG_FILE="unit-$(echo "core${CORE_VERSION}" | sed -e 's/\./-/')-$(echo "php${PHP_VERSION}" | sed -e 's/\.//').cov"
+        [[ "${CREATE_COVERAGE}" -eq 1 ]] && mkdir -p Build/coverage Build/logs
+        [[ "${CREATE_COVERAGE}" -eq 1 ]] && PHPUNIT_COVERAGE_OPTION="--coverage-php=Build/coverage/${COVERAGE_LOG_FILE}" || PHPUNIT_COVERAGE_OPTION=""
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml ${PHPUNIT_COVERAGE_OPTION} "$@"
         SUITE_EXIT_CODE=$?
         ;;
     unitRandom)
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-random-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml --order-by=random ${PHPUNIT_RANDOM} "$@"
+        [[ "${CREATE_COVERAGE}" -eq 1 ]] && mkdir -p Build/coverage Build/logs
+        COVERAGE_LOG_FILE="unitrandom-$(echo "core${CORE_VERSION}" | sed -e 's/\./-/')-$(echo "php${PHP_VERSION}" | sed -e 's/\.//').cov"
+        [[ "${CREATE_COVERAGE}" -eq 1 ]] && PHPUNIT_COVERAGE_OPTION="--coverage-php=Build/coverage/${COVERAGE_LOG_FILE}" || PHPUNIT_COVERAGE_OPTION=""
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-random-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml ${PHPUNIT_COVERAGE_OPTION} --order-by=random ${PHPUNIT_RANDOM} "$@"
         SUITE_EXIT_CODE=$?
         ;;
     update)
