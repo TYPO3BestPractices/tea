@@ -123,15 +123,15 @@
 		"check:coverage:functional": [
 			"@check:tests:create-directories",
 			"@coverage:create-directories",
-			"phpunit -c Build/phpunit/FunctionalTests.xml --coverage-php=build/coverage/functional.cov"
+			"phpunit -c Build/phpunit/FunctionalTests.xml --coverage-php=Build/coverage/functional.cov"
 		],
 		"check:coverage:merge": [
 			"@coverage:create-directories",
-			"@php tools/phpcov merge --clover=build/logs/clover.xml build/coverage/"
+			"@php tools/phpcov merge --clover=Build/logs/clover.xml Build/coverage/"
 		],
 		"check:coverage:unit": [
 			"@coverage:create-directories",
-			"phpunit -c Build/phpunit/UnitTests.xml --coverage-php=build/coverage/unit.cov"
+			"phpunit -c Build/phpunit/UnitTests.xml --coverage-php=Build/coverage/unit.cov"
 		],
 		"check:json:lint": "find . ! -path '*/.cache/*' ! -path '*/.Build/*' ! -path '*/node_modules/*' -name '*.json' | xargs -r php .Build/bin/jsonlint -q",
 		"check:php": [
@@ -165,7 +165,7 @@
 		"check:typoscript:lint": "typoscript-lint -c Build/typoscript-lint/config.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript Tests/Functional/Controller/Fixtures/TypoScript",
 		"check:xliff:lint": "php Build/Scripts/xliffLint.sh lint:xliff Resources/Private/Language",
 		"check:yaml:lint": "find . ! -path '*.Build/*' ! -path '*node_modules/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r php ./.Build/bin/yaml-lint",
-		"coverage:create-directories": "mkdir -p build/coverage build/logs",
+		"coverage:create-directories": "mkdir -p Build/coverage Build/logs",
 		"docs:generate": "docker run --rm --pull always -v $(pwd):/project -it ghcr.io/typo3-documentation/render-guides:latest --config=Documentation",
 		"fix": [
 			"@fix:composer:normalize",
