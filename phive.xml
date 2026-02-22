@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phive xmlns="https://phar.io/phive">
+  <!-- /*
+    @todo phpcov is installed as composer dev dependency now to have it available for runTests.sh based
+          execution to avoid adding `phive` already to the image only possible with custom image builds.
+          As this is the only tool and also in a outdated version, verify this and remove phive based
+          tool setup. There is no use in pipelines anymore and this is unused beside local development
+          tools. Also check contribution/development documentation to remove mentioning the phive install
+          and requirement.
+  */-->
   <phar name="phpcov" version="^9.0.2" installed="9.0.2" location="./tools/phpcov" copy="false"/>
 </phive>
