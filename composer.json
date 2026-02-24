@@ -176,7 +176,7 @@
 			"@fix:php:rector",
 			"@fix:php:cs-fixer"
 		],
-		"fix:php:cs-fixer": "php-cs-fixer fix --config ./Build/php-cs-fixer/config.php",
+		"fix:php:cs-fixer": "php-cs-fixer fix --diff --config ./Build/php-cs-fixer/config.php",
 		"fix:php:rector": "rector process --config=./Build/rector/config.php",
 		"phpstan:baseline": "phpstan --generate-baseline=Build/phpstan/phpstan-baseline.neon --allow-empty-baseline --configuration=Build/phpstan/phpstan.neon",
 		"prepare-release": [
