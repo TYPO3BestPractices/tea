@@ -46,7 +46,7 @@ call_user_func(
             ExtensionManagementUtility::addToInsertRecords($plugin);
 
             // If flexform is configured for current plugin
-            if (is_string($value['flexformsConfiguration'])) {
+            if (\is_string($value['flexformsConfiguration'])) {
                 // Add the FlexForm to the show item list
                 ExtensionManagementUtility::addToAllTCAtypes(
                     'tt_content',
