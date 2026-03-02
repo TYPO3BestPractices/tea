@@ -1,56 +1,66 @@
 <?php
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 defined('TYPO3') || die();
 
 call_user_func(
     static function (): void {
-        // This makes the plugin selectable in the BE.
-        $indexPluginSignature = ExtensionUtility::registerPlugin(
-            // extension name, matching the PHP namespaces (but without the vendor)
-            'Tea',
-            // arbitrary, but unique plugin name (not visible in the BE)
-            'TeaIndex',
-            // plugin title, as visible in the drop-down in the BE
-            'LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_index',
-            // the icon visible in the drop-down in the BE
-            'EXT:tea/Resources/Public/Icons/Extension.svg',
+        /**
+         * Add new select group for content element
+         */
+        ExtensionManagementUtility::addTcaSelectItemGroup(
+            'tt_content',
+            'CType',
+            'tea',
+            'LLL:EXT:tea/Resources/Private/Language/locallang_db.xlf:tx_tea_domain_model_tea.pluginGroup',
+            'after:default'
         );
 
-        // These two commands add the flexform configuration for the plugin.
-        $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$indexPluginSignature] = 'pi_flexform';
-        ExtensionManagementUtility::addPiFlexFormValue(
-            $indexPluginSignature,
-            'FILE:EXT:tea/Configuration/FlexForms/TeaIndex.xml',
-        );
+        /**
+         * Register all plugins their flexform configurations
+         */
+        $plugins = [
+            'index' => ['flexformsConfiguration' => 'TeaIndex'],
+            'show' => ['flexformsConfiguration' => null],
+            'front_end_editor'  => ['flexformsConfiguration' => 'TeaFrontendEditor'],
+        ];
 
-        $showPluginSignature = ExtensionUtility::registerPlugin(
-            'Tea',
-            'TeaShow',
-            'LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_show',
-            'EXT:tea/Resources/Public/Icons/Extension.svg',
-        );
+        foreach ($plugins as $key => $value) {
+            $plugin = \sprintf('tea_%1$s', $key);
+            // This makes the plugin selectable in the BE.
+            $pluginSignature = ExtensionUtility::registerPlugin(
+                // extension name, matching the PHP namespaces (but without the vendor)
+                'Tea',
+                // arbitrary, but unique plugin name (not visible in the BE)
+                GeneralUtility::underscoredToUpperCamelCase($plugin),
+                // plugin title, as visible in the drop-down in the BE
+                'LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.' . $plugin,
+                // the icon visible in the drop-down in the BE
+                'EXT:tea/Resources/Public/Icons/Extension.svg',
+                'tea'
+            );
 
-        $editorPluginSignature = ExtensionUtility::registerPlugin(
-            'Tea',
-            'TeaFrontEndEditor',
-            'LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_frontend_editor',
-            'EXT:tea/Resources/Public/Icons/Extension.svg',
-        );
+            ExtensionManagementUtility::addToInsertRecords($plugin);
 
-        // These two commands add the flexform configuration for the plugin.
-        $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$editorPluginSignature] = 'pi_flexform';
-        ExtensionManagementUtility::addPiFlexFormValue(
-            $editorPluginSignature,
-            'FILE:EXT:tea/Configuration/FlexForms/FrontEndEditor.xml'
-        );
-
-        // This removes the default controls from the plugins.
-        $controlsToRemove = 'recursive,pages';
-        $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$indexPluginSignature] = $controlsToRemove;
-        $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$showPluginSignature] = $controlsToRemove;
-        $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$editorPluginSignature] = $controlsToRemove;
-    },
+            // If flexform is configured for current plugin
+            if (\is_string($value['flexformsConfiguration'])) {
+                // Add the FlexForm to the show item list
+                ExtensionManagementUtility::addToAllTCAtypes(
+                    'tt_content',
+                    '--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin, pi_flexform',
+                    $pluginSignature,
+                    'after:palette:headers'
+                );
+                // Add the flexform configuration for the plugin.
+                ExtensionManagementUtility::addPiFlexFormValue(
+                    '*',
+                    \sprintf('FILE:EXT:tea/Configuration/FlexForms/%1$s.xml', $value['flexformsConfiguration']),
+                    $pluginSignature
+                );
+            }
+        }
+    }
 );
