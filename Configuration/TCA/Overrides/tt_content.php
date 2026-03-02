@@ -40,7 +40,7 @@ call_user_func(
 
             ExtensionManagementUtility::addToInsertRecords($contentType);
 
-            if($contentType === 'tea_index' || $contentType === 'tea_front_end_editor') {
+            if ($contentType === 'tea_index' || $contentType === 'tea_front_end_editor') {
                 // Add the FlexForm to the show item list
                 ExtensionManagementUtility::addToAllTCAtypes(
                     'tt_content',
