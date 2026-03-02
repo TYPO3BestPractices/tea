@@ -79,6 +79,8 @@ jobs:
         run: "ls -lahR build/logs/"
       - name: Upload coverage results to Coveralls
         uses: coverallsapp/github-action@v2
+        with:
+          fail-on-error: false
         env:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # Note: This is the only path that the Coveralls GitHub Action supports.
