@@ -9,83 +9,57 @@ on:
 permissions:
   contents: read
 jobs:
+  # @todo Rethink the whole implementation. It's possible to consider creating the part coverage logs directly
+  #       for all unit, unitRandom and functional tests in the `ci.yml` workflow and using this only to merge
+  #       and upload it. That would avoid reexecuting only for a subset of matrix run here again.
+  #       In general there are two different approaches when doing the above mentioned considerations:
+  #
+  #       * Use job artifacts to get all of the `Build/coverage/*.pcov` files and merge it using the pcov tool
+  #       * Use parallel partly upload in ci.yaml unit, unitRandom, functional test runs and use this to finish
+  #         the parallel execution. See: https://github.com/coverallsapp/github-action#complete-parallel-job-example
   code-coverage:
     name: Calculate code coverage
     permissions:
       actions: write
     runs-on: ubuntu-24.04
-    env:
-      DB_DATABASE: typo3
-      DB_USER: root
-      DB_PASSWORD: root
-      DB_HOST: localhost
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "${{ matrix.php-version }}"
-          ini-file: development
-          tools: composer:v2, phive
-          extensions: mysqli
-          coverage: xdebug
-      - name: Install development tools
-        run: phive --no-progress install --trust-gpg-keys D8406D0D82947747293778314AA394086372C20A
-      - name: Show Composer version
-        run: composer --version
+      - name: Show the Composer version
+        run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
-        run: composer config --global --list
-      - name: Cache dependencies installed with composer
-        uses: actions/cache@v5
-        with:
-          key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
-          path: ~/.cache/composer
-          restore-keys: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
-      - name: Install TYPO3 Core
-        env:
-          TYPO3: "${{ matrix.typo3-version }}"
+        run:  ./Build/Scripts/runTests.sh -s composer config --global --list
+      - name: Install composer dependencies
         run: |
-          composer require --no-ansi --no-interaction --no-progress --no-install typo3/cms-core:^"$TYPO3"
-          composer show
-      - name: Install lowest dependencies with composer
-        if: "matrix.composer-dependencies == 'Min'"
-        run: |
-          composer update --no-ansi --no-interaction --no-progress --with-dependencies --prefer-lowest
-          composer show
-      - name: Install highest dependencies with composer
-        if: "matrix.composer-dependencies == 'Max'"
-        run: |
-          composer update --no-ansi --no-interaction --no-progress --with-dependencies
-          composer show
-      - name: Start MySQL
-        run: "sudo /etc/init.d/mysql start"
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
+      # @todo Consider to execute all unit tests with coverage and using job artifacts to merge them in one place
+      #       instead of executing only one run here with coverage. Could also be combined directly uploading the
+      #       parallel executions as partly upload and using this workflow only to make the final webhook call.
       - name: Run unit tests with coverage
-        run: composer check:coverage:unit
-      - name: Show generated coverage files
-        run: "ls -lahR build/coverage/"
+        run: |
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s unit -m
+      # @todo Consider to execute all functional tests with coverage and using job artifacts to merge them in one place
+      #       instead of executing only one run here with coverage. Could also be combined directly uploading the
+      #       parallel executions as partly upload and using this workflow only to make the final webhook call.
       - name: Run functional tests with coverage
         run: |
-          export typo3DatabaseName="$DB_DATABASE";
-          export typo3DatabaseHost="$DB_HOST";
-          export typo3DatabaseUsername="$DB_USER";
-          export typo3DatabasePassword="$DB_PASSWORD";
-          composer check:coverage:functional
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s functional -m
       - name: Show generated coverage files
-        run: "ls -lahR build/coverage/"
+        run: |
+          ls -lahR Build/coverage/
+      # @todo
       - name: Merge coverage results
-        run: composer check:coverage:merge
+        run: |
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s coverageMerge
       - name: Show combined coverage files
-        run: "ls -lahR build/logs/"
+        run: "ls -lahR Build/logs/"
       - name: Upload coverage results to Coveralls
         uses: coverallsapp/github-action@v2
         with:
           fail-on-error: false
         env:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          # Note: This is the only path that the Coveralls GitHub Action supports.
-          # So we cannot use something like .Build/coverage/clover.xml here.
-          file: build/logs/clover.xml
+          file: Build/logs/clover.xml
     strategy:
       fail-fast: false
       matrix:
