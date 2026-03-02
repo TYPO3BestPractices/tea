@@ -55,5 +55,3 @@ ExtensionUtility::configurePlugin(
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
-
-ExtensionManagementUtility::addPageTSConfig('@import \'EXT:tea/Configuration/TSconfig/Page/ContentElementWizard.tsconfig\'');
