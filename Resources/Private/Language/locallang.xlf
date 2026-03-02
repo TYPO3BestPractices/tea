@@ -43,7 +43,7 @@
         <source>Title</source>
       </trans-unit>
       <trans-unit id="plugin.tea_front_end_editor" approved="yes">
-         <source>Tea fronend editor</source>
+         <source>Tea frontend editor</source>
       </trans-unit>
       <trans-unit id="plugin.frontEndEditor.property.description">
         <source>Description</source>
