@@ -81,7 +81,6 @@ jobs:
         command:
           - "phpmd"
           - "checkComposerNormalize"
-          - "fixComposerNormalize"
   prepare-release:
     name: Check prepare release script
     runs-on: ubuntu-24.04
