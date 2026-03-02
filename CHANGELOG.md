@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Add support for PostgreSQL 16 (#1271)
 
 ### Changed
-- !!! Migrate plugin to CType (#1332)
+- !!! Migrate plugin to CType (#1960)
 - Require the latest TYPO3 12LTS security release (#1940)
 - Move php-cs-fixer configuration to Build dir (#1353)
 - Move php sniff configuration to Build dir (#1357)
