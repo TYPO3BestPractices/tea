@@ -24,23 +24,23 @@ call_user_func(
          */
         $plugins = ['tea_index', 'tea_show', 'tea_front_end_editor'];
 
-        foreach ($plugins as $contentType) {
+        foreach ($plugins as $plugin) {
             // This makes the plugin selectable in the BE.
             $pluginSignature = ExtensionUtility::registerPlugin(
                 // extension name, matching the PHP namespaces (but without the vendor)
                 'Tea',
                 // arbitrary, but unique plugin name (not visible in the BE)
-                GeneralUtility::underscoredToUpperCamelCase($contentType),
+                GeneralUtility::underscoredToUpperCamelCase($plugin),
                 // plugin title, as visible in the drop-down in the BE
-                'LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.' . $contentType,
+                'LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.' . $plugin,
                 // the icon visible in the drop-down in the BE
                 'EXT:tea/Resources/Public/Icons/Extension.svg',
                 'tea'
             );
 
-            ExtensionManagementUtility::addToInsertRecords($contentType);
+            ExtensionManagementUtility::addToInsertRecords($plugin);
 
-            if ($contentType === 'tea_index' || $contentType === 'tea_front_end_editor') {
+            if ($plugin === 'tea_index' || $plugin === 'tea_front_end_editor') {
                 // Add the FlexForm to the show item list
                 ExtensionManagementUtility::addToAllTCAtypes(
                     'tt_content',
@@ -51,7 +51,7 @@ call_user_func(
                 // Add the flexform configuration for the plugin.
                 ExtensionManagementUtility::addPiFlexFormValue(
                     '*',
-                    sprintf('FILE:EXT:tea/Configuration/FlexForms/%s.xml', GeneralUtility::underscoredToUpperCamelCase($contentType)),
+                    sprintf('FILE:EXT:tea/Configuration/FlexForms/%s.xml', GeneralUtility::underscoredToUpperCamelCase($plugin)),
                     $pluginSignature
                 );
             }
