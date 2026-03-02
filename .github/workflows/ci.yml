@@ -81,6 +81,20 @@ jobs:
         command:
           - "phpmd"
           - "checkComposerNormalize"
+  check-fixers:
+    name: Check fixers
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Show the Composer version
+        run: ./Build/Scripts/runTests.sh -s composer -- --version
+      - name: Show the Composer configuration
+        run: ./Build/Scripts/runTests.sh -s composer config --global --list
+      - name: Install Composer dependencies
+        run: Build/Scripts/runTests.sh -s composerUpdateMax
+      - name: Run composer normalize check fixer
+        run: Build/Scripts/runTests.sh -s fixComposerNormalize
   prepare-release:
     name: Check prepare release script
     runs-on: ubuntu-24.04
