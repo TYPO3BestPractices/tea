@@ -55,6 +55,10 @@
         <source>Title</source>
         <target>Titel</target>
       </trans-unit>
+      <trans-unit id="plugin.tea_front_end_editor" approved="yes">
+           <source>Tea fronend editor</source>
+        <target>Tee-Frontend Editor</target>
+      </trans-unit>
       <trans-unit id="plugin.frontEndEditor.index.heading" approved="yes">
         <source>My teas</source>
         <target>Meine Tees</target>

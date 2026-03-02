@@ -26,7 +26,7 @@ call_user_func(
 
         foreach ($plugins as $contentType) {
             // This makes the plugin selectable in the BE.
-            ExtensionUtility::registerPlugin(
+            $pluginSignature = ExtensionUtility::registerPlugin(
                 // extension name, matching the PHP namespaces (but without the vendor)
                 'Tea',
                 // arbitrary, but unique plugin name (not visible in the BE)
@@ -38,31 +38,23 @@ call_user_func(
                 'tea'
             );
 
+            ExtensionManagementUtility::addToInsertRecords($contentType);
+
+            if($contentType === 'tea_index' || $contentType === 'tea_front_end_editor') {
+                // Add the FlexForm to the show item list
+                ExtensionManagementUtility::addToAllTCAtypes(
+                    'tt_content',
+                    '--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin, pi_flexform',
+                    $pluginSignature,
+                    'after:palette:headers'
+                );
+                // Add the flexform configuration for the plugin.
+                ExtensionManagementUtility::addPiFlexFormValue(
+                    '*',
+                    sprintf('FILE:EXT:tea/Configuration/FlexForms/%s.xml', GeneralUtility::underscoredToUpperCamelCase($contentType)),
+                    $pluginSignature
+                );
+            }
         }
-
-        // Add the FlexForm to the show item list
-        ExtensionManagementUtility::addToAllTCAtypes(
-            'tt_content',
-            '--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin, pi_flexform',
-            'tea_teaindex',
-            'after:palette:headers'
-        );
-        // Add the flexform configuration for the TeaIndex plugin.
-        ExtensionManagementUtility::addPiFlexFormValue(
-            '*',
-            'FILE:EXT:tea/Configuration/FlexForms/TeaIndex.xml',
-            'tea_teaindex'
-        );
-        // Add the flexform configuration for the FE editor plugin.
-        ExtensionManagementUtility::addPiFlexFormValue(
-            '*',
-            'FILE:EXT:tea/Configuration/FlexForms/FrontEndEditor.xml',
-            'tea_front_end_editor'
-        );
-
-        /**
-         * Register TeaIndex as "Insert Record"
-         */
-        ExtensionManagementUtility::addToInsertRecords('tea_index');
     }
 );
