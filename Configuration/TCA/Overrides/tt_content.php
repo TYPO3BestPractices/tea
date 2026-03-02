@@ -46,7 +46,7 @@ call_user_func(
             ExtensionManagementUtility::addToInsertRecords($plugin);
 
             // If flexform is configured for current plugin
-            if (isset($value['flexformsConfiguration'])) {
+            if (is_string($value['flexformsConfiguration'])) {
                 // Add the FlexForm to the show item list
                 ExtensionManagementUtility::addToAllTCAtypes(
                     'tt_content',
@@ -57,7 +57,7 @@ call_user_func(
                 // Add the flexform configuration for the plugin.
                 ExtensionManagementUtility::addPiFlexFormValue(
                     '*',
-                    sprintf('FILE:EXT:tea/Configuration/FlexForms/%1$s.xml', $value['flexformsConfiguration']),
+                    \sprintf('FILE:EXT:tea/Configuration/FlexForms/%1$s.xml', $value['flexformsConfiguration']),
                     $pluginSignature
                 );
             }
