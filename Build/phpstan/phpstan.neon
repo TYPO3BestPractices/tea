@@ -62,10 +62,6 @@ parameters:
         - '$_FILES'
         - '$_SERVER'
       message: 'Use PSR-7 API instead'
-  
-  excludePaths:
-    # We need this Class only for V12. So we exclude it here
-    - ../../Classes/Upgrades/AbstractListTypeToCTypeUpdate.php
 
   ignoreErrors:
     -
