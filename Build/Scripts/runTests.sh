@@ -184,6 +184,7 @@ Options:
     -s <...>
         Specifies which test suite to run
             - cgl: Fixes the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer).
+            - checkComposerNormalize: Checks the order of the composer.json entries.
             - clean: clean up build, cache and testing related files and folders
             - cleanCache: clean up cache related files and folders
             - cleanRenderedDocumentation: clean up rendered documentation files and folders (Documentation-GENERATED-temp)
@@ -195,6 +196,7 @@ Options:
             - composerUpdateMin: "composer update --prefer-lowest", with platform.php set to PHP version x.x.0.
             - docsGenerate: Renders the extension ReST documentation.
             - fix: Runs all automatic code style fixes.
+            - fixComposerNormalize: Normalizes the composer.json.
             - functional: PHP functional tests
             - lintCss: CSS file linting. Set -n for dry-run.
             - lintJs: JavaScript file linting. Set -n for dry-run.
@@ -203,6 +205,7 @@ Options:
             - lintTypoScript: TypoScript linting
             - lintYaml: YAML linting
             - npm: "npm" with all remaining arguments dispatched.
+            - phpmd: Checks code metrics in the PHP code using PHPMD.
             - phpstan: PHPStan tests
             - phpstanGenerateBaseline: regenerate PHPStan baseline, handy after PHPStan updates
             - shellcheck: check runTests.sh for shell issues
