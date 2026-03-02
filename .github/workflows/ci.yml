@@ -93,8 +93,8 @@ jobs:
         run: ./Build/Scripts/runTests.sh -s composer config --global --list
       - name: Install Composer dependencies
         run: Build/Scripts/runTests.sh -s composerUpdateMax
-      - name: Run composer normalize check fixer
-        run: Build/Scripts/runTests.sh -s fixComposerNormalize
+      - name: Runs all automatic code style fixes.
+        run: Build/Scripts/runTests.sh -s fix
   prepare-release:
     name: Check prepare release script
     runs-on: ubuntu-24.04
