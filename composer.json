@@ -71,8 +71,7 @@
 		"tomasvotruba/type-coverage": "1.0.0 || 2.1.0",
 		"typo3/cms-fluid-styled-content": "^12.4 || ^13.4",
 		"typo3/coding-standards": "0.8.0",
-		"typo3/testing-framework": "8.3.1",
-		"webmozart/assert": "1.12.1 || 2.1.2"
+		"typo3/testing-framework": "8.3.1"
 	},
 	"replace": {
 		"typo3-ter/tea": "self.version"
