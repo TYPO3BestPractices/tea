@@ -535,6 +535,11 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
+    checkComposerNormalize)
+        COMMAND="composer normalize --no-check-lock --dry-run"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        SUITE_EXIT_CODE=$?
+        ;;
     clean)
         cleanCacheFiles
         cleanRenderedDocumentationFiles
@@ -554,6 +559,11 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} "${COMMAND[@]}"
         SUITE_EXIT_CODE=$?
         ;;
+    composerUnused)
+        COMMAND="composer check:composer:unused"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-unused-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        SUITE_EXIT_CODE=$?
+        ;;
     composerUpdateMax)
         # `dumpautoload` removed due to error with missing `composer.lock` file on publishing public assets.
         COMMAND="composer config --unset platform.php; composer require --no-ansi --no-interaction --no-progress --no-install typo3/minimal:"^${CORE_VERSION}"; composer update --no-progress --no-interaction; composer show"
@@ -564,21 +574,6 @@ case ${TEST_SUITE} in
         # `dumpautoload` removed due to error with missing `composer.lock` file on publishing public assets.
         COMMAND="composer config platform.php ${PHP_VERSION}.0; composer require --no-ansi --no-interaction --no-progress --no-install typo3/minimal:"^${CORE_VERSION}"; composer update --prefer-lowest --no-progress --no-interaction; composer show"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-min-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
-        SUITE_EXIT_CODE=$?
-        ;;
-    checkComposerNormalize)
-        COMMAND="composer normalize --no-check-lock --dry-run"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
-        SUITE_EXIT_CODE=$?
-        ;;
-    fixComposerNormalize)
-        COMMAND="composer normalize --no-check-lock"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
-        SUITE_EXIT_CODE=$?
-        ;;
-    composerUnused)
-        COMMAND="composer check:composer:unused"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-unused-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
     docsGenerate)
@@ -596,8 +591,9 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} ${IMAGE_NODE} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
-    shellcheck)
-        ${CONTAINER_BIN} run ${CONTAINER_INTERACTIVE} --rm --pull always ${USERSET} -v "${ROOT_DIR}":/project:ro ${IMAGE_SHELLCHECK} /project/Build/Scripts/runTests.sh
+    fixComposerNormalize)
+        COMMAND="composer normalize --no-check-lock"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
     functional)
@@ -633,14 +629,13 @@ case ${TEST_SUITE} in
                 ;;
         esac
         ;;
-    lintTypoScript)
-        COMMAND="composer check:typoscript:lint"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
-        SUITE_EXIT_CODE=$?
-        ;;
-    lintPhp)
-        COMMAND="composer check:php:lint"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+    lintCss)
+        if [ "${CGLCHECK_DRY_RUN}" -eq 1 ]; then
+            COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run check:lint:css"
+        else
+            COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:css"
+        fi
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} ${IMAGE_NODE} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
     lintJs)
@@ -652,17 +647,18 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} ${IMAGE_NODE} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
-    lintCss)
-        if [ "${CGLCHECK_DRY_RUN}" -eq 1 ]; then
-            COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run check:lint:css"
-        else
-            COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:css"
-        fi
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} ${IMAGE_NODE} /bin/sh -c "${COMMAND}"
-        SUITE_EXIT_CODE=$?
-        ;;
     lintJson)
         COMMAND="composer check:json:lint"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        SUITE_EXIT_CODE=$?
+        ;;
+    lintPhp)
+        COMMAND="composer check:php:lint"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        SUITE_EXIT_CODE=$?
+        ;;
+    lintTypoScript)
+        COMMAND="composer check:typoscript:lint"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
@@ -689,6 +685,10 @@ case ${TEST_SUITE} in
     phpstanGenerateBaseline)
         COMMAND="composer phpstan:baseline"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        SUITE_EXIT_CODE=$?
+        ;;
+    shellcheck)
+        ${CONTAINER_BIN} run ${CONTAINER_INTERACTIVE} --rm --pull always ${USERSET} -v "${ROOT_DIR}":/project:ro ${IMAGE_SHELLCHECK} /project/Build/Scripts/runTests.sh
         SUITE_EXIT_CODE=$?
         ;;
     unit)
