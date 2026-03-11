@@ -60,7 +60,7 @@ waitFor() {
             COUNT=\$((COUNT + 1));
         done;
     "
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name wait-for-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_ALPINE} /bin/sh -c "${TESTCOMMAND}"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name wait-for-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} /bin/sh -c "${TESTCOMMAND}"
     # shellcheck disable=SC2181 # Disabled because we don‘t want to move the long line between the brackets
     if [[ $? -gt 0 ]]; then
         kill -SIGINT -$$
@@ -496,7 +496,6 @@ mkdir -p .Build/public/typo3temp/var/tests
 
 IMAGE_PHP="ghcr.io/typo3/core-testing-$(echo "php${PHP_VERSION}" | sed -e 's/\.//'):latest"
 IMAGE_NODE="docker.io/node:${NODE_VERSION}-alpine"
-IMAGE_ALPINE="docker.io/alpine:3.23.3"
 IMAGE_SHELLCHECK="docker.io/koalaman/shellcheck:v0.11.0"
 IMAGE_DOCS="ghcr.io/typo3-documentation/render-guides:0.36.0"
 IMAGE_MARIADB="docker.io/mariadb:${DBMS_VERSION}"
