@@ -16,7 +16,7 @@ call_user_func(
             'CType',
             'tea',
             'LLL:EXT:tea/Resources/Private/Language/locallang_db.xlf:tx_tea_domain_model_tea.pluginGroup',
-            'after:default'
+            'after:default',
         );
 
         /**
@@ -25,7 +25,7 @@ call_user_func(
         $plugins = [
             'index' => ['flexformsConfiguration' => 'TeaIndex'],
             'show' => ['flexformsConfiguration' => null],
-            'front_end_editor'  => ['flexformsConfiguration' => 'TeaFrontendEditor'],
+            'front_end_editor' => ['flexformsConfiguration' => 'TeaFrontendEditor'],
         ];
 
         foreach ($plugins as $key => $value) {
@@ -40,7 +40,7 @@ call_user_func(
                 'LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.' . $plugin,
                 // the icon visible in the drop-down in the BE
                 'EXT:tea/Resources/Public/Icons/Extension.svg',
-                'tea'
+                'tea',
             );
 
             ExtensionManagementUtility::addToInsertRecords($plugin);
@@ -52,15 +52,15 @@ call_user_func(
                     'tt_content',
                     '--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin, pi_flexform',
                     $pluginSignature,
-                    'after:palette:headers'
+                    'after:palette:headers',
                 );
                 // Add the flexform configuration for the plugin.
                 ExtensionManagementUtility::addPiFlexFormValue(
                     '*',
                     \sprintf('FILE:EXT:tea/Configuration/FlexForms/%1$s.xml', $value['flexformsConfiguration']),
-                    $pluginSignature
+                    $pluginSignature,
                 );
             }
         }
-    }
+    },
 );

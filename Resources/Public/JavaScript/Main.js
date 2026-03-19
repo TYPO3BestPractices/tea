@@ -10,7 +10,7 @@ TYPO3.tea.makeSortable = function (table) {
   while (--i >= 0)
     (function (i) {
       var dir = 1;
-      th[i].addEventListener('click', function () {
+      th[i].addEventListener("click", function () {
         TYPO3.tea.sortTable(table, i, (dir = 1 - dir));
       });
     })(i);
@@ -22,13 +22,18 @@ TYPO3.tea.sortTable = function (table, col, reverse) {
     i;
   reverse = -(+reverse || -1);
   tr = tr.sort(function (a, b) {
-    return reverse * a.cells[col].textContent.trim().localeCompare(b.cells[col].textContent.trim());
+    return (
+      reverse *
+      a.cells[col].textContent
+        .trim()
+        .localeCompare(b.cells[col].textContent.trim())
+    );
   });
   for (i = 0; i < tr.length; ++i) tb.appendChild(tr[i]);
 };
 
-document.addEventListener('DOMContentLoaded', function () {
-  var t = document.querySelectorAll('.tx-tea table'),
+document.addEventListener("DOMContentLoaded", function () {
+  var t = document.querySelectorAll(".tx-tea table"),
     i = t.length;
   while (--i >= 0) {
     TYPO3.tea.makeSortable(t[i]);

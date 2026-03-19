@@ -102,7 +102,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     #[Test]
     public function indexActionRendersTeaUid(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUserWithHigherUid.csv');
+        $this->importCSVDataSet(
+            __DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUserWithHigherUid.csv',
+        );
 
         $html = $this->getHtmlWithLoggedInUser();
 
@@ -275,7 +277,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     #[Test]
     public function updateActionWithOwnTeaKeepsPidUnchanged(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUserWithDifferentPid.csv');
+        $this->importCSVDataSet(
+            __DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUserWithDifferentPid.csv',
+        );
 
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesForEditForm(),
@@ -285,7 +289,7 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
         ]);
 
         $this->assertCSVDataSet(
-            __DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithDifferentPid.csv'
+            __DIR__ . '/Assertions/Database/FrontEndEditorController/Update/UpdatedTeaWithDifferentPid.csv',
         );
     }
 
