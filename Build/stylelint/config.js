@@ -4,14 +4,9 @@ export default {
     "at-rule-empty-line-before": [
       "always",
       {
-        "except": [
-          "blockless-after-same-name-blockless",
-          "first-nested"
-        ],
-        "ignore": [
-          "after-comment"
-        ]
-      }
+        except: ["blockless-after-same-name-blockless", "first-nested"],
+        ignore: ["after-comment"],
+      },
     ],
     "block-no-empty": true,
     "color-hex-length": "short",
@@ -19,36 +14,24 @@ export default {
     "comment-empty-line-before": [
       "always",
       {
-        "except": [
-          "first-nested"
-        ],
-        "ignore": [
-          "stylelint-commands"
-        ]
-      }
+        except: ["first-nested"],
+        ignore: ["stylelint-commands"],
+      },
     ],
     "comment-no-empty": true,
     "comment-whitespace-inside": "always",
     "custom-property-empty-line-before": [
       "always",
       {
-        "except": [
-          "after-custom-property",
-          "first-nested"
-        ],
-        "ignore": [
-          "after-comment",
-          "inside-single-line-block"
-        ]
-      }
+        except: ["after-custom-property", "first-nested"],
+        ignore: ["after-comment", "inside-single-line-block"],
+      },
     ],
     "declaration-block-no-duplicate-properties": [
       true,
       {
-        "ignore": [
-          "consecutive-duplicates-with-different-values"
-        ]
-      }
+        ignore: ["consecutive-duplicates-with-different-values"],
+      },
     ],
     "declaration-block-no-redundant-longhand-properties": true,
     "declaration-block-no-shorthand-property-overrides": true,
@@ -56,15 +39,9 @@ export default {
     "declaration-empty-line-before": [
       "always",
       {
-        "except": [
-          "after-declaration",
-          "first-nested"
-        ],
-        "ignore": [
-          "after-comment",
-          "inside-single-line-block"
-        ]
-      }
+        except: ["after-declaration", "first-nested"],
+        ignore: ["after-comment", "inside-single-line-block"],
+      },
     ],
     "font-family-no-duplicate-names": true,
     "function-calc-no-unspaced-operator": true,
@@ -78,21 +55,15 @@ export default {
     "property-no-unknown": [
       true,
       {
-        "ignoreProperties": [
-          "/^scroll-padding/"
-        ]
-      }
+        ignoreProperties: ["/^scroll-padding/"],
+      },
     ],
     "rule-empty-line-before": [
       "always-multi-line",
       {
-        "except": [
-          "first-nested"
-        ],
-        "ignore": [
-          "after-comment"
-        ]
-      }
+        except: ["first-nested"],
+        ignore: ["after-comment"],
+      },
     ],
     "selector-pseudo-element-colon-notation": "single",
     "selector-pseudo-element-no-unknown": true,

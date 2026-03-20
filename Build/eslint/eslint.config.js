@@ -9,11 +9,9 @@ export default [
       ecmaVersion: 2024,
       globals: {
         document: false,
-        TYPO3: "readonly"
+        TYPO3: "readonly",
       },
     },
-    ignores: [
-      "node_modules"
-    ]
-  }
-]
+    ignores: ["node_modules"],
+  },
+];
