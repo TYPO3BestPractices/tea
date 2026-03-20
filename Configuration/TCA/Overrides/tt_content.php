@@ -25,7 +25,7 @@ call_user_func(
         $plugins = [
             'index' => ['flexformsConfiguration' => 'TeaIndex'],
             'show' => ['flexformsConfiguration' => null],
-            'front_end_editor' => ['flexformsConfiguration' => 'TeaFrontendEditor'],
+            'front_end_editor' => ['flexformsConfiguration' => 'TeaFrontEndEditor'],
         ];
 
         foreach ($plugins as $key => $value) {
