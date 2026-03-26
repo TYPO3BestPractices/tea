@@ -203,6 +203,7 @@ Options:
             - lintJson: JSON linting
             - lintPhp: PHP linting
             - lintTypoScript: TypoScript linting
+            - lintXliff: XLIFF linting
             - lintYaml: YAML linting
             - npm: "npm" with all remaining arguments dispatched.
             - phpmd: Checks code metrics in the PHP code using PHPMD.
@@ -659,6 +660,11 @@ case ${TEST_SUITE} in
     lintTypoScript)
         COMMAND="composer check:typoscript:lint"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        SUITE_EXIT_CODE=$?
+        ;;
+    lintXliff)
+        COMMAND="php Build/Scripts/xliffLint.sh lint:xliff Resources/Private/Language"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintxliff-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
         SUITE_EXIT_CODE=$?
         ;;
     lintYaml)
