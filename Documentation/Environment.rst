@@ -21,7 +21,7 @@ The following commands expect that your SSH key is know by GitHub. If not, you n
 
    git clone git@github.com:oliverklee/TYPO3-testing-distribution.git
 
-Please checkout the the branch for the TYPO3 version you need. e.g. 12.x
+Please checkout the the branch for the TYPO3 version you need. e.g. `12.x`.
 For more information about the TYPO3-testing-distribution e.g. backend user credentials use the documentation:
 https://github.com/oliverklee-de/TYPO3-testing-distribution/blob/13.x/README.md (TYPO3 13)
 Adjust link to your needed version.
