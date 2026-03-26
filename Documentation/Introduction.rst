@@ -12,8 +12,8 @@ What does it do?
 ================
 
 This TYPO3 extension, based on Extbase and Fluid, is an example of best
-practices in automated code checks, unit/functional/acceptance testing and
-continuous integration (CI).
+practices in building an extension and securing its quality by automated code
+checks, unit/functional/acceptance testing and continuous integration (CI).
 
 .. note::
 
@@ -21,21 +21,32 @@ continuous integration (CI).
 
    This extension should not be used to kickstart other extensions.
    Instead, this extension should serve as an example for best practices.
-   Use `EXT:extension_builder <https://extensions.typo3.org/extension/extension_builder>`__
-   in order to kickstart a new extension.
 
 .. _why-is-this-extension-called-tea:
 
 Why is this extension called "tea"?
 ===================================
 
-Good extension names cover the domain of their purpose.
-This extension is about managing teas. That's why the name "tea" is a good fit.
+This extension tries to cover all fundamental aspects of the development of an extbase-extension.
+The fictional use case here is the management of tea varieties.
+The needed models, classes, controllers, etc. cover all typical parts of an extbase-extension.
+Further examples show how to test all these resources.
 
-We could also add `_example` to the name in order to state that this extension is an example.
+Since good extension names cover the domain of their purpose, this extension is named "tea".
+We could also have added `_example` to the name in order to state that this extension is an example.
 But that would already break with our goal to provide a best practice.
 
 This is not related to the `tea package manager <https://tea.xyz/>`__.
+
+.. _target-group:
+
+Target group
+============
+
+The target group of this extension are TYPO3-extension developers. Typical usecases are:
+
+- getting inspired by looking into the code
+- installing the tea-extension alongside another extension that gets developed and have a running test environment available.
 
 .. _presentation-online-days-2021:
 

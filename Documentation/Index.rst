@@ -31,8 +31,8 @@ TYPO3 extension ``tea``
 ----
 
 This TYPO3 extension, based on Extbase and Fluid, is an example of best
-practices in automated code checks, unit/functional/acceptance testing and
-continuous integration.
+practices in building an extension and securing its quality by automated code
+checks, unit/functional/acceptance testing and continuous integration (CI).
 
 ----
 
