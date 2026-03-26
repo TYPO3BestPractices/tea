@@ -64,7 +64,7 @@ final class CreateTestDataCommand extends Command
         if ($deleteDataBefore) {
             $query = $connectionForTable;
             $query->delete($table, ['pid' => $pageUid], [Connection::PARAM_INT]);
-            $output->writeln(sprintf('Existing data in page %s deleted.', $pageUid));
+            $output->writeln(\sprintf('Existing data in page %s deleted.', $pageUid));
         }
 
         $query = $connectionForTable;
