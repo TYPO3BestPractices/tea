@@ -21,7 +21,7 @@ printSummary() {
     echo "Container runtime: ${CONTAINER_BIN}" >&2
     echo "Container suffix: ${SUFFIX}"
     if [[ ${TEST_SUITE} =~ ^(npm|lintCss|lintJs)$ ]]; then
-        echo "NODE: ${NODE_VERSION}" >&2
+        echo "NODE: ${IMAGE_NODE}" >&2
     else
         echo "PHP: ${PHP_VERSION}" >&2
         echo "TYPO3: ${CORE_VERSION}" >&2
@@ -372,7 +372,6 @@ CGLCHECK_DRY_RUN=0
 DATABASE_DRIVER=""
 CONTAINER_BIN=""
 COMPOSER_ROOT_VERSION="3.0.x-dev"
-NODE_VERSION=22
 HELP_TEXT_NPM_CI="Now running \'npm ci --silent\'."
 HELP_TEXT_NPM_FAILURE="npm clean-install has failed. Please run \'${0} -s npm ci\' to explore."
 CONTAINER_INTERACTIVE="-it --init"
@@ -495,7 +494,7 @@ mkdir -p .cache
 mkdir -p .Build/public/typo3temp/var/tests
 
 IMAGE_PHP="ghcr.io/typo3/core-testing-$(echo "php${PHP_VERSION}" | sed -e 's/\.//'):latest"
-IMAGE_NODE="docker.io/node:${NODE_VERSION}-alpine"
+IMAGE_NODE="docker.io/node:22-alpine"
 IMAGE_SHELLCHECK="docker.io/koalaman/shellcheck:v0.11.0"
 IMAGE_DOCS="ghcr.io/typo3-documentation/render-guides:0.36.0"
 IMAGE_MARIADB="docker.io/mariadb:${DBMS_VERSION}"
