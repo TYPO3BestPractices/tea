@@ -431,12 +431,12 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
     private function getTrustedPropertiesFromHtml(string $html): string
     {
         $matches = [];
-        \preg_match('/__trustedProperties]" value="([a-zA-Z0-9&{};:,_\\[\\]]+)"/', $html, $matches);
+        preg_match('/__trustedProperties]" value="([a-zA-Z0-9&{};:,_\\[\\]]+)"/', $html, $matches);
         if (!isset($matches[1])) {
             throw new \RuntimeException('Could not fetch trustedProperties from returned HTML.', 1744028933);
         }
 
-        return \html_entity_decode($matches[1]);
+        return html_entity_decode($matches[1]);
     }
 
     private static function assertForbiddenResponse(ResponseInterface $response): void

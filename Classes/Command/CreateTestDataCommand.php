@@ -55,16 +55,16 @@ final class CreateTestDataCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $pageUid = $input->getArgument('pageUid') ?? 0;
-        \assert(\is_int($pageUid));
+        assert(is_int($pageUid));
         $deleteDataBefore = $input->getOption('delete-data-before') ?? false;
-        \assert(\is_bool($deleteDataBefore));
+        assert(is_bool($deleteDataBefore));
         $table = 'tx_tea_domain_model_tea';
         $connectionForTable = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
 
         if ($deleteDataBefore) {
             $query = $connectionForTable;
             $query->delete($table, ['pid' => $pageUid], [Connection::PARAM_INT]);
-            $output->writeln(\sprintf('Existing data in page %s deleted.', $pageUid));
+            $output->writeln(sprintf('Existing data in page %s deleted.', $pageUid));
         }
 
         $query = $connectionForTable;
@@ -72,7 +72,7 @@ final class CreateTestDataCommand extends Command
             $item = ['pid' => $pageUid, 'title' => $item['title'], 'description' => $item['description']];
             $query->insert($table, $item);
         }
-        $output->writeln(\sprintf('Test data in page %s created.', $pageUid));
+        $output->writeln(sprintf('Test data in page %s created.', $pageUid));
 
         $referenceIndex = GeneralUtility::makeInstance(ReferenceIndex::class);
         $referenceIndex->updateIndex(false);

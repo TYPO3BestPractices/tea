@@ -11,8 +11,8 @@ $config->setParallelConfig(ParallelConfigFactory::detect());
 $config->addRules(
     [
         'native_function_invocation' => [
-            'include' => ['@all'],
-            'scope' => 'namespaced',
+            'include' => [],
+            'scope' => 'all',
             'strict' => true,
         ]
     ]

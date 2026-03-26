@@ -41,7 +41,7 @@ class FrontEndEditorController extends ActionController
     private function getUidOfLoggedInUser(): int
     {
         $userUid = $this->context->getPropertyFromAspect('frontend.user', 'id');
-        \assert(\is_int($userUid) && $userUid >= 0);
+        assert(is_int($userUid) && $userUid >= 0);
 
         return $userUid;
     }
