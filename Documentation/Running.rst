@@ -28,6 +28,10 @@ display a list of all available Composer commands and scripts. For all custom
 Composer scripts there are descriptions in the `script-description` section of
 the `composer.json`.
 
+Keep in mind that certain commands only work if you have run
+:bash:`composer install` or :bash:`./Build/Scripts/runTests.sh -s composer install`
+before.
+
 If you have problems with missing dependencies on your local machine, it is
 recommended to execute tests with the usage of the `runTests.sh` script.
 
