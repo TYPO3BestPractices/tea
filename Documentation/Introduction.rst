@@ -27,14 +27,15 @@ checks, unit/functional/acceptance testing and continuous integration (CI).
 Why is this extension called "tea"?
 ===================================
 
-This extension tries to cover all fundamental aspects of the development of an extbase-extension.
-The fictional use case here is the management of tea varieties.
-The needed models, classes, controllers, etc. cover all typical parts of an extbase-extension.
-Further examples show how to test all these resources.
+This extension aims to cover all fundamental aspects of developing an Extbase
+extension. The fictional use case is the management of tea varieties. The
+required models, classes, controllers, and other components represent all
+typical parts of an Extbase extension. Additional examples demonstrate how to
+test these components.
 
-Since good extension names cover the domain of their purpose, this extension is named "tea".
-We could also have added `_example` to the name in order to state that this extension is an example.
-But that would already break with our goal to provide a best practice.
+Since well-chosen extension names should reflect their domain, this extension is
+named “tea”. While we could have added `_example` to indicate that it is a
+sample extension, this would contradict our goal of demonstrating best practices.
 
 This is not related to the `tea package manager <https://tea.xyz/>`__.
 
@@ -43,10 +44,12 @@ This is not related to the `tea package manager <https://tea.xyz/>`__.
 Target group
 ============
 
-The target group of this extension are TYPO3-extension developers. Typical usecases are:
+The target group for this extension is **TYPO3 extension developers**. Typical use
+cases include:
 
-- getting inspired by looking into the code
-- installing the tea-extension alongside another extension that gets developed and have a running test environment available.
+- Gaining inspiration by exploring the code
+- Cloning the tea extension locally to access a working example of tests, which can then be adapted for your own extension
+
 
 .. _presentation-online-days-2021:
 
