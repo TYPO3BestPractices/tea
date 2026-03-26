@@ -22,8 +22,9 @@ The following commands except that your ssh key is know by github. If not use ht
    git clone git@github.com:oliverklee/TYPO3-testing-distribution.git
 
 Please checkout the the branch for the TYPO3 version you need. e.g. 12.x
-For more information about the TYPO3-testing-distribution e.g. backend user credentials use the documentation
-https://github.com/oliverklee-de/TYPO3-testing-distribution/blob/13.x/README.md
+For more information about the TYPO3-testing-distribution e.g. backend user credentials use the documentation:
+https://github.com/oliverklee-de/TYPO3-testing-distribution/blob/13.x/README.md (TYPO3 13)
+Adjust link to your needed version.
 
 
 Also clone the tea extension.
