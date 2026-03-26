@@ -14,7 +14,7 @@ To kickstart the project, we suggest the usage of the
 by Oliver Klee as development environment. The distribution comes with a frontend,
 example data and predefined plugins.
 
-The following commands except that your ssh key is know by github. If not use https://
+The following commands expect that your SSH key is know by GitHub. If not, you need to use `https://`.
 
 .. index:: Clone TYPO3 Testing Distribution
 .. code-block:: bash
