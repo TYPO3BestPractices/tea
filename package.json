@@ -10,8 +10,8 @@
 	"version": "1.0.0",
 	"license": "GPL-2.0-or-later",
 	"engines": {
-		"node": "^20.17.0 || ^22.5.1",
-		"npm": "^9.6.5 || ^10.8.2"
+		"node": ">=24.14.0 <25.0.0",
+		"npm": ">=11.9.0"
 	},
 	"scripts": {
 		"check:lint:js": "eslint --config ./Build/eslint/eslint.config.js 'Resources/Public/**/*.js'",
