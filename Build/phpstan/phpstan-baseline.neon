@@ -1,2 +1,25 @@
 parameters:
-	ignoreErrors: []
+	ignoreErrors:
+		-
+			message: '#^Method TTN\\Tea\\Domain\\Repository\\TeaRepository\:\:findAllFromAllPages\(\) return type with generic interface TYPO3\\CMS\\Extbase\\Persistence\\QueryResultInterface does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: ../../Classes/Domain/Repository/TeaRepository.php
+
+		-
+			message: '#^Method TTN\\Tea\\Domain\\Repository\\TeaRepository\:\:findByOwnerUid\(\) return type with generic interface TYPO3\\CMS\\Extbase\\Persistence\\QueryResultInterface does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: ../../Classes/Domain/Repository/TeaRepository.php
+
+		-
+			message: '#^Cannot call method getUid\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../../Tests/Functional/Domain/Repository/TeaRepositoryTest.php
+
+		-
+			message: '#^Mixed variable in a `\$result\-\>current\(\)\-\>\.\.\.\(\)` can skip important errors\. Make sure the type is known$#'
+			identifier: typePerfect.noMixedMethodCaller
+			count: 1
+			path: ../../Tests/Functional/Domain/Repository/TeaRepositoryTest.php
