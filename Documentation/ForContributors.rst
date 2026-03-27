@@ -1,12 +1,14 @@
 .. include:: /Includes.rst.txt
 
-.. _development-environment:
+.. _forContributors:
 
-=======================
-Development environment
-=======================
+================
+For Contributors
+================
 
-You can run the code quality checks and automated tests locally (using a
+Your use case: You might want to contribute to the tea-extensions.
+
+You want to run the code quality checks and automated tests locally (using a
 local PHP, Composer, and database) or using runTests.sh.
 
 To kickstart the project, we suggest the usage of the

@@ -47,8 +47,9 @@ Target group
 The target group for this extension is **TYPO3 extension developers**. Typical use
 cases include:
 
-- Gaining inspiration by exploring the code
-- Cloning the tea extension locally to access a working example of tests, which can then be adapted for your own extension
+- Gaining inspiration by exploring the code :ref:`("code-explorer") <ForCodeExplorers>`
+- Cloning the tea extension locally to access a working example of tests, which can then be adapted for your own extension :ref:`("live-explorer") <ForLiveExplorers>`
+- Contributing to the collection of best practices by improving the tea-extension :ref:`("contributors") <ForContributors>`
 
 
 .. _presentation-online-days-2021:
