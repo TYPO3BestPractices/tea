@@ -177,4 +177,25 @@ final class TeaRepositoryTest extends FunctionalTestCase
         self::assertInstanceOf(Tea::class, $current);
         self::assertSame('Assam', $current->getTitle());
     }
+
+    #[Test]
+    public function findAllFromAllPagesCanFindRecordsFromMultiplePages(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/findsAllFromAllPages/TwoTeasWithDifferentPids.csv');
+
+        $result = $this->subject->findAllFromAllPages();
+
+        self::assertCount(2, $result);
+    }
+
+    #[Test]
+    public function findsAllFromAllPagesSortsByUidInDescendingOrder(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/findsAllFromAllPages/TwoTeasWithUidsForSorting.csv');
+
+        $result = $this->subject->findAllFromAllPages();
+
+        $result->rewind();
+        self::assertSame(2, $result->current()->getUid());
+    }
 }
