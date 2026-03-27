@@ -1,4 +1,4 @@
-"pages",,,,,,,,,
-,"uid","pid","sorting","deleted","t3_origuid","title",,,
-,1,0,256,0,0,"Tea data",,,
-,2,0,512,0,0,"Other tea data",,,
+"pages",,,,,,,
+,"uid","pid","sorting","deleted","title",
+,1,0,256,0,"Tea data",
+,2,0,512,0,"Other tea data",
