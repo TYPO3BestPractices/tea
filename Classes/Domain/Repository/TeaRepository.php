@@ -29,4 +29,16 @@ class TeaRepository extends Repository
 
         return $query->execute();
     }
+
+    /**
+     * @return QueryResultInterface<Tea>
+     */
+    public function findAllFromAllPages(): QueryResultInterface
+    {
+        $query = $this->createQuery();
+        $query->setQuerySettings($query->getQuerySettings()->setRespectStoragePage(false));
+        $query->setOrderings(['uid' => $query::ORDER_DESCENDING]);
+
+        return $query->execute();
+    }
 }
