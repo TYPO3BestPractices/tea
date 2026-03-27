@@ -208,6 +208,7 @@ Options:
             - phpmd: Checks code metrics in the PHP code using PHPMD.
             - phpstan: PHPStan tests
             - phpstanGenerateBaseline: regenerate PHPStan baseline, handy after PHPStan updates
+            - rector: Fixes and upgrades the PHP code using Rector
             - shellcheck: check runTests.sh for shell issues
             - unit (default): PHP unit tests
             - unitRandom: PHP unit tests in random order, add -o <number> to use specific seed
@@ -706,6 +707,14 @@ case ${TEST_SUITE} in
         echo "> remove \"dangling\" ghcr.io/typo3/core-testing-* images (those tagged as <none>)"
         ${CONTAINER_BIN} images --filter "reference=ghcr.io/typo3/core-testing-*" --filter "dangling=true" --format "{{.ID}}" | xargs -I {} ${CONTAINER_BIN} rmi {}
         echo ""
+        ;;
+     rector)
+        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+            CGLCHECK_DRY_RUN="--dry-run"
+        fi
+        COMMAND=".Build/bin/rector process ${CGLCHECK_DRY_RUN} --config=Build/rector/config.php"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name cgl-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+        SUITE_EXIT_CODE=$?
         ;;
     *)
         loadHelp
