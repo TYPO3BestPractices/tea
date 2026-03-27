@@ -48,6 +48,7 @@
 	},
 	"require-dev": {
 		"ergebnis/composer-normalize": "2.50.0",
+		"ergebnis/phpstan-rules": "2.5.2 || 2.13.1",
 		"friendsofphp/php-cs-fixer": "3.94.2",
 		"helmich/typo3-typoscript-lint": "3.3.0",
 		"icanhazstring/composer-unused": "0.8.11 || 0.9.6",
@@ -71,8 +72,7 @@
 		"tomasvotruba/type-coverage": "1.0.0 || 2.1.0",
 		"typo3/cms-fluid-styled-content": "^12.4 || ^13.4",
 		"typo3/coding-standards": "0.8.0",
-		"typo3/testing-framework": "8.3.1",
-		"ergebnis/phpstan-rules": "2.5.2 || 2.13.1"
+		"typo3/testing-framework": "8.3.1"
 	},
 	"replace": {
 		"typo3-ter/tea": "self.version"
