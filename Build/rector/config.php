@@ -22,7 +22,6 @@ return RectorConfig::configure()
         __DIR__ . '/../../ext_emconf.php',
         __DIR__ . '/../../ext_localconf.php',
     ])
-    ->withPhpVersion(PhpVersion::PHP_81)
     ->withPhpSets()
     ->withSets([
         // Rector sets
