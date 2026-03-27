@@ -6,7 +6,7 @@
 Documentation rendering
 =======================
 
-In order to render the documentation, please use the runTests.sh wrapper
+In order to render the documentation, please use the `runTests.sh` wrapper:
 
 .. index:: Commands; runTests.sh -s docsGenerate
 .. code-block:: bash
