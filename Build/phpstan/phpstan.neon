@@ -61,9 +61,11 @@ parameters:
 
   ignoreErrors:
     -
+      message: '#Class cognitive complexity is#'
+      path: '../../Classes/Upgrades/AbstractListTypeToCTypeUpdate.php'
+    -
+      message: '#Cognitive complexity for#'
+      path: '../../Classes/Upgrades/AbstractListTypeToCTypeUpdate.php'
+    -
       message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) .* will always evaluate to#'
       path: '../../Tests/'
-
-  excludePaths:
-    -
-      '../../Classes/Upgrades/AbstractListTypeToCTypeUpdate.php'
