@@ -6,8 +6,18 @@
 
     <f:section name="Content">
         <h1><f:translate id="LLL:EXT:tea/Resources/Private/Language/locallang_index_mod.xlf:mlang_tabs_tab" /></h1>
+
+        <f:flashMessages />
+
+        <f:if condition="{teas}">
+            <f:render section="TeasListing" arguments="{teas: teas}" />
+        </f:if>
+    </f:section>
+
+    <f:section name="TeasListing">
         <div class="panel panel-default">
             <table class="table table-fit table-striped table-hover">
+                <caption align="top"><f:translate id="LLL:EXT:tea/Resources/Private/Language/locallang_index_mod.xlf:listing.caption" /></caption>
                 <thead>
                     <tr>
                         <th scope="col"><f:translate id="LLL:EXT:tea/Resources/Private/Language/locallang_index_mod.xlf:tx_tea_domain_model_tea.uid" /></th>

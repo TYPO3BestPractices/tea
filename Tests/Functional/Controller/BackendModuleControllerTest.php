@@ -53,6 +53,22 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    public function indexProvidesCaptionForListing(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
+
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertStringContainsString('All available teas from the installation.', $html);
+    }
+
+    #[Test]
     public function indexListsTeasFromSortedByUidInDescendingOrder(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeasForIndex.csv');
@@ -70,6 +86,36 @@ final class BackendModuleControllerTest extends FunctionalTestCase
             strpos($html, 'Tea 2'),
             'Tea 1 is not sorted after Tea 2'
         );
+    }
+
+    #[Test]
+    public function indexShowsFlashMessageIfNoTeaExists(): void
+    {
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertStringContainsString('Right now the system does not have any teas.', $html);
+        self::assertStringContainsString('No Teas available yet', $html);
+        self::assertStringContainsString('alert-warning', $html);
+    }
+
+    #[Test]
+    public function indexDoesNotShowTeaListingMarkupIfNoTeaExists(): void
+    {
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertStringNotContainsString('All available teas from the installation.', $html);
     }
 
     /**

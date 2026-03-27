@@ -15,6 +15,15 @@
             <trans-unit id="tx_tea_domain_model_tea.uid">
                 <source>UID</source>
             </trans-unit>
+            <trans-unit id="flashmessage.missing_teas.message">
+                <source>Right now the system does not have any teas.</source>
+            </trans-unit>
+            <trans-unit id="flashmessage.missing_teas.title">
+                <source>No Teas available yet</source>
+            </trans-unit>
+            <trans-unit id="listing.caption">
+                <source>All available teas from the installation.</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
