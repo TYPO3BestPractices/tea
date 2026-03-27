@@ -6,13 +6,12 @@
 Documentation rendering
 =======================
 
-In order to render the documentation, this extension provides a Composer script
-that you can run locally via
+In order to render the documentation, please use the `runTests.sh` wrapper:
 
-.. index:: Commands; composer docs:generate
+.. index:: Commands; runTests.sh -s docsGenerate
 .. code-block:: bash
 
-   composer docs:generate
+   ./Build/Scripts/runTests.sh -s docsGenerate
 
 You do not need to start or build the containers for this as this happens
 automatically.
