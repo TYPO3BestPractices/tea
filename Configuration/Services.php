@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use TTN\Tea\Command\CreateTestDataCommand;
+use TTN\Tea\Upgrades\ListTypeToCTypeUpdate;
 
 return static function (ContainerConfigurator $containerConfigurator) {
     $services = $containerConfigurator
@@ -26,4 +27,8 @@ return static function (ContainerConfigurator $containerConfigurator) {
                 'description' => 'Create test data in existing sysfolder',
             ],
         );
+
+    $services
+        ->set(ListTypeToCTypeUpdate::class)
+        ->public();
 };
