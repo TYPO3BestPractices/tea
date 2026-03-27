@@ -1,0 +1,28 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+    <f:layout name="Module" />
+
+    <f:section name="Content">
+        <h1><f:translate id="LLL:EXT:tea/Resources/Private/Language/locallang_index_mod.xlf:mlang_tabs_tab" /></h1>
+        <div class="panel panel-default">
+            <table class="table table-fit table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col"><f:translate id="LLL:EXT:tea/Resources/Private/Language/locallang_index_mod.xlf:tx_tea_domain_model_tea.uid" /></th>
+                        <th scope="col"><f:translate id="LLL:EXT:tea/Resources/Private/Language/locallang_db.xlf:tx_tea_domain_model_tea.title" /></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:for each="{teas}" as="tea">
+                        <tr>
+                            <td>{tea.uid}</td>
+                            <td>{tea.title}</td>
+                        </tr>
+                    </f:for>
+                </tbody>
+            </table>
+        </div>
+    </f:section>
+</html>
