@@ -17,6 +17,7 @@ final class ListTypeToCTypeUpdateTest extends FunctionalTestCase
      * @var non-empty-string
      */
     private const FIXTURES_PREFIX = __DIR__ . '/Fixtures/';
+    private const ASSERTIONS_PREFIX = __DIR__ . '/Assertions/';
 
     protected array $testExtensionsToLoad = ['ttn/tea'];
 
@@ -72,7 +73,7 @@ final class ListTypeToCTypeUpdateTest extends FunctionalTestCase
     public function updateNotNecessary(): void
     {
         $this->importCSVDataSet(
-            self::FIXTURES_PREFIX . 'PluginAsCType.csv'
+            self::ASSERTIONS_PREFIX . 'PluginAsCType.csv'
         );
         self::assertFalse($this->subject->updateNecessary());
     }
@@ -88,7 +89,7 @@ final class ListTypeToCTypeUpdateTest extends FunctionalTestCase
         self::assertTrue($result);
         self::assertFalse($this->subject->updateNecessary());
         $this->assertCSVDataSet(
-            self::FIXTURES_PREFIX . 'PluginAsCType.csv'
+            self::ASSERTIONS_PREFIX . 'PluginAsCType.csv'
         );
     }
 
@@ -96,13 +97,13 @@ final class ListTypeToCTypeUpdateTest extends FunctionalTestCase
     public function executeUpdateOnCType(): void
     {
         $this->importCSVDataSet(
-            self::FIXTURES_PREFIX . 'PluginAsCType.csv'
+            self::ASSERTIONS_PREFIX . 'PluginAsCType.csv'
         );
         self::assertFalse($this->subject->updateNecessary());
         $result = $this->subject->executeUpdate();
         self::assertTrue($result);
         $this->assertCSVDataSet(
-            self::FIXTURES_PREFIX . 'PluginAsCType.csv'
+            self::ASSERTIONS_PREFIX . 'PluginAsCType.csv'
         );
     }
 
