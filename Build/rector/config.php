@@ -27,7 +27,7 @@ return RectorConfig::configure()
     ->withSets([
         // Rector sets
 
-        LevelSetList::UP_TO_PHP_84,
+        LevelSetList::UP_TO_PHP_81,
         // LevelSetList::UP_TO_PHP_82,
         // LevelSetList::UP_TO_PHP_83,
         // LevelSetList::UP_TO_PHP_84,
@@ -55,7 +55,7 @@ return RectorConfig::configure()
         Typo3SetList::CODE_QUALITY,
         Typo3SetList::GENERAL,
 
-        Typo3LevelSetList::UP_TO_TYPO3_13,
+        Typo3LevelSetList::UP_TO_TYPO3_12,
     ])
     // To have a better analysis from PHPStan, we teach it here some more things
     ->withPHPStanConfigs([
