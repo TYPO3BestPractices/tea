@@ -171,6 +171,30 @@ cleanRenderedDocumentationFiles() {
     echo "done"
 }
 
+fixComposerNormalize() {
+    COMMAND="composer normalize --no-check-lock"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+    return
+}
+
+ phpCsFixer() {
+    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+        CGLCHECK_DRY_RUN="--dry-run --diff"
+    fi
+    COMMAND="php .Build/bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpCsFixer-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+    return
+ }
+
+  rector() {
+    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+        CGLCHECK_DRY_RUN="--dry-run"
+    fi
+    COMMAND=".Build/bin/rector process ${CGLCHECK_DRY_RUN} --config=Build/rector/config.php"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name cgl-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+    return
+  }
+
 loadHelp() {
     # Load help text into $HELP
     read -r -d '' HELP <<EOF
@@ -594,8 +618,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     fixComposerNormalize)
-        COMMAND="composer normalize --no-check-lock"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        fixComposerNormalize
         SUITE_EXIT_CODE=$?
         ;;
     functional)
@@ -680,11 +703,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     phpCsFixer)
-        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
-            CGLCHECK_DRY_RUN="--dry-run --diff"
-        fi
-        COMMAND="php .Build/bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpcsfixer-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+        phpCsFixer
         SUITE_EXIT_CODE=$?
         ;;
     phpmd)
@@ -730,11 +749,7 @@ case ${TEST_SUITE} in
         echo ""
         ;;
      rector)
-        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
-            CGLCHECK_DRY_RUN="--dry-run"
-        fi
-        COMMAND=".Build/bin/rector process ${CGLCHECK_DRY_RUN} --config=Build/rector/config.php"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name cgl-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+        rector
         SUITE_EXIT_CODE=$?
         ;;
     *)
