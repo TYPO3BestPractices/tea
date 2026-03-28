@@ -12,8 +12,8 @@ What does it do?
 ================
 
 This TYPO3 extension, based on Extbase and Fluid, is an example of best
-practices in automated code checks, unit/functional/acceptance testing and
-continuous integration (CI).
+practices in building an extension and securing its quality by automated code
+checks, unit/functional/acceptance testing and continuous integration (CI).
 
 .. note::
 
@@ -21,21 +21,35 @@ continuous integration (CI).
 
    This extension should not be used to kickstart other extensions.
    Instead, this extension should serve as an example for best practices.
-   Use `EXT:extension_builder <https://extensions.typo3.org/extension/extension_builder>`__
-   in order to kickstart a new extension.
 
 .. _why-is-this-extension-called-tea:
 
 Why is this extension called "tea"?
 ===================================
 
-Good extension names cover the domain of their purpose.
-This extension is about managing teas. That's why the name "tea" is a good fit.
+This extension aims to cover all fundamental aspects of developing an Extbase
+extension. The fictional use case is the management of tea varieties. The
+required models, classes, controllers, and other components represent all
+typical parts of an Extbase extension. Additional examples demonstrate how to
+test these components.
 
-We could also add `_example` to the name in order to state that this extension is an example.
-But that would already break with our goal to provide a best practice.
+Since well-chosen extension names should reflect their domain, this extension is
+named “tea”. While we could have added `_example` to indicate that it is a
+sample extension, this would contradict our goal of demonstrating best practices.
 
 This is not related to the `tea package manager <https://tea.xyz/>`__.
+
+.. _target-group:
+
+Target group
+============
+
+The target group for this extension is **TYPO3 extension developers**. Typical use
+cases include:
+
+- Gaining inspiration by exploring the code
+- Cloning the tea extension locally to access a working example of tests, which can then be adapted for your own extension
+
 
 .. _presentation-online-days-2021:
 
