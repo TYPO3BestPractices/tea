@@ -13,6 +13,7 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 final class ExtensionTest extends FunctionalTestCase
 {
     protected array $testExtensionsToLoad = ['ttn/tea'];
+    protected bool $initializeDatabase = false;
 
     #[Test]
     public function isLoadedByExensionkey(): void
