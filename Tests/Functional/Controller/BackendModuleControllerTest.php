@@ -15,10 +15,10 @@ use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\FormProtection\AbstractFormProtection;
 use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Http\ServerRequest;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
@@ -150,13 +150,13 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     #[Test]
     public function indexLinksTeaValuesToEditForm(): void
     {
-        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '13.0', '<')) {
-            $token = GeneralUtility::hmac('routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN);
-        } else {
+        if ((new Typo3Version())->getMajorVersion() === 13) {
             $token = $this->get(HashService::class)->hmac(
                 'routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN,
                 AbstractFormProtection::class
             );
+        } else {
+            $token = GeneralUtility::hmac('routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN);
         }
 
         $expectedUrlQuery = http_build_query([
