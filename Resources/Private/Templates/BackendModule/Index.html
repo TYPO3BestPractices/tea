@@ -1,5 +1,6 @@
 <html
     xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
     data-namespace-typo3-fluid="true"
 >
     <f:layout name="Module" />
@@ -27,8 +28,8 @@
                 <tbody>
                     <f:for each="{teas}" as="tea">
                         <tr>
-                            <td>{tea.uid}</td>
-                            <td>{tea.title}</td>
+                            <td><be:link.editRecord uid="{tea.uid}" table="tx_tea_domain_model_tea">{tea.uid}</be:link.editRecord></td>
+                            <td><be:link.editRecord uid="{tea.uid}" table="tx_tea_domain_model_tea">{tea.title}</be:link.editRecord></td>
                         </tr>
                     </f:for>
                 </tbody>
