@@ -1,9 +1,9 @@
 includes:
   - phpstan-baseline.neon
-  - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
-  - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
-  - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
-  - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
+  - ../../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+  - ../../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
+  - ../../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
+  - ../../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
 
 parameters:
   phpVersion: 80100
@@ -11,10 +11,10 @@ parameters:
   level: 9
 
   paths:
-    - ../../Classes
-    - ../../Configuration
-    - ../../Tests
-    - ../../ext_localconf.php
+    - ../../../Classes
+    - ../../../Configuration
+    - ../../../Tests
+    - ../../../ext_localconf.php
 
   type_coverage:
     return_type: 100
@@ -62,10 +62,10 @@ parameters:
   ignoreErrors:
     -
       message: '#Class cognitive complexity is#'
-      path: '../../Classes/Upgrades/AbstractListTypeToCTypeUpdate.php'
+      path: '../../../Classes/Upgrades/AbstractListTypeToCTypeUpdate.php'
     -
       message: '#Cognitive complexity for#'
-      path: '../../Classes/Upgrades/AbstractListTypeToCTypeUpdate.php'
+      path: '../../../Classes/Upgrades/AbstractListTypeToCTypeUpdate.php'
     -
       message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) .* will always evaluate to#'
-      path: '../../Tests/'
+      path: '../../../Tests/'
