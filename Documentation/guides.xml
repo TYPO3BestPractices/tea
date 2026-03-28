@@ -16,8 +16,8 @@
     />
     <project
         title="TYPO3 EXT:tea"
-        release="3.1.0"
-        version="3.1"
+        release="4.0.0"
+        version="4.0"
         copyright="since 2013 by the TYPO3 contributors"
     />
 </guides>
