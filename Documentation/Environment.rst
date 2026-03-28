@@ -27,7 +27,6 @@ https://github.com/oliverklee-de/TYPO3-testing-distribution/blob/13.x/README.md 
 Adjust link to your needed version.
 
 
-Also clone the tea extension.
 
 .. index:: Clone Tea Extension
 .. code-block:: bash
