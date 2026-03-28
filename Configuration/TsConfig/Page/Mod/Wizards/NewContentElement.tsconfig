@@ -9,7 +9,7 @@ mod.wizards {
                     tt_content_defValues {
                         CType = tea_teaindex
                     }
-                },
+                }
                 tea_show {
                     iconIdentifier = tx-tea
                     title =  LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_show
@@ -17,7 +17,7 @@ mod.wizards {
                     tt_content_defValues {
                         CType = tea_teashow
                     }
-                },
+                }
                 tea_frontend_editor {
                     iconIdentifier = tx-tea
                     title =  LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_frontend_editor
@@ -25,7 +25,7 @@ mod.wizards {
                     tt_content_defValues {
                         CType = tea_teafrontendeditor
                     }
-                },
+                }
             }
         }
     }
