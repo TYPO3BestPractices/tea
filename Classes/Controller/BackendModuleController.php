@@ -15,7 +15,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 #[AsController]
 final class BackendModuleController extends ActionController
 {
-    public const TRANSLATE_KEY_PREFIX = 'LLL:EXT:tea/Resources/Private/Language/locallang_index_mod.xlf:';
+    private const TRANSLATE_KEY_PREFIX = 'LLL:EXT:tea/Resources/Private/Language/locallang_index_mod.xlf:';
 
     public function __construct(
         private readonly ModuleTemplateFactory $moduleTemplateFactory,
@@ -28,8 +28,8 @@ final class BackendModuleController extends ActionController
 
         if (count($teas) === 0) {
             $this->addFlashMessage(
-                LocalizationUtility::translate(self::TRANSLATE_KEY_PREFIX . 'flashmessage.missing_teas.message') ?? '',
-                LocalizationUtility::translate(self::TRANSLATE_KEY_PREFIX . 'flashmessage.missing_teas.title') ?? '',
+                LocalizationUtility::translate(self::TRANSLATE_KEY_PREFIX . 'flash_message.missing_teas.message') ?? '',
+                LocalizationUtility::translate(self::TRANSLATE_KEY_PREFIX . 'flash_message.missing_teas.title') ?? '',
                 ContextualFeedbackSeverity::WARNING
             );
         }

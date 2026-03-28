@@ -15,10 +15,10 @@
             <trans-unit id="tx_tea_domain_model_tea.uid">
                 <source>UID</source>
             </trans-unit>
-            <trans-unit id="flashmessage.missing_teas.message">
+            <trans-unit id="flash_message.missing_teas.message">
                 <source>Currently, there are no teas.</source>
             </trans-unit>
-            <trans-unit id="flashmessage.missing_teas.title">
+            <trans-unit id="flash_message.missing_teas.title">
                 <source>No Teas available yet</source>
             </trans-unit>
             <trans-unit id="listing.caption">
