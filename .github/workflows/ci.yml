@@ -46,16 +46,18 @@ jobs:
         run: Build/Scripts/runTests.sh -s composerUpdateMax
       - name: Install composer dependencies
         run: |
-          ./Build/Scripts/runTests.sh -t ${{matrix.typo3-version}} -s composerUpdateMax
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdateMax
       - name: Run phpstan code quality checks
         run: |
-          ./Build/Scripts/runTests.sh -t ${{matrix.typo3-version}} -s phpstan
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s phpstan
     strategy:
       fail-fast: false
       matrix:
         include:
           - typo3-version: "12.4"
+            php-version: "8.2"
           - typo3-version: "13.4"
+            php-version: "8.2"
   code-quality:
     name: Code quality checks
     runs-on: ubuntu-24.04
