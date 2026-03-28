@@ -1,0 +1,32 @@
+mod.wizards {
+    newContentElement.wizardItems {
+        plugins {
+            elements {
+                tea_index {
+                    iconIdentifier = tx-tea
+                    title =  LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_index
+                    description = LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_index.description
+                    tt_content_defValues {
+                        CType = tea_teaindex
+                    }
+                },
+                tea_show {
+                    iconIdentifier = tx-tea
+                    title =  LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_show
+                    description = LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_show.description
+                    tt_content_defValues {
+                        CType = tea_teashow
+                    }
+                },
+                tea_frontend_editor {
+                    iconIdentifier = tx-tea
+                    title =  LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_frontend_editor
+                    description = LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_frontend_editor.description
+                    tt_content_defValues {
+                        CType = tea_teafrontendeditor
+                    }
+                },
+            }
+        }
+    }
+}

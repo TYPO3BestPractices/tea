@@ -7,6 +7,10 @@
         <source>Tea list</source>
         <target>Teeliste</target>
       </trans-unit>
+      <trans-unit id="plugin.tea_index.description" approved="yes">
+        <source>List of all teas</source>
+        <target>Liste aller Tees</target>
+      </trans-unit>
       <trans-unit id="plugin.tea_index.settings.tab.pagesAndFolders" approved="yes">
         <source>Pages and folders</source>
         <target>Seiten und Ordner</target>
@@ -27,9 +31,17 @@
         <source>Tea single view</source>
         <target>Tee-Einzelansicht</target>
       </trans-unit>
+      <trans-unit id="plugin.tea_show.description" approved="yes">
+        <source>Single view of one tea</source>
+        <target>Einzelansicht eines Tees</target>
+      </trans-unit>
       <trans-unit id="plugin.tea_frontend_editor" approved="yes">
         <source>Tea front-end editor</source>
         <target>Frontend-Editor für Tee</target>
+      </trans-unit>
+       <trans-unit id="plugin.tea_frontend_editor.description" approved="yes">
+        <source>Plugin for editing a tea</source>
+        <target>Plugin zum editieren eines Tees</target>
       </trans-unit>
       <trans-unit id="plugin.tea_frontend_editor.settings.tab.pagesAndFolders" approved="yes">
         <source>Pages and folders</source>

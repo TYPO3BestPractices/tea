@@ -6,6 +6,9 @@
       <trans-unit id="plugin.tea_index">
         <source>Tea list</source>
       </trans-unit>
+      <trans-unit id="plugin.tea_index.description">
+        <source>List of all teas</source>
+      </trans-unit>
       <trans-unit id="plugin.tea_index.settings.tab.pagesAndFolders">
         <source>Pages and folders</source>
       </trans-unit>
@@ -21,8 +24,14 @@
       <trans-unit id="plugin.tea_show">
         <source>Tea single view</source>
       </trans-unit>
+      <trans-unit id="plugin.tea_show.description">
+        <source>Single view of one tea</source>
+      </trans-unit>
       <trans-unit id="plugin.tea_frontend_editor">
         <source>Tea front-end editor</source>
+      </trans-unit>
+      <trans-unit id="plugin.tea_frontend_editor.description">
+        <source>Plugin for editing a tea</source>
       </trans-unit>
       <trans-unit id="plugin.tea_frontend_editor.settings.tab.pagesAndFolders">
         <source>Pages and folders</source>
@@ -83,6 +92,12 @@
       </trans-unit>
       <trans-unit id="plugin.frontEndEditor.new.heading">
         <source>Create new tea</source>
+      </trans-unit>
+      <trans-unit id="wizard.title">
+        <source>Tea</source>
+      </trans-unit>
+      <trans-unit id="wizard.description">
+        <source>Tea</source>
       </trans-unit>
     </body>
   </file>
