@@ -46,7 +46,7 @@ jobs:
         run: Build/Scripts/runTests.sh -s composerUpdateMax
       - name: Install composer dependencies
         run: |
-          ./Build/Scripts/runTests.sh -t ${{matrix.typo3-version}} -s composer composerUpdateMax
+          ./Build/Scripts/runTests.sh -t ${{matrix.typo3-version}} -s composerUpdateMax
       - name: Run phpstan code quality checks
         run: |
           ./Build/Scripts/runTests.sh -t ${{matrix.typo3-version}} -s phpstan
