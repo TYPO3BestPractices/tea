@@ -181,9 +181,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
             'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
         ]);
 
-        self::assertTrue(
-            str_contains($html, '<input type="hidden" name="tx_tea_teafrontendeditor[tea][__identity]" value="1" />') ||
-            str_contains($html, '<input type="hidden" name="tx_tea_teafrontendeditor[tea][__identity]" value="1" >')
+        self::assertStringContainsString(
+            '<input type="hidden" name="tx_tea_teafrontendeditor[tea][__identity]" value="1"',
+            $html,
         );
 
         self::assertStringContainsString('Godesberger Burgtee', $html);
