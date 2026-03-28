@@ -43,16 +43,8 @@ checks, unit/functional/acceptance testing and continuous integration (CI).
    :titlesonly:
 
    Introduction
-   PHPVersionSupport
-   ReleaseBranchingStrategy
    Environment
-   DependencyManager
-   CommandController
-   Running
-   ContinuousIntegration
-   Documentation
-   Security
-   Assertions
+   TechnicalBackground
    DivergencesToTypo3Core
 
 .. Meta Menu
