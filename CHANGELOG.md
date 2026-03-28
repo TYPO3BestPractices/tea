@@ -3,9 +3,24 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## x.y.z
+
+### Added
+
+### Changed
+
+### Cleanup
+
+### Removed
+
+### Fixed
+
+### Documentation
+
 ## 4.0.0
 
 ### Added
+
 - Add support for PHP 8.4 (#1536)
 - Add support for PHP 8.5 (#1814)
 - Add support for PostgreSQL 16 (#1271)
@@ -26,6 +41,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Add backend module to demonstrate testing of them (#2022)
 
 ### Changed
+
 - !!! Migrate plugin to CType (#1960)
 - Require the latest TYPO3 12LTS security release (#1940)
 - Move php-cs-fixer configuration to Build dir (#1353)
@@ -64,7 +80,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Switch to using runTests.sh for PHP linting in GitHub Actions (#1672)
 - Simplify the unit/functional tests CI matrix (#1686)
 - Configure test suites for unit and functional tests (#1690)
-- Migrate controller tests to functional tests (#1729, #1734, #1738, #1739, #1778, #1779)
+- Migrate controller tests to functional tests (#1729, #1734, #1738, #1739,
+  #1778, #1779)
 - Also run PSR4-verify on ci:static (#1769)
 - Add functional tests to update properties of teas (#1794)
 - Unblock argument passing in Build/Scripts/runTests.sh (#1689)
@@ -75,6 +92,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Use TYPO3 13.4 as default version (#2042)
 
 ### Cleanup
+
 - Drop obsolete options from ext_emconf.php (#1298)
 - Import classes instead of FQCN (#1299)
 - Clean up the unit tests configuration (#1389)
@@ -85,6 +103,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Make Rector calls explicit (#1967)
 
 ### Removed
+
 - Drop DDEV configuration in favor of `runTests.sh` (#1063)
 - Stop using the predefined GitHub Actions (#1211)
 - Add more development documentation (#1399)
@@ -98,8 +117,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Remove leading slashes from global functions (#2013)
 - Add rector to runTests.sh (#2015)
 
-
 ### Fixed
+
 - Add `resname` to all language labels (#1221)
 - Raise the minimal TYPO3 V12 version (#1212)
 - Use our own PHPUnit configuration files in runTests.sh (#1134)
@@ -107,6 +126,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Display dbms version for functional test execution (#1276)
 
 ### Documentation
+
 - Switch the documentation to PHP-based rendering (#1190)
 - Document why EXT:tea uses a Services.php, while YAML is fine as well (#1286)
 - Document philosophy of alignment with TYPO3 CMS Core (#1284)
@@ -131,6 +151,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## 3.1.0
 
 ### Added
+
 - Add Composer script for XLIFF linting (#1071)
 - Add polish translation for tea (#1020)
 - Make records timeable and hideable (#989)
@@ -140,24 +161,29 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Add type coverage calculation (#830)
 
 ### Changed
+
 - Rename TsConfig directory to `TSconfig` (#923)
 - Set the minimal 12LTS version to 12.1 (#702)
 
 ### Removed
+
 - Stop using Prophecy (#676)
 
 ### Fixed
+
 - Get the functional tests to work with TYPO3 >= 12.1 (#704)
 - Avoid race condition on case-insensitive filesystems (#657)
 
 ## 3.0.0
 
 ### Added
+
 - Harden the GitHub Actions workflows (#649)
 - Add support for TYPO3 12 (#615, #652, #653)
 - Add `.gitignore` entry for JetBrains Fleet editor (#642)
 
 ### Changed
+
 - Switch the coverage on CI from Xdebug to PCOV (#648)
 - Upgrade to `helmich/typo3-typoscript-lint` V3 (#645)
 - Upgrade to the testing framework v7 (#629)
@@ -169,11 +195,13 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Replace switchable controller actions with separate plugins (#575)
 
 ### Removed
+
 - Drop support for Symfony 4.4 (#622)
 - Drop support for TYPO3 10LTS (#594)
 - Drop support for PHP 7.2 and 7.3 (#581)
 
 ### Fixed
+
 - Stop injecting QuerySettings (#650)
 - Do not check `composer.lock` during `composer normalize` (#641)
 - Require TYPO3 >= 11.5.4 (#643)
@@ -182,15 +210,18 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## 2.0.1
 
 ### Changed
+
 - Use CamelCase for the TsConfig folder (#522)
 - Stop using the `typo3/minimal` package on CI (#520, #531)
 - Update to Composer 2.4 (#513)
 - Change the default indentation for rst files to 4 spaces (#194)
 
 ### Removed
+
 - Remove the ancient acceptance tests (#512)
 
 ### Fixed
+
 - Have all extension dependencies in the `ext_emconf.php` as well (#515)
 - Bump the minimal 10.4 Extbase requirement (#514)
 - Explicitly require Prophecy (#511)
@@ -198,33 +229,40 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## 2.0.0
 
 ### Added
+
 - Add the PHPStan strict rules (#471)
 - Add a Dependabot action for updating dependencies (#452, #461, #469, #481)
 - Use Coveralls for the code coverage (#425)
 
 ### Changed
+
 - Move npm tools and config to default locations (#444)
 - Use the TYPO3 Code of Conduct (#430)
 
 ### Removed
+
 - Drop support for TYPO3 9LTS (#363, #372)
 
 ## 1.1.0
 
 ### Added
+
 - Also run the unit tests with V11 in the CI pipeline (#336)
 - Allow installations on TYPO3 11LTS
 
 ### Changed
+
 - Require at least TYPO3 11.5.2 for 11LTS (#335)
 - Upgrade to PHPUnit 8.5 (#328)
 
 ### Fixed
+
 - Only publish to the TER if the tag is a valid version number (#329)
 
 ## 1.0.0
 
 ### Added
+
 - Also run the CI build once a week (#160)
 - Run the functional tests via GitHub Actions (#55)
 - Cache Composer dependencies in build (#31)
@@ -239,6 +277,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Composer script for PHP linting
 
 ### Changed
+
 - Disable running with lower dependencies on GitHub actions (#54)
 - Move the project to the TYPO3 Documentation Team (#47)
 - Run unit tests with GitHub actions (#37)
@@ -257,6 +296,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Complete rewrite. Usable with TYPO3 7.6 and 8.7.
 
 ### Removed
+
 - Drop the Travis CI builds (#56)
 - Drop obsolete `dividers2tabs` from the TCA (#44)
 - Drop obsolete parts from the README (#34)
@@ -270,6 +310,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Drop the dependency of `roave/security-advisories`
 
 ### Fixed
+
 - Always use the Composer-installed tools (#49)
 - Avoid unwanted higher PHP versions (#50)
 - Stop caching `vendor/` on Travis CI (#51)
