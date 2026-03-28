@@ -11,9 +11,14 @@ use TTN\Tea\Controller\BackendModuleController;
 use TYPO3\CMS\Backend\Routing\Route;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
+use TYPO3\CMS\Core\Crypto\HashService;
+use TYPO3\CMS\Core\FormProtection\AbstractFormProtection;
+use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Http\ServerRequest;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
@@ -25,6 +30,8 @@ final class BackendModuleControllerTest extends FunctionalTestCase
 {
     private const TRANSLATE_KEY_PREFIX = 'LLL:EXT:tea/Resources/Private/Language/locallang_index_mod.xlf:';
 
+    private const FORM_PROTECTION_SESSION_TOKEN = 'testToken';
+
     protected function setUp(): void
     {
         $this->testExtensionsToLoad = [
@@ -34,7 +41,10 @@ final class BackendModuleControllerTest extends FunctionalTestCase
         parent::setUp();
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/BackendUser.csv');
-        $this->setUpBackendUser(1);
+        $this->setUpBackendUser(1)
+            ->getSession()
+            ->set('formProtectionSessionToken', self::FORM_PROTECTION_SESSION_TOKEN);
+
         $GLOBALS['LANG'] = $this->get(LanguageServiceFactory::class)->create('en');
     }
 
@@ -137,6 +147,43 @@ final class BackendModuleControllerTest extends FunctionalTestCase
         self::assertTranslationKeyIsNotRendered('listing.caption', $html);
     }
 
+    #[Test]
+    public function indexLinksTeaValuesToEditForm(): void
+    {
+        if ((new Typo3Version())->getMajorVersion() === 13) {
+            $token = $this->get(HashService::class)->hmac(
+                'routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN,
+                AbstractFormProtection::class
+            );
+        } else {
+            $token = GeneralUtility::hmac('routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN);
+        }
+
+        $expectedUrlQuery = http_build_query([
+            'token' => $token,
+            'edit' => [
+                'tx_tea_domain_model_tea' => [
+                    1 => 'edit',
+                ],
+            ],
+        ]) . '&returnUrl=typo3/module/tea/index/BackendModule/index';
+
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
+
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertStringContainsString(
+            htmlspecialchars('/typo3/record/edit?' . $expectedUrlQuery, ENT_QUOTES),
+            $html
+        );
+    }
+
     /**
      * @param non-empty-string $route
      * @param non-empty-string $pluginName
@@ -207,10 +254,14 @@ final class BackendModuleControllerTest extends FunctionalTestCase
             ->setControllerActionName($action)
             ->setPluginName($pluginName);
 
+        $normalizedParams = self::createStub(NormalizedParams::class);
+        $normalizedParams->method('getRequestUri')->willReturn('typo3' . $route);
+
         return (new ServerRequest($route))
             ->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_BE)
             ->withAttribute('site', new Site('test', 1, ['base' => 'localhost/']))
             ->withAttribute('route', new Route($route, ['packageName' => $packageName]))
+            ->withAttribute('normalizedParams', $normalizedParams)
             ->withAttribute('extbase', $extbaseParameters);
     }
 
