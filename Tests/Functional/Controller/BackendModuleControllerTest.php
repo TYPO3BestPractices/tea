@@ -18,6 +18,7 @@ use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
@@ -149,29 +150,23 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     #[Test]
     public function indexLinksTeaValuesToEditForm(): void
     {
-        if (class_exists(HashService::class)) {
-            $token = GeneralUtility::makeInstance(HashService::class)->hmac(
+        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '13.0', '<')) {
+            $token = GeneralUtility::hmac('routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN);
+        } else {
+            $token = $this->get(HashService::class)->hmac(
                 'routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN,
                 AbstractFormProtection::class
             );
-        } else {
-            // Before v13
-            $token = GeneralUtility::hmac('routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN);
         }
 
-        $expectedUrl = htmlspecialchars(
-            '/typo3/record/edit?'
-            . http_build_query([
-                'token' => $token,
-                'edit' => [
-                    'tx_tea_domain_model_tea' => [
-                        1 => 'edit',
-                    ],
+        $expectedUrlQuery = http_build_query([
+            'token' => $token,
+            'edit' => [
+                'tx_tea_domain_model_tea' => [
+                    1 => 'edit',
                 ],
-            ])
-            . '&returnUrl=typo3/module/tea/index/BackendModule/index',
-            ENT_QUOTES
-        );
+            ],
+        ]) . '&returnUrl=typo3/module/tea/index/BackendModule/index';
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
 
@@ -183,7 +178,10 @@ final class BackendModuleControllerTest extends FunctionalTestCase
 
         $html = $response->getBody()->__toString();
 
-        self::assertStringContainsString($expectedUrl, $html);
+        self::assertStringContainsString(
+            htmlspecialchars('/typo3/record/edit?' . $expectedUrlQuery, ENT_QUOTES),
+            $html
+        );
     }
 
     /**
