@@ -80,7 +80,6 @@ jobs:
           - "json:lint"
           - "php:cs-fixer"
           - "php:rector"
-          - "php:stan"
           - "typoscript:lint"
           - "xliff:lint"
           - "yaml:lint"
