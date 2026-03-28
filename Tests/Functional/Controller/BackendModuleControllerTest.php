@@ -17,11 +17,14 @@ use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 #[CoversClass(BackendModuleController::class)]
 final class BackendModuleControllerTest extends FunctionalTestCase
 {
+    private const TRANSLATE_KEY_PREFIX = 'LLL:EXT:tea/Resources/Private/Language/locallang_index_mod.xlf:';
+
     protected function setUp(): void
     {
         $this->testExtensionsToLoad = [
@@ -53,6 +56,22 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    public function indexProvidesCaptionForListing(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
+
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertTranslationKeyIsRendered('listing.caption', $html);
+    }
+
+    #[Test]
     public function indexListsTeasFromSortedByUidInDescendingOrder(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeasForIndex.csv');
@@ -70,6 +89,52 @@ final class BackendModuleControllerTest extends FunctionalTestCase
             strpos($html, 'Tea 2'),
             'Tea 1 is not sorted after Tea 2'
         );
+    }
+
+    #[Test]
+    public function indexShowsFlashMessageIfNoTeaExists(): void
+    {
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertTranslationKeyIsRendered('flash_message.missing_teas.title', $html);
+        self::assertTranslationKeyIsRendered('flash_message.missing_teas.message', $html);
+        self::assertStringContainsString('alert-warning', $html);
+    }
+
+    #[Test]
+    public function indexDoesNotShowFlashMessageIfTeaExists(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
+
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertStringNotContainsString('alert-warning', $html);
+    }
+
+    #[Test]
+    public function indexDoesNotShowTeaListingMarkupIfNoTeaExists(): void
+    {
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertTranslationKeyIsNotRendered('listing.caption', $html);
     }
 
     /**
@@ -147,5 +212,31 @@ final class BackendModuleControllerTest extends FunctionalTestCase
             ->withAttribute('site', new Site('test', 1, ['base' => 'localhost/']))
             ->withAttribute('route', new Route($route, ['packageName' => $packageName]))
             ->withAttribute('extbase', $extbaseParameters);
+    }
+
+    /**
+     * @param non-empty-string $translationKey
+     */
+    private function assertTranslationKeyIsRendered(string $translationKey, string $html): void
+    {
+        $fullTranslationId = self::TRANSLATE_KEY_PREFIX . $translationKey;
+
+        $translation = LocalizationUtility::translate($fullTranslationId);
+
+        self::assertIsString($translation, 'Translation key "' . $fullTranslationId . '" does not exist.');
+        self::assertStringContainsString($translation, $html);
+    }
+
+    /**
+     * @param non-empty-string $translationKey
+     */
+    private function assertTranslationKeyIsNotRendered(string $translationKey, string $html): void
+    {
+        $fullTranslationId = self::TRANSLATE_KEY_PREFIX . $translationKey;
+
+        $translation = LocalizationUtility::translate($fullTranslationId);
+
+        self::assertIsString($translation, 'Translation key "' . $fullTranslationId . '" does not exist.');
+        self::assertStringNotContainsString($translation, $html);
     }
 }
