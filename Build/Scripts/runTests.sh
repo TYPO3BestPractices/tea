@@ -208,6 +208,7 @@ Options:
             - phpmd: Checks code metrics in the PHP code using PHPMD.
             - phpstan: PHPStan tests
             - phpstanGenerateBaseline: regenerate PHPStan baseline, handy after PHPStan updates
+            - psr-verify: Verifies PSR-4 namespace correctness.
             - rector: Fixes and upgrades the PHP code using Rector
             - shellcheck: check runTests.sh for shell issues
             - unit (default): PHP unit tests
@@ -686,6 +687,11 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
+    psr-verify)
+            COMMAND="composer dumpautoload --optimize --strict-psr --no-plugins"
+            ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name psr-verify-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+            SUITE_EXIT_CODE=$?
+            ;;
     shellcheck)
         ${CONTAINER_BIN} run ${CONTAINER_INTERACTIVE} --rm --pull always ${USERSET} -v "${ROOT_DIR}":/project:ro ${IMAGE_SHELLCHECK} /project/Build/Scripts/runTests.sh
         SUITE_EXIT_CODE=$?
