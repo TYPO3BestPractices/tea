@@ -9,4 +9,8 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:tea/Resources/Public/Icons/Module.svg',
     ],
+    'tx-tea' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:tea/Resources/Public/Icons/Extension.svg',
+    ],
 ];
