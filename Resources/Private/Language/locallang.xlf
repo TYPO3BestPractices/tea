@@ -93,12 +93,6 @@
       <trans-unit id="plugin.frontEndEditor.new.heading">
         <source>Create new tea</source>
       </trans-unit>
-      <trans-unit id="wizard.title">
-        <source>Tea</source>
-      </trans-unit>
-      <trans-unit id="wizard.description">
-        <source>Tea</source>
-      </trans-unit>
     </body>
   </file>
 </xliff>
