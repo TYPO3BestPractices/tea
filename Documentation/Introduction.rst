@@ -17,10 +17,15 @@ checks, unit/functional/acceptance testing and continuous integration (CI).
 
 .. note::
 
-   This is not a kickstarter extension.
+   **Never run this extension in production!**
 
-   This extension should not be used to kickstart other extensions.
-   Instead, this extension should serve as an example for best practices.
+   This extension has educational and documentational purpose only. It is never
+   meant to run in production.
+
+   This is also not a kickstarter extension.
+   It should not be used to kickstart other extensions.
+   Instead, it should serve as an example for best practices.
+
 
 .. _why-is-this-extension-called-tea:
 
@@ -29,7 +34,7 @@ Why is this extension called "tea"?
 
 This extension aims to cover all fundamental aspects of developing an Extbase
 extension. The fictional use case is the management of tea varieties. The
-required models, classes, controllers, and other components represent all
+required models, classes, controllers and other components represent all
 typical parts of an Extbase extension. Additional examples demonstrate how to
 test these components.
 
@@ -44,12 +49,14 @@ This is not related to the `tea package manager <https://tea.xyz/>`__.
 Target group
 ============
 
-The target group for this extension is **TYPO3 extension developers**. Typical use
-cases include:
+The target group for this extension is **TYPO3 extension developers**.
 
-- Gaining inspiration by exploring the code :ref:`("code-explorer") <ForCodeExplorers>`
-- Cloning the tea extension locally to access a working example of tests, which can then be adapted for your own extension :ref:`("live-explorer") <ForLiveExplorers>`
-- Contributing to the collection of best practices by improving the tea-extension :ref:`("contributors") <ForContributors>`
+Typical use cases include:
+
+- Gaining inspiration by exploring the code :ref:`("see the code") <ForCodeExplorers>`
+- Installing the tea-extension without tests to have a simple but comprehensive example at hand ("install the tea extension")
+- Using the tests provided by tea extension to improve the code of your own extension :ref:`("use the tests") <ForLiveExplorers>`
+- Contributing to the collection of best practices by improving the tea-extension :ref:`("contribute to tea-extension") <ForContributors>`
 
 
 .. _presentation-online-days-2021:
