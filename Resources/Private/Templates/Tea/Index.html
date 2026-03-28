@@ -1,50 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-    <f:layout name="Default"/>
+<f:layout name="Default"/>
 
-    <f:section name="main">
-        <h2>
-            <f:translate key="plugin.tea.heading"/>
-        </h2>
+<f:section name="main">
+    <h2>
+        <f:translate key="plugin.tea.heading"/>
+    </h2>
 
-        <f:if condition="{teas}">
-            <f:then>
-                <f:render section="Teas" arguments="{teas: teas}"/>
-            </f:then>
-            <f:else>
-                <p>
-                    <f:translate id="plugin.tea.noTeasAvailable"/>
-                </p>
-            </f:else>
-        </f:if>
-    </f:section>
+    <f:if condition="{teas}">
+        <f:then>
+            <f:render section="Teas" arguments="{teas: teas}"/>
+        </f:then>
+        <f:else>
+            <p>
+                <f:translate id="plugin.tea.noTeasAvailable"/>
+            </p>
+        </f:else>
+    </f:if>
+</f:section>
 
-    <f:section name="Teas">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        <f:translate key="plugin.tea.property.uid"/>
-                    </th>
-                    <th>
-                        <f:translate key="plugin.tea.property.title"/>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <f:for each="{teas}" as="tea">
-                    <tr>
-                        <td>
-                            {tea.uid}
-                        </td>
-                        <td>
-                            <f:link.action action="show" arguments="{tea: tea}" pageUid="{settings.singleViewPageUid}">
-                                {tea.title}
-                            </f:link.action>
-                        </td>
-                    </tr>
-                </f:for>
-            </tbody>
-        </table>
-    </f:section>
+<f:section name="Teas">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                <f:translate key="plugin.tea.property.uid"/>
+            </th>
+            <th>
+                <f:translate key="plugin.tea.property.title"/>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <f:for each="{teas}" as="tea">
+            <tr>
+                <td>
+                    {tea.uid}
+                </td>
+                <td>
+                    <f:link.action action="show" arguments="{tea: tea}" pageUid="{settings.singleViewPageUid}">
+                        {tea.title}
+                    </f:link.action>
+                </td>
+            </tr>
+        </f:for>
+        </tbody>
+    </table>
+</f:section>
 </html>

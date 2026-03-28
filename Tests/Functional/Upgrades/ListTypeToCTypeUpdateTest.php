@@ -64,7 +64,7 @@ final class ListTypeToCTypeUpdateTest extends FunctionalTestCase
     public function updateNecessary(): void
     {
         $this->importCSVDataSet(
-            self::FIXTURES_PREFIX . 'PluginAsListType.csv'
+            self::FIXTURES_PREFIX . 'PluginAsListType.csv',
         );
         self::assertTrue($this->subject->updateNecessary());
     }
@@ -73,7 +73,7 @@ final class ListTypeToCTypeUpdateTest extends FunctionalTestCase
     public function updateNotNecessary(): void
     {
         $this->importCSVDataSet(
-            self::ASSERTIONS_PREFIX . 'PluginAsCType.csv'
+            self::ASSERTIONS_PREFIX . 'PluginAsCType.csv',
         );
         self::assertFalse($this->subject->updateNecessary());
     }
@@ -82,14 +82,14 @@ final class ListTypeToCTypeUpdateTest extends FunctionalTestCase
     public function executeUpdateOnListType(): void
     {
         $this->importCSVDataSet(
-            self::FIXTURES_PREFIX . 'PluginAsListType.csv'
+            self::FIXTURES_PREFIX . 'PluginAsListType.csv',
         );
         self::assertTrue($this->subject->updateNecessary());
         $result = $this->subject->executeUpdate();
         self::assertTrue($result);
         self::assertFalse($this->subject->updateNecessary());
         $this->assertCSVDataSet(
-            self::ASSERTIONS_PREFIX . 'PluginAsCType.csv'
+            self::ASSERTIONS_PREFIX . 'PluginAsCType.csv',
         );
     }
 
@@ -97,13 +97,13 @@ final class ListTypeToCTypeUpdateTest extends FunctionalTestCase
     public function executeUpdateOnCType(): void
     {
         $this->importCSVDataSet(
-            self::ASSERTIONS_PREFIX . 'PluginAsCType.csv'
+            self::ASSERTIONS_PREFIX . 'PluginAsCType.csv',
         );
         self::assertFalse($this->subject->updateNecessary());
         $result = $this->subject->executeUpdate();
         self::assertTrue($result);
         $this->assertCSVDataSet(
-            self::ASSERTIONS_PREFIX . 'PluginAsCType.csv'
+            self::ASSERTIONS_PREFIX . 'PluginAsCType.csv',
         );
     }
 

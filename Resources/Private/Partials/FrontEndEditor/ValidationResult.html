@@ -1,11 +1,11 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-    <f:form.validationResults for="tea.{property}">
-        <f:if condition="{validationResults.flattenedErrors}">
-            <f:for each="{validationResults.errors}" as="error">
-                <div class="invalid-feedback">
-                    {error.message}
-                </div>
-            </f:for>
-        </f:if>
-    </f:form.validationResults>
+<f:form.validationResults for="tea.{property}">
+    <f:if condition="{validationResults.flattenedErrors}">
+        <f:for each="{validationResults.errors}" as="error">
+            <div class="invalid-feedback">
+                {error.message}
+            </div>
+        </f:for>
+    </f:if>
+</f:form.validationResults>
 </html>

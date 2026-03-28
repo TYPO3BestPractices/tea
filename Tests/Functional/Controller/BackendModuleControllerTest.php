@@ -97,7 +97,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
         self::assertLessThan(
             strpos($html, 'Tea 1'),
             strpos($html, 'Tea 2'),
-            'Tea 1 is not sorted after Tea 2'
+            'Tea 1 is not sorted after Tea 2',
         );
     }
 
@@ -192,7 +192,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     private function executeRequest(
         string $route,
         string $pluginName,
-        string $action
+        string $action,
     ): ResponseInterface {
         $request = $this->createRequest(
             $route,
@@ -214,10 +214,11 @@ final class BackendModuleControllerTest extends FunctionalTestCase
             Environment::getVarPath(),
             Environment::getConfigPath(),
             Environment::getCurrentScript(),
-            Environment::toArray()['os']
+            Environment::toArray()['os'],
         );
 
-        $response = $this->get(BackendModuleController::class)
+        $response = $this
+            ->get(BackendModuleController::class)
             ->processRequest(new Request($request));
 
         Environment::initialize(
@@ -229,7 +230,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
             Environment::getVarPath(),
             Environment::getConfigPath(),
             Environment::getCurrentScript(),
-            Environment::toArray()['os']
+            Environment::toArray()['os'],
         );
 
         return $response;

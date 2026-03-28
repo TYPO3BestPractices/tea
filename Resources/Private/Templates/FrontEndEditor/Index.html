@@ -1,60 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-    <f:layout name="FrontEndEditor"/>
+<f:layout name="FrontEndEditor"/>
 
-    <f:section name="main">
-        <h2>
-            <f:translate key="plugin.frontEndEditor.index.heading"/>
-        </h2>
+<f:section name="main">
+    <h2>
+        <f:translate key="plugin.frontEndEditor.index.heading"/>
+    </h2>
 
-        <p class="btn btn-link">
-            <f:link.action action="new">
-                <f:translate key="plugin.frontEndEditor.action.new"/>
-            </f:link.action>
-        </p>
+    <p class="btn btn-link">
+        <f:link.action action="new">
+            <f:translate key="plugin.frontEndEditor.action.new"/>
+        </f:link.action>
+    </p>
 
-        <f:if condition="{teas}">
-            <f:then>
-                <table class="table table-striped table-hover">
+    <f:if condition="{teas}">
+        <f:then>
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th scope="col">
+                        <f:translate key="plugin.frontEndEditor.property.uid"/>
+                    </th>
+                    <th scope="col">
+                        <f:translate key="plugin.frontEndEditor.property.title"/>
+                    </th>
+                    <th scope="col" colspan="2">
+                        <f:translate key="plugin.frontEndEditor.action.actions"/>
+                    </th>
+                </tr>
+                <f:for each="{teas}" as="tea">
                     <tr>
-                        <th scope="col">
-                            <f:translate key="plugin.frontEndEditor.property.uid"/>
-                        </th>
-                        <th scope="col">
-                            <f:translate key="plugin.frontEndEditor.property.title"/>
-                        </th>
-                        <th scope="col" colspan="2">
-                            <f:translate key="plugin.frontEndEditor.action.actions"/>
-                        </th>
+                        <td>
+                            {tea.uid}
+                        </td>
+                        <td>
+                            {tea.title}
+                        </td>
+                        <td>
+                            <f:link.action action="edit" arguments="{tea: tea}">
+                                <f:translate key="plugin.frontEndEditor.action.edit"/>
+                            </f:link.action>
+                        </td>
+                        <td>
+                            <f:form action="delete" name="tea" object="{tea}">
+                                <f:form.submit value="{f:translate(key: 'plugin.frontEndEditor.action.delete')}"
+                                               class="btn btn-danger"/>
+                            </f:form>
+                        </td>
                     </tr>
-                    <f:for each="{teas}" as="tea">
-                        <tr>
-                            <td>
-                                {tea.uid}
-                            </td>
-                            <td>
-                                {tea.title}
-                            </td>
-                            <td>
-                                <f:link.action action="edit" arguments="{tea: tea}">
-                                    <f:translate key="plugin.frontEndEditor.action.edit"/>
-                                </f:link.action>
-                            </td>
-                            <td>
-                                <f:form action="delete" name="tea" object="{tea}">
-                                    <f:form.submit value="{f:translate(key: 'plugin.frontEndEditor.action.delete')}"
-                                                   class="btn btn-danger"/>
-                                </f:form>
-                            </td>
-                        </tr>
-                    </f:for>
-                </table>
-            </f:then>
-            <f:else>
-                <p class="alert alert-info" role="alert">
-                    <f:translate key="plugin.frontEndEditor.message.noTeas"/>
-                </p>
-            </f:else>
-        </f:if>
-    </f:section>
+                </f:for>
+            </table>
+        </f:then>
+        <f:else>
+            <p class="alert alert-info" role="alert">
+                <f:translate key="plugin.frontEndEditor.message.noTeas"/>
+            </p>
+        </f:else>
+    </f:if>
+</f:section>
 </html>

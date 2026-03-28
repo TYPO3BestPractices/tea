@@ -14,8 +14,8 @@ $config->addRules(
             'include' => [],
             'scope' => 'all',
             'strict' => true,
-        ]
-    ]
+        ],
+    ],
 );
 $config->getFinder()->in('Classes')->in('Configuration')->in('Tests');
 return $config;
