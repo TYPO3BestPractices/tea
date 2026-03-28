@@ -16,7 +16,7 @@
                 <source>UID</source>
             </trans-unit>
             <trans-unit id="flashmessage.missing_teas.message">
-                <source>Right now the system does not have any teas.</source>
+                <source>Currently, there are no teas.</source>
             </trans-unit>
             <trans-unit id="flashmessage.missing_teas.title">
                 <source>No Teas available yet</source>
