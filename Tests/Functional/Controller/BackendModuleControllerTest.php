@@ -17,6 +17,7 @@ use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 #[CoversClass(BackendModuleController::class)]
@@ -65,7 +66,10 @@ final class BackendModuleControllerTest extends FunctionalTestCase
 
         $html = $response->getBody()->__toString();
 
-        self::assertStringContainsString('All available teas from the installation.', $html);
+        self::assertStringContainsString(
+            LocalizationUtility::translate(BackendModuleController::TRANSLATE_KEY_PREFIX . 'listing.caption') ?? '',
+            $html
+        );
     }
 
     #[Test]
@@ -99,9 +103,31 @@ final class BackendModuleControllerTest extends FunctionalTestCase
 
         $html = $response->getBody()->__toString();
 
-        self::assertStringContainsString('Right now the system does not have any teas.', $html);
-        self::assertStringContainsString('No Teas available yet', $html);
+        self::assertStringContainsString(
+            LocalizationUtility::translate(BackendModuleController::TRANSLATE_KEY_PREFIX . 'flashmessage.missing_teas.title') ?? '',
+            $html
+        );
+        self::assertStringContainsString(
+            LocalizationUtility::translate(BackendModuleController::TRANSLATE_KEY_PREFIX . 'flashmessage.missing_teas.message') ?? '',
+            $html
+        );
         self::assertStringContainsString('alert-warning', $html);
+    }
+
+    #[Test]
+    public function indexDoesNotShowFlashMessageIfTeaExists(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
+
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertStringNotContainsString('alert-warning', $html);
     }
 
     #[Test]
@@ -115,7 +141,10 @@ final class BackendModuleControllerTest extends FunctionalTestCase
 
         $html = $response->getBody()->__toString();
 
-        self::assertStringNotContainsString('All available teas from the installation.', $html);
+        self::assertStringNotContainsString(
+            LocalizationUtility::translate(BackendModuleController::TRANSLATE_KEY_PREFIX . 'listing.caption') ?? '',
+            $html
+        );
     }
 
     /**
