@@ -1,6 +1,7 @@
 # Example TYPO3 extension for code quality checks and automated tests
 
 [![TYPO3 V12](https://img.shields.io/badge/TYPO3-12-orange.svg)](https://get.typo3.org/version/12)
+[![TYPO3 V13](https://img.shields.io/badge/TYPO3-13-orange.svg)](https://get.typo3.org/version/13)
 [![License](https://img.shields.io/github/license/TYPO3BestPractices/tea)](https://packagist.org/packages/ttn/tea)
 [![GitHub CI status](https://github.com/TYPO3BestPractices/tea/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/TYPO3BestPractices/tea/actions)
 [![Coverage Status](https://coveralls.io/repos/github/TYPO3BestPractices/tea/badge.svg?branch=main)](https://coveralls.io/github/TYPO3BestPractices/tea?branch=main)
