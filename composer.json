@@ -105,7 +105,7 @@
 	},
 	"extra": {
 		"branch-alias": {
-			"dev-main": "5.0.x-dev"
+			"dev-main": "4.1.x-dev"
 		},
 		"typo3/cms": {
 			"extension-key": "tea",
