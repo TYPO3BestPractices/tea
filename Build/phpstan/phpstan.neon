@@ -69,3 +69,23 @@ parameters:
     -
       message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) .* will always evaluate to#'
       path: '../../Tests/'
+
+  ergebnis:
+    declareStrictTypes:
+      enabled: false
+    final:
+      enabled: false
+    finalInAbstractClass:
+      enabled: false
+    noExtends:
+      enabled: false
+    noIsset:
+      enabled: false
+    noNullableReturnTypeDeclaration:
+      enabled: false
+    noParameterWithContainerTypeDeclaration:
+      enabled: false
+    noParameterWithNullableTypeDeclaration:
+      enabled: false
+    noParameterWithNullDefaultValue:
+      enabled: false
