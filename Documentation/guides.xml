@@ -13,6 +13,7 @@
         edit-on-github-branch="main"
         edit-on-github="TYPO3BestPractices/tea"
         typo3-core-preferred="stable"
+        interlink-shortcode="ttn/tea"
     />
     <project
         title="TYPO3 EXT:tea"
