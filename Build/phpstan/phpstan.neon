@@ -1,13 +1,10 @@
 includes:
-  - phpstan-baseline.neon
   - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
   - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
   - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
   - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
 
 parameters:
-  phpVersion: 80100
-
   level: 9
 
   paths:

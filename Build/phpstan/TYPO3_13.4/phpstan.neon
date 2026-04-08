@@ -1,0 +1,7 @@
+includes:
+  - ../phpstan.neon
+  - phpstan-baseline.neon
+
+parameters:
+  phpVersion: 80200
+
