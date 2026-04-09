@@ -18,8 +18,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Install Composer dependencies
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composerUpdateMax -t 13.4
+      - name: Show the Composer version
+        run: ./Build/Scripts/runTests.sh -s composer -- --version
+      - name: Show the Composer configuration
+        run: ./Build/Scripts/runTests.sh -s composer config --global --list
+      - name: Install composer dependencies
+        run: |
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
       - name: Lint PHP
         run: |
           Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s lintPhp
@@ -32,6 +37,9 @@ jobs:
           - "8.3"
           - "8.4"
           - "8.5"
+        # For consistency, the TYPO3 version should match the default TYPO3 version in `runTests.sh`.
+        typo3-version: [ "13.4" ]
+        composer-dependencies: [ Max ]
   code-quality:
     name: Code quality checks
     runs-on: ubuntu-24.04
