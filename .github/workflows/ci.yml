@@ -41,7 +41,7 @@ jobs:
       - name: Show the Composer version
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
-        run:  ./Build/Scripts/runTests.sh -s composer config --global --list
+        run: ./Build/Scripts/runTests.sh -s composer config --global --list
       - name: Install Composer dependencies
         run: Build/Scripts/runTests.sh -s composerUpdateMax
       - name: Run code quality checks
@@ -133,7 +133,7 @@ jobs:
       - name: Show the Composer version
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
-        run:  ./Build/Scripts/runTests.sh -s composer config --global --list
+        run: ./Build/Scripts/runTests.sh -s composer config --global --list
       - name: Install composer dependencies
         run: |
           ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
@@ -178,7 +178,7 @@ jobs:
       - name: Show the Composer version
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
-        run:  ./Build/Scripts/runTests.sh -s composer config --global --list
+        run: ./Build/Scripts/runTests.sh -s composer config --global --list
       - name: Install composer dependencies
         run: |
           ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
