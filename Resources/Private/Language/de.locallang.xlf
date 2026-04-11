@@ -39,7 +39,7 @@
         <source>Tea front-end editor</source>
         <target>Frontend-Editor für Tee</target>
       </trans-unit>
-       <trans-unit id="plugin.tea_frontend_editor.description" approved="yes">
+      <trans-unit id="plugin.tea_frontend_editor.description" approved="yes">
         <source>Plugin for editing a tea</source>
         <target>Plugin zum editieren eines Tees</target>
       </trans-unit>
