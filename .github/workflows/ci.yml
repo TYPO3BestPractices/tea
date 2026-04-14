@@ -38,8 +38,10 @@ jobs:
           - "8.4"
           - "8.5"
         # For consistency, the TYPO3 version should match the default TYPO3 version in `runTests.sh`.
-        typo3-version: [ "13.4" ]
-        composer-dependencies: [ Max ]
+        typo3-version:
+          - "13.4"
+        composer-dependencies:
+          - Max
   code-quality:
     name: Code quality checks
     runs-on: ubuntu-24.04
