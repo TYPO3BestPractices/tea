@@ -119,10 +119,22 @@ jobs:
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
         run: ./Build/Scripts/runTests.sh -s composer config --global --list
-      - name: Install Composer dependencies
-        run: Build/Scripts/runTests.sh -s composerUpdateMax
+      - name: Install composer dependencies
+        run: |
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
       - name: Runs all automatic code style fixes.
-        run: Build/Scripts/runTests.sh -s fix
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s fix
+    strategy:
+      fail-fast: false
+      matrix:
+        # For consistency, the PHP version should match the default PHP version in `runTests.sh`.
+        php-version:
+          - "8.2"
+        # For consistency, the TYPO3 version should match the default TYPO3 version in `runTests.sh`.
+        typo3-version:
+          - "13.4"
+        composer-dependencies:
+          - Max
   prepare-release:
     name: Check prepare release script
     runs-on: ubuntu-24.04
