@@ -20,6 +20,7 @@ return RectorConfig::configure()
         __DIR__ . '/../../ext_localconf.php',
     ])
     ->withPhpSets()
+    ->withComposerBased(phpunit: true)
     ->withSets([
         // Rector sets
 
@@ -32,12 +33,6 @@ return RectorConfig::configure()
         // SetList::PRIVATIZATION,
         // SetList::STRICT_BOOLEANS,
         // SetList::TYPE_DECLARATION,
-
-        // PHPUnit sets
-
-        PHPUnitSetList::PHPUNIT_100,
-        // PHPUnitSetList::PHPUNIT_110,
-        // PHPUnitSetList::PHPUNIT_CODE_QUALITY,
 
         // TYPO3 Sets
         // https://github.com/sabbelasichon/typo3-rector/blob/main/src/Set/Typo3LevelSetList.php
