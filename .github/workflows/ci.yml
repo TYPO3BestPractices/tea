@@ -31,17 +31,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version:
-          - "8.1"
-          - "8.2"
-          - "8.3"
-          - "8.4"
-          - "8.5"
-        # For consistency, the TYPO3 version should match the default TYPO3 version in `runTests.sh`.
-        typo3-version:
-          - "13.4"
-        composer-dependencies:
-          - Max
+        include:
+          - typo3-version: "12.4"
+            php-version: "8.1"
+            composer-dependencies: Max
+          - typo3-version: "13.4"
+            php-version: "8.2"
+            composer-dependencies: Max
+          - typo3-version: "13.4"
+            php-version: "8.3"
+            composer-dependencies: Max
+          - typo3-version: "13.4"
+            php-version: "8.4"
+            composer-dependencies: Max
+          - typo3-version: "13.4"
+            php-version: "8.5"
+            composer-dependencies: Max
   code-quality:
     name: Code quality checks
     runs-on: ubuntu-24.04
