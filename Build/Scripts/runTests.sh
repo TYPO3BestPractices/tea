@@ -210,7 +210,6 @@ Options:
             - phpstanGenerateBaseline: regenerate PHPStan baseline, handy after PHPStan updates
             - shellcheck: check runTests.sh for shell issues
             - unit (default): PHP unit tests
-            - unitRandom: PHP unit tests in random order, add -o <number> to use specific seed
             - update: Updates existing typo3/core-testing-*:latest container images and removes dangling local volumes.
 
     -a <mysqli|pdo_mysql>
@@ -282,7 +281,7 @@ Options:
             - 8.5: use PHP 8.5
 
     -e "<phpunit options>" (DEPRECATED).
-        Only with -s functional|functionalDeprecated|unit|unitDeprecated|unitRandom
+        Only with -s functional|functionalDeprecated|unit|unitDeprecated
         Additional options to send to phpunit (unit & functional tests). For phpunit,
         options starting with "--" must be added after options starting with "-".
         Example -e "-d memory_limit=-1 --filter filterByValueRecursiveCorrectlyFiltersArray" to enable verbose output AND filter tests
@@ -293,7 +292,7 @@ Options:
             Build/Scripts/runTests.sh -s unit -- --filter filterByValueRecursiveCorrectlyFiltersArray
 
     -x
-        Only with -s functional|functionalDeprecated|unit|unitDeprecated|unitRandom
+        Only with -s functional|functionalDeprecated|unit|unitDeprecated
         Send information to host instance for test or system under test break points. This is especially
         useful if a local PhpStorm instance is listening on default xdebug port 9003. A different port
         can be selected with -y
@@ -301,12 +300,6 @@ Options:
     -y <port>
         Send xdebug information to a different port than default 9003 if an IDE like PhpStorm
         is not listening on default port.
-
-    -o <number>
-        Only with -s unitRandom
-        Set specific random seed to replay a random run in this order again. The phpunit randomizer
-        outputs the used seed at the end (in gitlab core testing logs, too). Use that number to
-        replay the unit tests in that order.
 
     -n
         Only with -s cgl|composerNormalize|npm|lintJs|lintCss
@@ -693,10 +686,6 @@ case ${TEST_SUITE} in
         ;;
     unit)
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml "$@"
-        SUITE_EXIT_CODE=$?
-        ;;
-    unitRandom)
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-random-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml --order-by=random ${PHPUNIT_RANDOM} "$@"
         SUITE_EXIT_CODE=$?
         ;;
     update)
