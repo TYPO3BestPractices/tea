@@ -500,7 +500,7 @@ mkdir -p .Build/public/typo3temp/var/tests
 IMAGE_PHP="ghcr.io/typo3/core-testing-$(echo "php${PHP_VERSION}" | sed -e 's/\.//'):latest"
 IMAGE_NODEJS="ghcr.io/typo3/core-testing-nodejs24:1.1"
 IMAGE_SHELLCHECK="docker.io/koalaman/shellcheck:v0.11.0"
-IMAGE_DOCS="ghcr.io/typo3-documentation/render-guides:0.37.0"
+IMAGE_DOCS="ghcr.io/typo3-documentation/render-guides:0.37.1"
 IMAGE_MARIADB="docker.io/mariadb:${DBMS_VERSION}"
 IMAGE_MYSQL="docker.io/mysql:${DBMS_VERSION}"
 IMAGE_POSTGRES="docker.io/postgres:${DBMS_VERSION}-alpine"
