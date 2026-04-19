@@ -359,7 +359,6 @@ DBMS_VERSION=""
 PHP_VERSION="8.2"
 PHP_XDEBUG_ON=0
 PHP_XDEBUG_PORT=9003
-PHPUNIT_RANDOM=""
 # CGLCHECK_DRY_RUN is a more generic dry-run switch not limited to CGL
 CGLCHECK_DRY_RUN=0
 DATABASE_DRIVER=""
@@ -385,7 +384,7 @@ OPTIND=1
 # Array for invalid options
 INVALID_OPTIONS=()
 # Simple option parsing based on getopts (! not getopt)
-while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
+while getopts "a:b:s:d:i:p:t:xy:nhu" OPT; do
     case ${OPT} in
         s)
             TEST_SUITE=${OPTARG}
@@ -422,9 +421,6 @@ while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
             ;;
         y)
             PHP_XDEBUG_PORT=${OPTARG}
-            ;;
-        o)
-            PHPUNIT_RANDOM="--random-order-seed=${OPTARG}"
             ;;
         n)
             CGLCHECK_DRY_RUN=1
