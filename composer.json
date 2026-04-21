@@ -135,8 +135,8 @@
 		],
 		"check:json:lint": "find . ! -path '*/.cache/*' ! -path '*/.Build/*' ! -path '*/node_modules/*' -name '*.json' | xargs -r php .Build/bin/jsonlint -q",
 		"check:php": [
-			"@check:php:cs-fixer",
 			"@check:php:lint",
+			"@check:php:cs-fixer",
 			"@check:php:stan"
 		],
 		"check:php:cs-fixer": "php-cs-fixer fix --config ./Build/php-cs-fixer/config.php -v --dry-run --diff",
