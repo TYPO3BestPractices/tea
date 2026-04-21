@@ -43,7 +43,9 @@ checks, unit/functional/acceptance testing and continuous integration (CI).
    :titlesonly:
 
    Introduction
-   Environment
+   ForCodeExplorers
+   ForLiveExplorers
+   ForContributors
    TechnicalBackground
    DivergencesToTypo3Core
 
