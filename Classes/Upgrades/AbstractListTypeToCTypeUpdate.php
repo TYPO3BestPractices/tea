@@ -186,6 +186,7 @@ abstract class AbstractListTypeToCTypeUpdate implements UpgradeWizardInterface
         /** @phpstan-ignore cast.int */
         return (int)$queryBuilder->executeQuery()->fetchOne() === 0;
     }
+
     /** @phpstan-ignore missingType.iterableValue */
     protected function getContentElementsToUpdate(string $listType): array
     {
@@ -201,6 +202,7 @@ abstract class AbstractListTypeToCTypeUpdate implements UpgradeWizardInterface
 
         return $queryBuilder->executeQuery()->fetchAllAssociative();
     }
+
     /** @phpstan-ignore missingType.iterableValue */
     protected function getBackendUserGroupsToUpdate(string $listType): array
     {
@@ -266,21 +268,36 @@ abstract class AbstractListTypeToCTypeUpdate implements UpgradeWizardInterface
     private function validateRequirements(): void
     {
         if ($this->getTitle() === '') {
-            throw new \RuntimeException('The update class "' . static::class . '" must provide a title by extending "getTitle()"', 1727605675);
+            throw new \RuntimeException(
+                'The update class "' . static::class . '" must provide a title by extending "getTitle()"',
+                1727605675,
+            );
         }
         if ($this->getDescription() === '') {
-            throw new \RuntimeException('The update class "' . static::class . '" must provide a description by extending "getDescription()"', 1727605676);
+            throw new \RuntimeException(
+                'The update class "' . static::class . '" must provide a description by extending "getDescription()"',
+                1727605676,
+            );
         }
         if ($this->getListTypeToCTypeMapping() === []) {
-            throw new \RuntimeException('The update class "' . static::class . '" does not provide a "list_type" to "CType" migration mapping', 1727605677);
+            throw new \RuntimeException(
+                'The update class "' . static::class . '" does not provide a "list_type" to "CType" migration mapping',
+                1727605677,
+            );
         }
 
         foreach ($this->getListTypeToCTypeMapping() as $listType => $contentElement) {
             if ($listType === '') {
-                throw new \RuntimeException('Invalid mapping item "' . $listType . '" in class "' . static::class, 1727605678);
+                throw new \RuntimeException(
+                    'Invalid mapping item "' . $listType . '" in class "' . static::class,
+                    1727605678,
+                );
             }
             if ($contentElement === '') {
-                throw new \RuntimeException('Invalid mapping item "' . $contentElement . '" in class "' . static::class, 1727605679);
+                throw new \RuntimeException(
+                    'Invalid mapping item "' . $contentElement . '" in class "' . static::class,
+                    1727605679,
+                );
             }
         }
     }

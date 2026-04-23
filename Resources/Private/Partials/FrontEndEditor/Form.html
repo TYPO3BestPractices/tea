@@ -1,36 +1,36 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-    <f:variable name="propertyLabelPrefix" value="plugin.frontEndEditor.property"/>
-    <f:variable name="idPrefix" value="tea-editor"/>
+<f:variable name="propertyLabelPrefix" value="plugin.frontEndEditor.property"/>
+<f:variable name="idPrefix" value="tea-editor"/>
 
-    <fieldset class="mb-3">
-        <div class="row mb-3">
-            <label for="{idPrefix}-title" class="col-sm-2 col-form-label">
-                <f:translate key="{propertyLabelPrefix}.title"/>
-            </label>
-            <div class="col-sm-10">
-                <f:form.textfield property="title" id="{idPrefix}-title" maxlength="255"
-                                  class="form-control" errorClass="is-invalid" required="required"/>
-                <f:render partial="FrontEndEditor/ValidationResult" arguments="{property: 'title'}"/>
-            </div>
+<fieldset class="mb-3">
+    <div class="row mb-3">
+        <label for="{idPrefix}-title" class="col-sm-2 col-form-label">
+            <f:translate key="{propertyLabelPrefix}.title"/>
+        </label>
+        <div class="col-sm-10">
+            <f:form.textfield property="title" id="{idPrefix}-title" maxlength="255"
+                              class="form-control" errorClass="is-invalid" required="required"/>
+            <f:render partial="FrontEndEditor/ValidationResult" arguments="{property: 'title'}"/>
         </div>
-
-        <div class="row mb-3">
-            <label for="{idPrefix}-description" class="col-sm-2 col-form-label">
-                <f:translate key="{propertyLabelPrefix}.description"/>
-            </label>
-            <div class="col-sm-10">
-                <f:form.textarea property="description" id="{idPrefix}-description"
-                                 class="form-control" rows="5" errorClass="is-invalid"
-                                 additionalAttributes="{maxlength: 2000}"/>
-                <f:render partial="FrontEndEditor/ValidationResult" arguments="{property: 'description'}"/>
-            </div>
-        </div>
-    </fieldset>
-
-    <div class="d-flex justify-content-end mt-3 mb-3">
-        <f:link.action action="index" class="btn btn-outline-secondary me-3" additionalAttributes="{role: 'button'}">
-            <f:translate key="plugin.frontEndEditor.action.cancel"/>
-        </f:link.action>
-        <f:form.submit value="{f:translate(key: 'plugin.frontEndEditor.action.save')}" class="btn btn-primary"/>
     </div>
+
+    <div class="row mb-3">
+        <label for="{idPrefix}-description" class="col-sm-2 col-form-label">
+            <f:translate key="{propertyLabelPrefix}.description"/>
+        </label>
+        <div class="col-sm-10">
+            <f:form.textarea property="description" id="{idPrefix}-description"
+                             class="form-control" rows="5" errorClass="is-invalid"
+                             additionalAttributes="{maxlength: 2000}"/>
+            <f:render partial="FrontEndEditor/ValidationResult" arguments="{property: 'description'}"/>
+        </div>
+    </div>
+</fieldset>
+
+<div class="d-flex justify-content-end mt-3 mb-3">
+    <f:link.action action="index" class="btn btn-outline-secondary me-3" additionalAttributes="{role: 'button'}">
+        <f:translate key="plugin.frontEndEditor.action.cancel"/>
+    </f:link.action>
+    <f:form.submit value="{f:translate(key: 'plugin.frontEndEditor.action.save')}" class="btn btn-primary"/>
+</div>
 </html>

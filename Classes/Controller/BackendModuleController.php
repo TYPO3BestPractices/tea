@@ -30,7 +30,7 @@ final class BackendModuleController extends ActionController
             $this->addFlashMessage(
                 LocalizationUtility::translate(self::TRANSLATE_KEY_PREFIX . 'flash_message.missing_teas.message') ?? '',
                 LocalizationUtility::translate(self::TRANSLATE_KEY_PREFIX . 'flash_message.missing_teas.title') ?? '',
-                ContextualFeedbackSeverity::WARNING
+                ContextualFeedbackSeverity::WARNING,
             );
         }
 

@@ -1,12 +1,12 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-    <f:security.ifAuthenticated>
-        <f:then>
-            <f:render section="main"/>
-        </f:then>
-        <f:else>
-            <div class="alert alert-danger" role="alert">
-                Please configure this plugin to be only visible if a website user is logged in.
-            </div>
-        </f:else>
-    </f:security.ifAuthenticated>
+<f:security.ifAuthenticated>
+    <f:then>
+        <f:render section="main"/>
+    </f:then>
+    <f:else>
+        <div class="alert alert-danger" role="alert">
+            Please configure this plugin to be only visible if a website user is logged in.
+        </div>
+    </f:else>
+</f:security.ifAuthenticated>
 </html>
