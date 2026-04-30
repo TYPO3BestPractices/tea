@@ -329,6 +329,13 @@ jobs:
             composer-dependencies: Max
           - typo3-version: "13.4"
             php-version: "8.5"
+            dbms: "mariadb"
+            composer-dependencies: Min
+          - typo3-version: "13.4"
+            php-version: "8.5"
+            dbms: "mariadb"
+          - typo3-version: "13.4"
+            php-version: "8.5"
             dbms: "mysql"
             composer-dependencies: Min
           - typo3-version: "13.4"
@@ -374,6 +381,14 @@ jobs:
           - typo3-version: "14.3"
             php-version: "8.5"
             dbms: "sqlite"
+            composer-dependencies: Max
+          - typo3-version: "14.3"
+            php-version: "8.5"
+            dbms: "mariadb"
+            composer-dependencies: Min
+          - typo3-version: "14.3"
+            php-version: "8.5"
+            dbms: "mariadb"
             composer-dependencies: Max
           - typo3-version: "14.3"
             php-version: "8.5"
