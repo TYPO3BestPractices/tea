@@ -263,34 +263,42 @@ jobs:
           ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
       - name: Run functional tests
         run: |
-          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s functional
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -d ${{ matrix.dbms }} -s functional
     strategy:
       fail-fast: false
       matrix:
         include:
           - typo3-version: "12.4"
             php-version: "8.1"
+            dbms: "sqlite"
             composer-dependencies: Min
           - typo3-version: "12.4"
             php-version: "8.1"
+            dbms: "sqlite"
             composer-dependencies: Max
           - typo3-version: "12.4"
             php-version: "8.5"
+            dbms: "sqlite"
             composer-dependencies: Min
           - typo3-version: "12.4"
             php-version: "8.5"
+            dbms: "sqlite"
             composer-dependencies: Max
           - typo3-version: "13.4"
             php-version: "8.2"
+            dbms: "sqlite"
             composer-dependencies: Min
           - typo3-version: "13.4"
             php-version: "8.2"
+            dbms: "sqlite"
             composer-dependencies: Max
           - typo3-version: "13.4"
             php-version: "8.5"
+            dbms: "sqlite"
             composer-dependencies: Min
           - typo3-version: "13.4"
             php-version: "8.5"
+            dbms: "sqlite"
             composer-dependencies: Max
   shellcheck:
     name: Check shell scripts
