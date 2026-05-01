@@ -5,7 +5,8 @@
 /.php-cs-fixer.cache
 /.phpunit.result.cache
 /Documentation-GENERATED-temp/
-/build
+/Build/coverage
+/Build/logs
 /composer.lock
 /generate-documentation.sh
 /nbproject
