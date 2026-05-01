@@ -157,10 +157,6 @@
 			"@check:yaml:lint"
 		],
 		"check:tests:create-directories": "mkdir -p .Build/public/typo3temp/var/tests",
-		"check:tests:functional": [
-			"@check:tests:create-directories",
-			"phpunit -c Build/phpunit/FunctionalTests.xml"
-		],
 		"check:tests:unit": "phpunit -c Build/phpunit/UnitTests.xml",
 		"check:typoscript:lint": "typoscript-lint -c Build/typoscript-lint/config.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript Tests/Functional/Controller/Fixtures/TypoScript",
 		"check:xliff:lint": "php Build/Scripts/xliffLint.sh lint:xliff Resources/Private/Language",
@@ -211,7 +207,6 @@
 		"check:php:stan": "Checks the PHP types using PHPStan.",
 		"check:static": "Runs all static code checks (syntax, style, types).",
 		"check:tests:create-directories": "Creates the directories required to smoothely run the functional tests.",
-		"check:tests:functional": "Runs the functional tests.",
 		"check:tests:unit": "Runs the unit tests.",
 		"check:typoscript:lint": "Lints the TypoScript files.",
 		"check:xliff:lint": "Lints the XLIFF files.",
