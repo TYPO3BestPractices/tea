@@ -193,6 +193,19 @@ Runs the unit tests.
 
         ./Build/Scripts/runTests.sh -p 8.2 -s unit
 
+.. tip::
+
+    With the option :code:`-t`, you can specify the TYPO3 version the unit and
+    the functional tests are run for. Tests which only apply to one TYPO3
+    version are skipped for the others, and a version the dependencies have not
+    been installed for makes the tests fail immediately. Use the same version as
+    for the installation.
+
+    .. code-block:: bash
+
+        ./Build/Scripts/runTests.sh -t 14.3 -s unit
+        ./Build/Scripts/runTests.sh -t 14.3 -s functional
+
 .. _running-unit-and-functional-tests-in-phpstorm:
 
 Running unit and functional tests in PHPStorm

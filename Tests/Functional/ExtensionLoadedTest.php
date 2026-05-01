@@ -19,8 +19,12 @@ final class ExtensionLoadedTest extends FunctionalTestCase
     #[Test]
     public function isLoaded(): void
     {
-        self::assertTrue(
-            ExtensionManagementUtility::isLoaded('tea'),
-        );
+        self::assertTrue(ExtensionManagementUtility::isLoaded('tea'));
+    }
+
+    #[Test]
+    public function isLoadedWithComposerPackageName(): void
+    {
+        self::assertTrue(ExtensionManagementUtility::isLoaded('ttn/tea'));
     }
 }
