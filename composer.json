@@ -184,8 +184,6 @@
 			"rm .editorconfig",
 			"rm .gitattributes",
 			"rm .gitignore",
-			"rm .npmrc",
-			"rm .nvmrc",
 			"rm package-lock.json",
 			"rm package.json",
 			"rm phive.xml"
