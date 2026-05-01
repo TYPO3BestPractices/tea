@@ -23,6 +23,8 @@ updates:
       - dependency-name: "phpstan/phpstan"
       - dependency-name: "phpstan/phpstan-phpunit"
       - dependency-name: "phpstan/phpstan-strict-rules"
+      - dependency-name: "phpunit/phpcov"
+        versions: [ ">= 10.0" ]
       - dependency-name: "phpunit/phpunit"
         versions: [ ">= 11.0" ]
       - dependency-name: "rector/type-perfect"

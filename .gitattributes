@@ -7,5 +7,3 @@
 /Tests/ export-ignore
 /package-lock.json export-ignore
 /package.json export-ignore
-/phive.xml export-ignore
-/tools/ export-ignore binary

@@ -58,6 +58,7 @@
 		"phpstan/phpstan": "1.12.33 || 2.1.40",
 		"phpstan/phpstan-phpunit": "1.4.2 || 2.0.12",
 		"phpstan/phpstan-strict-rules": "1.6.2 || 2.0.8",
+		"phpunit/phpcov": "9.0.2",
 		"phpunit/phpunit": "10.5.63",
 		"rector/type-perfect": "1.0.0 || 2.1.2",
 		"saschaegerer/phpstan-typo3": "1.10.2 || 2.1.1",
@@ -127,7 +128,7 @@
 		],
 		"check:coverage:merge": [
 			"@coverage:create-directories",
-			"@php tools/phpcov merge --clover=build/logs/clover.xml build/coverage/"
+			"phpcov merge --clover=build/logs/clover.xml build/coverage/"
 		],
 		"check:coverage:unit": [
 			"@coverage:create-directories",
@@ -185,8 +186,7 @@
 			"rm .gitattributes",
 			"rm .gitignore",
 			"rm package-lock.json",
-			"rm package.json",
-			"rm phive.xml"
+			"rm package.json"
 		]
 	},
 	"scripts-descriptions": {

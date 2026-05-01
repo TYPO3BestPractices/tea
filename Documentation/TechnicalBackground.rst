@@ -13,7 +13,6 @@ Detailed documentation of all subaspects of testing:
 
    TechnicalBackground/PHPVersionSupport
    TechnicalBackground/ReleaseBranchingStrategy
-   TechnicalBackground/DependencyManager
    TechnicalBackground/CommandController
    TechnicalBackground/Running
    TechnicalBackground/ContinuousIntegration
