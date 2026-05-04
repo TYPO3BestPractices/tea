@@ -123,7 +123,7 @@
 		"check:coverage:functional": [
 			"@check:tests:create-directories",
 			"@coverage:create-directories",
-			"phpunit -c Build/phpunit/FunctionalTests.xml --coverage-php=build/coverage/functional.cov"
+			"phpunit -c Build/phpunit/FunctionalTests.xml --exclude-group not-core-13.4 --coverage-php=build/coverage/functional.cov"
 		],
 		"check:coverage:merge": [
 			"@coverage:create-directories",
@@ -131,7 +131,7 @@
 		],
 		"check:coverage:unit": [
 			"@coverage:create-directories",
-			"phpunit -c Build/phpunit/UnitTests.xml --coverage-php=build/coverage/unit.cov"
+			"phpunit -c Build/phpunit/UnitTests.xml --exclude-group not-core-13.4 --coverage-php=build/coverage/unit.cov"
 		],
 		"check:json:lint": "find . ! -path '*/.cache/*' ! -path '*/.Build/*' ! -path '*/node_modules/*' -name '*.json' | xargs -r php .Build/bin/jsonlint -q",
 		"check:php": [

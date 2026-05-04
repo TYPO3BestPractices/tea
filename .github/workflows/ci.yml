@@ -212,7 +212,7 @@ jobs:
           ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
       - name: Run unit tests
         run: |
-          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s unit
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s unit
     strategy:
       fail-fast: false
       matrix:
@@ -263,7 +263,7 @@ jobs:
           ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
       - name: Run functional tests
         run: |
-          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -d ${{ matrix.dbms }} -s functional
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -d ${{ matrix.dbms }} -s functional
     strategy:
       fail-fast: false
       matrix:
