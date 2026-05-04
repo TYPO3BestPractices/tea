@@ -703,10 +703,10 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     psr-verify)
-            COMMAND="composer dumpautoload --optimize --strict-psr --no-plugins"
-            ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name psr-verify-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
-            SUITE_EXIT_CODE=$?
-            ;;
+        COMMAND="composer dumpautoload --optimize --strict-psr --no-plugins"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name psr-verify-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+        SUITE_EXIT_CODE=$?
+        ;;
     shellcheck)
         ${CONTAINER_BIN} run ${CONTAINER_INTERACTIVE} --rm --pull always ${USERSET} -v "${ROOT_DIR}":/project:ro ${IMAGE_SHELLCHECK} /project/Build/Scripts/runTests.sh
         SUITE_EXIT_CODE=$?
