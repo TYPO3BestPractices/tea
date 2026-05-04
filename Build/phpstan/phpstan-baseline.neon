@@ -13,13 +13,13 @@ parameters:
 			path: ../../Classes/Domain/Repository/TeaRepository.php
 
 		-
-			rawMessage: 'Cannot call method getUid() on mixed.'
-			identifier: method.nonObject
-			count: 1
-			path: ../../Tests/Functional/Domain/Repository/TeaRepositoryTest.php
+			rawMessage: Provide more specific return type "TYPO3\CMS\Extbase\Persistence\QueryResultInterface" over abstract one
+			identifier: typePerfect.narrowReturnObjectType
+			count: 2
+			path: ../../Classes/Domain/Repository/TeaRepository.php
 
 		-
-			rawMessage: 'Mixed variable in a `$result->current()->...()` can skip important errors. Make sure the type is known'
-			identifier: typePerfect.noMixedMethodCaller
+			rawMessage: 'Call to an undefined method object::getUid().'
+			identifier: method.notFound
 			count: 1
 			path: ../../Tests/Functional/Domain/Repository/TeaRepositoryTest.php
