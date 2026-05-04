@@ -3,8 +3,6 @@
 /.gitattributes export-ignore
 /.github/ export-ignore
 /.gitignore export-ignore
-/.npmrc export-ignore
-/.nvmrc export-ignore
 /Build/ export-ignore
 /Tests/ export-ignore
 /package-lock.json export-ignore
