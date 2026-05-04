@@ -53,7 +53,7 @@ Inside the testing distribution there is a file
     cp .ddev/docker-compose.extensions.yaml.template .ddev/docker-compose.extensions.yaml
 
 The file needs to mount the tea extension into the testing distribution. Keep in mind
-that you use the correct paths here. You need to edit docker-compose.extensions.yaml
+that you use the correct paths here. You need to edit :file:`docker-compose.extensions.yaml`
 and add the following content:
 
 
