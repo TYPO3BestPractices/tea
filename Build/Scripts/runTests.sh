@@ -585,17 +585,19 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     fix)
-        COMMAND="composer fix"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        COMMAND="composer normalize --no-check-lock"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        SUITE_EXIT_CODE=$?
+        COMMAND="composer fix:php:rector"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-fix-php-rector-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        SUITE_EXIT_CODE=$?
+        COMMAND="composer fix:php:cs-fixer"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-fix-php-cs-fixer-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        SUITE_EXIT_CODE=$?
         COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:js"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} ${IMAGE_NODEJS} /bin/sh -c "${COMMAND}"
         COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:css"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} ${IMAGE_NODEJS} /bin/sh -c "${COMMAND}"
-        SUITE_EXIT_CODE=$?
-        ;;
-    fixComposerNormalize)
-        COMMAND="composer normalize --no-check-lock"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
     functional)
