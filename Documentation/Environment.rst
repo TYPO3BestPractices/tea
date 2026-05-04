@@ -53,7 +53,8 @@ Inside the testing distribution there is a file
     cp .ddev/docker-compose.extensions.yaml.template .ddev/docker-compose.extensions.yaml
 
 The file needs to mount the tea extension into the testing distribution. Keep in mind
-that you use the correct paths here.
+that you use the correct paths here. You need to edit docker-compose.extensions.yaml
+and add the following content:
 
 
 .. index:: Mount extension into testing distribution
@@ -64,7 +65,13 @@ that you use the correct paths here.
         volumes:
           - "$HOME/git/tea:/var/www/html/src/extensions/tea:cached,ro"
 
-After that you can start the testing distribution using ddev.
+.. note::
+
+   More information about volumes and mounts:
+
+   https://docs.docker.com/reference/compose-file/services/#volumes
+
+After that you can start the testing distribution using ddev (inside the TYPO3-testion-distribution folder).
 
 .. index:: Start the testing distribution
 .. code-block:: bash
@@ -79,3 +86,7 @@ After that you should be able to access the frontend:
 .. code-block:: bash
 
     ddev launch
+
+Remember you can find all credentials (backend/frontend) here:
+
+https://github.com/oliverklee-de/TYPO3-testing-distribution/blob/13.x/README.md#credentials (TYPO3 13)
