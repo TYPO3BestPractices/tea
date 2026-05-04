@@ -203,7 +203,7 @@ Options:
             - composerUnused: Finds unused Composer packages.
             - composerUpdateMax: "composer update", with no platform.php config.
             - composerUpdateMin: "composer update --prefer-lowest", with platform.php set to PHP version x.x.0.
-            - docsGenerate: Renders the extension ReST documentation.
+            - executeRstRendering: Renders the extension ReST documentation.
             - fix: Runs all automatic code style fixes.
             - fixComposerNormalize: Normalizes the composer.json.
             - functional: PHP functional tests
@@ -509,7 +509,7 @@ mkdir -p .Build/public/typo3temp/var/tests
 IMAGE_PHP="ghcr.io/typo3/core-testing-$(echo "php${PHP_VERSION}" | sed -e 's/\.//'):latest"
 IMAGE_NODEJS="ghcr.io/typo3/core-testing-nodejs24:1.1"
 IMAGE_SHELLCHECK="docker.io/koalaman/shellcheck:v0.11.0"
-IMAGE_DOCS="ghcr.io/typo3-documentation/render-guides:0.37.1"
+IMAGE_RSTRENDERING="ghcr.io/typo3-documentation/render-guides:0.37.1"
 IMAGE_MARIADB="docker.io/mariadb:${DBMS_VERSION}"
 IMAGE_MYSQL="docker.io/mysql:${DBMS_VERSION}"
 IMAGE_POSTGRES="docker.io/postgres:${DBMS_VERSION}-alpine"
@@ -587,10 +587,10 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-min-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND[@]}"
         SUITE_EXIT_CODE=$?
         ;;
-    docsGenerate)
+    executeRstRendering)
         mkdir -p Documentation-GENERATED-temp
         chown -R ${HOST_UID}:${HOST_PID} Documentation-GENERATED-temp
-        ${CONTAINER_BIN} run ${CONTAINER_INTERACTIVE} --rm --pull always ${USERSET} -v "${ROOT_DIR}":/project ${IMAGE_DOCS} --config=Documentation --fail-on-log
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name execute-rst-rendering -v "${ROOT_DIR}":/project ${IMAGE_RSTRENDERING} --config=Documentation
         SUITE_EXIT_CODE=$?
         ;;
     fix)
