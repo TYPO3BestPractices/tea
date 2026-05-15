@@ -610,6 +610,10 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
+    checkIntegrityXliff)
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name check-integrity-set-labels-${SUFFIX} ${IMAGE_PHP} php -dxdebug.mode=off Build/Scripts/checkIntegrityXliff.php
+        SUITE_EXIT_CODE=$?
+        ;;
     clean)
         cleanCacheFiles
         cleanRenderedDocumentationFiles
