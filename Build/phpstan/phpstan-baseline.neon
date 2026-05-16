@@ -17,9 +17,3 @@ parameters:
 			identifier: typePerfect.narrowReturnObjectType
 			count: 2
 			path: ../../Classes/Domain/Repository/TeaRepository.php
-
-		-
-			rawMessage: 'Call to an undefined method object::getUid().'
-			identifier: method.notFound
-			count: 1
-			path: ../../Tests/Functional/Domain/Repository/TeaRepositoryTest.php
