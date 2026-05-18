@@ -12,7 +12,6 @@ use Ssch\TYPO3Rector\Set\Typo3SetList;
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__ . '/../../Build/',
         __DIR__ . '/../../Classes/',
         __DIR__ . '/../../Configuration/',
         __DIR__ . '/../../Tests/',
