@@ -11,9 +11,3 @@ parameters:
 			identifier: missingType.generics
 			count: 1
 			path: ../../Classes/Domain/Repository/TeaRepository.php
-
-		-
-			rawMessage: Provide more specific return type "TYPO3\CMS\Extbase\Persistence\QueryResultInterface" over abstract one
-			identifier: typePerfect.narrowReturnObjectType
-			count: 2
-			path: ../../Classes/Domain/Repository/TeaRepository.php
