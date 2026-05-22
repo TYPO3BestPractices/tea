@@ -381,7 +381,7 @@ PHP_XDEBUG_ON=0
 PHP_XDEBUG_PORT=9003
 PHPUNIT_RANDOM=""
 # CGLCHECK_DRY_RUN is a more generic dry-run switch not limited to CGL
-CGLCHECK_DRY_RUN=0
+CGLCHECK_DRY_RUN=""
 DATABASE_DRIVER=""
 CONTAINER_BIN=""
 COMPOSER_ROOT_VERSION="3.0.x-dev"
@@ -446,7 +446,7 @@ while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
             PHPUNIT_RANDOM="--random-order-seed=${OPTARG}"
             ;;
         n)
-            CGLCHECK_DRY_RUN=1
+            CGLCHECK_DRY_RUN="-n"
             ;;
         h)
             loadHelp
@@ -538,7 +538,7 @@ fi
 # Suite execution
 case ${TEST_SUITE} in
     cgl)
-        if [ "${CGLCHECK_DRY_RUN}" -eq 1 ]; then
+        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
             COMMAND="composer check:php:cs-fixer"
         else
             COMMAND="composer fix:php:cs"
@@ -641,7 +641,7 @@ case ${TEST_SUITE} in
         esac
         ;;
     lintCss)
-        if [ "${CGLCHECK_DRY_RUN}" -eq 1 ]; then
+        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
             COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run check:lint:css"
         else
             COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:css"
@@ -650,7 +650,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     lintJs)
-        if [ "${CGLCHECK_DRY_RUN}" -eq 1 ]; then
+        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
             COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run check:lint:js"
         else
             COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:js"
