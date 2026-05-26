@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v5
         with:
           key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
-          path: ~/.cache/composer
+          path: .cache/composer
           restore-keys: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
       - name: Install composer dependencies
         run: |
@@ -65,7 +65,7 @@ jobs:
         uses: actions/cache@v5
         with:
           key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
-          path: ~/.cache/composer
+          path: .cache/composer
           restore-keys: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
       - name: Install composer dependencies
         run: |
@@ -108,7 +108,7 @@ jobs:
         uses: actions/cache@v5
         with:
           key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
-          path: ~/.cache/composer
+          path: .cache/composer
           restore-keys: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
       - name: Install composer dependencies
         run: |
@@ -144,7 +144,7 @@ jobs:
         uses: actions/cache@v5
         with:
           key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
-          path: ~/.cache/composer
+          path: .cache/composer
           restore-keys: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
       - name: Install composer dependencies
         run: |
@@ -205,7 +205,7 @@ jobs:
         uses: actions/cache@v5
         with:
           key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
-          path: ~/.cache/composer
+          path: .cache/composer
           restore-keys: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
       - name: Install composer dependencies
         run: |
@@ -256,7 +256,7 @@ jobs:
         uses: actions/cache@v5
         with:
           key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
-          path: ~/.cache/composer
+          path: .cache/composer
           restore-keys: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
       - name: Install composer dependencies
         run: |
