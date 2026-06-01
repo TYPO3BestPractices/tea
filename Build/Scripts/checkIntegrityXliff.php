@@ -44,6 +44,7 @@ final class CheckIntegrityXliff
         'short_description',
     ];
     private const XliffDeprecationKey = 'x-unused-since';
+    private const pathToXliffFiles = 'Resources/Private/Language';
     public function execute(array $argv = []): int
     {
         $isVerbose = in_array('-v', $argv, true) || in_array('--verbose', $argv, true);
@@ -121,7 +122,7 @@ final class CheckIntegrityXliff
         $finder = new Finder();
         return $finder
             ->files()
-            ->in(__DIR__ . '/../../Resources/Private/Language/')
+            ->in(__DIR__ . '/../../' . self::pathToXliffFiles . '/')
             ->name('*.xlf');
     }
 
@@ -129,7 +130,7 @@ final class CheckIntegrityXliff
     {
         $extensionKey = 'N/A';
         $shortLabelFile = basename($labelFile);
-        if (preg_match('@/([a-z][a-z0-9_]*)/Resources/Private/Language/(.+)$@imsU', $labelFile, $matches)) {
+        if (preg_match('@/([a-z][a-z0-9_]*)/' . self::pathToXliffFiles . '/(.+)$@imsU', $labelFile, $matches)) {
             $extensionKey = $matches[1];
             $shortLabelFile = $matches[2];
         }
@@ -202,7 +203,7 @@ final class CheckIntegrityXliff
             }
 
             $expectedOriginals = [
-                'EXT:' . $extensionKey . '/Resources/Private/Language/' . $shortLabelFile,
+                'EXT:' . $extensionKey . '/' . self::pathToXliffFiles . '/' . $shortLabelFile,
                 'messages', // @todo is this right?
             ];
 
