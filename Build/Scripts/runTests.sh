@@ -197,14 +197,14 @@ lintTypoScript() {
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintTypoScript-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
 }
 
-lintYaml() {
-    COMMAND="composer check:yaml:lint"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintYaml-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
-}
-
 lintXliff() {
     COMMAND="php Build/Scripts/xliffLint.sh lint:xliff Resources/Private/Language"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintXliff-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+}
+
+lintYaml() {
+    COMMAND="composer check:yaml:lint"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintYaml-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
 }
 
 loadHelp() {
