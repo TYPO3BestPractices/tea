@@ -171,8 +171,6 @@ cleanRenderedDocumentationFiles() {
     echo "done"
 }
 
-
-
 loadHelp() {
     # Load help text into $HELP
     read -r -d '' HELP <<EOF
@@ -379,6 +377,11 @@ phpCsFixer() {
     fi
     COMMAND="php .Build/bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpCsFixer-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+}
+
+psr-verify() {
+    COMMAND="composer dumpautoload --optimize --strict-psr --no-plugins"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name psr-verify-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
 }
 
 rector() {
@@ -743,8 +746,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     psr-verify)
-        COMMAND="composer dumpautoload --optimize --strict-psr --no-plugins"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name psr-verify-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+        psr-verify
         SUITE_EXIT_CODE=$?
         ;;
     shellcheck)
