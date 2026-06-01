@@ -197,6 +197,11 @@ lintYaml() {
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintYaml-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
 }
 
+lintXliff() {
+    COMMAND="php Build/Scripts/xliffLint.sh lint:xliff Resources/Private/Language"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintXliff-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+}
+
 loadHelp() {
     # Load help text into $HELP
     read -r -d '' HELP <<EOF
@@ -696,8 +701,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     lintXliff)
-        COMMAND="php Build/Scripts/xliffLint.sh lint:xliff Resources/Private/Language"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintxliff-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+        lintXliff
         SUITE_EXIT_CODE=$?
         ;;
     lintYaml)
