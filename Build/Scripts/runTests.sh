@@ -356,6 +356,15 @@ fixComposerNormalize() {
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name fixComposerNormalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
 }
 
+lintJs() {
+    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+        COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run check:lint:js"
+    else
+        COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:js"
+    fi
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintJs-${SUFFIX} ${IMAGE_NODEJS} /bin/sh -c "${COMMAND}"
+}
+
 lintPhp() {
     COMMAND="composer check:php:lint"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintPhp-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
@@ -699,12 +708,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     lintJs)
-        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
-            COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run check:lint:js"
-        else
-            COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:js"
-        fi
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} ${IMAGE_NODEJS} /bin/sh -c "${COMMAND}"
+        lintJs
         SUITE_EXIT_CODE=$?
         ;;
     lintJson)
