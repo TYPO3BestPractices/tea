@@ -244,7 +244,6 @@ Options:
             - rector: Fixes and upgrades the PHP code using Rector. Set -n for dry-run.
             - shellcheck: check runTests.sh for shell issues
             - unit (default): PHP unit tests
-            - unitRandom: PHP unit tests in random order, add -o <number> to use specific seed
             - update: Updates existing typo3/core-testing-*:latest container images and removes dangling local volumes.
 
     -a <mysqli|pdo_mysql>
@@ -316,7 +315,7 @@ Options:
             - 8.5: use PHP 8.5
 
     -e "<phpunit options>" (DEPRECATED).
-        Only with -s functional|functionalDeprecated|unit|unitDeprecated|unitRandom
+        Only with -s functional|functionalDeprecated|unit|unitDeprecated
         Additional options to send to phpunit (unit & functional tests). For phpunit,
         options starting with "--" must be added after options starting with "-".
         Example -e "-d memory_limit=-1 --filter filterByValueRecursiveCorrectlyFiltersArray" to enable verbose output AND filter tests
@@ -327,7 +326,7 @@ Options:
             Build/Scripts/runTests.sh -s unit -- --filter filterByValueRecursiveCorrectlyFiltersArray
 
     -x
-        Only with -s functional|functionalDeprecated|unit|unitDeprecated|unitRandom
+        Only with -s functional|functionalDeprecated|unit|unitDeprecated
         Send information to host instance for test or system under test break points. This is especially
         useful if a local PhpStorm instance is listening on default xdebug port 9003. A different port
         can be selected with -y
@@ -335,12 +334,6 @@ Options:
     -y <port>
         Send xdebug information to a different port than default 9003 if an IDE like PhpStorm
         is not listening on default port.
-
-    -o <number>
-        Only with -s unitRandom
-        Set specific random seed to replay a random run in this order again. The phpunit randomizer
-        outputs the used seed at the end (in gitlab core testing logs, too). Use that number to
-        replay the unit tests in that order.
 
     -n
         Only with -s cgl|lintCss|lintJs|phpCsFixer|rector
@@ -400,7 +393,6 @@ DBMS_VERSION=""
 PHP_VERSION="8.2"
 PHP_XDEBUG_ON=0
 PHP_XDEBUG_PORT=9003
-PHPUNIT_RANDOM=""
 # CGLCHECK_DRY_RUN is a more generic dry-run switch not limited to CGL
 CGLCHECK_DRY_RUN=""
 DATABASE_DRIVER=""
@@ -425,7 +417,7 @@ OPTIND=1
 # Array for invalid options
 INVALID_OPTIONS=()
 # Simple option parsing based on getopts (! not getopt)
-while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
+while getopts "a:b:s:d:i:p:t:xy:nhu" OPT; do
     case ${OPT} in
         s)
             TEST_SUITE=${OPTARG}
@@ -462,9 +454,6 @@ while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
             ;;
         y)
             PHP_XDEBUG_PORT=${OPTARG}
-            ;;
-        o)
-            PHPUNIT_RANDOM="--random-order-seed=${OPTARG}"
             ;;
         n)
             CGLCHECK_DRY_RUN="-n"
@@ -743,10 +732,6 @@ case ${TEST_SUITE} in
         ;;
     unit)
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml "$@"
-        SUITE_EXIT_CODE=$?
-        ;;
-    unitRandom)
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-random-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml --order-by=random ${PHPUNIT_RANDOM} "$@"
         SUITE_EXIT_CODE=$?
         ;;
     update)
