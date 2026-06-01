@@ -385,6 +385,11 @@ Examples:
 EOF
 }
 
+phpstan() {
+    COMMAND="composer check:php:stan"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpstan-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
 # Test if at least one of the supported container binaries exists, else exit out with error
 if ! type "docker" >/dev/null 2>&1 && ! type "podman" >/dev/null 2>&1; then
     echo "This script relies on docker or podman. Please install at least one of them" >&2
@@ -727,8 +732,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     phpstan)
-        COMMAND="composer check:php:stan"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        phpstan
         SUITE_EXIT_CODE=$?
         ;;
     phpstanGenerateBaseline)
