@@ -30,7 +30,7 @@ if (PHP_SAPI !== 'cli') {
     die('Script must be called from command line.' . chr(10));
 }
 
-final readonly class CheckIntegrityXliff
+final class CheckIntegrityXliff
 {
     private const expectedXliffDeprecations = [
         'mlang_labels_tablabel',
