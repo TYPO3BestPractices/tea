@@ -192,6 +192,11 @@ rector() {
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name rector-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
 }
 
+lintTypoScript() {
+    COMMAND="composer check:typoscript:lint"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintTypoScript-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
 lintYaml() {
     COMMAND="composer check:yaml:lint"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintYaml-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
@@ -696,8 +701,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     lintTypoScript)
-        COMMAND="composer check:typoscript:lint"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        lintTypoScript
         SUITE_EXIT_CODE=$?
         ;;
     lintXliff)
