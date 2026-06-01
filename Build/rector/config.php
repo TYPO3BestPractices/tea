@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
 use Rector\PHPUnit\Set\PHPUnitSetList;
-use Rector\Set\ValueObject\LevelSetList;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
-use Rector\ValueObject\PhpVersion;
-use Ssch\TYPO3Rector\CodeQuality\General\ConvertImplicitVariablesToExplicitGlobalsRector;
 use Ssch\TYPO3Rector\CodeQuality\General\ExtEmConfRector;
 use Ssch\TYPO3Rector\Configuration\Typo3Option;
 use Ssch\TYPO3Rector\Set\Typo3LevelSetList;
@@ -15,22 +12,15 @@ use Ssch\TYPO3Rector\Set\Typo3SetList;
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__ . '/../../Build/',
         __DIR__ . '/../../Classes/',
         __DIR__ . '/../../Configuration/',
         __DIR__ . '/../../Tests/',
         __DIR__ . '/../../ext_emconf.php',
         __DIR__ . '/../../ext_localconf.php',
     ])
-    ->withPhpVersion(PhpVersion::PHP_81)
     ->withPhpSets()
     ->withSets([
         // Rector sets
-
-        LevelSetList::UP_TO_PHP_81,
-        // LevelSetList::UP_TO_PHP_82,
-        // LevelSetList::UP_TO_PHP_83,
-        // LevelSetList::UP_TO_PHP_84,
 
         // SetList::CODE_QUALITY,
         // SetList::CODING_STYLE,
@@ -56,6 +46,7 @@ return RectorConfig::configure()
         Typo3SetList::GENERAL,
 
         Typo3LevelSetList::UP_TO_TYPO3_12,
+        // Typo3LevelSetList::UP_TO_TYPO3_13,
     ])
     // To have a better analysis from PHPStan, we teach it here some more things
     ->withPHPStanConfigs([
@@ -63,7 +54,6 @@ return RectorConfig::configure()
     ])
     ->withRules([
         AddVoidReturnTypeWhereNoReturnRector::class,
-        ConvertImplicitVariablesToExplicitGlobalsRector::class,
     ])
     ->withImportNames(true, true, false)
     ->withConfiguredRule(ExtEmConfRector::class, [

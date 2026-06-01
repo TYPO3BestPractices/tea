@@ -8,10 +8,10 @@ Documentation rendering
 
 In order to render the documentation, please use the `runTests.sh` wrapper:
 
-.. index:: Commands; runTests.sh -s docsGenerate
+.. index:: Commands; runTests.sh -s executeRstRendering
 .. code-block:: bash
 
-   ./Build/Scripts/runTests.sh -s docsGenerate
+   ./Build/Scripts/runTests.sh -s executeRstRendering
 
 You do not need to start or build the containers for this as this happens
 automatically.

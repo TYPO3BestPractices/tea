@@ -11,17 +11,27 @@ use TTN\Tea\Controller\BackendModuleController;
 use TYPO3\CMS\Backend\Routing\Route;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
+use TYPO3\CMS\Core\Crypto\HashService;
+use TYPO3\CMS\Core\FormProtection\AbstractFormProtection;
+use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Http\ServerRequest;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 #[CoversClass(BackendModuleController::class)]
 final class BackendModuleControllerTest extends FunctionalTestCase
 {
+    private const TRANSLATE_KEY_PREFIX = 'LLL:EXT:tea/Resources/Private/Language/locallang_index_mod.xlf:';
+
+    private const FORM_PROTECTION_SESSION_TOKEN = 'testToken';
+
     protected function setUp(): void
     {
         $this->testExtensionsToLoad = [
@@ -31,7 +41,10 @@ final class BackendModuleControllerTest extends FunctionalTestCase
         parent::setUp();
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/BackendUser.csv');
-        $this->setUpBackendUser(1);
+        $this->setUpBackendUser(1)
+            ->getSession()
+            ->set('formProtectionSessionToken', self::FORM_PROTECTION_SESSION_TOKEN);
+
         $GLOBALS['LANG'] = $this->get(LanguageServiceFactory::class)->create('en');
     }
 
@@ -53,6 +66,22 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    public function indexProvidesCaptionForListing(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
+
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertTranslationKeyIsRendered('listing.caption', $html);
+    }
+
+    #[Test]
     public function indexListsTeasFromSortedByUidInDescendingOrder(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeasForIndex.csv');
@@ -69,6 +98,89 @@ final class BackendModuleControllerTest extends FunctionalTestCase
             strpos($html, 'Tea 1'),
             strpos($html, 'Tea 2'),
             'Tea 1 is not sorted after Tea 2'
+        );
+    }
+
+    #[Test]
+    public function indexShowsFlashMessageIfNoTeaExists(): void
+    {
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertTranslationKeyIsRendered('flash_message.missing_teas.title', $html);
+        self::assertTranslationKeyIsRendered('flash_message.missing_teas.message', $html);
+        self::assertStringContainsString('alert-warning', $html);
+    }
+
+    #[Test]
+    public function indexDoesNotShowFlashMessageIfTeaExists(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
+
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertStringNotContainsString('alert-warning', $html);
+    }
+
+    #[Test]
+    public function indexDoesNotShowTeaListingMarkupIfNoTeaExists(): void
+    {
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertTranslationKeyIsNotRendered('listing.caption', $html);
+    }
+
+    #[Test]
+    public function indexLinksTeaValuesToEditForm(): void
+    {
+        if ((new Typo3Version())->getMajorVersion() === 13) {
+            $token = $this->get(HashService::class)->hmac(
+                'routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN,
+                AbstractFormProtection::class
+            );
+        } else {
+            $token = GeneralUtility::hmac('routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN);
+        }
+
+        $expectedUrlQuery = http_build_query([
+            'token' => $token,
+            'edit' => [
+                'tx_tea_domain_model_tea' => [
+                    1 => 'edit',
+                ],
+            ],
+        ]) . '&returnUrl=typo3/module/tea/index/BackendModule/index';
+
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
+
+        $response = $this->executeRequest(
+            '/module/tea/index/BackendModule/index',
+            'tea_index',
+            'index',
+        );
+
+        $html = $response->getBody()->__toString();
+
+        self::assertStringContainsString(
+            htmlspecialchars('/typo3/record/edit?' . $expectedUrlQuery, ENT_QUOTES),
+            $html
         );
     }
 
@@ -142,10 +254,40 @@ final class BackendModuleControllerTest extends FunctionalTestCase
             ->setControllerActionName($action)
             ->setPluginName($pluginName);
 
+        $normalizedParams = self::createStub(NormalizedParams::class);
+        $normalizedParams->method('getRequestUri')->willReturn('typo3' . $route);
+
         return (new ServerRequest($route))
             ->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_BE)
             ->withAttribute('site', new Site('test', 1, ['base' => 'localhost/']))
             ->withAttribute('route', new Route($route, ['packageName' => $packageName]))
+            ->withAttribute('normalizedParams', $normalizedParams)
             ->withAttribute('extbase', $extbaseParameters);
+    }
+
+    /**
+     * @param non-empty-string $translationKey
+     */
+    private function assertTranslationKeyIsRendered(string $translationKey, string $html): void
+    {
+        $fullTranslationId = self::TRANSLATE_KEY_PREFIX . $translationKey;
+
+        $translation = LocalizationUtility::translate($fullTranslationId);
+
+        self::assertIsString($translation, 'Translation key "' . $fullTranslationId . '" does not exist.');
+        self::assertStringContainsString($translation, $html);
+    }
+
+    /**
+     * @param non-empty-string $translationKey
+     */
+    private function assertTranslationKeyIsNotRendered(string $translationKey, string $html): void
+    {
+        $fullTranslationId = self::TRANSLATE_KEY_PREFIX . $translationKey;
+
+        $translation = LocalizationUtility::translate($fullTranslationId);
+
+        self::assertIsString($translation, 'Translation key "' . $fullTranslationId . '" does not exist.');
+        self::assertStringNotContainsString($translation, $html);
     }
 }

@@ -10,6 +10,7 @@ use TTN\Tea\Upgrades\AbstractListTypeToCTypeUpdate;
 use TTN\Tea\Upgrades\ListTypeToCTypeUpdate;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
+#[CoversClass(AbstractListTypeToCTypeUpdate::class)]
 #[CoversClass(ListTypeToCTypeUpdate::class)]
 final class ListTypeToCTypeUpdateTest extends FunctionalTestCase
 {

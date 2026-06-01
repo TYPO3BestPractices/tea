@@ -21,13 +21,13 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
-		"eslint": "^10.0.2",
+		"eslint": "^10.3.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-prettier": "^5.5.5",
 		"install": "^0.13.0",
-		"prettier": "^3.8.1",
-		"stylelint": "^17.4.0",
+		"prettier": "^3.8.3",
+		"stylelint": "^17.11.0",
 		"stylelint-config-standard-scss": "^17.0.0",
-		"stylelint-no-browser-hacks": "^2.0.0"
+		"stylelint-no-browser-hacks": "^2.0.2"
 	}
 }

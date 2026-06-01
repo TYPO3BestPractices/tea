@@ -12,16 +12,46 @@ use TTN\Tea\Controller\FrontEndEditorController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestContext;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 #[CoversClass(FrontEndEditorController::class)]
-final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestCase
+final class FrontEndEditorControllerTest extends FunctionalTestCase
 {
+    protected array $testExtensionsToLoad = ['ttn/tea'];
+
+    protected array $coreExtensionsToLoad = ['typo3/cms-fluid-styled-content'];
+
+    protected array $pathsToLinkInTestInstance = [
+        'typo3conf/ext/tea/Tests/Functional/Controller/Fixtures/Sites/' => 'typo3conf/sites',
+    ];
+
+    protected array $configurationToUseInTestInstance = [
+        'FE' => [
+            'cacheHash' => [
+                'enforceValidation' => false,
+            ],
+        ],
+    ];
+
     private const UID_OF_PAGE = 1;
     private const UID_OF_TEA = 1;
 
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.csv');
+        $this->setUpFrontendRootPage(1, [
+            'constants' => [
+                'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript',
+                'EXT:tea/Configuration/TypoScript/constants.typoscript',
+            ],
+            'setup' => [
+                'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
+                'EXT:tea/Configuration/TypoScript/setup.typoscript',
+                'EXT:tea/Tests/Functional/Controller/Fixtures/TypoScript/Setup/Rendering.typoscript',
+            ],
+        ]);
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/ContentElement.csv');
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/FrontendUser.csv');
@@ -181,9 +211,9 @@ final class FrontEndEditorControllerTest extends AbstractFrontendControllerTestC
             'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
         ]);
 
-        self::assertTrue(
-            str_contains($html, '<input type="hidden" name="tx_tea_teafrontendeditor[tea][__identity]" value="1" />') ||
-            str_contains($html, '<input type="hidden" name="tx_tea_teafrontendeditor[tea][__identity]" value="1" >')
+        self::assertStringContainsString(
+            '<input type="hidden" name="tx_tea_teafrontendeditor[tea][__identity]" value="1"',
+            $html,
         );
 
         self::assertStringContainsString('Godesberger Burgtee', $html);

@@ -171,6 +171,15 @@ cleanRenderedDocumentationFiles() {
     echo "done"
 }
 
+ phpCsFixer() {
+    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+        CGLCHECK_DRY_RUN="--dry-run --diff"
+    fi
+    COMMAND="php .Build/bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpCsFixer-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+    return
+ }
+
 loadHelp() {
     # Load help text into $HELP
     read -r -d '' HELP <<EOF
@@ -194,7 +203,7 @@ Options:
             - composerUnused: Finds unused Composer packages.
             - composerUpdateMax: "composer update", with no platform.php config.
             - composerUpdateMin: "composer update --prefer-lowest", with platform.php set to PHP version x.x.0.
-            - docsGenerate: Renders the extension ReST documentation.
+            - executeRstRendering: Renders the extension ReST documentation.
             - fix: Runs all automatic code style fixes.
             - fixComposerNormalize: Normalizes the composer.json.
             - functional: PHP functional tests
@@ -203,11 +212,14 @@ Options:
             - lintJson: JSON linting
             - lintPhp: PHP linting
             - lintTypoScript: TypoScript linting
+            - lintXliff: XLIFF linting
             - lintYaml: YAML linting
             - npm: "npm" with all remaining arguments dispatched.
+            - phpCsFixer fixes code to follow the standards.
             - phpmd: Checks code metrics in the PHP code using PHPMD.
             - phpstan: PHPStan tests
             - phpstanGenerateBaseline: regenerate PHPStan baseline, handy after PHPStan updates
+            - psr-verify: Verifies PSR-4 namespace correctness.
             - rector: Fixes and upgrades the PHP code using Rector
             - shellcheck: check runTests.sh for shell issues
             - unit (default): PHP unit tests
@@ -369,7 +381,7 @@ PHP_XDEBUG_ON=0
 PHP_XDEBUG_PORT=9003
 PHPUNIT_RANDOM=""
 # CGLCHECK_DRY_RUN is a more generic dry-run switch not limited to CGL
-CGLCHECK_DRY_RUN=0
+CGLCHECK_DRY_RUN=""
 DATABASE_DRIVER=""
 CONTAINER_BIN=""
 COMPOSER_ROOT_VERSION="3.0.x-dev"
@@ -434,7 +446,7 @@ while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
             PHPUNIT_RANDOM="--random-order-seed=${OPTARG}"
             ;;
         n)
-            CGLCHECK_DRY_RUN=1
+            CGLCHECK_DRY_RUN="-n"
             ;;
         h)
             loadHelp
@@ -466,9 +478,15 @@ fi
 
 handleDbmsOptions
 
-# ENV var "CI" is set by gitlab-ci. Use it to force some CI details.
 if [ "${CI}" == "true" ]; then
+    # ENV var "CI" is set by gitlab-ci. Use it to force some CI details.
     CONTAINER_INTERACTIVE=""
+elif [ ! -t 0 ] || [ ! -t 1 ]; then
+    # If stdin or stdout is not a TTY (e.g. a script runner, pipe, or non-interactive shell),
+    # drop the interactive "-it" flags automatically to avoid podman warning "The input device
+    # is not a TTY." and docker failure, and to keep redirected output free of TTY control characters.
+    # Keep "--init" so the PID 1 init process still forwards signals (e.g. ctrl-c) to the test process.
+    CONTAINER_INTERACTIVE="--init"
 fi
 
 # determine default container binary to use: 1. podman 2. docker
@@ -497,7 +515,7 @@ mkdir -p .Build/public/typo3temp/var/tests
 IMAGE_PHP="ghcr.io/typo3/core-testing-$(echo "php${PHP_VERSION}" | sed -e 's/\.//'):latest"
 IMAGE_NODEJS="ghcr.io/typo3/core-testing-nodejs24:1.1"
 IMAGE_SHELLCHECK="docker.io/koalaman/shellcheck:v0.11.0"
-IMAGE_DOCS="ghcr.io/typo3-documentation/render-guides:0.36.0"
+IMAGE_RSTRENDERING="ghcr.io/typo3-documentation/render-guides:0.39.0"
 IMAGE_MARIADB="docker.io/mariadb:${DBMS_VERSION}"
 IMAGE_MYSQL="docker.io/mysql:${DBMS_VERSION}"
 IMAGE_POSTGRES="docker.io/postgres:${DBMS_VERSION}-alpine"
@@ -526,7 +544,7 @@ fi
 # Suite execution
 case ${TEST_SUITE} in
     cgl)
-        if [ "${CGLCHECK_DRY_RUN}" -eq 1 ]; then
+        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
             COMMAND="composer check:php:cs-fixer"
         else
             COMMAND="composer fix:php:cs"
@@ -565,20 +583,20 @@ case ${TEST_SUITE} in
         ;;
     composerUpdateMax)
         # `dumpautoload` removed due to error with missing `composer.lock` file on publishing public assets.
-        COMMAND="composer config --unset platform.php; composer require --no-ansi --no-interaction --no-progress --no-install typo3/minimal:"^${CORE_VERSION}"; composer update --no-progress --no-interaction; composer show"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-max-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        COMMAND="(composer config --unset platform.php && composer require --no-ansi --no-interaction --no-progress --no-install typo3/minimal:"^${CORE_VERSION}" && composer update --no-progress --no-interaction && composer show)"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-max-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND[@]}"
         SUITE_EXIT_CODE=$?
         ;;
     composerUpdateMin)
         # `dumpautoload` removed due to error with missing `composer.lock` file on publishing public assets.
-        COMMAND="composer config platform.php ${PHP_VERSION}.0; composer require --no-ansi --no-interaction --no-progress --no-install typo3/minimal:"^${CORE_VERSION}"; composer update --prefer-lowest --no-progress --no-interaction; composer show"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-min-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        COMMAND="(composer config platform.php ${PHP_VERSION}.0 && composer require --no-ansi --no-interaction --no-progress --no-install typo3/minimal:"^${CORE_VERSION}" && composer update --prefer-lowest --no-progress --no-interaction && composer show)"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-min-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND[@]}"
         SUITE_EXIT_CODE=$?
         ;;
-    docsGenerate)
+    executeRstRendering)
         mkdir -p Documentation-GENERATED-temp
         chown -R ${HOST_UID}:${HOST_PID} Documentation-GENERATED-temp
-        ${CONTAINER_BIN} run ${CONTAINER_INTERACTIVE} --rm --pull always ${USERSET} -v "${ROOT_DIR}":/project ${IMAGE_DOCS} --config=Documentation --fail-on-log
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name execute-rst-rendering -v "${ROOT_DIR}":/project ${IMAGE_RSTRENDERING} --config=Documentation
         SUITE_EXIT_CODE=$?
         ;;
     fix)
@@ -629,7 +647,7 @@ case ${TEST_SUITE} in
         esac
         ;;
     lintCss)
-        if [ "${CGLCHECK_DRY_RUN}" -eq 1 ]; then
+        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
             COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run check:lint:css"
         else
             COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:css"
@@ -638,7 +656,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     lintJs)
-        if [ "${CGLCHECK_DRY_RUN}" -eq 1 ]; then
+        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
             COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run check:lint:js"
         else
             COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:js"
@@ -661,6 +679,11 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
+    lintXliff)
+        COMMAND="php Build/Scripts/xliffLint.sh lint:xliff Resources/Private/Language"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintxliff-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+        SUITE_EXIT_CODE=$?
+        ;;
     lintYaml)
         COMMAND="composer check:yaml:lint"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
@@ -669,6 +692,10 @@ case ${TEST_SUITE} in
     npm)
         COMMAND=(npm "$@")
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} ${IMAGE_NODEJS} "${COMMAND[@]}"
+        SUITE_EXIT_CODE=$?
+        ;;
+    phpCsFixer)
+        phpCsFixer
         SUITE_EXIT_CODE=$?
         ;;
     phpmd)
@@ -686,6 +713,11 @@ case ${TEST_SUITE} in
         PHPSTAN_CONFIG_FILE="Build/phpstan/TYPO3_${CORE_VERSION}/phpstan.neon"
         COMMAND=(php -dxdebug.mode=off .Build/bin/phpstan analyse -c ${PHPSTAN_CONFIG_FILE} --no-progress --no-interaction --memory-limit 4G --allow-empty-baseline --generate-baseline=Build/phpstan/TYPO3_${CORE_VERSION}/phpstan-baseline.neon)
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpstan-baseline-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} "${COMMAND[@]}"
+        SUITE_EXIT_CODE=$?
+        ;;
+    psr-verify)
+        COMMAND="composer dumpautoload --optimize --strict-psr --no-plugins"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name psr-verify-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
         SUITE_EXIT_CODE=$?
         ;;
     shellcheck)
