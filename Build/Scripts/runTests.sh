@@ -180,6 +180,15 @@ cleanRenderedDocumentationFiles() {
     return
  }
 
+  rector() {
+    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+        CGLCHECK_DRY_RUN="--dry-run"
+    fi
+    COMMAND=".Build/bin/rector process ${CGLCHECK_DRY_RUN} --config=Build/rector/config.php"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name rector-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+    return
+  }
+
 loadHelp() {
     # Load help text into $HELP
     read -r -d '' HELP <<EOF
@@ -740,12 +749,8 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} images --filter "reference=ghcr.io/typo3/core-testing-*" --filter "dangling=true" --format "{{.ID}}" | xargs -I {} ${CONTAINER_BIN} rmi {}
         echo ""
         ;;
-     rector)
-        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
-            CGLCHECK_DRY_RUN="--dry-run"
-        fi
-        COMMAND=".Build/bin/rector process ${CGLCHECK_DRY_RUN} --config=Build/rector/config.php"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name cgl-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+    rector)
+        rector
         SUITE_EXIT_CODE=$?
         ;;
     *)
