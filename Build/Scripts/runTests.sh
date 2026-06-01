@@ -185,6 +185,7 @@ Options:
         Specifies which script/tool to run
             - cgl: Fixes the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer). Set -n for dry-run.
             - checkComposerNormalize: Checks the order of the composer.json entries.
+            - checkIntegrityXliff: checks for all xlf files for validity and deprecated usages
             - clean: clean up build, cache and testing related files and folders
             - cleanCache: clean up cache related files and folders
             - cleanRenderedDocumentation: clean up rendered documentation files and folders (Documentation-GENERATED-temp)
@@ -203,7 +204,6 @@ Options:
             - lintJson: JSON linting
             - lintPhp: PHP linting
             - lintTypoScript: TypoScript linting
-            - lintXliff: XLIFF linting
             - lintYaml: YAML linting
             - npm: "npm" with all remaining arguments dispatched.
             - phpCsFixer fixes code to follow the standards. Set -n for dry-run.
@@ -726,10 +726,6 @@ case ${TEST_SUITE} in
         ;;
     lintTypoScript)
         lintTypoScript
-        SUITE_EXIT_CODE=$?
-        ;;
-    lintXliff)
-        lintXliff
         SUITE_EXIT_CODE=$?
         ;;
     lintYaml)
