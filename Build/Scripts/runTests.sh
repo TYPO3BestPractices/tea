@@ -171,6 +171,12 @@ cleanRenderedDocumentationFiles() {
     echo "done"
 }
 
+fixComposerNormalize() {
+        COMMAND="composer normalize --no-check-lock"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name fixComposerNormalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        return
+    }
+
  phpCsFixer() {
     if [ -n "${CGLCHECK_DRY_RUN}" ]; then
         CGLCHECK_DRY_RUN="--dry-run --diff"
@@ -618,8 +624,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     fixComposerNormalize)
-        COMMAND="composer normalize --no-check-lock"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        fixComposerNormalize
         SUITE_EXIT_CODE=$?
         ;;
     functional)
