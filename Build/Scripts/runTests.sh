@@ -171,41 +171,7 @@ cleanRenderedDocumentationFiles() {
     echo "done"
 }
 
-fixComposerNormalize() {
-    COMMAND="composer normalize --no-check-lock"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name fixComposerNormalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
-}
 
-phpCsFixer() {
-    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
-        CGLCHECK_DRY_RUN="--dry-run --diff"
-    fi
-    COMMAND="php .Build/bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpCsFixer-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
-}
-
-rector() {
-    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
-        CGLCHECK_DRY_RUN="--dry-run"
-    fi
-    COMMAND=".Build/bin/rector process ${CGLCHECK_DRY_RUN} --config=Build/rector/config.php"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name rector-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
-}
-
-lintTypoScript() {
-    COMMAND="composer check:typoscript:lint"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintTypoScript-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
-}
-
-lintXliff() {
-    COMMAND="php Build/Scripts/xliffLint.sh lint:xliff Resources/Private/Language"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintXliff-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
-}
-
-lintYaml() {
-    COMMAND="composer check:yaml:lint"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintYaml-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
-}
 
 loadHelp() {
     # Load help text into $HELP
@@ -385,9 +351,47 @@ Examples:
 EOF
 }
 
+# Functions for the individual checkers/fixers
+
+fixComposerNormalize() {
+    COMMAND="composer normalize --no-check-lock"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name fixComposerNormalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
+lintTypoScript() {
+    COMMAND="composer check:typoscript:lint"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintTypoScript-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
+lintXliff() {
+    COMMAND="php Build/Scripts/xliffLint.sh lint:xliff Resources/Private/Language"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintXliff-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+}
+
+lintYaml() {
+    COMMAND="composer check:yaml:lint"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintYaml-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
+phpCsFixer() {
+    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+        CGLCHECK_DRY_RUN="--dry-run --diff"
+    fi
+    COMMAND="php .Build/bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpCsFixer-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+}
+
 phpstan() {
     COMMAND="composer check:php:stan"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpstan-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
+rector() {
+    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+        CGLCHECK_DRY_RUN="--dry-run"
+    fi
+    COMMAND=".Build/bin/rector process ${CGLCHECK_DRY_RUN} --config=Build/rector/config.php"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name rector-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
 }
 
 # Test if at least one of the supported container binaries exists, else exit out with error
