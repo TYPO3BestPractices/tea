@@ -195,6 +195,12 @@ rector() {
     return
 }
 
+lintYaml() {
+    COMMAND="composer check:yaml:lint"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintYaml-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+    return
+}
+
 loadHelp() {
     # Load help text into $HELP
     read -r -d '' HELP <<EOF
@@ -699,8 +705,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     lintYaml)
-        COMMAND="composer check:yaml:lint"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        lintYaml
         SUITE_EXIT_CODE=$?
         ;;
     npm)
