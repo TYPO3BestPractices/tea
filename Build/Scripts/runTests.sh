@@ -171,14 +171,7 @@ cleanRenderedDocumentationFiles() {
     echo "done"
 }
 
- phpCsFixer() {
-    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
-        CGLCHECK_DRY_RUN="--dry-run --diff"
-    fi
-    COMMAND="php .Build/bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpCsFixer-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
-    return
- }
+
 
 loadHelp() {
     # Load help text into $HELP
@@ -191,8 +184,8 @@ Usage: $0 [options] [file]
 
 Options:
     -s <...>
-        Specifies which test suite to run
-            - cgl: Fixes the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer).
+        Specifies which script/tool to run
+            - cgl: Fixes the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer). Set -n for dry-run.
             - checkComposerNormalize: Checks the order of the composer.json entries.
             - clean: clean up build, cache and testing related files and folders
             - cleanCache: clean up cache related files and folders
@@ -215,12 +208,12 @@ Options:
             - lintXliff: XLIFF linting
             - lintYaml: YAML linting
             - npm: "npm" with all remaining arguments dispatched.
-            - phpCsFixer fixes code to follow the standards.
+            - phpCsFixer fixes code to follow the standards. Set -n for dry-run.
             - phpmd: Checks code metrics in the PHP code using PHPMD.
             - phpstan: PHPStan tests
             - phpstanGenerateBaseline: regenerate PHPStan baseline, handy after PHPStan updates
             - psr-verify: Verifies PSR-4 namespace correctness.
-            - rector: Fixes and upgrades the PHP code using Rector
+            - rector: Fixes and upgrades the PHP code using Rector. Set -n for dry-run.
             - shellcheck: check runTests.sh for shell issues
             - unit (default): PHP unit tests
             - unitRandom: PHP unit tests in random order, add -o <number> to use specific seed
@@ -322,7 +315,7 @@ Options:
         replay the unit tests in that order.
 
     -n
-        Only with -s cgl|composerNormalize|npm|lintJs|lintCss
+        Only with -s cgl|lintCss|lintJs|phpCsFixer|rector
         Activate dry-run in checks so they do not actively change files and only print broken ones.
 
     -u
@@ -356,6 +349,49 @@ Examples:
     # Run functional tests on postgres 11
     ./Build/Scripts/runTests.sh -s functional -d postgres -i 11
 EOF
+}
+
+# Functions for the individual checkers/fixers
+
+fixComposerNormalize() {
+    COMMAND="composer normalize --no-check-lock"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name fixComposerNormalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
+lintTypoScript() {
+    COMMAND="composer check:typoscript:lint"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintTypoScript-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
+lintXliff() {
+    COMMAND="php Build/Scripts/xliffLint.sh lint:xliff Resources/Private/Language"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintXliff-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+}
+
+lintYaml() {
+    COMMAND="composer check:yaml:lint"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintYaml-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
+phpCsFixer() {
+    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+        CGLCHECK_DRY_RUN="--dry-run --diff"
+    fi
+    COMMAND="php .Build/bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpCsFixer-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+}
+
+phpstan() {
+    COMMAND="composer check:php:stan"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpstan-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
+rector() {
+    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+        CGLCHECK_DRY_RUN="--dry-run"
+    fi
+    COMMAND=".Build/bin/rector process ${CGLCHECK_DRY_RUN} --config=Build/rector/config.php"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name rector-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
 }
 
 # Test if at least one of the supported container binaries exists, else exit out with error
@@ -609,8 +645,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     fixComposerNormalize)
-        COMMAND="composer normalize --no-check-lock"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        fixComposerNormalize
         SUITE_EXIT_CODE=$?
         ;;
     functional)
@@ -675,18 +710,15 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     lintTypoScript)
-        COMMAND="composer check:typoscript:lint"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        lintTypoScript
         SUITE_EXIT_CODE=$?
         ;;
     lintXliff)
-        COMMAND="php Build/Scripts/xliffLint.sh lint:xliff Resources/Private/Language"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintxliff-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+        lintXliff
         SUITE_EXIT_CODE=$?
         ;;
     lintYaml)
-        COMMAND="composer check:yaml:lint"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        lintYaml
         SUITE_EXIT_CODE=$?
         ;;
     npm)
@@ -742,12 +774,8 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} images --filter "reference=ghcr.io/typo3/core-testing-*" --filter "dangling=true" --format "{{.ID}}" | xargs -I {} ${CONTAINER_BIN} rmi {}
         echo ""
         ;;
-     rector)
-        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
-            CGLCHECK_DRY_RUN="--dry-run"
-        fi
-        COMMAND=".Build/bin/rector process ${CGLCHECK_DRY_RUN} --config=Build/rector/config.php"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name cgl-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+    rector)
+        rector
         SUITE_EXIT_CODE=$?
         ;;
     *)
