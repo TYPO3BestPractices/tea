@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Translation\Util\XliffUtils;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../../.Build/vendor/autoload.php';
 
 if (PHP_SAPI !== 'cli') {
     die('Script must be called from command line.' . chr(10));
@@ -121,7 +121,7 @@ final readonly class CheckIntegrityXliff
         $finder = new Finder();
         return $finder
             ->files()
-            ->in(__DIR__ . '/../../typo3/sysext/*/Resources/Private/Language/')
+            ->in(__DIR__ . '/../../Resources/Private/Language/')
             ->name('*.xlf');
     }
 
@@ -129,7 +129,7 @@ final readonly class CheckIntegrityXliff
     {
         $extensionKey = 'N/A';
         $shortLabelFile = basename($labelFile);
-        if (preg_match('@sysext/(.+)/Resources/Private/Language/(.+)$@imsU', $labelFile, $matches)) {
+        if (preg_match('@/([a-z][a-z0-9_]*)/Resources/Private/Language/(.+)$@imsU', $labelFile, $matches)) {
             $extensionKey = $matches[1];
             $shortLabelFile = $matches[2];
         }
