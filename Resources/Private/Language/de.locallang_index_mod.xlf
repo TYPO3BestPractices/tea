@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" target-language="de" original="EXT:tea/Resources/Private/Language/de.locallang_index_mod.xlf" datatype="plaintext" date="2026-03-26T16:01:00Z">
+    <header/>
+    <body>
+      <trans-unit id="module.title" approved="yes">
+        <source>Teas</source>
+        <target>Tees</target>
+      </trans-unit>
+      <trans-unit id="tx_tea_domain_model_tea.uid" approved="yes">
+        <source>UID</source>
+        <target>UID</target>
+      </trans-unit>
+      <trans-unit id="flash_message.missing_teas.message" approved="yes">
+        <source>Currently, there are no teas.</source>
+        <target>Momentan sind keine Tees verfügbar.</target>
+      </trans-unit>
+      <trans-unit id="flash_message.missing_teas.title" approved="yes">
+        <source>No Teas available yet</source>
+        <target>Noch keine Tees verfügbar</target>
+      </trans-unit>
+      <trans-unit id="listing.caption" approved="yes">
+        <source>All available teas from the installation.</source>
+        <target>Alle verfügbaren Tees in dieser Installation.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
