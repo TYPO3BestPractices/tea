@@ -45,6 +45,7 @@ final class CheckIntegrityXliff
     ];
     private const XliffDeprecationKey = 'x-unused-since';
     private const pathToXliffFiles = 'Resources/Private/Language';
+
     public function execute(array $argv = []): int
     {
         $isVerbose = in_array('-v', $argv, true) || in_array('--verbose', $argv, true);
@@ -151,7 +152,8 @@ final class CheckIntegrityXliff
         $version = $attributes['@attributes']['version'] ?? '';
         $supportedVersions = ['1.2', '2.0'];
         if (!in_array($version, $supportedVersions, true)) {
-            $result['error'] = 'Incompatible version: ' . $version . ' (expected: ' . implode(', ', $supportedVersions) . ')';
+            $result['error'] = 'Incompatible version: ' . $version . ' (expected: ' . implode(', ',
+                    $supportedVersions) . ')';
             $result['errorcode'] = 'XLF version';
             return $result;
         }
@@ -211,7 +213,8 @@ final class CheckIntegrityXliff
                 $expectedOriginals[] = 'EXT:core/Resources/Private/Language/countries.xlf';
             }
             if (!in_array($original, $expectedOriginals, true)) {
-                $result['error'] = 'Invalid original: ' . $original . ' (expected: ' . implode(', ', $expectedOriginals) . ')';
+                $result['error'] = 'Invalid original: ' . $original . ' (expected: ' . implode(', ',
+                        $expectedOriginals) . ')';
                 $result['errorcode'] = 'file.original';
                 return $result;
             }
