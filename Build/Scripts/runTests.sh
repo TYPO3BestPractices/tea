@@ -206,8 +206,8 @@ Usage: $0 [options] [file]
 
 Options:
     -s <...>
-        Specifies which test suite to run
-            - cgl: Fixes the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer).
+        Specifies which script/tool to run
+            - cgl: Fixes the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer). Set -n for dry-run.
             - checkComposerNormalize: Checks the order of the composer.json entries.
             - clean: clean up build, cache and testing related files and folders
             - cleanCache: clean up cache related files and folders
@@ -230,12 +230,12 @@ Options:
             - lintXliff: XLIFF linting
             - lintYaml: YAML linting
             - npm: "npm" with all remaining arguments dispatched.
-            - phpCsFixer fixes code to follow the standards.
+            - phpCsFixer fixes code to follow the standards. Set -n for dry-run.
             - phpmd: Checks code metrics in the PHP code using PHPMD.
             - phpstan: PHPStan tests
             - phpstanGenerateBaseline: regenerate PHPStan baseline, handy after PHPStan updates
             - psr-verify: Verifies PSR-4 namespace correctness.
-            - rector: Fixes and upgrades the PHP code using Rector
+            - rector: Fixes and upgrades the PHP code using Rector. Set -n for dry-run.
             - shellcheck: check runTests.sh for shell issues
             - unit (default): PHP unit tests
             - unitRandom: PHP unit tests in random order, add -o <number> to use specific seed
@@ -337,7 +337,7 @@ Options:
         replay the unit tests in that order.
 
     -n
-        Only with -s cgl|composerNormalize|npm|lintJs|lintCss
+        Only with -s cgl|lintCss|lintJs|phpCsFixer|rector
         Activate dry-run in checks so they do not actively change files and only print broken ones.
 
     -u
