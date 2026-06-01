@@ -171,8 +171,6 @@ cleanRenderedDocumentationFiles() {
     echo "done"
 }
 
-
-
 loadHelp() {
     # Load help text into $HELP
     read -r -d '' HELP <<EOF
@@ -384,6 +382,11 @@ phpCsFixer() {
 phpstan() {
     COMMAND="composer check:php:stan"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpstan-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
+psr-verify() {
+    COMMAND="composer dumpautoload --optimize --strict-psr --no-plugins"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name psr-verify-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
 }
 
 rector() {
@@ -745,8 +748,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     psr-verify)
-        COMMAND="composer dumpautoload --optimize --strict-psr --no-plugins"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name psr-verify-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+        psr-verify
         SUITE_EXIT_CODE=$?
         ;;
     shellcheck)
