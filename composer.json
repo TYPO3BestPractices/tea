@@ -160,7 +160,7 @@
 		"check:tests:create-directories": "mkdir -p .Build/public/typo3temp/var/tests",
 		"check:tests:unit": "phpunit -c Build/phpunit/UnitTests.xml",
 		"check:typoscript:lint": "typoscript-lint -c Build/typoscript-lint/config.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript Tests/Functional/Controller/Fixtures/TypoScript",
-		"check:xliff:lint": "php Build/Scripts/xliffLint.sh lint:xliff Resources/Private/Language",
+		"check:xliff:lint": "php Build/Scripts/checkIntegrityXliff.php",
 		"check:yaml:lint": "find . ! -path '*.Build/*' ! -path '*node_modules/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r php ./.Build/bin/yaml-lint",
 		"coverage:create-directories": "mkdir -p build/coverage build/logs",
 		"fix": [
