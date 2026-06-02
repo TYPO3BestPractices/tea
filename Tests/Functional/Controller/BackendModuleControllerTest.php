@@ -41,7 +41,8 @@ final class BackendModuleControllerTest extends FunctionalTestCase
         parent::setUp();
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/BackendUser.csv');
-        $this->setUpBackendUser(1)
+        $this
+            ->setUpBackendUser(1)
             ->getSession()
             ->set('formProtectionSessionToken', self::FORM_PROTECTION_SESSION_TOKEN);
 
@@ -97,7 +98,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
         self::assertLessThan(
             strpos($html, 'Tea 1'),
             strpos($html, 'Tea 2'),
-            'Tea 1 is not sorted after Tea 2'
+            'Tea 1 is not sorted after Tea 2',
         );
     }
 
@@ -153,7 +154,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
         if ((new Typo3Version())->getMajorVersion() === 13) {
             $token = $this->get(HashService::class)->hmac(
                 'routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN,
-                AbstractFormProtection::class
+                AbstractFormProtection::class,
             );
         } else {
             $token = GeneralUtility::hmac('routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN);
@@ -180,7 +181,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
 
         self::assertStringContainsString(
             htmlspecialchars('/typo3/record/edit?' . $expectedUrlQuery, ENT_QUOTES),
-            $html
+            $html,
         );
     }
 
@@ -192,7 +193,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     private function executeRequest(
         string $route,
         string $pluginName,
-        string $action
+        string $action,
     ): ResponseInterface {
         $request = $this->createRequest(
             $route,
@@ -214,10 +215,11 @@ final class BackendModuleControllerTest extends FunctionalTestCase
             Environment::getVarPath(),
             Environment::getConfigPath(),
             Environment::getCurrentScript(),
-            Environment::toArray()['os']
+            Environment::toArray()['os'],
         );
 
-        $response = $this->get(BackendModuleController::class)
+        $response = $this
+            ->get(BackendModuleController::class)
             ->processRequest(new Request($request));
 
         Environment::initialize(
@@ -229,7 +231,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
             Environment::getVarPath(),
             Environment::getConfigPath(),
             Environment::getCurrentScript(),
-            Environment::toArray()['os']
+            Environment::toArray()['os'],
         );
 
         return $response;
