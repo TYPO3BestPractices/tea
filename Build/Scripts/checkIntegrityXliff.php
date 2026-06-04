@@ -43,8 +43,8 @@ final class CheckIntegrityXliff
         $testResults = [];
         $errors = [];
 
-        /** @var \SplFileInfo $labelFile */
         foreach ($filesToProcess as $labelFile) {
+            assert($labelFile instanceof \SplFileInfo);
             $fullFilePath = $labelFile->getRealPath();
             $result = $this->checkValidLabels($fullFilePath);
             if (isset($result['error'])) {
