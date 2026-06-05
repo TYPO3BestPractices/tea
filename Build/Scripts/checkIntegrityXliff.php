@@ -74,7 +74,9 @@ final class CheckIntegrityXliff
         } else {
             // Non-verbose: just show a summary line
             if ($errors !== []) {
-                $output->writeln('<error>' . count($errors) . ' error(s) found in ' . count($testResults) . ' files.</error>');
+                $output->writeln(
+                    '<error>' . count($errors) . ' error(s) found in ' . count($testResults) . ' files.</error>',
+                );
             }
         }
 
@@ -138,8 +140,8 @@ final class CheckIntegrityXliff
         $version = $attributes['@attributes']['version'] ?? '';
         $supportedVersions = ['1.2', '2.0'];
         if (!in_array($version, $supportedVersions, true)) {
-            $result['error'] = 'Incompatible version: ' . $version . ' (expected: ' . implode(', ',
-                    $supportedVersions) . ')';
+            $result['error'] = 'Incompatible version: ' . $version
+                . ' (expected: ' . implode(', ', $supportedVersions) . ')';
             $result['errorcode'] = 'XLF version';
             return $result;
         }
@@ -199,8 +201,8 @@ final class CheckIntegrityXliff
                 $expectedOriginals[] = 'EXT:core/Resources/Private/Language/countries.xlf';
             }
             if (!in_array($original, $expectedOriginals, true)) {
-                $result['error'] = 'Invalid original: ' . $original . ' (expected: ' . implode(', ',
-                        $expectedOriginals) . ')';
+                $result['error'] = 'Invalid original: ' . $original
+                    . ' (expected: ' . implode(', ', $expectedOriginals) . ')';
                 $result['errorcode'] = 'file.original';
                 return $result;
             }
@@ -281,7 +283,6 @@ final class CheckIntegrityXliff
 
                 $seenUnitIds[$unitId] = true;
             }
-
             // XLIFF 2.0 has no deprecation syntax check yet.
         }
 
