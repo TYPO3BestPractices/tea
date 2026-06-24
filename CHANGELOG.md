@@ -17,6 +17,34 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Documentation
 
+## V4.1.0: CI improvements, bugfixes and cleanup
+
+### Added
+
+- Add a more comprehensive XLIFF integrity checker (#2148)
+- Add a German translation for the BE module (#2163)
+- Add Postgres/MySQL to the functional tests on CI (#2101)
+- Add Composer caching on CI (#1933, #2139)
+
+### Changed
+
+- Disable some Type Perfect PHPStan rules (#2134)
+- Do not process `Build/` with Rector (#2126)
+- Move PHPCov from Phive to Composer (#2109)
+
+### Removed
+
+- Drop Composer scripts for functional tests
+- Drop the `AbstractFrontendControllerTestCase` (#2076)
+
+### Fixed
+
+- Fix locallang files (#2158)
+- Fix path to the Composer cache in GitHub Actions (#2139)
+- Actually fix the code with `runTests.sh -s phpCsFixer` (#2136)
+- Return exitcode != 0 when `runTests.sh -s composerUpdate(Min|Max)`
+  fails (#1936)
+
 ## 4.0.0
 
 ### Added
