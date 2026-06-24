@@ -51,6 +51,36 @@ jobs:
           - typo3-version: "13.4"
             php-version: "8.5"
             composer-dependencies: Max
+  phpstan:
+    name: PHPStan code quality checks
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Show the Composer version
+        run: ./Build/Scripts/runTests.sh -s composer -- --version
+      - name: Show the Composer configuration
+        run: ./Build/Scripts/runTests.sh -s composer config --global --list
+      - name: Cache dependencies installed with composer
+        uses: actions/cache@v5
+        with:
+          key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
+          path: .cache/composer
+          restore-keys: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
+      - name: Install composer dependencies
+        run: |
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdateMax
+      - name: Run phpstan code quality checks
+        run: |
+          ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s phpstan
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - typo3-version: "12.4"
+            php-version: "8.2"
+          - typo3-version: "13.4"
+            php-version: "8.2"
   code-quality:
     name: Code quality checks
     runs-on: ubuntu-24.04
@@ -82,7 +112,6 @@ jobs:
           - "json:lint"
           - "php:cs-fixer"
           - "php:rector"
-          - "php:stan"
           - "typoscript:lint"
           - "xliff:lint"
           - "yaml:lint"

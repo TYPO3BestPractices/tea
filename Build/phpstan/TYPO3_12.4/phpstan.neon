@@ -1,0 +1,16 @@
+includes:
+  - ../phpstan.neon
+  - phpstan-baseline.neon
+
+parameters:
+  phpVersion: 80100
+  ignoreErrors:
+  		-
+  			message: "#^Call to method hmac\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Crypto\\\\HashService\\.$#"
+  			count: 1
+  			path: ../../../Tests/Functional/Controller/BackendModuleControllerTest.php
+
+  		-
+  			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Crypto\\\\HashService not found\\.$#"
+  			count: 1
+  			path: ../../../Tests/Functional/Controller/BackendModuleControllerTest.php
