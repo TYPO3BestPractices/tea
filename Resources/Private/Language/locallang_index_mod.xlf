@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" original="EXT:tea/Resources/Private/Language/locallang_index_mod.xlf" datatype="plaintext" date="2026-03-26T15:21:30Z">
+  <file source-language="en" original="EXT:tea/Resources/Private/Language/locallang_index_mod.xlf" datatype="plaintext"
+        date="2026-03-26T15:21:30Z">
     <header/>
     <body>
       <trans-unit id="module.title">

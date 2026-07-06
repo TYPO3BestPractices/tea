@@ -15,13 +15,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Show the Composer version
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
         run: ./Build/Scripts/runTests.sh -s composer config --global --list
       - name: Cache dependencies installed with composer
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
           path: .cache/composer
@@ -86,13 +86,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Show the Composer version
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
         run: ./Build/Scripts/runTests.sh -s composer config --global --list
       - name: Cache dependencies installed with composer
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
           path: .cache/composer
@@ -128,13 +128,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Show the Composer version
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
         run: ./Build/Scripts/runTests.sh -s composer config --global --list
       - name: Cache dependencies installed with composer
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
           path: .cache/composer
@@ -164,13 +164,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Show the Composer version
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
         run: ./Build/Scripts/runTests.sh -s composer config --global --list
       - name: Cache dependencies installed with composer
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
           path: .cache/composer
@@ -196,7 +196,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Run prepare release
         run: Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s composer prepare-release
     strategy:
@@ -215,7 +215,7 @@ jobs:
           - "Js"
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Run code quality frontend
         run: |
           Build/Scripts/runTests.sh -s lint${{ matrix.command }}
@@ -225,13 +225,13 @@ jobs:
     needs: php-lint
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Show the Composer version
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
         run: ./Build/Scripts/runTests.sh -s composer config --global --list
       - name: Cache dependencies installed with composer
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
           path: .cache/composer
@@ -276,13 +276,13 @@ jobs:
     needs: php-lint
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Show the Composer version
         run: ./Build/Scripts/runTests.sh -s composer -- --version
       - name: Show the Composer configuration
         run: ./Build/Scripts/runTests.sh -s composer config --global --list
       - name: Cache dependencies installed with composer
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
           path: .cache/composer
@@ -351,7 +351,7 @@ jobs:
     timeout-minutes: 2
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Check scripts
         run: |
           Build/Scripts/runTests.sh -s shellcheck
@@ -361,7 +361,7 @@ jobs:
     timeout-minutes: 2
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Test if the documentation will render without warnings
         run: |
           Build/Scripts/runTests.sh -s executeRstRendering

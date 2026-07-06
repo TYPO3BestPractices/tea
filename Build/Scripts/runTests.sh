@@ -185,6 +185,7 @@ Options:
         Specifies which script/tool to run
             - cgl: Fixes the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer). Set -n for dry-run.
             - checkComposerNormalize: Checks the order of the composer.json entries.
+            - checkIntegrityXliff: checks for all xlf files for validity and deprecated usages
             - clean: clean up build, cache and testing related files and folders
             - cleanCache: clean up cache related files and folders
             - cleanRenderedDocumentation: clean up rendered documentation files and folders (Documentation-GENERATED-temp)
@@ -203,7 +204,6 @@ Options:
             - lintJson: JSON linting
             - lintPhp: PHP linting
             - lintTypoScript: TypoScript linting
-            - lintXliff: XLIFF linting
             - lintYaml: YAML linting
             - npm: "npm" with all remaining arguments dispatched.
             - phpCsFixer fixes code to follow the standards. Set -n for dry-run.
@@ -356,6 +356,15 @@ fixComposerNormalize() {
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name fixComposerNormalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
 }
 
+lintJs() {
+    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+        COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run check:lint:js"
+    else
+        COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:js"
+    fi
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintJs-${SUFFIX} ${IMAGE_NODEJS} /bin/sh -c "${COMMAND}"
+}
+
 lintPhp() {
     COMMAND="composer check:php:lint"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintPhp-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
@@ -364,11 +373,6 @@ lintPhp() {
 lintTypoScript() {
     COMMAND="composer check:typoscript:lint"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintTypoScript-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
-}
-
-lintXliff() {
-    COMMAND="php Build/Scripts/xliffLint.sh lint:xliff Resources/Private/Language"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintXliff-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
 }
 
 lintYaml() {
@@ -606,6 +610,10 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
+    checkIntegrityXliff)
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name check-integrity-set-labels-${SUFFIX} ${IMAGE_PHP} php -dxdebug.mode=off Build/Scripts/checkIntegrityXliff.php
+        SUITE_EXIT_CODE=$?
+        ;;
     clean)
         cleanCacheFiles
         cleanRenderedDocumentationFiles
@@ -704,12 +712,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     lintJs)
-        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
-            COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run check:lint:js"
-        else
-            COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:js"
-        fi
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} ${IMAGE_NODEJS} /bin/sh -c "${COMMAND}"
+        lintJs
         SUITE_EXIT_CODE=$?
         ;;
     lintJson)
@@ -723,10 +726,6 @@ case ${TEST_SUITE} in
         ;;
     lintTypoScript)
         lintTypoScript
-        SUITE_EXIT_CODE=$?
-        ;;
-    lintXliff)
-        lintXliff
         SUITE_EXIT_CODE=$?
         ;;
     lintYaml)
