@@ -17,21 +17,26 @@ final class TeaTest extends FunctionalTestCase
     protected array $testExtensionsToLoad = ['ttn/tea'];
 
     private Tea $subject;
+
     private ConjunctionValidator $validator;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->subject = new Tea();
-        $validatorResolver = $this->getContainer()->get(ValidatorResolver::class);
+
+        $validatorResolver = $this->get(ValidatorResolver::class);
         $this->validator = $validatorResolver->getBaseValidatorConjunction(Tea::class);
+
+        $this->subject = new Tea();
     }
 
     #[Test]
     public function titleWithMaximumLengthPassesValidation(): void
     {
         $this->subject->setTitle(str_repeat('p', 255));
+
         $result = $this->validator->validate($this->subject);
+
         self::assertFalse($result->forProperty('title')->hasErrors());
     }
 
@@ -39,7 +44,9 @@ final class TeaTest extends FunctionalTestCase
     public function titleLongerThanMaximumLengthDoesNotPassValidation(): void
     {
         $this->subject->setTitle(str_repeat('p', 256));
+
         $result = $this->validator->validate($this->subject);
+
         self::assertTrue($result->forProperty('title')->hasErrors());
     }
 
@@ -47,7 +54,9 @@ final class TeaTest extends FunctionalTestCase
     public function emptyTitleDoesNotPassValidation(): void
     {
         $this->subject->setTitle('');
+
         $result = $this->validator->validate($this->subject);
+
         self::assertTrue($result->forProperty('title')->hasErrors());
     }
 
@@ -55,7 +64,9 @@ final class TeaTest extends FunctionalTestCase
     public function descriptionWithMaximumLengthPassesValidation(): void
     {
         $this->subject->setDescription(str_repeat('d', 2000));
+
         $result = $this->validator->validate($this->subject);
+
         self::assertFalse($result->forProperty('description')->hasErrors());
     }
 
@@ -63,8 +74,9 @@ final class TeaTest extends FunctionalTestCase
     public function descriptionLongerThanMaximumLengthDoesNotPassValidation(): void
     {
         $this->subject->setDescription(str_repeat('d', 2001));
+
         $result = $this->validator->validate($this->subject);
+
         self::assertTrue($result->forProperty('description')->hasErrors());
     }
-
 }
