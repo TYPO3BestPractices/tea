@@ -749,7 +749,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     phpstan)
-        phpstan
+        phpstan "$@"
         SUITE_EXIT_CODE=$?
         ;;
     phpstanGenerateBaseline)
