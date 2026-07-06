@@ -15,6 +15,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Removed
 
+- Drop support for PHP 8.1 (#2207)
+
 ### Fixed
 
 ### Documentation
