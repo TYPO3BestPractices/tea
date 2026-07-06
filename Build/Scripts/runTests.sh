@@ -32,7 +32,7 @@ printSummary() {
                 echo "DBMS: ${DBMS}  version ${DBMS_VERSION}  driver ${DATABASE_DRIVER}" >&2
                 ;;
             sqlite)
-                echo "DBMS: ${DBMS}  driver pdo_sqlite" >&2
+                echo "DBMS: ${DBMS}" >&2
                 ;;
         esac
     fi
@@ -68,6 +68,7 @@ waitFor() {
 }
 
 cleanUp() {
+    echo "Remove container for network \"${NETWORK}\""
     ATTACHED_CONTAINERS=$(${CONTAINER_BIN} ps --filter network=${NETWORK} --format='{{.Names}}')
     for ATTACHED_CONTAINER in ${ATTACHED_CONTAINERS}; do
         ${CONTAINER_BIN} kill ${ATTACHED_CONTAINER} >/dev/null
@@ -529,10 +530,10 @@ done
 if [ ${#INVALID_OPTIONS[@]} -ne 0 ]; then
     echo "Invalid option(s):" >&2
     for I in "${INVALID_OPTIONS[@]}"; do
-        echo ${I} >&2
+        echo "-"${I} >&2
     done
     echo >&2
-    echo "call \".Build/Scripts/runTests.sh -h\" to display help and valid options"
+    echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
     exit 1
 fi
 
@@ -564,7 +565,7 @@ if [ $(uname) != "Darwin" ] && [ ${CONTAINER_BIN} = "docker" ]; then
 fi
 
 if ! type ${CONTAINER_BIN} >/dev/null 2>&1; then
-    echo "Selected container environment \"${CONTAINER_BIN}\" not found. Please install \"${CONTAINER_BIN}\" or use -b option to select one." >&2
+    echo "Selected container environment \"${CONTAINER_BIN}\" not found. Please install or use -b option to select one." >&2
     exit 1
 fi
 
