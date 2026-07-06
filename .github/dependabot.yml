@@ -38,7 +38,7 @@ updates:
       - dependency-name: "typo3/cms-*"
     versioning-strategy: "increase"
     # adjust this number according to your own milestones if used.
-    milestone: 12
+    milestone: 8
     commit-message:
       prefix: "[Dependabot] "
 
@@ -50,6 +50,6 @@ updates:
       interval: "daily"
     versioning-strategy: "increase"
     # adjust this number according to your own milestones if used.
-    milestone: 12
+    milestone: 8
     commit-message:
       prefix: "[Dependabot] "
