@@ -97,10 +97,10 @@ Lints the PHP files for syntax errors.
 
 Checks the PHP types using PHPStan.
 
-.. index:: Commands; composer check:static
+.. index:: Commands; phpstan
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer check:static
+    ./Build/Scripts/runTests.sh -p 8.2 -t 13.4 -s phpstan
 
 Runs all static code checks (syntax, style, types).
 
