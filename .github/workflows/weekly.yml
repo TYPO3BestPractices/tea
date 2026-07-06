@@ -1,10 +1,8 @@
 ---
 name: CI
 on:
-  push:
-    branches:
-      - main
-  pull_request:
+  schedule:
+    - cron: '15 3 * * 1'
 permissions:
   contents: read
 jobs:
@@ -36,6 +34,15 @@ jobs:
         include:
           - typo3-version: "12.4"
             php-version: "8.1"
+            composer-dependencies: Max
+          - typo3-version: "13.4"
+            php-version: "8.2"
+            composer-dependencies: Max
+          - typo3-version: "13.4"
+            php-version: "8.3"
+            composer-dependencies: Max
+          - typo3-version: "13.4"
+            php-version: "8.4"
             composer-dependencies: Max
           - typo3-version: "13.4"
             php-version: "8.5"
@@ -244,6 +251,24 @@ jobs:
             php-version: "8.1"
             composer-dependencies: Max
           - typo3-version: "12.4"
+            php-version: "8.2"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.2"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
+            php-version: "8.3"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.3"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
+            php-version: "8.4"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.4"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
             php-version: "8.5"
             composer-dependencies: Min
           - typo3-version: "12.4"
@@ -297,13 +322,41 @@ jobs:
             dbms: "sqlite"
             composer-dependencies: Max
           - typo3-version: "12.4"
+            php-version: "8.2"
+            dbms: "sqlite"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.2"
+            dbms: "sqlite"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
+            php-version: "8.3"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.3"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
+            php-version: "8.4"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.4"
+            composer-dependencies: Max
+          - typo3-version: "12.4"
             php-version: "8.5"
             dbms: "sqlite"
             composer-dependencies: Min
           - typo3-version: "12.4"
             php-version: "8.5"
             dbms: "mysql"
+            composer-dependencies: Min
+          - typo3-version: "12.4"
+            php-version: "8.5"
+            dbms: "mysql"
             composer-dependencies: Max
+          - typo3-version: "12.4"
+            php-version: "8.5"
+            dbms: "postgres"
+            composer-dependencies: Min
           - typo3-version: "12.4"
             php-version: "8.5"
             dbms: "postgres"
@@ -321,6 +374,22 @@ jobs:
             dbms: "sqlite"
             composer-dependencies: Max
           - typo3-version: "13.4"
+            php-version: "8.3"
+            dbms: "sqlite"
+            composer-dependencies: Min
+          - typo3-version: "13.4"
+            php-version: "8.3"
+            dbms: "sqlite"
+            composer-dependencies: Max
+          - typo3-version: "13.4"
+            php-version: "8.4"
+            dbms: "sqlite"
+            composer-dependencies: Min
+          - typo3-version: "13.4"
+            php-version: "8.4"
+            dbms: "sqlite"
+            composer-dependencies: Max
+          - typo3-version: "13.4"
             php-version: "8.5"
             dbms: "sqlite"
             composer-dependencies: Min
@@ -331,7 +400,15 @@ jobs:
           - typo3-version: "13.4"
             php-version: "8.5"
             dbms: "mysql"
+            composer-dependencies: Min
+          - typo3-version: "13.4"
+            php-version: "8.5"
+            dbms: "mysql"
             composer-dependencies: Max
+          - typo3-version: "13.4"
+            php-version: "8.5"
+            dbms: "postgres"
+            composer-dependencies: Min
           - typo3-version: "13.4"
             php-version: "8.5"
             dbms: "postgres"
