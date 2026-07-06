@@ -365,6 +365,11 @@ lintJs() {
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintJs-${SUFFIX} ${IMAGE_NODEJS} /bin/sh -c "${COMMAND}"
 }
 
+lintJson() {
+     COMMAND="composer check:json:lint"
+     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintJson-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
 lintPhp() {
     COMMAND="composer check:php:lint"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintPhp-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
@@ -718,8 +723,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     lintJson)
-        COMMAND="composer check:json:lint"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        lintJson
         SUITE_EXIT_CODE=$?
         ;;
     lintPhp)
