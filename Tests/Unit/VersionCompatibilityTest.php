@@ -15,7 +15,7 @@ final class VersionCompatibilityTest extends UnitTestCase
     #[Test]
     public function currentVersionIsSupported(): void
     {
-        $supportedVersions = [12, 13];
+        $supportedVersions = [13];
         $currentVersion = (new Typo3Version())->getMajorVersion();
         self::assertContains(
             $currentVersion,

@@ -4,6 +4,3 @@ includes:
 
 parameters:
   phpVersion: 80200
-
-  featureToggles:
-    rawMessageInBaseline: true
