@@ -11,7 +11,9 @@ return [
         'access' => 'user',
         'workspaces' => 'live',
         'path' => '/module/tea/index',
-        'labels' => 'LLL:EXT:tea/Resources/Private/Language/locallang_index_mod.xlf',
+        'labels' => [
+            'title' => 'LLL:EXT:tea/Resources/Private/Language/locallang_index_mod.xlf:module.title',
+        ],
         'extensionName' => 'Tea',
         'iconIdentifier' => 'tx-tea-backend-module',
         'inheritNavigationComponentFromMainModule' => false,
