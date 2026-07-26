@@ -30,12 +30,10 @@ final class BackendModuleControllerTest extends FunctionalTestCase
 
     private const FORM_PROTECTION_SESSION_TOKEN = 'testToken';
 
+    protected array $testExtensionsToLoad = ['ttn/tea'];
+
     protected function setUp(): void
     {
-        $this->testExtensionsToLoad = [
-            'ttn/tea',
-        ];
-
         parent::setUp();
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/BackendUser.csv');
