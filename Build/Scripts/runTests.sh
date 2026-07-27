@@ -87,8 +87,8 @@ handleDbmsOptions() {
                 echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
                 exit 1
             fi
-            [ -z "${DBMS_VERSION}" ] && DBMS_VERSION="10.3"
-            if ! [[ ${DBMS_VERSION} =~ ^(10.3|10.4|10.5|10.6|10.7|10.8|10.9|10.10|10.11|11.0|11.1)$ ]]; then
+            [ -z "${DBMS_VERSION}" ] && DBMS_VERSION="10.4"
+            if ! [[ ${DBMS_VERSION} =~ ^(10.4|10.5|10.6|10.7|10.8|10.9|10.10|10.11|11.0|11.1|11.2|11.3|11.4|11.5|11.6|11.7|11.8)$ ]]; then
                 echo "Invalid combination -d ${DBMS} -i ${DBMS_VERSION}" >&2
                 echo >&2
                 echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
@@ -104,7 +104,7 @@ handleDbmsOptions() {
                 exit 1
             fi
             [ -z "${DBMS_VERSION}" ] && DBMS_VERSION="8.0"
-            if ! [[ ${DBMS_VERSION} =~ ^(5.5|5.6|5.7|8.0)$ ]]; then
+            if ! [[ ${DBMS_VERSION} =~ ^(8.0|8.1|8.2|8.3|8.4)$ ]]; then
                 echo "Invalid combination -d ${DBMS} -i ${DBMS_VERSION}" >&2
                 echo >&2
                 echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
@@ -119,7 +119,7 @@ handleDbmsOptions() {
                 exit 1
             fi
             [ -z "${DBMS_VERSION}" ] && DBMS_VERSION="10"
-            if ! [[ ${DBMS_VERSION} =~ ^(10|11|12|13|14|15|16)$ ]]; then
+            if ! [[ ${DBMS_VERSION} =~ ^(10|11|12|13|14|15|16|17|18)$ ]]; then
                 echo "Invalid combination -d ${DBMS} -i ${DBMS_VERSION}" >&2
                 echo >&2
                 echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
@@ -257,6 +257,10 @@ Options:
             - 11.2   short-term development series, maintained until 2024-11
             - 11.3   short-term development series, rolling release
             - 11.4   long-term, maintained until 2029-05
+            - 11.5   short-term development series, maintained until 2024-11
+            - 11.6   short-term development series, maintained until 2025-02
+            - 11.7   short-term development series, maintained until 2025-05
+            - 11.8   long-term, maintained until 2030-06
         With "-d mysql":
             - 8.0   maintained until 2026-04 (default) LTS
             - 8.1   unmaintained since 2023-10
@@ -271,6 +275,8 @@ Options:
             - 14    maintained until 2026-11-12
             - 15    maintained until 2027-11-11
             - 16    maintained until 2028-11-09
+            - 17    maintained until 2029-11-08
+            - 18    maintained until 2030-11-14
 
     -t <13.4>
         Only with -s composerUpdateMin|composerUpdateMax
