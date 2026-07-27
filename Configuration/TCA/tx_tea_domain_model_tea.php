@@ -24,8 +24,8 @@ return [
     ],
     'types' => [
         '1' => [
-            'showitem' =>
-                '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+            'showitem'
+                => '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                     title, description, image, owner,
                  --div--;LLL:EXT:tea/Resources/Private/Language/locallang_db.xlf:tx_tea_domain_model_tea.tabs.access,
                     --palette--;;hidden,
@@ -109,8 +109,8 @@ return [
                     ],
                 ],
                 'foreign_table' => 'tx_tea_domain_model_tea',
-                'foreign_table_where' =>
-                    'AND {#tx_tea_domain_model_tea}.{#pid}=###CURRENT_PID###
+                'foreign_table_where'
+                    => 'AND {#tx_tea_domain_model_tea}.{#pid}=###CURRENT_PID###
                      AND {#tx_tea_domain_model_tea}.{#sys_language_uid} IN (-1,0)',
                 'default' => 0,
             ],

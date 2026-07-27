@@ -74,7 +74,7 @@
 		"tomasvotruba/cognitive-complexity": "0.2.3 || 1.1.1",
 		"tomasvotruba/type-coverage": "1.0.0 || 2.2.1",
 		"typo3/cms-fluid-styled-content": "^13.4",
-		"typo3/coding-standards": "0.8.0",
+		"typo3/coding-standards": "0.9.0",
 		"typo3/testing-framework": "8.3.1"
 	},
 	"replace": {
