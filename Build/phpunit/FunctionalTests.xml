@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
     backupGlobals="true"
     beStrictAboutOutputDuringTests="true"
     bootstrap="../../.Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTestsBootstrap.php"
@@ -31,7 +31,7 @@
         <ini name="display_errors" value="1"/>
         <env name="TYPO3_CONTEXT" value="Testing"/>
     </php>
-    <source restrictDeprecations="true" restrictNotices="true" restrictWarnings="true">
+    <source restrictNotices="true" restrictWarnings="true" ignoreIndirectDeprecations="true">
         <include>
             <directory>../../Classes</directory>
         </include>
