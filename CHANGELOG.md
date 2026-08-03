@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Add support for TYPO3 14LTS (#2254)
 - Add a dedicated weekly CI workflow (#1903)
 
 ### Changed
