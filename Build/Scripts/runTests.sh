@@ -192,7 +192,6 @@ Options:
             - cleanRenderedDocumentation: clean up rendered documentation files and folders (Documentation-GENERATED-temp)
             - cleanTests: clean up test related files and folders
             - composer: "composer" with all remaining arguments dispatched.
-            - composerNormalize: Normalizes the composer.json.
             - composerUnused: Finds unused Composer packages.
             - composerUpdateMax: "composer update", with no platform.php config.
             - composerUpdateMin: "composer update --prefer-lowest", with platform.php set to PHP version x.x.0.
