@@ -631,6 +631,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     checkComposerNormalize)
+        CGLCHECK_DRY_RUN="-n"
         composerNormalize
         SUITE_EXIT_CODE=$?
         ;;
