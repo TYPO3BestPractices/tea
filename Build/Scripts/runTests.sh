@@ -359,6 +359,15 @@ checkIntegrityXliff() {
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name check-integrity-set-labels-${SUFFIX} ${IMAGE_PHP} php -dxdebug.mode=off Build/Scripts/checkIntegrityXliff.php
 }
 
+cgl() {
+     # Active dry-run for cgl needs not "-n" but specific options
+     if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+         CGLCHECK_DRY_RUN="--dry-run --diff"
+     fi
+     COMMAND="php -dxdebug.mode=off .Build/bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
+     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name cgl-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
+}
+
 composerNormalize() {
     if [ -n "${CGLCHECK_DRY_RUN}" ]; then
         CGLCHECK_DRY_RUN="--dry-run"
@@ -629,12 +638,7 @@ fi
 # Suite execution
 case ${TEST_SUITE} in
     cgl)
-        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
-            COMMAND="composer check:php:cs-fixer"
-        else
-            COMMAND="composer fix:php:cs"
-        fi
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-command-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+        cgl
         SUITE_EXIT_CODE=$?
         ;;
     checkIntegrityXliff)
