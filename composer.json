@@ -59,7 +59,7 @@
 		"phpstan/phpstan-strict-rules": "2.0.12",
 		"phpunit/phpcov": "9.0.2",
 		"phpunit/phpunit": "10.5.64",
-		"rector/type-perfect": "2.1.4",
+		"rector/type-perfect": "2.2.0",
 		"saschaegerer/phpstan-typo3": "2.1.1",
 		"seld/jsonlint": "1.12.1",
 		"spaze/phpstan-disallowed-calls": "4.13.0",
