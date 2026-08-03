@@ -354,6 +354,10 @@ EOF
 
 # Functions for the individual checkers/fixers
 
+ checkIntegrityXliff() {
+     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name check-integrity-set-labels-${SUFFIX} ${IMAGE_PHP} php -dxdebug.mode=off Build/Scripts/checkIntegrityXliff.php
+}
+
 composerNormalize() {
     if [ -n "${CGLCHECK_DRY_RUN}" ]; then
         CGLCHECK_DRY_RUN="--dry-run"
@@ -633,7 +637,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     checkIntegrityXliff)
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name check-integrity-set-labels-${SUFFIX} ${IMAGE_PHP} php -dxdebug.mode=off Build/Scripts/checkIntegrityXliff.php
+        checkIntegrityXliff
         SUITE_EXIT_CODE=$?
         ;;
     clean)
