@@ -357,8 +357,8 @@ EOF
 # Functions for the individual checkers/fixers
 
 composerUnused() {
-        COMMAND="composer check:composer:unused"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-unused-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+    COMMAND="composer check:composer:unused"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-unused-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
 }
 
 fixComposerNormalize() {
