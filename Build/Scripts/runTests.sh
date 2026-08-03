@@ -655,11 +655,10 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} "${COMMAND[@]}"
         SUITE_EXIT_CODE=$?
         ;;
-     composerNormalize)
-         CGLCHECK_DRY_RUN="-n"
-         composerNormalize
-         SUITE_EXIT_CODE=$?
-         ;;
+    composerNormalize)
+        composerNormalize
+        SUITE_EXIT_CODE=$?
+        ;;
     composerUnused)
         composerUnused
         SUITE_EXIT_CODE=$?
