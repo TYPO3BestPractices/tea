@@ -358,6 +358,16 @@ composerUnused() {
         COMMAND="composer check:composer:unused"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-unused-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
 }
+
+lintCss() {
+    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+        COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run check:lint:css"
+    else
+        COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:css"
+    fi
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} ${IMAGE_NODEJS} /bin/sh -c "${COMMAND}"
+}
+
 lintJs() {
     if [ -n "${CGLCHECK_DRY_RUN}" ]; then
         COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run check:lint:js"
@@ -710,12 +720,8 @@ case ${TEST_SUITE} in
         esac
         ;;
     lintCss)
-        if [ -n "${CGLCHECK_DRY_RUN}" ]; then
-            COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run check:lint:css"
-        else
-            COMMAND="echo ${HELP_TEXT_NPM_CI}; npm ci --silent || { echo ${HELP_TEXT_NPM_FAILURE}; exit 1; } && npm run fix:lint:css"
-        fi
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} ${IMAGE_NODEJS} /bin/sh -c "${COMMAND}"
+        CGLCHECK_DRY_RUN="-n"
+        lintCss
         SUITE_EXIT_CODE=$?
         ;;
     lintJs)
