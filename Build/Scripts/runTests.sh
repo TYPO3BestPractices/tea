@@ -354,6 +354,14 @@ EOF
 
 # Functions for the individual checkers/fixers
 
+composerNormalize() {
+    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+        CGLCHECK_DRY_RUN="--dry-run"
+    fi
+        COMMAND="composer normalize --no-check-lock ${CGLCHECK_DRY_RUN}"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
 composerUnused() {
         COMMAND="composer check:composer:unused"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-unused-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
@@ -648,13 +656,10 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
      composerNormalize)
-            if [ -n "${CGLCHECK_DRY_RUN}" ]; then
-                CGLCHECK_DRY_RUN="--dry-run"
-            fi
-            COMMAND="composer normalize --no-check-lock ${CGLCHECK_DRY_RUN}"
-            ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
-            SUITE_EXIT_CODE=$?
-            ;;
+         CGLCHECK_DRY_RUN="-n"
+         composerNormalize
+         SUITE_EXIT_CODE=$?
+         ;;
     composerUnused)
         composerUnused
         SUITE_EXIT_CODE=$?
