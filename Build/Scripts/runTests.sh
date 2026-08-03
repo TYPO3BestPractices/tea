@@ -280,6 +280,7 @@ Options:
         Only with -s composerUpdateMin|composerUpdateMax
         Specifies the TYPO3 CORE Version to be used
             - 13.4: (default) use TYPO3 v13
+            - 14.3: use TYPO3 v14
 
     -p <8.2|8.3|8.4|8.5>
         Specifies the PHP minor version to be used
@@ -512,7 +513,7 @@ while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
             ;;
         t)
             CORE_VERSION=${OPTARG}
-            if ! [[ ${CORE_VERSION} =~ ^(13.4)$ ]]; then
+            if ! [[ ${CORE_VERSION} =~ ^(13.4|14.3)$ ]]; then
                 INVALID_OPTIONS+=("-t ${OPTARG}")
             fi
             ;;
