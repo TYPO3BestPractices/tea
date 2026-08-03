@@ -773,6 +773,10 @@ case ${TEST_SUITE} in
         psr-verify
         SUITE_EXIT_CODE=$?
         ;;
+    rector)
+        rector
+        SUITE_EXIT_CODE=$?
+        ;;
     shellcheck)
         ${CONTAINER_BIN} run ${CONTAINER_INTERACTIVE} --rm --pull always ${USERSET} -v "${ROOT_DIR}":/project:ro ${IMAGE_SHELLCHECK} /project/Build/Scripts/runTests.sh
         SUITE_EXIT_CODE=$?
@@ -794,10 +798,6 @@ case ${TEST_SUITE} in
         echo "> remove \"dangling\" ghcr.io/typo3/core-testing-* images (those tagged as <none>)"
         ${CONTAINER_BIN} images --filter "reference=ghcr.io/typo3/core-testing-*" --filter "dangling=true" --format "{{.ID}}" | xargs -I {} ${CONTAINER_BIN} rmi {}
         echo ""
-        ;;
-    rector)
-        rector
-        SUITE_EXIT_CODE=$?
         ;;
     *)
         loadHelp
