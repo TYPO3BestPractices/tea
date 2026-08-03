@@ -136,7 +136,7 @@ jobs:
           ./Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
       - name: Run code quality checks
         run: |
-          Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -s ${{ matrix.command }}
+          Build/Scripts/runTests.sh -p ${{ matrix.php-version }} -n -s ${{ matrix.command }}
     strategy:
       fail-fast: false
       matrix:
