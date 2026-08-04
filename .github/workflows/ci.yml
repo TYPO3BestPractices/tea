@@ -246,6 +246,18 @@ jobs:
           - typo3-version: "13.4"
             php-version: "8.5"
             composer-dependencies: Max
+          - typo3-version: "14.3"
+            php-version: "8.2"
+            composer-dependencies: Min
+          - typo3-version: "14.3"
+            php-version: "8.2"
+            composer-dependencies: Max
+          - typo3-version: "14.3"
+            php-version: "8.5"
+            composer-dependencies: Min
+          - typo3-version: "14.3"
+            php-version: "8.5"
+            composer-dependencies: Max
   functional-tests:
     name: Functional tests
     runs-on: ubuntu-26.04
