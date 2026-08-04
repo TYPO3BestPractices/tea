@@ -284,10 +284,10 @@ Options:
 
     -p <8.2|8.3|8.4|8.5>
         Specifies the PHP minor version to be used
-            - 8.2: (default) use PHP 8.2
+            - 8.2: use PHP 8.2
             - 8.3: use PHP 8.3
             - 8.4: use PHP 8.4
-            - 8.5: use PHP 8.5
+            - 8.5: (default) use PHP 8.5
 
     -e "<phpunit options>" (DEPRECATED).
         Only with -s functional|functionalDeprecated|unit|unitDeprecated|unitRandom
@@ -329,7 +329,7 @@ Options:
         Show this help.
 
 Examples:
-    # Run all core unit tests using PHP 8.2
+    # Run all core unit tests using PHP 8.5
     ./Build/Scripts/runTests.sh
     ./Build/Scripts/runTests.sh -s unit
 
@@ -470,7 +470,7 @@ TEST_SUITE="unit"
 CORE_VERSION="13.4"
 DBMS="sqlite"
 DBMS_VERSION=""
-PHP_VERSION="8.2"
+PHP_VERSION="8.5"
 PHP_XDEBUG_ON=0
 PHP_XDEBUG_PORT=9003
 PHPUNIT_RANDOM=""
