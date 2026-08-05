@@ -337,6 +337,54 @@ jobs:
             php-version: "8.5"
             dbms: "postgres"
             composer-dependencies: Max
+          - typo3-version: "14.3"
+            php-version: "8.2"
+            dbms: "sqlite"
+            composer-dependencies: Min
+          - typo3-version: "14.3"
+            php-version: "8.2"
+            dbms: "sqlite"
+            composer-dependencies: Max
+          - typo3-version: "14.3"
+            php-version: "8.3"
+            dbms: "sqlite"
+            composer-dependencies: Min
+          - typo3-version: "14.3"
+            php-version: "8.3"
+            dbms: "sqlite"
+            composer-dependencies: Max
+          - typo3-version: "14.3"
+            php-version: "8.4"
+            dbms: "sqlite"
+            composer-dependencies: Min
+          - typo3-version: "14.3"
+            php-version: "8.4"
+            dbms: "sqlite"
+            composer-dependencies: Max
+          - typo3-version: "14.3"
+            php-version: "8.5"
+            dbms: "sqlite"
+            composer-dependencies: Min
+          - typo3-version: "14.3"
+            php-version: "8.5"
+            dbms: "sqlite"
+            composer-dependencies: Max
+          - typo3-version: "14.3"
+            php-version: "8.5"
+            dbms: "mysql"
+            composer-dependencies: Min
+          - typo3-version: "14.3"
+            php-version: "8.5"
+            dbms: "mysql"
+            composer-dependencies: Max
+          - typo3-version: "14.3"
+            php-version: "8.5"
+            dbms: "postgres"
+            composer-dependencies: Min
+          - typo3-version: "14.3"
+            php-version: "8.5"
+            dbms: "postgres"
+            composer-dependencies: Max
   shellcheck:
     name: Check shell scripts
     runs-on: ubuntu-26.04
