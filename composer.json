@@ -60,6 +60,7 @@
 		"phpstan/phpstan-strict-rules": "2.0.12",
 		"phpunit/phpcov": "10.0.1",
 		"phpunit/phpunit": "11.5.56",
+		"rector/rector": "2.6.3",
 		"rector/type-perfect": "2.2.0",
 		"saschaegerer/phpstan-typo3": "2.2.0 || 3.1.0",
 		"seld/jsonlint": "1.12.1",
