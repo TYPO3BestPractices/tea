@@ -440,7 +440,7 @@ phpstanGenerateBaseline() {
 }
 
 psrVerify() {
-    COMMAND="composer dumpautoload --optimize --strict-psr --no-plugins"
+    COMMAND="composer dumpautoload --optimize --strict-psr --no-plugins --dry-run"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name psr-verify-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
 }
 
