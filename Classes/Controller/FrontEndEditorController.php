@@ -10,7 +10,7 @@ use TTN\Tea\Domain\Repository\TeaRepository;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Attribute\IgnoreValidation;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 
@@ -46,7 +46,7 @@ class FrontEndEditorController extends ActionController
         return $userUid;
     }
 
-    #[Extbase\IgnoreValidation(['argumentName' => 'tea'])]
+    #[IgnoreValidation(['argumentName' => 'tea'])]
     public function editAction(Tea $tea): ResponseInterface
     {
         $this->checkIfUserIsOwner($tea);
@@ -89,7 +89,7 @@ class FrontEndEditorController extends ActionController
         return $this->redirect('index');
     }
 
-    #[Extbase\IgnoreValidation(['argumentName' => 'tea'])]
+    #[IgnoreValidation(['argumentName' => 'tea'])]
     public function deleteAction(Tea $tea): ResponseInterface
     {
         $this->checkIfUserIsOwner($tea);
