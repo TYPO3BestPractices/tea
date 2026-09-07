@@ -6,6 +6,7 @@ namespace TTN\Tea\Tests\Functional\Controller;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
 use TTN\Tea\Controller\FrontEndEditorController;
@@ -58,6 +59,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function indexActionForNoLoggedInUserRendersErrorMessage(): void
     {
         $request = (new InternalRequest())->withPageId(self::UID_OF_PAGE);
@@ -71,6 +73,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function indexActionForLoggedInUserRendersTeaOwnedByTheLoggedInUser(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');

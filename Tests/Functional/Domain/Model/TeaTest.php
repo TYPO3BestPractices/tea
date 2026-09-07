@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TTN\Tea\Tests\Functional\Domain\Model;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\Test;
 use TTN\Tea\Domain\Model\Tea;
 use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator;
@@ -31,6 +32,7 @@ final class TeaTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function titleWithMaximumLengthPassesValidation(): void
     {
         $this->subject->setTitle(str_repeat('p', 255));
@@ -41,6 +43,7 @@ final class TeaTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function titleLongerThanMaximumLengthDoesNotPassValidation(): void
     {
         $this->subject->setTitle(str_repeat('p', 256));
@@ -51,6 +54,7 @@ final class TeaTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function emptyTitleDoesNotPassValidation(): void
     {
         $this->subject->setTitle('');
@@ -61,6 +65,7 @@ final class TeaTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function descriptionWithMaximumLengthPassesValidation(): void
     {
         $this->subject->setDescription(str_repeat('d', 2000));
@@ -71,6 +76,7 @@ final class TeaTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function descriptionLongerThanMaximumLengthDoesNotPassValidation(): void
     {
         $this->subject->setDescription(str_repeat('d', 2001));

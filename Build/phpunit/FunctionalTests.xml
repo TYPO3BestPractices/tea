@@ -12,7 +12,7 @@
     displayDetailsOnTestsThatTriggerNotices="true"
     displayDetailsOnTestsThatTriggerWarnings="true"
     failOnAllIssues="true"
-    failOnDeprecation="false"
+    failOnDeprecation="true"
     failOnEmptyTestSuite="true"
     failOnNotice="true"
     failOnPhpunitDeprecation="true"
