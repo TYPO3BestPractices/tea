@@ -122,7 +122,7 @@
 	},
 	"scripts": {
 		"check:composer:normalize": "@composer normalize --no-check-lock --dry-run",
-		"check:composer:psr-verify": "@composer dumpautoload --optimize --strict-psr --no-plugins",
+		"check:composer:psr-verify": "@composer dumpautoload --optimize --strict-psr --no-plugins --dry-run",
 		"check:composer:unused": "composer-unused --configuration=Build/composer-unused/composer-unused.php",
 		"check:coverage": [
 			"@check:coverage:unit",
