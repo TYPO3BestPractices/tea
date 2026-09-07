@@ -172,7 +172,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
         $html = $response->getBody()->__toString();
 
         self::assertStringContainsString(
-            htmlspecialchars('/typo3/record/edit?' . $expectedUrlQuery, ENT_QUOTES),
+            htmlspecialchars('typo3/record/edit?' . $expectedUrlQuery, ENT_QUOTES),
             $html,
         );
     }
