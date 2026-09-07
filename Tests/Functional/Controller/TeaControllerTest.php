@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TTN\Tea\Tests\Functional\Controller;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\Test;
 use TTN\Tea\Controller\TeaController;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
@@ -50,6 +51,7 @@ final class TeaControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function indexActionShowsMessageWhenNoTeasAreAvailable(): void
     {
         $request = (new InternalRequest())->withPageId(1);
@@ -70,6 +72,7 @@ final class TeaControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function indexActionRendersAllAvailableTeasOnStoragePage(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/Teas.csv');

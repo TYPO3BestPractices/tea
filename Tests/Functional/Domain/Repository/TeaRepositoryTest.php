@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TTN\Tea\Tests\Functional\Domain\Repository;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\Test;
 use TTN\Tea\Domain\Model\Tea;
 use TTN\Tea\Domain\Repository\TeaRepository;
@@ -39,6 +40,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function findAllForNoRecordsReturnsEmptyQueryResult(): void
     {
         $result = $this->subject->findAll();
