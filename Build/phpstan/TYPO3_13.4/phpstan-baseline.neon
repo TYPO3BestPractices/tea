@@ -11,3 +11,15 @@ parameters:
 			identifier: missingType.generics
 			count: 1
 			path: ../../../Classes/Domain/Repository/TeaRepository.php
+
+		-
+			rawMessage: Access to constant SHA3_256 on an unknown class TYPO3\CMS\Core\Crypto\HashAlgo.
+			identifier: class.notFound
+			count: 1
+			path: ../../../Tests/Functional/Controller/BackendModuleControllerTest.php
+
+		-
+			rawMessage: 'Method TYPO3\CMS\Core\Crypto\HashService::hmac() invoked with 3 parameters, 2 required.'
+			identifier: arguments.count
+			count: 1
+			path: ../../../Tests/Functional/Controller/BackendModuleControllerTest.php

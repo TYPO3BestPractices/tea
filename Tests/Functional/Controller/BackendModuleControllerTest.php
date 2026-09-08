@@ -12,10 +12,12 @@ use TTN\Tea\Controller\BackendModuleController;
 use TYPO3\CMS\Backend\Routing\Route;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
+use TYPO3\CMS\Core\Crypto\HashAlgo;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\FormProtection\AbstractFormProtection;
 use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Http\ServerRequest;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -150,10 +152,20 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     #[IgnoreDeprecations]
     public function indexLinksTeaValuesToEditForm(): void
     {
-        $token = $this->get(HashService::class)->hmac(
-            'routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN,
-            AbstractFormProtection::class,
-        );
+        if (((new Typo3Version())->getMajorVersion() >= 14)) {
+            $token = $this->get(HashService::class)->hmac(
+                'routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN,
+                AbstractFormProtection::class,
+                HashAlgo::SHA3_256,
+            );
+            $moduleUrlParameter = '&module=';
+        } else {
+            $moduleUrlParameter = '';
+            $token = $this->get(HashService::class)->hmac(
+                'routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN,
+                AbstractFormProtection::class,
+            );
+        }
 
         $expectedUrlQuery = http_build_query([
             'token' => $token,
@@ -162,7 +174,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
                     1 => 'edit',
                 ],
             ],
-        ]) . '&returnUrl=typo3/module/tea/index/BackendModule/index';
+        ]) . $moduleUrlParameter . '&returnUrl=typo3/module/tea/index/BackendModule/index';
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
 
