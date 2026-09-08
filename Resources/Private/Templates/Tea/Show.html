@@ -7,6 +7,16 @@
             {tea.title}
         </h2>
 
+        <f:if condition="{tea.image}">
+            <figure>
+                <f:image
+                    image="{tea.image}"
+                    alt="{tea.image.alternative}"
+                    maxWidth="600"
+                />
+            </figure>
+        </f:if>
+
         {tea.description -> f:format.html()}
     </f:section>
 </html>

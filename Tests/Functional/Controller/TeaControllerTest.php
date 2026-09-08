@@ -22,6 +22,10 @@ final class TeaControllerTest extends FunctionalTestCase
         'typo3conf/ext/tea/Tests/Functional/Controller/Fixtures/Sites/' => 'typo3conf/sites',
     ];
 
+    protected array $pathsToProvideInTestInstance = [
+        'typo3conf/ext/tea/Tests/Functional/Controller/Fixtures/Database/TeaController/ImageOfTea.jpeg' => 'fileadmin/user_upload/ImageOfTea.jpeg',
+    ];
+
     protected array $configurationToUseInTestInstance = [
         'FE' => [
             'cacheHash' => [
@@ -108,6 +112,44 @@ final class TeaControllerTest extends FunctionalTestCase
 
         self::assertStringContainsString('Godesberger Burgtee', $html);
         self::assertStringNotContainsString('Oolong', $html);
+    }
+
+    #[Test]
+    public function showActionRendersImageOfTea(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/TeaWithImage.csv');
+
+        $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
+
+        $html = (string)$this->executeFrontendSubRequest($request)->getBody();
+
+        self::assertStringContainsString('<figure>', $html);
+        self::assertStringContainsString('<img', $html);
+        self::assertStringContainsString('ImageOfTea', $html);
+    }
+
+    #[Test]
+    public function showActionRendersAltTextFromImageOfTea(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/TeaWithAltTextOfImage.csv');
+
+        $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
+
+        $html = (string)$this->executeFrontendSubRequest($request)->getBody();
+
+        self::assertStringContainsString('alt="Alt-text"', $html);
+    }
+
+    #[Test]
+    public function showActionRendersMaxWidthFromImageOfTea(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/TeaWithImage.csv');
+
+        $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
+
+        $html = (string)$this->executeFrontendSubRequest($request)->getBody();
+
+        self::assertStringContainsString('width="600"', $html);
     }
 
     #[Test]
