@@ -69,6 +69,9 @@ jobs:
           - typo3-version: "13.4"
             php-version: "8.2"
             composer-dependencies: Max
+          - typo3-version: "14.3"
+            php-version: "8.2"
+            composer-dependencies: Max
   code-quality:
     name: Code quality checks
     runs-on: ubuntu-26.04
