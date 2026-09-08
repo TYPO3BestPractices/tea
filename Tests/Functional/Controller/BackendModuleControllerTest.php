@@ -67,6 +67,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function indexProvidesCaptionForListing(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
