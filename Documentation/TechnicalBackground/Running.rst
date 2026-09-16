@@ -107,6 +107,13 @@ have been installed for.
 
 Lints the TypoScript files.
 
+.. index:: Commands; composer check:xliff:normalize
+.. code-block:: bash
+
+    ./Build/Scripts/runTests.sh -s composer check:xliff:normalize
+
+Checks the formatting of the XLIFF files.
+
 .. index:: Commands; composer check:yaml:lint
 .. code-block:: bash
 
@@ -134,6 +141,14 @@ Runs all fixers for the PHP code.
     ./Build/Scripts/runTests.sh -s composer fix:php:cs-fixer
 
 Fixes the code style with PHP-CS-Fixer.
+
+.. index:: Commands; normalizeXliff
+.. code-block:: bash
+
+    ./Build/Scripts/runTests.sh -s normalizeXliff
+
+Normalizes the formatting of the XLIFF files. Add :code:`-n` to only check
+the formatting without changing any files.
 
 .. index:: Commands; phpstanGenerateBaseline
 .. code-block:: bash
