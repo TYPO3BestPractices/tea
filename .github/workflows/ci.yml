@@ -370,3 +370,65 @@ jobs:
       - name: Test if the documentation will render without warnings
         run: |
           Build/Scripts/runTests.sh -b docker -s executeRstRendering
+  code-coverage:
+    name: Calculate code coverage
+    # The coverage is collected by running the suites once more with "-m", so this job consumes
+    # nothing the test jobs produce. It waits for them anyway, so that a coverage result is never
+    # published before the tests it is derived from have run.
+    #
+    # "!cancelled()" rather than "always()" or "success() || failure()": the coverage is meant to
+    # be published even when a test suite fails, but "unit-tests" and "functional-tests" are
+    # skipped when "php-lint" fails, and a skipped dependency would skip this job as well.
+    # "always()" would additionally run it after the whole run has been cancelled.
+    needs: [unit-tests, functional-tests]
+    if: ${{ !cancelled() }}
+    permissions:
+      actions: write
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Show the Composer version
+        run: ./Build/Scripts/runTests.sh -b docker -s composer -- --version
+      - name: Show the Composer configuration
+        run: ./Build/Scripts/runTests.sh -b docker -s composer config --global --list
+      - name: Cache dependencies installed with composer
+        uses: actions/cache@v6
+        with:
+          key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
+          path: .cache/composer
+          restore-keys: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
+      - name: Install composer dependencies
+        run: |
+          ./Build/Scripts/runTests.sh -b docker -p ${{ matrix.php-version }} -t ${{ matrix.typo3-version }} -s composerUpdate${{ matrix.composer-dependencies }}
+      - name: Run unit tests with coverage
+        run: |
+          ./Build/Scripts/runTests.sh -b docker -p ${{ matrix.php-version }} -t ${{ matrix.typo3-version }} -s unit -m
+      - name: Run functional tests with coverage
+        run: |
+          ./Build/Scripts/runTests.sh -b docker -p ${{ matrix.php-version }} -t ${{ matrix.typo3-version }} -d ${{ matrix.dbms }} -s functional -m
+      - name: Show the collected coverage reports
+        run: "ls -lahR .Build/coverage/"
+      - name: Merge the coverage reports
+        run: |
+          ./Build/Scripts/runTests.sh -b docker -p ${{ matrix.php-version }} -t ${{ matrix.typo3-version }} -s coverageMerge
+      - name: Show the merged coverage report
+        run: "ls -lahR .Build/logs/"
+      - name: Upload coverage results to Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          file: .Build/logs/clover.xml
+          format: clover
+          fail-on-error: false
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # The reports of one run are merged into a single result, so they all have to come from
+          # the same installed dependency set. Collect the coverage for one TYPO3 and one PHP
+          # version only, rather than across the test matrix above.
+          - typo3-version: "13.4"
+            php-version: "8.2"
+            dbms: "sqlite"
+            composer-dependencies: Max

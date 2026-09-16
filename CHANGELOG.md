@@ -15,6 +15,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 - Pin the unit and functional tests to the installed TYPO3 version (#2327)
 - Collect the code coverage with `runTests.sh` (#1802)
+- Calculate the code coverage after the test suites (#1802)
 
 ### Cleanup
 
