@@ -27,6 +27,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 - Keep `composer.json` unchanged when running
   `runTests.sh -s composerUpdate(Min|Max)` (#2192)
+- Pass the Coveralls GitHub action its inputs (#1802)
 
 ### Documentation
 

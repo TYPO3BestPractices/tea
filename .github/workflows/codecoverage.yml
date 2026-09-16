@@ -78,10 +78,10 @@ jobs:
       - name: Upload coverage results to Coveralls
         uses: coverallsapp/github-action@v2
         with:
-          fail-on-error: false
-        env:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           file: .Build/logs/clover.xml
+          format: clover
+          fail-on-error: false
     strategy:
       fail-fast: false
       matrix:
