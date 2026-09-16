@@ -203,7 +203,8 @@ Options:
             - composerUnused: Finds unused Composer packages.
             - composerUpdateMax: "composer update", with no platform.php config.
             - composerUpdateMin: "composer update --prefer-lowest", with platform.php set to PHP version x.x.0.
-            - executeRstRendering: Renders the extension ReST documentation.
+            - executeRstRendering: Renders the extension ReST documentation and
+              fails on rendering warnings and errors.
             - fix: Runs all automatic code style fixes.
             - functional: PHP functional tests
             - lintCss: CSS file linting. Set -n for dry-run.
@@ -693,7 +694,7 @@ case ${TEST_SUITE} in
     executeRstRendering)
         mkdir -p Documentation-GENERATED-temp
         chown -R ${HOST_UID}:${HOST_PID} Documentation-GENERATED-temp
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name execute-rst-rendering -v "${ROOT_DIR}":/project ${IMAGE_RSTRENDERING} --config=Documentation
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name execute-rst-rendering -v "${ROOT_DIR}":/project ${IMAGE_RSTRENDERING} --fail-on-log --fail-on-error --no-progress --config=Documentation
         SUITE_EXIT_CODE=$?
         ;;
     fix)
