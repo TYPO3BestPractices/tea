@@ -295,17 +295,6 @@ Options:
             - 8.4: use PHP 8.4
             - 8.5: (default) use PHP 8.5
 
-    -e "<phpunit options>" (DEPRECATED).
-        Only with -s functional|functionalDeprecated|unit|unitDeprecated|unitRandom
-        Additional options to send to phpunit (unit & functional tests). For phpunit,
-        options starting with "--" must be added after options starting with "-".
-        Example -e "-d memory_limit=-1 --filter filterByValueRecursiveCorrectlyFiltersArray" to enable verbose output AND filter tests
-        named "canRetrieveValueWithGP"
-        DEPRECATED - pass arguments after the -- separator directly. For example, instead of
-            Build/Scripts/runTests.sh -s unit -e "--filter filterByValueRecursiveCorrectlyFiltersArray"
-        use
-            Build/Scripts/runTests.sh -s unit -- --filter filterByValueRecursiveCorrectlyFiltersArray
-
     -x
         Only with -s functional|functionalDeprecated|unit|unitDeprecated|unitRandom
         Send information to host instance for test or system under test break points. This is especially
