@@ -25,6 +25,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
+- Keep `composer.json` unchanged when running
+  `runTests.sh -s composerUpdate(Min|Max)` (#2192)
+
 ### Documentation
 
 ## V4.1.0: CI improvements, bugfixes and cleanup

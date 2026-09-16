@@ -201,8 +201,10 @@ Options:
             - composer: "composer" with all remaining arguments dispatched.
             - composerNormalize: Normalizes (Set -n for dry-run) or checks the composer.json.
             - composerUnused: Finds unused Composer packages.
-            - composerUpdateMax: "composer update", with no platform.php config.
+            - composerUpdateMax: "composer update", with no platform.php config. The suite adds
+              "typo3/minimal" to a throwaway copy of the manifest, so "composer.json" stays untouched.
             - composerUpdateMin: "composer update --prefer-lowest", with platform.php set to PHP version x.x.0.
+              "composer.json" stays untouched, see composerUpdateMax.
             - executeRstRendering: Renders the extension ReST documentation and
               fails on rendering warnings and errors.
             - fix: Runs all automatic code style fixes.
@@ -480,6 +482,11 @@ CGLCHECK_DRY_RUN=""
 DATABASE_DRIVER=""
 CONTAINER_BIN=""
 COMPOSER_ROOT_VERSION="3.0.x-dev"
+# "composer config" and "composer require" rewrite the manifest they operate on. The install
+# suites therefore run on a throwaway copy of "composer.json", selected with the "COMPOSER"
+# environment variable, so that the tracked "composer.json" is never touched and the added
+# "typo3/minimal" requirement can not be committed by accident.
+COMPOSER_BUILD_FILE="composer.build.json"
 HELP_TEXT_NPM_CI="Now running \'npm ci --silent\'."
 HELP_TEXT_NPM_FAILURE="npm clean-install has failed. Please run \'${0} -s npm ci\' to explore."
 CONTAINER_INTERACTIVE="-it --init"
@@ -684,14 +691,14 @@ case ${TEST_SUITE} in
         ;;
     composerUpdateMax)
         # `dumpautoload` removed due to error with missing `composer.lock` file on publishing public assets.
-        COMMAND="(composer config --unset platform.php && composer require --no-ansi --no-interaction --no-progress --no-install typo3/minimal:"^${CORE_VERSION}" && composer update --no-progress --no-interaction && composer show)"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-max-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND[@]}"
+        COMMAND="cp composer.json ${COMPOSER_BUILD_FILE} && (composer config --unset platform.php && composer require --no-ansi --no-interaction --no-progress --no-install typo3/minimal:"^${CORE_VERSION}" && composer update --no-progress --no-interaction && composer show); COMPOSER_EXIT_CODE=\$?; rm -f ${COMPOSER_BUILD_FILE}; exit \$COMPOSER_EXIT_CODE"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-max-${SUFFIX} -e COMPOSER=${COMPOSER_BUILD_FILE} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND[@]}"
         SUITE_EXIT_CODE=$?
         ;;
     composerUpdateMin)
         # `dumpautoload` removed due to error with missing `composer.lock` file on publishing public assets.
-        COMMAND="(composer config platform.php ${PHP_VERSION}.0 && composer require --no-ansi --no-interaction --no-progress --no-install typo3/minimal:"^${CORE_VERSION}" && composer update --prefer-lowest --no-progress --no-interaction && composer show)"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-min-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND[@]}"
+        COMMAND="cp composer.json ${COMPOSER_BUILD_FILE} && (composer config platform.php ${PHP_VERSION}.0 && composer require --no-ansi --no-interaction --no-progress --no-install typo3/minimal:"^${CORE_VERSION}" && composer update --prefer-lowest --no-progress --no-interaction && composer show); COMPOSER_EXIT_CODE=\$?; rm -f ${COMPOSER_BUILD_FILE}; exit \$COMPOSER_EXIT_CODE"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-min-${SUFFIX} -e COMPOSER=${COMPOSER_BUILD_FILE} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND[@]}"
         SUITE_EXIT_CODE=$?
         ;;
     executeRstRendering)
