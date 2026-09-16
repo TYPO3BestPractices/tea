@@ -618,10 +618,19 @@ ${CONTAINER_BIN} network create ${NETWORK} >/dev/null
 
 if [ ${CONTAINER_BIN} = "docker" ]; then
     CONTAINER_COMMON_PARAMS="${CONTAINER_INTERACTIVE} --rm --network ${NETWORK} --add-host "${CONTAINER_HOST}:host-gateway" ${USERSET} -v ${ROOT_DIR}:${ROOT_DIR} -w ${ROOT_DIR}"
+    # docker creates a tmpfs owned by "root:root" which inherits the mode of its host mountpoint,
+    # while "${USERSET}" passes a user but no group and runs the container as "uid=${HOST_UID}
+    # gid=0". At a umask of 0022 the mountpoint comes up 0755, group 0 gets "r-x" only, and every
+    # test fails with "unable to open database file". "uid" and "gid" make the mount owned by the
+    # user the container runs as, "mode=1777" keeps it writable whatever the umask.
+    TMPFS_MOUNT_OPTIONS="rw,noexec,nosuid,uid=${HOST_UID},gid=${HOST_PID},mode=1777"
 else
     # podman
     CONTAINER_HOST="host.containers.internal"
     CONTAINER_COMMON_PARAMS="${CONTAINER_INTERACTIVE} ${CI_PARAMS} --rm --network ${NETWORK} -v ${ROOT_DIR}:${ROOT_DIR} -w ${ROOT_DIR}"
+    # Rootless podman maps the container root to the host user, so the tmpfs is writable without
+    # an explicit owner. "mode=1777" is kept for the rootful case.
+    TMPFS_MOUNT_OPTIONS="rw,noexec,nosuid,mode=1777"
 fi
 
 if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
@@ -722,7 +731,11 @@ case ${TEST_SUITE} in
                 SUITE_EXIT_CODE=$?
                 ;;
             sqlite)
-                CONTAINERPARAMS="-e typo3DatabaseDriver=pdo_sqlite"
+                # The functional sqlite databases are written to a tmpfs, which roughly halves the
+                # runtime of the suite and leaves nothing behind on disk. The mount options differ
+                # per container binary, see where "${TMPFS_MOUNT_OPTIONS}" is assigned.
+                mkdir -p "${ROOT_DIR}/.Build/public/typo3temp/var/tests/functional-sqlite-dbs/"
+                CONTAINERPARAMS="-e typo3DatabaseDriver=pdo_sqlite --tmpfs ${ROOT_DIR}/.Build/public/typo3temp/var/tests/functional-sqlite-dbs/:${TMPFS_MOUNT_OPTIONS}"
                 ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name functional-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${CONTAINERPARAMS} ${IMAGE_PHP} "${COMMAND[@]}"
                 SUITE_EXIT_CODE=$?
                 ;;
