@@ -13,6 +13,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- Pin the unit and functional tests to the installed TYPO3 version (#2327)
+
 ### Cleanup
 
 ### Removed

@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace TTN\Tea\Tests;
+namespace TTN\Tea\Tests\Support;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Information\Typo3Version;
 
 /**
@@ -30,6 +31,8 @@ use TYPO3\CMS\Core\Information\Typo3Version;
  *
  * @see \TTN\Tea\Tests\Unit\VersionCompatibilityTest
  * @see \TTN\Tea\Tests\Functional\VersionCompatibilityTest
+ *
+ * @phpstan-require-extends TestCase
  */
 trait VersionCompatibilityTestsTrait
 {

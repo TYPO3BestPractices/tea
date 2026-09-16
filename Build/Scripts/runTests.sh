@@ -290,8 +290,8 @@ Options:
         Specifies the TYPO3 CORE Version to be used
             - 13.4: (default) use TYPO3 v13
             - 14.3: use TYPO3 v14
-        For the test suites this selects the tests which only apply to one TYPO3 version.
-        Use the version the dependencies have been installed for, a different one lets the
+        For the test suites, this selects the tests which only apply to one TYPO3 version.
+        Use the version the dependencies have been installed for. A different one lets the
         tests fail with a hint about the mismatch.
 
     -p <8.2|8.3|8.4|8.5>

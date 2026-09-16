@@ -166,7 +166,7 @@ You can currently run these tests on the command line:
 .. index:: Commands; functional
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s functional
+    ./Build/Scripts/runTests.sh -t 13.4 -s functional
 
 Runs the functional tests using a database populated from the CSV files in
 `Tests/Functional/Controller/Fixtures/Database` folder.
@@ -179,7 +179,7 @@ Runs the functional tests using a database populated from the CSV files in
 .. index:: Commands; unit
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s unit
+    ./Build/Scripts/runTests.sh -t 13.4 -s unit
 
 Runs the unit tests.
 
@@ -195,11 +195,12 @@ Runs the unit tests.
 
 .. tip::
 
-    With the option :code:`-t`, you can specify the TYPO3 version the unit and
-    the functional tests are run for. Tests which only apply to one TYPO3
-    version are skipped for the others, and a version the dependencies have not
-    been installed for makes the tests fail immediately. Use the same version as
-    for the installation.
+    With the option :code:`-t` (:code:`13.4` or :code:`14.3`, default
+    :code:`13.4`), you can specify the TYPO3 version the unit and the
+    functional tests are run for. Tests which only apply to one TYPO3 version
+    are skipped for the others, and a version the dependencies have not been
+    installed for makes the tests fail immediately. Use the same version as for
+    the installation.
 
     .. code-block:: bash
 
