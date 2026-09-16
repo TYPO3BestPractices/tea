@@ -124,23 +124,6 @@
 		"check:composer:normalize": "@composer normalize --no-check-lock --dry-run",
 		"check:composer:psr-verify": "@composer dumpautoload --optimize --strict-psr --no-plugins --dry-run",
 		"check:composer:unused": "composer-unused --configuration=Build/composer-unused/composer-unused.php",
-		"check:coverage": [
-			"@check:coverage:unit",
-			"@check:coverage:functional"
-		],
-		"check:coverage:functional": [
-			"@check:tests:create-directories",
-			"@coverage:create-directories",
-			"phpunit -c Build/phpunit/FunctionalTests.xml --exclude-group not-core-13.4 --exclude-group not-core-14.3 --coverage-php=build/coverage/functional.cov"
-		],
-		"check:coverage:merge": [
-			"@coverage:create-directories",
-			"phpcov merge --clover=build/logs/clover.xml build/coverage/"
-		],
-		"check:coverage:unit": [
-			"@coverage:create-directories",
-			"phpunit -c Build/phpunit/UnitTests.xml --exclude-group not-core-13.4 --exclude-group not-core-14.3 --coverage-php=build/coverage/unit.cov"
-		],
 		"check:json:lint": "find . ! -path '*/.cache/*' ! -path '*/.Build/*' ! -path '*/node_modules/*' -name '*.json' | xargs -r php .Build/bin/jsonlint -q",
 		"check:php": [
 			"@check:php:lint",
@@ -166,7 +149,6 @@
 		"check:typoscript:lint": "typoscript-lint -c Build/typoscript-lint/config.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript Tests/Functional/Controller/Fixtures/TypoScript",
 		"check:xliff:lint": "php Build/Scripts/checkIntegrityXliff.php",
 		"check:yaml:lint": "find . ! -path '*.Build/*' ! -path '*node_modules/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r php ./.Build/bin/yaml-lint",
-		"coverage:create-directories": "mkdir -p build/coverage build/logs",
 		"fix": [
 			"@fix:composer:normalize",
 			"@fix:php"
@@ -196,9 +178,6 @@
 		"check:composer:normalize": "Checks the composer.json.",
 		"check:composer:psr-verify": "Verifies PSR-4 namespace correctness.",
 		"check:composer:unused": "Finds unused Composer packages required in composer.json.",
-		"check:coverage:functional": "Generates the code coverage report for functional tests, skipping the TYPO3 version-pinned tests.",
-		"check:coverage:merge": "Merges the code coverage reports for unit and functional tests.",
-		"check:coverage:unit": "Generates the code coverage report for unit tests, skipping the TYPO3 version-pinned tests.",
 		"check:json:lint": "Lints the JSON files.",
 		"check:php": "Runs all static checks for the PHP files.",
 		"check:php:cs-fixer": "Checks the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer).",
@@ -211,7 +190,6 @@
 		"check:typoscript:lint": "Lints the TypoScript files.",
 		"check:xliff:lint": "Lints the XLIFF files.",
 		"check:yaml:lint": "Lints the YAML files.",
-		"coverage:create-directories": "Creates the directories needed for recording and merging the code coverage reports.",
 		"fix": "Runs all automatic code style fixes.",
 		"fix:composer:normalize": "Normalizes composer.json file content.",
 		"fix:php": "Runs all fixers for the PHP code.",

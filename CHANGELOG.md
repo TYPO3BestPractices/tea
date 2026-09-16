@@ -14,6 +14,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
 
 - Pin the unit and functional tests to the installed TYPO3 version (#2327)
+- Collect the code coverage with `runTests.sh` (#1802)
+- Calculate the code coverage after the test suites (#1802)
 
 ### Cleanup
 
@@ -22,11 +24,13 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Drop the `ListTypeToCTypeUpdate` upgrade wizard (#2211)
 - Drop support for TYPO3 12LTS (#2210)
 - Drop support for PHP 8.1 (#2207)
+- Drop the code coverage Composer scripts (#1802)
 
 ### Fixed
 
 - Keep `composer.json` unchanged when running
   `runTests.sh -s composerUpdate(Min|Max)` (#2192)
+- Pass the Coveralls GitHub action its inputs (#1802)
 
 ### Documentation
 
