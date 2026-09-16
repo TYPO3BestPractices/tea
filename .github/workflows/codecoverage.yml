@@ -61,7 +61,7 @@ jobs:
       - name: Run unit tests with coverage
         run: composer check:coverage:unit
       - name: Show generated coverage files
-        run: "ls -lahR build/coverage/"
+        run: "ls -lahR .Build/coverage/"
       - name: Run functional tests with coverage
         run: |
           export typo3DatabaseName="$DB_DATABASE";
@@ -70,20 +70,18 @@ jobs:
           export typo3DatabasePassword="$DB_PASSWORD";
           composer check:coverage:functional
       - name: Show generated coverage files
-        run: "ls -lahR build/coverage/"
+        run: "ls -lahR .Build/coverage/"
       - name: Merge coverage results
         run: composer check:coverage:merge
       - name: Show combined coverage files
-        run: "ls -lahR build/logs/"
+        run: "ls -lahR .Build/logs/"
       - name: Upload coverage results to Coveralls
         uses: coverallsapp/github-action@v2
         with:
           fail-on-error: false
         env:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          # Note: This is the only path that the Coveralls GitHub Action supports.
-          # So we cannot use something like .Build/coverage/clover.xml here.
-          file: build/logs/clover.xml
+          file: .Build/logs/clover.xml
     strategy:
       fail-fast: false
       matrix:
