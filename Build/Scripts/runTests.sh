@@ -36,6 +36,9 @@ printSummary() {
                 ;;
         esac
     fi
+    if [ ${CREATE_COVERAGE} -eq 1 ] && [ -n "${COVERAGE_FILE}" ] && [ -f "${ROOT_DIR}/.Build/coverage/${COVERAGE_FILE}" ]; then
+        echo "COVERAGE-FILE: .Build/coverage/${COVERAGE_FILE}" >&2
+    fi
     if [[ ${SUITE_EXIT_CODE} -eq 0 ]]; then
         echo "SUCCESS" >&2
     else
@@ -169,7 +172,9 @@ cleanTestFiles() {
     # test related
     echo -n "Clean test related files ... "
     rm -rf \
-        .Build/public/typo3temp/var/tests/
+        .Build/public/typo3temp/var/tests/ \
+        .Build/coverage/ \
+        .Build/logs/
     echo "done"
 }
 
@@ -178,6 +183,18 @@ cleanRenderedDocumentationFiles() {
     rm -rf \
         Documentation-GENERATED-temp
     echo "done"
+}
+
+prepareCoverage() {
+    # Fills "${COVERAGE_OPTION}" with the phpunit option collecting the coverage, based on the
+    # file name the calling suite has put into "${COVERAGE_FILE}". Without "-m" the array stays
+    # empty, and an empty array adds no argument at all to the phpunit call.
+    COVERAGE_OPTION=()
+    if [ ${CREATE_COVERAGE} -eq 0 ]; then
+        return
+    fi
+    mkdir -p "${ROOT_DIR}/.Build/coverage" "${ROOT_DIR}/.Build/logs"
+    COVERAGE_OPTION=("--coverage-php=.Build/coverage/${COVERAGE_FILE}")
 }
 
 loadHelp() {
@@ -205,6 +222,7 @@ Options:
               "typo3/minimal" to a throwaway copy of the manifest, so "composer.json" stays untouched.
             - composerUpdateMin: "composer update --prefer-lowest", with platform.php set to PHP version x.x.0.
               "composer.json" stays untouched, see composerUpdateMax.
+            - coverageMerge: Merges the coverage collected with -m into one clover report.
             - executeRstRendering: Renders the extension ReST documentation and
               fails on rendering warnings and errors.
             - fix: Runs all automatic code style fixes.
@@ -323,6 +341,14 @@ Options:
         Only with -s cgl|lintCss|lintJs|phpCsFixer|rector
         Activate dry-run in checks so they do not actively change files and only print broken ones.
 
+    -m
+        Only with -s functional|unit|unitRandom
+        Collect code coverage while the tests run. The report is written to
+        ".Build/coverage/", under a name unique for the TYPO3 version, the PHP version and
+        the DBMS, so that the runs of a test matrix do not overwrite each other. Merge all
+        collected reports into ".Build/logs/clover.xml" with "-s coverageMerge" afterwards.
+        Cannot be combined with -x, as both need a different Xdebug mode.
+
     -u
         Update existing typo3/core-testing-*:latest container images and remove dangling local volumes.
         New images are published once in a while and only the latest ones are supported by core testing.
@@ -353,6 +379,11 @@ Examples:
 
     # Run functional tests on postgres 11
     ./Build/Scripts/runTests.sh -s functional -d postgres -i 11
+
+    # Collect the coverage of the unit and the functional tests and merge both into one report
+    ./Build/Scripts/runTests.sh -p 8.2 -s unit -m
+    ./Build/Scripts/runTests.sh -p 8.2 -s functional -m
+    ./Build/Scripts/runTests.sh -p 8.2 -s coverageMerge
 EOF
 }
 
@@ -477,6 +508,9 @@ PHP_VERSION="8.5"
 PHP_XDEBUG_ON=0
 PHP_XDEBUG_PORT=9003
 PHPUNIT_RANDOM=""
+CREATE_COVERAGE=0
+COVERAGE_FILE=""
+COVERAGE_OPTION=()
 # CGLCHECK_DRY_RUN is a more generic dry-run switch not limited to CGL
 CGLCHECK_DRY_RUN=""
 DATABASE_DRIVER=""
@@ -506,7 +540,7 @@ OPTIND=1
 # Array for invalid options
 INVALID_OPTIONS=()
 # Simple option parsing based on getopts (! not getopt)
-while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
+while getopts "a:b:s:d:i:p:t:xy:o:nmhu" OPT; do
     case ${OPT} in
         s)
             TEST_SUITE=${OPTARG}
@@ -550,6 +584,9 @@ while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
         n)
             CGLCHECK_DRY_RUN="-n"
             ;;
+        m)
+            CREATE_COVERAGE=1
+            ;;
         h)
             loadHelp
             echo "${HELP}"
@@ -573,6 +610,22 @@ if [ ${#INVALID_OPTIONS[@]} -ne 0 ]; then
     for I in "${INVALID_OPTIONS[@]}"; do
         echo "-"${I} >&2
     done
+    echo >&2
+    echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+    exit 1
+fi
+
+# Validated here rather than further down, so that an invalid combination exits before the
+# container network is created and does not leave it behind.
+if [ ${CREATE_COVERAGE} -eq 1 ] && [ ${PHP_XDEBUG_ON} -eq 1 ]; then
+    echo "Options \"-m\" and \"-x\" cannot be combined, they need a different Xdebug mode." >&2
+    echo >&2
+    echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+    exit 1
+fi
+
+if [ ${CREATE_COVERAGE} -eq 1 ] && ! [[ ${TEST_SUITE} =~ ^(functional|unit|unitRandom)$ ]]; then
+    echo "Option \"-m\" is not available for \"-s ${TEST_SUITE}\"." >&2
     echo >&2
     echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
     exit 1
@@ -657,7 +710,13 @@ else
     TMPFS_MOUNT_OPTIONS="rw,noexec,nosuid,mode=1777"
 fi
 
-if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
+if [ ${CREATE_COVERAGE} -eq 1 ]; then
+    # Xdebug is the only coverage driver in the "core-testing" images, pcov is not installed
+    # there. The mode has to be set through the environment: the images ship Xdebug in mode
+    # "develop", and that is what "xdebug.mode" keeps reporting even while coverage is active.
+    XDEBUG_MODE="-e XDEBUG_MODE=coverage"
+    XDEBUG_CONFIG=" "
+elif [ ${PHP_XDEBUG_ON} -eq 0 ]; then
     XDEBUG_MODE="-e XDEBUG_MODE=off"
     XDEBUG_CONFIG=" "
 else
@@ -714,6 +773,41 @@ case ${TEST_SUITE} in
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-install-min-${SUFFIX} -e COMPOSER=${COMPOSER_BUILD_FILE} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND[@]}"
         SUITE_EXIT_CODE=$?
         ;;
+    coverageMerge)
+        COVERAGE_REPORTS=()
+        for COVERAGE_REPORT in "${ROOT_DIR}"/.Build/coverage/*.cov; do
+            [ -e "${COVERAGE_REPORT}" ] || continue
+            COVERAGE_REPORTS+=("$(basename "${COVERAGE_REPORT}")")
+        done
+        # The error paths only set the exit code and let the run end in the "printSummary" every
+        # suite finishes with, rather than leaving through an exit of their own.
+        if [ ${#COVERAGE_REPORTS[@]} -eq 0 ]; then
+            echo "No coverage reports in \".Build/coverage/\" to merge." >&2
+            echo "Run a test suite with \"-m\" first." >&2
+            SUITE_EXIT_CODE=1
+        else
+            # The serialized reports carry no version information, and phpcov merges whatever it
+            # is given without checking it. Reports collected against the dependencies of another
+            # TYPO3 or PHP version would therefore end up in a plausible looking but wrong
+            # result. Every report has both versions in its name, so a mismatch is refused here:
+            # nothing empties ".Build/coverage/" on its own, and a report of an earlier run with
+            # a different "-t" or "-p" would otherwise still be lying around.
+            COVERAGE_VARIANTS=$(printf '%s\n' "${COVERAGE_REPORTS[@]}" | sed -e 's/\.cov$//' -e 's/^unit-random-//' -e 's/^unit-//' -e 's/^functional-//' | cut -d- -f1-3 | sort -u)
+            if [ "$(printf '%s\n' "${COVERAGE_VARIANTS}" | wc -l)" -ne 1 ]; then
+                echo "The coverage reports in \".Build/coverage/\" have not all been collected for the" >&2
+                echo "same TYPO3 and PHP version:" >&2
+                printf '    %s\n' "${COVERAGE_REPORTS[@]}" >&2
+                echo "Merging them would produce a wrong result. Remove the stale reports, or run" >&2
+                echo "\"-s cleanTests\", and collect the coverage again." >&2
+                SUITE_EXIT_CODE=1
+            else
+                mkdir -p "${ROOT_DIR}/.Build/logs"
+                COMMAND=(.Build/bin/phpcov merge --clover=.Build/logs/clover.xml .Build/coverage/)
+                ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name coverage-merge-${SUFFIX} ${IMAGE_PHP} "${COMMAND[@]}"
+                SUITE_EXIT_CODE=$?
+            fi
+        fi
+        ;;
     executeRstRendering)
         mkdir -p Documentation-GENERATED-temp
         chown -R ${HOST_UID}:${HOST_PID} Documentation-GENERATED-temp
@@ -729,7 +823,14 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     functional)
-        COMMAND=(.Build/bin/phpunit -c Build/phpunit/FunctionalTests.xml --exclude-group not-${DBMS} --exclude-group not-core-${CORE_VERSION} "$@")
+        # The DBMS, its version and the driver are part of the name, so that the coverage of
+        # the functional runs of a test matrix can be merged without overwriting each other.
+        COVERAGE_FILE="functional-core${CORE_VERSION//./-}-php${PHP_VERSION//./}-${DBMS}"
+        [ -n "${DBMS_VERSION}" ] && COVERAGE_FILE="${COVERAGE_FILE}${DBMS_VERSION//./_}"
+        [ -n "${DATABASE_DRIVER}" ] && COVERAGE_FILE="${COVERAGE_FILE}-${DATABASE_DRIVER}"
+        COVERAGE_FILE="${COVERAGE_FILE}.cov"
+        prepareCoverage
+        COMMAND=(.Build/bin/phpunit -c Build/phpunit/FunctionalTests.xml --exclude-group not-${DBMS} --exclude-group not-core-${CORE_VERSION} "${COVERAGE_OPTION[@]}" "$@")
         case ${DBMS} in
             mariadb)
                 echo "Using driver: ${DATABASE_DRIVER}"
@@ -825,11 +926,15 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     unit)
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml --exclude-group not-core-${CORE_VERSION} "$@"
+        COVERAGE_FILE="unit-core${CORE_VERSION//./-}-php${PHP_VERSION//./}.cov"
+        prepareCoverage
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml --exclude-group not-core-${CORE_VERSION} "${COVERAGE_OPTION[@]}" "$@"
         SUITE_EXIT_CODE=$?
         ;;
     unitRandom)
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-random-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml --exclude-group not-core-${CORE_VERSION} --order-by=random ${PHPUNIT_RANDOM} "$@"
+        COVERAGE_FILE="unit-random-core${CORE_VERSION//./-}-php${PHP_VERSION//./}.cov"
+        prepareCoverage
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-random-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml --exclude-group not-core-${CORE_VERSION} "${COVERAGE_OPTION[@]}" --order-by=random ${PHPUNIT_RANDOM} "$@"
         SUITE_EXIT_CODE=$?
         ;;
     update)
