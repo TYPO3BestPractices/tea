@@ -620,8 +620,21 @@ shift $((OPTIND - 1))
 
 ${CONTAINER_BIN} network create ${NETWORK} >/dev/null
 
+# In a git worktree ".git" is a file pointing to a gitdir outside "${ROOT_DIR}",
+# so the mount below does not carry it and git finds no repository inside the
+# container at all. Mounting the common gitdir under its original absolute path
+# covers both it and the worktree gitdir nested below it.
+GIT_DIR_MOUNT=""
+if [ -f "${ROOT_DIR}/.git" ]; then
+    GIT_COMMON_DIR="$(git -C "${ROOT_DIR}" rev-parse --git-common-dir 2>/dev/null)"
+    GIT_COMMON_DIR="$(cd "${ROOT_DIR}" && cd "${GIT_COMMON_DIR}" >/dev/null 2>&1 && pwd)"
+    if [ -n "${GIT_COMMON_DIR}" ] && [ "${GIT_COMMON_DIR}" != "${ROOT_DIR}" ]; then
+        GIT_DIR_MOUNT="-v ${GIT_COMMON_DIR}:${GIT_COMMON_DIR}"
+    fi
+fi
+
 if [ ${CONTAINER_BIN} = "docker" ]; then
-    CONTAINER_COMMON_PARAMS="${CONTAINER_INTERACTIVE} --rm --network ${NETWORK} --add-host "${CONTAINER_HOST}:host-gateway" ${USERSET} -v ${ROOT_DIR}:${ROOT_DIR} -w ${ROOT_DIR}"
+    CONTAINER_COMMON_PARAMS="${CONTAINER_INTERACTIVE} --rm --network ${NETWORK} --add-host "${CONTAINER_HOST}:host-gateway" ${USERSET} -v ${ROOT_DIR}:${ROOT_DIR} ${GIT_DIR_MOUNT} -w ${ROOT_DIR}"
     # docker creates a tmpfs owned by "root:root" which inherits the mode of its host mountpoint,
     # while "${USERSET}" passes a user but no group and runs the container as "uid=${HOST_UID}
     # gid=0". At a umask of 0022 the mountpoint comes up 0755, group 0 gets "r-x" only, and every
@@ -631,7 +644,7 @@ if [ ${CONTAINER_BIN} = "docker" ]; then
 else
     # podman
     CONTAINER_HOST="host.containers.internal"
-    CONTAINER_COMMON_PARAMS="${CONTAINER_INTERACTIVE} ${CI_PARAMS} --rm --network ${NETWORK} -v ${ROOT_DIR}:${ROOT_DIR} -w ${ROOT_DIR}"
+    CONTAINER_COMMON_PARAMS="${CONTAINER_INTERACTIVE} ${CI_PARAMS} --rm --network ${NETWORK} -v ${ROOT_DIR}:${ROOT_DIR} ${GIT_DIR_MOUNT} -w ${ROOT_DIR}"
     # Rootless podman maps the container root to the host user, so the tmpfs is writable without
     # an explicit owner. "mode=1777" is kept for the rootful case.
     TMPFS_MOUNT_OPTIONS="rw,noexec,nosuid,mode=1777"
