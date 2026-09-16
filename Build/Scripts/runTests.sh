@@ -77,9 +77,11 @@ cleanUp() {
     echo "Remove container for network \"${NETWORK}\""
     ATTACHED_CONTAINERS=$(${CONTAINER_BIN} ps --filter network=${NETWORK} --format='{{.Names}}')
     for ATTACHED_CONTAINER in ${ATTACHED_CONTAINERS}; do
-        ${CONTAINER_BIN} kill ${ATTACHED_CONTAINER} >/dev/null
+        # "rm -f" rather than "kill": the database containers run with "--rm", so a signal only
+        # starts their removal and the network removal below races it.
+        ${CONTAINER_BIN} rm -f ${ATTACHED_CONTAINER} >/dev/null
     done
-    ${CONTAINER_BIN} network rm ${NETWORK} >/dev/null
+    ${CONTAINER_BIN} network rm -f ${NETWORK} >/dev/null
 }
 
 handleDbmsOptions() {
