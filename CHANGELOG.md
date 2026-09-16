@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Drop the `ListTypeToCTypeUpdate` upgrade wizard (#2211)
 - Drop support for TYPO3 12LTS (#2210)
 - Drop support for PHP 8.1 (#2207)
+- Drop the code coverage Composer scripts (#1802)
 
 ### Fixed
 
