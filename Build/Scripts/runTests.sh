@@ -290,8 +290,8 @@ Options:
     -t <13.4|14.3>
         Only with -s composerUpdateMin|composerUpdateMax|phpstan|phpstanGenerateBaseline|unit|unitRandom|functional
         Specifies the TYPO3 CORE Version to be used
-            - 13.4: (default) use TYPO3 v13
-            - 14.3: use TYPO3 v14
+            - 13.4: use TYPO3 v13
+            - 14.3: (default) use TYPO3 v14
         For the test suites, this selects the tests which only apply to one TYPO3 version.
         Use the version the dependencies have been installed for. A different one lets the
         tests fail with a hint about the mismatch.
@@ -470,7 +470,7 @@ ROOT_DIR="${PWD}"
 
 # Option defaults
 TEST_SUITE="unit"
-CORE_VERSION="13.4"
+CORE_VERSION="14.3"
 DBMS="sqlite"
 DBMS_VERSION=""
 PHP_VERSION="8.5"
