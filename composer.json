@@ -159,17 +159,20 @@
 			"@check:php:cs-fixer",
 			"@check:typoscript:lint",
 			"@check:xliff:lint",
+			"@check:xliff:normalize",
 			"@check:yaml:lint"
 		],
 		"check:tests:create-directories": "mkdir -p .Build/public/typo3temp/var/tests",
 		"check:tests:unit": "phpunit -c Build/phpunit/UnitTests.xml --exclude-group not-core-13.4 --exclude-group not-core-14.3",
 		"check:typoscript:lint": "typoscript-lint -c Build/typoscript-lint/config.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript Tests/Functional/Controller/Fixtures/TypoScript",
 		"check:xliff:lint": "php Build/Scripts/checkIntegrityXliff.php",
+		"check:xliff:normalize": "php Build/Scripts/xliffNormalizer.php --dry-run",
 		"check:yaml:lint": "find . ! -path '*.Build/*' ! -path '*node_modules/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r php ./.Build/bin/yaml-lint",
 		"coverage:create-directories": "mkdir -p build/coverage build/logs",
 		"fix": [
 			"@fix:composer:normalize",
-			"@fix:php"
+			"@fix:php",
+			"@fix:xliff:normalize"
 		],
 		"fix:composer:normalize": "@composer normalize --no-check-lock",
 		"fix:php": [
@@ -178,6 +181,7 @@
 		],
 		"fix:php:cs-fixer": "php-cs-fixer fix --config ./Build/php-cs-fixer/config.php",
 		"fix:php:rector": "rector process --config=./Build/rector/config.php",
+		"fix:xliff:normalize": "php Build/Scripts/xliffNormalizer.php",
 		"prepare-release": [
 			"rm -rf .Build",
 			"rm -rf .ddev",
@@ -210,6 +214,7 @@
 		"check:tests:unit": "Runs the unit tests, skipping the TYPO3 version-pinned tests.",
 		"check:typoscript:lint": "Lints the TypoScript files.",
 		"check:xliff:lint": "Lints the XLIFF files.",
+		"check:xliff:normalize": "Checks the formatting of the XLIFF files.",
 		"check:yaml:lint": "Lints the YAML files.",
 		"coverage:create-directories": "Creates the directories needed for recording and merging the code coverage reports.",
 		"fix": "Runs all automatic code style fixes.",
@@ -217,6 +222,7 @@
 		"fix:php": "Runs all fixers for the PHP code.",
 		"fix:php:cs-fixer": "Fixes the code style with PHP-CS-Fixer.",
 		"fix:php:rector": "Updates the code with Rector.",
+		"fix:xliff:normalize": "Normalizes the formatting of the XLIFF files.",
 		"prepare-release": "Removes development-only files in preparation of a TER release."
 	}
 }

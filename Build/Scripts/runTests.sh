@@ -215,6 +215,7 @@ Options:
             - lintPhp: PHP linting
             - lintTypoScript: TypoScript linting
             - lintYaml: YAML linting
+            - normalizeXliff: Normalizes the formatting of all xlf files. Set -n for dry-run.
             - npm: "npm" with all remaining arguments dispatched.
             - phpCsFixer fixes code to follow the standards. Set -n for dry-run.
             - phpmd: Checks code metrics in the PHP code using PHPMD.
@@ -320,7 +321,7 @@ Options:
         replay the unit tests in that order.
 
     -n
-        Only with -s cgl|lintCss|lintJs|phpCsFixer|rector
+        Only with -s cgl|lintCss|lintJs|normalizeXliff|phpCsFixer|rector
         Activate dry-run in checks so they do not actively change files and only print broken ones.
 
     -u
@@ -420,6 +421,14 @@ lintTypoScript() {
 lintYaml() {
     COMMAND="composer check:yaml:lint"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintYaml-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+}
+
+normalizeXliff() {
+    NORMALIZE_XLIFF_ARGS=""
+    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
+        NORMALIZE_XLIFF_ARGS="-n"
+    fi
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name normalize-xliff-${SUFFIX} ${IMAGE_PHP} php -dxdebug.mode=off Build/Scripts/xliffNormalizer.php ${NORMALIZE_XLIFF_ARGS} "$@"
 }
 
 phpCsFixer() {
@@ -724,6 +733,7 @@ case ${TEST_SUITE} in
         composerNormalize
         rector
         cgl
+        normalizeXliff
         lintJs
         lintCss
         SUITE_EXIT_CODE=$?
@@ -788,6 +798,10 @@ case ${TEST_SUITE} in
         ;;
     lintYaml)
         lintYaml
+        SUITE_EXIT_CODE=$?
+        ;;
+    normalizeXliff)
+        normalizeXliff "$@"
         SUITE_EXIT_CODE=$?
         ;;
     npm)
