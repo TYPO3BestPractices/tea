@@ -38,16 +38,16 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - typo3-version: "13.4"
+          - typo3-version: "14.3"
             php-version: "8.2"
             composer-dependencies: Max
-          - typo3-version: "13.4"
+          - typo3-version: "14.3"
             php-version: "8.3"
             composer-dependencies: Max
-          - typo3-version: "13.4"
+          - typo3-version: "14.3"
             php-version: "8.4"
             composer-dependencies: Max
-          - typo3-version: "13.4"
+          - typo3-version: "14.3"
             php-version: "8.5"
             composer-dependencies: Max
   phpstan:
