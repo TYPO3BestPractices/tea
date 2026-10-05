@@ -249,8 +249,13 @@ Options:
             - unitRandom: PHP unit tests in random order, add -o <number> to use specific seed
             - update: Updates existing typo3/core-testing-*:latest container images and removes dangling local volumes.
 
+    -b <docker|podman>
+        Container environment:
+            - podman (default)
+            - docker
+
     -a <mysqli|pdo_mysql>
-        Only with -s functional|functionalDeprecated
+        Only with -s functional
         Specifies to use another driver, following combinations are available:
             - mysql
                 - mysqli (default)
@@ -259,18 +264,13 @@ Options:
                 - mysqli (default)
                 - pdo_mysql
 
-    -b <docker|podman>
-        Container environment:
-            - docker
-            - podman (default)
-
     -d <sqlite|mariadb|mysql|postgres>
-        Only with -s functional|functionalDeprecated
+        Only with -s functional
         Specifies on which DBMS tests are performed
+            - sqlite: (default): use sqlite
             - mariadb: use mariadb
             - mysql: use MySQL
             - postgres: use postgres
-            - sqlite: (default): use sqlite
 
     -i version
         Specify a specific database version
@@ -313,7 +313,7 @@ Options:
         Only with -s composerUpdateMin|composerUpdateMax|phpstan|phpstanGenerateBaseline|unit|unitRandom|functional
         Specifies the TYPO3 CORE Version to be used
             - 13.4: use TYPO3 v13
-            - 14.3: (default) use TYPO3 v14
+            - 14.3 (default): use TYPO3 v14
         For the test suites, this selects the tests which only apply to one TYPO3 version.
         Use the version the dependencies have been installed for. A different one lets the
         tests fail with a hint about the mismatch.
@@ -323,10 +323,10 @@ Options:
             - 8.2: use PHP 8.2
             - 8.3: use PHP 8.3
             - 8.4: use PHP 8.4
-            - 8.5: (default) use PHP 8.5
+            - 8.5 (default): use PHP 8.5
 
     -x
-        Only with -s functional|functionalDeprecated|unit|unitDeprecated|unitRandom
+        Only with -s functional|unit|unitRandom
         Send information to host instance for test or system under test break points. This is especially
         useful if a local PhpStorm instance is listening on default xdebug port 9003. A different port
         can be selected with -y
@@ -342,8 +342,8 @@ Options:
         replay the unit tests in that order.
 
     -n
-        Only with -s cgl|lintCss|lintJs|normalizeXliff|phpCsFixer|rector
-        Activate dry-run in checks so they do not actively change files and only print broken ones.
+        Only with -s cgl|composerNormalize|lintCss|lintJs|normalizeXliff|phpCsFixer|rector
+        Activate dry-run: do not modify files, only report issues.
 
     -m
         Only with -s functional|unit|unitRandom
@@ -354,9 +354,8 @@ Options:
         Cannot be combined with -x, as both need a different Xdebug mode.
 
     -u
-        Update existing typo3/core-testing-*:latest container images and remove dangling local volumes.
-        New images are published once in a while and only the latest ones are supported by core testing.
-        Use this if weird test errors occur. Also removes obsolete image versions of typo3/core-testing-*.
+        Update existing typo3/core-testing-* container images and remove obsolete dangling image versions.
+        Also removes dangling local volumes. Use this if weird test errors occur.
 
     -h
         Show this help.
@@ -369,20 +368,28 @@ Examples:
     # Run all core units tests and enable xdebug (have a PhpStorm listening on port 9003!)
     ./Build/Scripts/runTests.sh -x
 
-    # Run unit tests in phpunit with xdebug on PHP 8.2 and filter for test filterByValueRecursiveCorrectlyFiltersArray
-    ./Build/Scripts/runTests.sh -x -p 8.2 -- --filter filterByValueRecursiveCorrectlyFiltersArray
+    # Run unit tests in phpunit with xdebug on PHP 8.5 and filter for test filterByValueRecursiveCorrectlyFiltersArray
+    ./Build/Scripts/runTests.sh -x -p 8.5 -- --filter filterByValueRecursiveCorrectlyFiltersArray
 
     # Run functional tests in phpunit with a filtered test method name in a specified file
-    # example will currently execute two tests, both of which start with the search term
-    ./Build/Scripts/runTests.sh -s functional -- \
-          --filter datetimeInstanceCanBePersistedToDatabaseIfTypeIsExplicitlySpecified \
-          typo3/sysext/core/Tests/Functional/Database/ConnectionTest.php
+    ./Build/Scripts/runTests.sh -s functional -- --filter aTestName path/to/fileTest.php
 
-    # Run functional tests on postgres with xdebug, php 8.2 and execute a restricted set of tests
-    ./Build/Scripts/runTests.sh -x -p 8.2 -s functional -d postgres typo3/sysext/core/Tests/Functional/Authentication
+    # Run functional tests on postgres with xdebug, php 8.5 and execute a restricted set of tests
+    ./Build/Scripts/runTests.sh -x -p 8.5 -s functional -d postgres Tests/Functional
 
     # Run functional tests on postgres 11
     ./Build/Scripts/runTests.sh -s functional -d postgres -i 11
+
+    # Run composer require to require a dependency
+    ./Build/Scripts/runTests.sh -s composer -- require --dev typo3/testing-framework:dev-main
+
+    # Some composer command examples
+    ./Build/Scripts/runTests.sh -s composer -- dumpautoload
+    ./Build/Scripts/runTests.sh -s composer -- info | grep "symfony"
+
+    # Some npm command examples
+    ./Build/Scripts/runTests.sh -s npm -- audit
+    ./Build/Scripts/runTests.sh -s npm -- ci
 
     # Collect the coverage of the unit and the functional tests and merge both into one report
     ./Build/Scripts/runTests.sh -p 8.2 -s unit -m
