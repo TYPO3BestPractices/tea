@@ -82,6 +82,39 @@ jobs:
           - typo3-version: "14.3"
             php-version: "8.2"
             composer-dependencies: Max
+  legacy-composer-checks:
+    name: Legacy composer checks
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Show the Composer version
+        run: ./Build/Scripts/runTests.sh -b docker -s composer -- --version
+      - name: Show the Composer configuration
+        run: ./Build/Scripts/runTests.sh -b docker -s composer config --global --list
+      - name: Cache dependencies installed with composer
+        uses: actions/cache@v6
+        with:
+          key: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
+          path: .cache/composer
+          restore-keys: "php-${{ matrix.php-version }}-typo3-${{ matrix.typo3-version }}-${{ matrix.composer-dependencies }}-composer-\n"
+      - name: Install composer dependencies
+        run: |
+          ./Build/Scripts/runTests.sh -b docker -p ${{ matrix.php-version }} -t ${{matrix.typo3-version}} -s composerUpdate${{matrix.composer-dependencies}}
+      - name: Run PHP-CS-Fixer
+        run: |
+          Build/Scripts/runTests.sh -b docker -p ${{ matrix.php-version }} -s composer check:php:cs-fixer
+    strategy:
+      matrix:
+        # For php cs-fixer, the PHP version must be the minimum supported version.
+        php-version:
+          - "8.2"
+        # For consistency, the TYPO3 version should match the default TYPO3 version in `runTests.sh` or the maximum version
+        # compatible with the PHP version above, respectively.
+        typo3-version:
+          - "13.4"
+        composer-dependencies:
+          - Max
   code-quality:
     name: Code quality checks
     runs-on: ubuntu-26.04
@@ -111,7 +144,6 @@ jobs:
           - "composer:psr-verify"
           - "composer:unused"
           - "json:lint"
-          - "php:cs-fixer"
           - "php:rector"
           - "typoscript:lint"
           - "xliff:lint"
@@ -151,6 +183,7 @@ jobs:
       fail-fast: false
       matrix:
         command:
+          - "cgl"
           - "composerNormalize"
           - "phpmd"
         # For consistency, the PHP version should match the default PHP version in `runTests.sh`.
