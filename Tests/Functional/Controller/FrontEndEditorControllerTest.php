@@ -223,7 +223,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     }
 
     #[Test]
-    #[DataProvider('possibleEditFormFieldNames')]
+    #[DataProvider('formFieldNames')]
     public function editActionWithOwnTeaHasAllFormFields(string $fieldName): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
@@ -239,9 +239,10 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     /**
      * @return \Generator<non-empty-string, array{0: non-empty-string}>
      */
-    public static function possibleEditFormFieldNames(): \Generator
+    public static function formFieldNames(): \Generator
     {
         yield 'title' => ['title'];
+        yield 'description' => ['description'];
     }
 
     #[Test]
@@ -373,6 +374,17 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
         ]);
 
         self::assertStringContainsString('Create new tea', $html);
+    }
+
+    #[Test]
+    #[DataProvider('formFieldNames')]
+    public function newActionHasAllFormFields(string $fieldName): void
+    {
+        $html = $this->getHtmlWithLoggedInUser([
+            'tx_tea_teafrontendeditor[action]' => 'new',
+        ]);
+
+        self::assertStringContainsString('name="tx_tea_teafrontendeditor[tea][' . $fieldName . ']"', $html);
     }
 
     #[Test]
