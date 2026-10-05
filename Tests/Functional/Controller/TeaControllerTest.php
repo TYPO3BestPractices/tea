@@ -104,6 +104,44 @@ final class TeaControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    public function indexActionWithoutRecursionDoesNotRenderTeaInStoragePageSubfolder(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/indexAction/IndexWithoutRecursionAndTeaInStoragePageSubfolder.csv');
+
+        $request = (new InternalRequest())->withPageId(1);
+
+        $html = (string)$this->executeFrontendSubRequest($request)->getBody();
+
+        self::assertStringContainsString('No teas available.', $html);
+        self::assertStringNotContainsString('Tea in subfolder', $html);
+    }
+
+    #[Test]
+    public function indexActionWithRecursionDepthOneRendersTeaInDirectSubfolder(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/indexAction/IndexWithRecursionDepthOneAndTeasInNestedSubfolders.csv');
+
+        $request = (new InternalRequest())->withPageId(1);
+
+        $html = (string)$this->executeFrontendSubRequest($request)->getBody();
+
+        self::assertStringContainsString('Tea in subfolder', $html);
+    }
+
+    #[Test]
+    public function indexActionWithRecursionDepthOneDoesNotRenderTeaInNestedSubfolder(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/indexAction/IndexWithRecursionDepthOneAndTeasInNestedSubfolders.csv');
+
+        $request = (new InternalRequest())->withPageId(1);
+
+        $html = (string)$this->executeFrontendSubRequest($request)->getBody();
+
+        self::assertStringContainsString('Tea in subfolder', $html);
+        self::assertStringNotContainsString('Tea in nested subfolder', $html);
+    }
+
+    #[Test]
     public function showActionRendersTheGivenTeas(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/showAction/ShowWithTwoTeas.csv');
