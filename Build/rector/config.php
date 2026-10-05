@@ -18,6 +18,7 @@ return RectorConfig::configure()
         __DIR__ . '/../../ext_emconf.php',
         __DIR__ . '/../../ext_localconf.php',
     ])
+    ->withCache(__DIR__ . '/../.cache/rector')
     ->withPhpSets()
     ->withComposerBased(phpunit: true)
     ->withSets([

@@ -409,17 +409,17 @@ jobs:
         run: |
           ./Build/Scripts/runTests.sh -b docker -p ${{ matrix.php-version }} -t ${{ matrix.typo3-version }} -d ${{ matrix.dbms }} -s functional -m
       - name: Show the collected coverage reports
-        run: "ls -lahR .Build/coverage/"
+        run: "ls -lahR Build/coverage/"
       - name: Merge the coverage reports
         run: |
           ./Build/Scripts/runTests.sh -b docker -p ${{ matrix.php-version }} -t ${{ matrix.typo3-version }} -s coverageMerge
       - name: Show the merged coverage report
-        run: "ls -lahR .Build/logs/"
+        run: "ls -lahR Build/logs/"
       - name: Upload coverage results to Coveralls
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          file: .Build/logs/clover.xml
+          file: Build/logs/clover.xml
           format: clover
           fail-on-error: false
     strategy:

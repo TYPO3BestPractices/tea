@@ -1,11 +1,13 @@
 includes:
-  - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
-  - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
-  - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
-  - ../../.Build/vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
+  - ../../vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+  - ../../vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
+  - ../../vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
+  - ../../vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
 
 parameters:
   level: 9
+
+  tmpDir: ../../Build/.cache/phpstan
 
   paths:
     - ../../Classes

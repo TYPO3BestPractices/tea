@@ -36,8 +36,8 @@ printSummary() {
                 ;;
         esac
     fi
-    if [ ${CREATE_COVERAGE} -eq 1 ] && [ -n "${COVERAGE_FILE}" ] && [ -f "${ROOT_DIR}/.Build/coverage/${COVERAGE_FILE}" ]; then
-        echo "COVERAGE-FILE: .Build/coverage/${COVERAGE_FILE}" >&2
+    if [ ${CREATE_COVERAGE} -eq 1 ] && [ -n "${COVERAGE_FILE}" ] && [ -f "${ROOT_DIR}/Build/coverage/${COVERAGE_FILE}" ]; then
+        echo "COVERAGE-FILE: Build/coverage/${COVERAGE_FILE}" >&2
     fi
     if [[ ${SUITE_EXIT_CODE} -eq 0 ]]; then
         echo "SUCCESS" >&2
@@ -96,14 +96,14 @@ handleDbmsOptions() {
             if [ "${DATABASE_DRIVER}" != "mysqli" ] && [ "${DATABASE_DRIVER}" != "pdo_mysql" ]; then
                 echo "Invalid combination -d ${DBMS} -a ${DATABASE_DRIVER}" >&2
                 echo >&2
-                echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+                echo "Use \"Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
                 exit 1
             fi
             [ -z "${DBMS_VERSION}" ] && DBMS_VERSION="10.4"
             if ! [[ ${DBMS_VERSION} =~ ^(10.4|10.5|10.6|10.7|10.8|10.9|10.10|10.11|11.0|11.1|11.2|11.3|11.4|11.5|11.6|11.7|11.8)$ ]]; then
                 echo "Invalid combination -d ${DBMS} -i ${DBMS_VERSION}" >&2
                 echo >&2
-                echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+                echo "Use \"Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
                 exit 1
             fi
             ;;
@@ -112,14 +112,14 @@ handleDbmsOptions() {
             if [ "${DATABASE_DRIVER}" != "mysqli" ] && [ "${DATABASE_DRIVER}" != "pdo_mysql" ]; then
                 echo "Invalid combination -d ${DBMS} -a ${DATABASE_DRIVER}" >&2
                 echo >&2
-                echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+                echo "Use \"Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
                 exit 1
             fi
             [ -z "${DBMS_VERSION}" ] && DBMS_VERSION="8.0"
             if ! [[ ${DBMS_VERSION} =~ ^(8.0|8.1|8.2|8.3|8.4)$ ]]; then
                 echo "Invalid combination -d ${DBMS} -i ${DBMS_VERSION}" >&2
                 echo >&2
-                echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+                echo "Use \"Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
                 exit 1
             fi
             ;;
@@ -127,14 +127,14 @@ handleDbmsOptions() {
             if [ -n "${DATABASE_DRIVER}" ]; then
                 echo "Invalid combination -d ${DBMS} -a ${DATABASE_DRIVER}" >&2
                 echo >&2
-                echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+                echo "Use \"Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
                 exit 1
             fi
             [ -z "${DBMS_VERSION}" ] && DBMS_VERSION="10"
             if ! [[ ${DBMS_VERSION} =~ ^(10|11|12|13|14|15|16|17|18)$ ]]; then
                 echo "Invalid combination -d ${DBMS} -i ${DBMS_VERSION}" >&2
                 echo >&2
-                echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+                echo "Use \"Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
                 exit 1
             fi
             ;;
@@ -142,30 +142,39 @@ handleDbmsOptions() {
             if [ -n "${DATABASE_DRIVER}" ]; then
                 echo "Invalid combination -d ${DBMS} -a ${DATABASE_DRIVER}" >&2
                 echo >&2
-                echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+                echo "Use \"Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
                 exit 1
             fi
             if [ -n "${DBMS_VERSION}" ]; then
                 echo "Invalid combination -d ${DBMS} -i ${DATABASE_DRIVER}" >&2
                 echo >&2
-                echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+                echo "Use \"Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
                 exit 1
             fi
             ;;
         *)
             echo "Invalid option -d ${DBMS}" >&2
             echo >&2
-            echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+            echo "Use \"Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
             exit 1
             ;;
     esac
 }
 
+cleanBuildFiles() {
+    echo -n "Clean builds ... "
+    rm -rf \
+        bin/ \
+        public/ \
+        vendor/
+    echo "done"
+}
+
 cleanCacheFiles() {
     echo -n "Clean caches ... "
     rm -rf \
-        .Build/.cache \
-        .php-cs-fixer.cache
+        .cache \
+        Build/.cache
     echo "done"
 }
 
@@ -173,9 +182,9 @@ cleanTestFiles() {
     # test related
     echo -n "Clean test related files ... "
     rm -rf \
-        .Build/public/typo3temp/var/tests/ \
-        .Build/coverage/ \
-        .Build/logs/
+        public/typo3temp/var/tests/ \
+        Build/coverage/ \
+        Build/logs/
     echo "done"
 }
 
@@ -194,8 +203,8 @@ prepareCoverage() {
     if [ ${CREATE_COVERAGE} -eq 0 ]; then
         return
     fi
-    mkdir -p "${ROOT_DIR}/.Build/coverage" "${ROOT_DIR}/.Build/logs"
-    COVERAGE_OPTION=("--coverage-php=.Build/coverage/${COVERAGE_FILE}")
+    mkdir -p "${ROOT_DIR}/Build/coverage" "${ROOT_DIR}/Build/logs"
+    COVERAGE_OPTION=("--coverage-php=Build/coverage/${COVERAGE_FILE}")
 }
 
 loadHelp() {
@@ -213,6 +222,7 @@ Options:
             - cgl: Fixes the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer). Set -n for dry-run.
             - checkIntegrityXliff: checks for all xlf files for validity and deprecated usages
             - clean: clean up build, cache and testing related files and folders
+            - cleanBuild: clean up build related files and folders
             - cleanCache: clean up cache related files and folders
             - cleanRenderedDocumentation: clean up rendered documentation files and folders (Documentation-GENERATED-temp)
             - cleanTests: clean up test related files and folders
@@ -346,9 +356,9 @@ Options:
     -m
         Only with -s functional|unit|unitRandom
         Collect code coverage while the tests run. The report is written to
-        ".Build/coverage/", under a name unique for the TYPO3 version, the PHP version and
+        "Build/coverage/", under a name unique for the TYPO3 version, the PHP version and
         the DBMS, so that the runs of a test matrix do not overwrite each other. Merge all
-        collected reports into ".Build/logs/clover.xml" with "-s coverageMerge" afterwards.
+        collected reports into "Build/logs/clover.xml" with "-s coverageMerge" afterwards.
         Cannot be combined with -x, as both need a different Xdebug mode.
 
     -u
@@ -400,7 +410,7 @@ cgl() {
      if [ -n "${CGLCHECK_DRY_RUN}" ]; then
          CGLCHECK_DRY_RUN="--dry-run --diff"
      fi
-     COMMAND="php -dxdebug.mode=off .Build/bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
+     COMMAND="php -dxdebug.mode=off bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
      ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name cgl-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
 }
 
@@ -467,19 +477,19 @@ phpCsFixer() {
     if [ -n "${CGLCHECK_DRY_RUN}" ]; then
         CGLCHECK_DRY_RUN="--dry-run --diff"
     fi
-    COMMAND="php .Build/bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
+    COMMAND="php bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpCsFixer-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
 }
 
 phpstan() {
     PHPSTAN_CONFIG_FILE="Build/phpstan/TYPO3_${CORE_VERSION}/phpstan.neon"
-    COMMAND=(php -dxdebug.mode=off .Build/bin/phpstan analyse -c ${PHPSTAN_CONFIG_FILE} --no-progress --no-interaction --memory-limit 4G "$@")
+    COMMAND=(php -dxdebug.mode=off bin/phpstan analyse -c ${PHPSTAN_CONFIG_FILE} --no-progress --no-interaction --memory-limit 4G "$@")
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpstan-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} "${COMMAND[@]}"
 }
 
 phpstanGenerateBaseline() {
     PHPSTAN_CONFIG_FILE="Build/phpstan/TYPO3_${CORE_VERSION}/phpstan.neon"
-    COMMAND=(php -dxdebug.mode=off .Build/bin/phpstan analyse -c ${PHPSTAN_CONFIG_FILE} --no-progress --no-interaction --memory-limit 4G --allow-empty-baseline --generate-baseline=Build/phpstan/TYPO3_${CORE_VERSION}/phpstan-baseline.neon)
+    COMMAND=(php -dxdebug.mode=off bin/phpstan analyse -c ${PHPSTAN_CONFIG_FILE} --no-progress --no-interaction --memory-limit 4G --allow-empty-baseline --generate-baseline=Build/phpstan/TYPO3_${CORE_VERSION}/phpstan-baseline.neon)
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpstan-baseline-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} "${COMMAND[@]}"
 }
 
@@ -492,7 +502,7 @@ rector() {
     if [ -n "${CGLCHECK_DRY_RUN}" ]; then
         CGLCHECK_DRY_RUN="--dry-run"
     fi
-    COMMAND=".Build/bin/rector process ${CGLCHECK_DRY_RUN} --config=Build/rector/config.php"
+    COMMAND="bin/rector process ${CGLCHECK_DRY_RUN} --config=Build/rector/config.php"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name rector-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
 }
 
@@ -621,7 +631,7 @@ if [ ${#INVALID_OPTIONS[@]} -ne 0 ]; then
         echo "-"${I} >&2
     done
     echo >&2
-    echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+    echo "Use \"Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
     exit 1
 fi
 
@@ -630,14 +640,14 @@ fi
 if [ ${CREATE_COVERAGE} -eq 1 ] && [ ${PHP_XDEBUG_ON} -eq 1 ]; then
     echo "Options \"-m\" and \"-x\" cannot be combined, they need a different Xdebug mode." >&2
     echo >&2
-    echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+    echo "Use \"Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
     exit 1
 fi
 
 if [ ${CREATE_COVERAGE} -eq 1 ] && ! [[ ${TEST_SUITE} =~ ^(functional|unit|unitRandom)$ ]]; then
     echo "Option \"-m\" is not available for \"-s ${TEST_SUITE}\"." >&2
     echo >&2
-    echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
+    echo "Use \"Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
     exit 1
 fi
 
@@ -675,7 +685,7 @@ fi
 
 # Create .cache dir: composer need this.
 mkdir -p .cache
-mkdir -p .Build/public/typo3temp/var/tests
+mkdir -p public/typo3temp/var/tests
 
 IMAGE_PHP="ghcr.io/typo3/core-testing-$(echo "php${PHP_VERSION}" | sed -e 's/\.//'):latest"
 IMAGE_NODEJS="ghcr.io/typo3/core-testing-nodejs24:1.1"
@@ -753,9 +763,13 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     clean)
+        cleanBuildFiles
         cleanCacheFiles
         cleanRenderedDocumentationFiles
         cleanTestFiles
+        ;;
+    cleanBuild)
+        cleanBuildFiles
         ;;
     cleanCache)
         cleanCacheFiles
@@ -793,14 +807,14 @@ case ${TEST_SUITE} in
         ;;
     coverageMerge)
         COVERAGE_REPORTS=()
-        for COVERAGE_REPORT in "${ROOT_DIR}"/.Build/coverage/*.cov; do
+        for COVERAGE_REPORT in "${ROOT_DIR}"/Build/coverage/*.cov; do
             [ -e "${COVERAGE_REPORT}" ] || continue
             COVERAGE_REPORTS+=("$(basename "${COVERAGE_REPORT}")")
         done
         # The error paths only set the exit code and let the run end in the "printSummary" every
         # suite finishes with rather than leaving through an exit of their own.
         if [ ${#COVERAGE_REPORTS[@]} -eq 0 ]; then
-            echo "No coverage reports in \".Build/coverage/\" to merge." >&2
+            echo "No coverage reports in \"Build/coverage/\" to merge." >&2
             echo "Run a test suite with \"-m\" first." >&2
             SUITE_EXIT_CODE=1
         else
@@ -808,19 +822,19 @@ case ${TEST_SUITE} in
             # is given without checking it. Reports collected against the dependencies of another
             # TYPO3 or PHP version would therefore end up in a plausible looking but wrong
             # result. Every report has both versions in its name, so a mismatch is refused here:
-            # nothing empties ".Build/coverage/" on its own, and a report of an earlier run with
+            # nothing empties "Build/coverage/" on its own, and a report of an earlier run with
             # a different "-t" or "-p" would otherwise still be lying around.
             COVERAGE_VARIANTS=$(printf '%s\n' "${COVERAGE_REPORTS[@]}" | sed -e 's/\.cov$//' -e 's/^unit-random-//' -e 's/^unit-//' -e 's/^functional-//' | cut -d- -f1-3 | sort -u)
             if [ "$(printf '%s\n' "${COVERAGE_VARIANTS}" | wc -l)" -ne 1 ]; then
-                echo "The coverage reports in \".Build/coverage/\" have not all been collected for the" >&2
+                echo "The coverage reports in \"Build/coverage/\" have not all been collected for the" >&2
                 echo "same TYPO3 and PHP version:" >&2
                 printf '    %s\n' "${COVERAGE_REPORTS[@]}" >&2
                 echo "Merging them would produce a wrong result. Remove the stale reports, or run" >&2
                 echo "\"-s cleanTests\", and collect the coverage again." >&2
                 SUITE_EXIT_CODE=1
             else
-                mkdir -p "${ROOT_DIR}/.Build/logs"
-                COMMAND=(.Build/bin/phpcov merge --clover=.Build/logs/clover.xml .Build/coverage/)
+                mkdir -p "${ROOT_DIR}/Build/logs"
+                COMMAND=(bin/phpcov merge --clover=Build/logs/clover.xml Build/coverage/)
                 ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name coverage-merge-${SUFFIX} ${IMAGE_PHP} "${COMMAND[@]}"
                 SUITE_EXIT_CODE=$?
             fi
@@ -849,7 +863,7 @@ case ${TEST_SUITE} in
         [ -n "${DATABASE_DRIVER}" ] && COVERAGE_FILE="${COVERAGE_FILE}-${DATABASE_DRIVER}"
         COVERAGE_FILE="${COVERAGE_FILE}.cov"
         prepareCoverage
-        COMMAND=(.Build/bin/phpunit -c Build/phpunit/FunctionalTests.xml --exclude-group not-${DBMS} --exclude-group not-core-${CORE_VERSION} "${COVERAGE_OPTION[@]}" "$@")
+        COMMAND=(bin/phpunit -c Build/phpunit/FunctionalTests.xml --exclude-group not-${DBMS} --exclude-group not-core-${CORE_VERSION} "${COVERAGE_OPTION[@]}" "$@")
         case ${DBMS} in
             mariadb)
                 echo "Using driver: ${DATABASE_DRIVER}"
@@ -878,8 +892,8 @@ case ${TEST_SUITE} in
                 # The functional sqlite databases are written to a tmpfs, which roughly halves the
                 # runtime of the suite and leaves nothing behind on disk. The mount options differ
                 # per container binary, see where "${TMPFS_MOUNT_OPTIONS}" is assigned.
-                mkdir -p "${ROOT_DIR}/.Build/public/typo3temp/var/tests/functional-sqlite-dbs/"
-                CONTAINERPARAMS="-e typo3DatabaseDriver=pdo_sqlite --tmpfs ${ROOT_DIR}/.Build/public/typo3temp/var/tests/functional-sqlite-dbs/:${TMPFS_MOUNT_OPTIONS}"
+                mkdir -p "${ROOT_DIR}/public/typo3temp/var/tests/functional-sqlite-dbs/"
+                CONTAINERPARAMS="-e typo3DatabaseDriver=pdo_sqlite --tmpfs ${ROOT_DIR}/public/typo3temp/var/tests/functional-sqlite-dbs/:${TMPFS_MOUNT_OPTIONS}"
                 ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name functional-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${CONTAINERPARAMS} ${IMAGE_PHP} "${COMMAND[@]}"
                 SUITE_EXIT_CODE=$?
                 ;;
@@ -924,7 +938,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     phpmd)
-        COMMAND=".Build/bin/phpmd Classes text Build/phpmd/config.xml"
+        COMMAND="bin/phpmd Classes text Build/phpmd/config.xml"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpmd-${SUFFIX} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
@@ -951,13 +965,13 @@ case ${TEST_SUITE} in
     unit)
         COVERAGE_FILE="unit-core${CORE_VERSION//./-}-php${PHP_VERSION//./}.cov"
         prepareCoverage
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml --exclude-group not-core-${CORE_VERSION} "${COVERAGE_OPTION[@]}" "$@"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} bin/phpunit -c Build/phpunit/UnitTests.xml --exclude-group not-core-${CORE_VERSION} "${COVERAGE_OPTION[@]}" "$@"
         SUITE_EXIT_CODE=$?
         ;;
     unitRandom)
         COVERAGE_FILE="unit-random-core${CORE_VERSION//./-}-php${PHP_VERSION//./}.cov"
         prepareCoverage
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-random-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} .Build/bin/phpunit -c Build/phpunit/UnitTests.xml --exclude-group not-core-${CORE_VERSION} "${COVERAGE_OPTION[@]}" --order-by=random ${PHPUNIT_RANDOM} "$@"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name unit-random-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_PHP} bin/phpunit -c Build/phpunit/UnitTests.xml --exclude-group not-core-${CORE_VERSION} "${COVERAGE_OPTION[@]}" --order-by=random ${PHPUNIT_RANDOM} "$@"
         SUITE_EXIT_CODE=$?
         ;;
     update)
