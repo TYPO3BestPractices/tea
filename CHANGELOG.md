@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- Add functional tests for the recursive storage PID (#1229)
+- Add functional tests for the recursive storage PID (#2366)
 - Add the image to the show action (#2303)
 - Add support for TYPO3 14LTS (#2254, #2266, #2267, #2301, #2302, #2304, #2308,
   #2309, #2310)
