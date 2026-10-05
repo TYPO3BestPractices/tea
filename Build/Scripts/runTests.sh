@@ -67,9 +67,10 @@ waitFor() {
     if [[ $? -gt 0 ]]; then
         # Not "kill -SIGINT -$$": the SIGINT trap is only installed when CI is not "true", so on
         # CI the signal did nothing, the run continued and the tests connected to a database
-        # that was not listening.
+        # that was not listening. Message and exit code match the SIGINT trap.
+        echo "runTests.sh SIGINT signal emitted"
         cleanUp
-        exit 1
+        exit 2
     fi
 }
 
@@ -184,14 +185,14 @@ loadHelp() {
     # Load help text into $HELP
     read -r -d '' HELP <<EOF
 TYPO3 core test runner. Execute unit, functional and other test suites in
-a container based test environment. Handles execution of single test files,
-sending xdebug information to a local IDE and more.
+a container based test environment. Handles execution of single test files, sending
+xdebug information to a local IDE and more.
 
 Usage: $0 [options] [file]
 
 Options:
     -s <...>
-        Specifies which script/tool to run
+        Specifies the test suite to run
             - cgl: Fixes the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer). Set -n for dry-run.
             - checkIntegrityXliff: checks for all xlf files for validity and deprecated usages
             - clean: clean up build, cache and testing related files and folders
@@ -466,7 +467,7 @@ rector() {
 
 # Test if at least one of the supported container binaries exists, else exit out with error
 if ! type "docker" >/dev/null 2>&1 && ! type "podman" >/dev/null 2>&1; then
-    echo "This script relies on docker or podman. Please install at least one of them" >&2
+    echo "This script relies on docker or podman. Please install" >&2
     exit 1
 fi
 
@@ -515,7 +516,7 @@ OPTIND=1
 # Array for invalid options
 INVALID_OPTIONS=()
 # Simple option parsing based on getopts (! not getopt)
-while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
+while getopts ":a:b:s:d:i:p:t:xy:o:nhu" OPT; do
     case ${OPT} in
         s)
             TEST_SUITE=${OPTARG}
@@ -525,7 +526,7 @@ while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
             ;;
         b)
             if ! [[ ${OPTARG} =~ ^(docker|podman)$ ]]; then
-                INVALID_OPTIONS+=("-b ${OPTARG}")
+                INVALID_OPTIONS+=("${OPTARG}")
             fi
             CONTAINER_BIN=${OPTARG}
             ;;
@@ -538,13 +539,13 @@ while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
         p)
             PHP_VERSION=${OPTARG}
             if ! [[ ${PHP_VERSION} =~ ^(8.2|8.3|8.4|8.5)$ ]]; then
-                INVALID_OPTIONS+=("-p ${OPTARG}")
+                INVALID_OPTIONS+=("${OPTARG}")
             fi
             ;;
         t)
             CORE_VERSION=${OPTARG}
             if ! [[ ${CORE_VERSION} =~ ^(13.4|14.3)$ ]]; then
-                INVALID_OPTIONS+=("-t ${OPTARG}")
+                INVALID_OPTIONS+=("${OPTARG}")
             fi
             ;;
         x)
@@ -568,10 +569,10 @@ while getopts "a:b:s:d:i:p:t:xy:o:nhu" OPT; do
             TEST_SUITE=update
             ;;
         \?)
-            INVALID_OPTIONS+=("-${OPTARG}")
+            INVALID_OPTIONS+=("${OPTARG}")
             ;;
         :)
-            INVALID_OPTIONS+=("-${OPTARG}")
+            INVALID_OPTIONS+=("${OPTARG}")
             ;;
     esac
 done
