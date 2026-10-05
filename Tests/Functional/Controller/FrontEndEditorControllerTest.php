@@ -41,7 +41,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/RootPage.csv');
         $this->setUpFrontendRootPage(1, [
             'constants' => [
                 'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript',
