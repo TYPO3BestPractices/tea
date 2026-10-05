@@ -18,6 +18,8 @@ final class TeaTest extends FunctionalTestCase
 {
     protected array $testExtensionsToLoad = ['ttn/tea'];
 
+    protected bool $initializeDatabase = false;
+
     private Tea $subject;
 
     private ConjunctionValidator $validator;
