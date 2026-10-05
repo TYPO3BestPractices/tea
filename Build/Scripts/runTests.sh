@@ -422,7 +422,7 @@ composerNormalize() {
 }
 
 composerUnused() {
-    COMMAND="composer check:composer:unused"
+    COMMAND=".Build/bin/composer-unused --configuration=./Build/composer-unused/composer-unused.php"
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-unused-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
 }
 
