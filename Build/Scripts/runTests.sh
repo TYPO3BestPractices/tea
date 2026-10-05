@@ -810,7 +810,7 @@ case ${TEST_SUITE} in
             # result. Every report has both versions in its name, so a mismatch is refused here:
             # nothing empties ".Build/coverage/" on its own, and a report of an earlier run with
             # a different "-t" or "-p" would otherwise still be lying around.
-            COVERAGE_VARIANTS=$(printf '%s\n' "${COVERAGE_REPORTS[@]}" | sed -e 's/\.cov$//' -e 's/^unit-random-//' -e 's/^unit-//' -e 's/^functional-//' | cut -d- -f1-4 | sort -u)
+            COVERAGE_VARIANTS=$(printf '%s\n' "${COVERAGE_REPORTS[@]}" | sed -e 's/\.cov$//' -e 's/^unit-random-//' -e 's/^unit-//' -e 's/^functional-//' | cut -d- -f1-3 | sort -u)
             if [ "$(printf '%s\n' "${COVERAGE_VARIANTS}" | wc -l)" -ne 1 ]; then
                 echo "The coverage reports in \".Build/coverage/\" have not all been collected for the" >&2
                 echo "same TYPO3 and PHP version:" >&2
