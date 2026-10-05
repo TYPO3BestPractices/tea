@@ -74,13 +74,6 @@ Lints the JSON files.
 
     ./Build/Scripts/runTests.sh -s composer check:php
 
-Runs all static checks for the PHP files.
-
-.. index:: Commands; composer check:php:cs-fixer
-.. code-block:: bash
-
-    ./Build/Scripts/runTests.sh -s composer check:php:cs-fixer
-
 Checks the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer).
 
 .. index:: Commands; composer check:php:lint
@@ -135,12 +128,12 @@ Runs all fixers (except for the ones that need JavaScript).
 
 Runs all fixers for the PHP code.
 
-.. index:: Commands; composer fix:php:cs-fixer
+.. index:: Commands; cgl
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer fix:php:cs-fixer
+    ./Build/Scripts/runTests.sh -s cgl
 
-Fixes the code style with PHP-CS-Fixer.
+Fixes the code style with PHP-CS-Fixer. Add -n to only check the code style without changing any files.
 
 .. index:: Commands; normalizeXliff
 .. code-block:: bash
