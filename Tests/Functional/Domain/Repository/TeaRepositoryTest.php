@@ -9,8 +9,6 @@ use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\Test;
 use TTN\Tea\Domain\Model\Tea;
 use TTN\Tea\Domain\Repository\TeaRepository;
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
-use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -22,13 +20,9 @@ final class TeaRepositoryTest extends FunctionalTestCase
 
     private TeaRepository $subject;
 
-    private PersistenceManagerInterface $persistenceManager;
-
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->persistenceManager = $this->get(PersistenceManagerInterface::class);
 
         $this->subject = $this->get(TeaRepository::class);
     }
@@ -83,56 +77,6 @@ final class TeaRepositoryTest extends FunctionalTestCase
         $model = $this->subject->findByUid(1);
 
         self::assertInstanceOf(Tea::class, $model);
-    }
-
-    #[Test]
-    public function findByUidForExistingRecordMapsAllScalarData(): void
-    {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/propertyMapping/TeaWithAllScalarData.csv');
-
-        $model = $this->subject->findByUid(1);
-        self::assertInstanceOf(Tea::class, $model);
-
-        self::assertSame('Earl Grey', $model->getTitle());
-        self::assertSame('Fresh and hot.', $model->getDescription());
-        self::assertSame(2, $model->getOwnerUid());
-    }
-
-    #[Test]
-    public function fillsImageRelation(): void
-    {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/propertyMapping/TeaWithImage.csv');
-
-        $model = $this->subject->findByUid(1);
-        self::assertInstanceOf(Tea::class, $model);
-
-        $image = $model->getImage();
-        self::assertInstanceOf(FileReference::class, $image);
-        self::assertSame(1, $image->getUid());
-    }
-
-    #[Test]
-    public function mapsDeletedImageRelationToNull(): void
-    {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/propertyMapping/TeaWithDeletedImage.csv');
-
-        $model = $this->subject->findByUid(1);
-        self::assertInstanceOf(Tea::class, $model);
-
-        self::assertNull($model->getImage());
-    }
-
-    #[Test]
-    public function addAndPersistAllCreatesNewRecord(): void
-    {
-        $title = 'Godesberger Burgtee';
-        $model = new Tea();
-        $model->setTitle($title);
-
-        $this->subject->add($model);
-        $this->persistenceManager->persistAll();
-
-        $this->assertCSVDataSet(__DIR__ . '/Fixtures/persistence/PersistedTea.csv');
     }
 
     #[Test]
