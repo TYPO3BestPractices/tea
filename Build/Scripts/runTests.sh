@@ -564,14 +564,14 @@ while getopts ":a:b:s:d:i:p:t:xy:o:nmhu" OPT; do
         s)
             TEST_SUITE=${OPTARG}
             ;;
-        a)
-            DATABASE_DRIVER=${OPTARG}
-            ;;
         b)
             if ! [[ ${OPTARG} =~ ^(docker|podman)$ ]]; then
                 INVALID_OPTIONS+=("${OPTARG}")
             fi
             CONTAINER_BIN=${OPTARG}
+            ;;
+        a)
+            DATABASE_DRIVER=${OPTARG}
             ;;
         d)
             DBMS=${OPTARG}
@@ -579,15 +579,15 @@ while getopts ":a:b:s:d:i:p:t:xy:o:nmhu" OPT; do
         i)
             DBMS_VERSION=${OPTARG}
             ;;
-        p)
-            PHP_VERSION=${OPTARG}
-            if ! [[ ${PHP_VERSION} =~ ^(8.2|8.3|8.4|8.5)$ ]]; then
-                INVALID_OPTIONS+=("${OPTARG}")
-            fi
-            ;;
         t)
             CORE_VERSION=${OPTARG}
             if ! [[ ${CORE_VERSION} =~ ^(13.4|14.3)$ ]]; then
+                INVALID_OPTIONS+=("${OPTARG}")
+            fi
+            ;;
+        p)
+            PHP_VERSION=${OPTARG}
+            if ! [[ ${PHP_VERSION} =~ ^(8.2|8.3|8.4|8.5)$ ]]; then
                 INVALID_OPTIONS+=("${OPTARG}")
             fi
             ;;
