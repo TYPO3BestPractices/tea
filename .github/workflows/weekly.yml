@@ -112,7 +112,7 @@ jobs:
         # For consistency, the TYPO3 version should match the default TYPO3 version in `runTests.sh` or the maximum version
         # compatible with the PHP version above, respectively.
         typo3-version:
-          - "13.4"
+          - "14.3"
         composer-dependencies:
           - Max
   code-quality:
