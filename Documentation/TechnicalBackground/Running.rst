@@ -232,14 +232,14 @@ General setup
 
 -  Open :guilabel:`File > Settings > PHP > Test Frameworks`.
 -  (*) Use Composer autoloader.
--  Path to script: select `.Build/vendor/autoload.php` in your project folder.
+-  Path to script: select `vendor/autoload.php` in your project folder.
 
 In the Run configurations, edit the PHPUnit configuration and use these
 settings so this configuration can serve as a template:
 
 -  Directory: use the `Tests/Unit` directory in your project.
 -  (*) Use alternative configuration file.
--  Use `.Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml`
+-  Use `vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml`
    in your project folder.
 -  Add the following environment variables:
 
@@ -265,4 +265,4 @@ settings:
 -  Directory: use the `Tests/Functional` directory in your project.
 -  (*) Use alternative configuration file.
 -  Use
-   `.Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml`.
+   `vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml`.

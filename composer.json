@@ -103,13 +103,13 @@
 			"block-insecure": false,
 			"block-abandoned": false
 		},
-		"bin-dir": ".Build/bin",
+		"bin-dir": "bin",
 		"lock": false,
 		"preferred-install": {
 			"*": "dist"
 		},
 		"sort-packages": true,
-		"vendor-dir": ".Build/vendor"
+		"vendor-dir": "vendor"
 	},
 	"extra": {
 		"branch-alias": {
@@ -117,20 +117,20 @@
 		},
 		"typo3/cms": {
 			"extension-key": "tea",
-			"web-dir": ".Build/public"
+			"web-dir": "public"
 		}
 	},
 	"scripts": {
 		"check:composer:normalize": "@composer normalize --no-check-lock --dry-run",
 		"check:composer:psr-verify": "@composer dumpautoload --optimize --strict-psr --no-plugins --dry-run",
 		"check:composer:unused": "composer-unused --configuration=Build/composer-unused/composer-unused.php",
-		"check:json:lint": "find . ! -path '*/.cache/*' ! -path '*/.Build/*' ! -path '*/node_modules/*' -name '*.json' | xargs -r php .Build/bin/jsonlint -q",
+		"check:json:lint": "find . ! -path '*/.cache/*' ! -path './Build/coverage/*' ! -path './Build/logs/*' ! -path '*/node_modules/*' ! -path './public/*' ! -path './vendor/*' -name '*.json' | xargs -r php bin/jsonlint -q",
 		"check:php": [
 			"@check:php:lint",
 			"@check:php:cs-fixer"
 		],
 		"check:php:cs-fixer": "php-cs-fixer fix --config ./Build/php-cs-fixer/config.php -v --dry-run --diff",
-		"check:php:lint": "parallel-lint *.php Build Classes Configuration Tests",
+		"check:php:lint": "parallel-lint --exclude Build/.cache *.php Build Classes Configuration Tests",
 		"check:php:rector": "rector process --dry-run --config=./Build/rector/config.php",
 		"check:static": [
 			"@check:composer:normalize",
@@ -145,12 +145,12 @@
 			"@check:xliff:normalize",
 			"@check:yaml:lint"
 		],
-		"check:tests:create-directories": "mkdir -p .Build/public/typo3temp/var/tests",
+		"check:tests:create-directories": "mkdir -p public/typo3temp/var/tests",
 		"check:tests:unit": "phpunit -c Build/phpunit/UnitTests.xml --exclude-group not-core-13.4 --exclude-group not-core-14.3",
 		"check:typoscript:lint": "typoscript-lint -c Build/typoscript-lint/config.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript Tests/Functional/Controller/Fixtures/TypoScript",
 		"check:xliff:lint": "php Build/Scripts/checkIntegrityXliff.php",
 		"check:xliff:normalize": "php Build/Scripts/xliffNormalizer.php --dry-run",
-		"check:yaml:lint": "find . ! -path '*.Build/*' ! -path '*node_modules/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r php ./.Build/bin/yaml-lint",
+		"check:yaml:lint": "find . ! -path '*/.cache/*' ! -path './Build/coverage/*' ! -path './Build/logs/*' ! -path '*/node_modules/*' ! -path './public/*' ! -path './vendor/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r php ./bin/yaml-lint",
 		"fix": [
 			"@fix:composer:normalize",
 			"@fix:php",
@@ -165,7 +165,9 @@
 		"fix:php:rector": "rector process --config=./Build/rector/config.php",
 		"fix:xliff:normalize": "php Build/Scripts/xliffNormalizer.php",
 		"prepare-release": [
-			"rm -rf .Build",
+			"rm -rf bin",
+			"rm -rf public",
+			"rm -rf vendor",
 			"rm -rf .ddev",
 			"rm -rf .github",
 			"rm -rf Build",

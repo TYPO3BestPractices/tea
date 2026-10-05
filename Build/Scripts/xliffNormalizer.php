@@ -6,7 +6,7 @@ use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Finder\Finder;
 
-require __DIR__ . '/../../.Build/vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 if (PHP_SAPI !== 'cli') {
     die('Script must be called from command line.' . chr(10));

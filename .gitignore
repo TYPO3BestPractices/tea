@@ -1,8 +1,6 @@
 /*.idea
-/.Build/*
 /.cache
 /.fleet
-/.php-cs-fixer.cache
 /.phpunit.result.cache
 /Documentation-GENERATED-temp/
 /composer.build.json
@@ -10,3 +8,9 @@
 /nbproject
 /node_modules/
 /var
+/Build/.cache/
+/Build/coverage/
+/Build/logs/
+/bin/
+/public/
+/vendor/
