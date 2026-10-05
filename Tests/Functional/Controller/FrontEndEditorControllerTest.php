@@ -6,6 +6,7 @@ namespace TTN\Tea\Tests\Functional\Controller;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
 use TTN\Tea\Controller\FrontEndEditorController;
@@ -17,6 +18,9 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 #[CoversClass(FrontEndEditorController::class)]
 final class FrontEndEditorControllerTest extends FunctionalTestCase
 {
+    private const UID_OF_PAGE = 1;
+    private const UID_OF_TEA = 1;
+
     protected array $testExtensionsToLoad = ['ttn/tea'];
 
     protected array $coreExtensionsToLoad = ['typo3/cms-fluid-styled-content'];
@@ -32,9 +36,6 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
             ],
         ],
     ];
-
-    private const UID_OF_PAGE = 1;
-    private const UID_OF_TEA = 1;
 
     protected function setUp(): void
     {
@@ -58,6 +59,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function indexActionForNoLoggedInUserRendersErrorMessage(): void
     {
         $request = (new InternalRequest())->withPageId(self::UID_OF_PAGE);
@@ -71,6 +73,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function indexActionForLoggedInUserRendersTeaOwnedByTheLoggedInUser(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');

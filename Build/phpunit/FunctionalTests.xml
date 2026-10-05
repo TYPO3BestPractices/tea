@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
     backupGlobals="true"
     beStrictAboutOutputDuringTests="true"
     bootstrap="../../.Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTestsBootstrap.php"
@@ -21,17 +21,10 @@
     requireCoverageMetadata="true"
 >
     <php>
-        <!--
-            @deprecated: Set this to not suppress warnings, notices and deprecations in functional tests
-                         with TYPO3 core v11 and up.
-                         Will always be done with next major version.
-                         To still suppress warnings, notices and deprecations, do NOT define the constant at all.
-         -->
-        <const name="TYPO3_TESTING_FUNCTIONAL_REMOVE_ERROR_HANDLER" value="true"/>
         <ini name="display_errors" value="1"/>
         <env name="TYPO3_CONTEXT" value="Testing"/>
     </php>
-    <source restrictDeprecations="true" restrictNotices="true" restrictWarnings="true">
+    <source restrictNotices="true" restrictWarnings="true" ignoreIndirectDeprecations="true">
         <include>
             <directory>../../Classes</directory>
         </include>

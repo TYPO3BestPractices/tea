@@ -90,26 +90,29 @@ Checks the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer).
 
 Lints the PHP files for syntax errors.
 
-.. index:: Commands; composer check:php:stan
-.. code-block:: bash
-
-    ./Build/Scripts/runTests.sh -s composer check:php:stan
-
-Checks the PHP types using PHPStan.
-
 .. index:: Commands; phpstan
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -p 8.2 -t 13.4 -s phpstan
 
-Runs all static code checks (syntax, style, types).
+Checks the PHP types using PHPStan. The option :code:`-t` selects the
+PHPStan configuration and baseline for the given TYPO3 version
+(:code:`13.4` or :code:`14.3`). Use the TYPO3 version the dependencies
+have been installed for.
 
 .. index:: Commands; composer check:typoscript:lint
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -scomposer check:typoscript:lint
+    ./Build/Scripts/runTests.sh -s composer check:typoscript:lint
 
 Lints the TypoScript files.
+
+.. index:: Commands; composer check:xliff:normalize
+.. code-block:: bash
+
+    ./Build/Scripts/runTests.sh -s composer check:xliff:normalize
+
+Checks the formatting of the XLIFF files.
 
 .. index:: Commands; composer check:yaml:lint
 .. code-block:: bash
@@ -118,10 +121,10 @@ Lints the TypoScript files.
 
 Lints the YAML files.
 
-.. index:: Commands; composer fix
+.. index:: Commands; fix
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer fix
+    ./Build/Scripts/runTests.sh -s fix
 
 Runs all fixers (except for the ones that need JavaScript).
 
@@ -139,12 +142,21 @@ Runs all fixers for the PHP code.
 
 Fixes the code style with PHP-CS-Fixer.
 
-.. index:: Commands; composer phpstan:baseline
+.. index:: Commands; normalizeXliff
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s composer phpstan:baseline
+    ./Build/Scripts/runTests.sh -s normalizeXliff
 
-Updates the PHPStan baseline file to match the code.
+Normalizes the formatting of the XLIFF files. Add :code:`-n` to only check
+the formatting without changing any files.
+
+.. index:: Commands; phpstanGenerateBaseline
+.. code-block:: bash
+
+    ./Build/Scripts/runTests.sh -p 8.2 -t 13.4 -s phpstanGenerateBaseline
+
+Updates the PHPStan baseline file of the given TYPO3 version to match the
+code.
 
 .. _running-unit-and-functional-tests:
 
@@ -166,10 +178,10 @@ Running unit and functional tests
 
 You can currently run these tests on the command line:
 
-.. index:: Commands; composer check:tests:functional
+.. index:: Commands; functional
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s functional
+    ./Build/Scripts/runTests.sh -t 13.4 -s functional
 
 Runs the functional tests using a database populated from the CSV files in
 `Tests/Functional/Controller/Fixtures/Database` folder.
@@ -179,10 +191,10 @@ Runs the functional tests using a database populated from the CSV files in
     For executing functional tests, a database connection is needed. Therefore,
     it is recommended to run the functional tests using :code:`runTests.sh`.
 
-.. index:: Commands; composer check:tests:unit
+.. index:: Commands; unit
 .. code-block:: bash
 
-    ./Build/Scripts/runTests.sh -s unit
+    ./Build/Scripts/runTests.sh -t 13.4 -s unit
 
 Runs the unit tests.
 
@@ -195,6 +207,20 @@ Runs the unit tests.
     .. code-block:: bash
 
         ./Build/Scripts/runTests.sh -p 8.2 -s unit
+
+.. tip::
+
+    With the option :code:`-t` (:code:`13.4` or :code:`14.3`, default
+    :code:`13.4`), you can specify the TYPO3 version the unit and the
+    functional tests are run for. Tests which only apply to one TYPO3 version
+    are skipped for the others, and a version the dependencies have not been
+    installed for makes the tests fail immediately. Use the same version as for
+    the installation.
+
+    .. code-block:: bash
+
+        ./Build/Scripts/runTests.sh -t 14.3 -s unit
+        ./Build/Scripts/runTests.sh -t 14.3 -s functional
 
 .. _running-unit-and-functional-tests-in-phpstorm:
 

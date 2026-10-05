@@ -6,6 +6,7 @@
 /.phpunit.result.cache
 /Documentation-GENERATED-temp/
 /build
+/composer.build.json
 /composer.lock
 /nbproject
 /node_modules/

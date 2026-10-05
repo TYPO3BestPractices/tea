@@ -14,9 +14,12 @@ parameters:
     - ../../ext_localconf.php
 
   type_coverage:
-    return_type: 100
+    # Native types for class constants are only available in PHP >= 8.3.0:
+    # https://www.php.net/manual/en/language.oop5.constants.php
+    constant_type: 0
     param_type: 100
     property_type: 95
+    return_type: 100
 
   cognitive_complexity:
     class: 10
@@ -58,11 +61,28 @@ parameters:
 
   ignoreErrors:
     -
-      message: '#Class cognitive complexity is#'
-      path: '../../Classes/Upgrades/AbstractListTypeToCTypeUpdate.php'
-    -
-      message: '#Cognitive complexity for#'
-      path: '../../Classes/Upgrades/AbstractListTypeToCTypeUpdate.php'
-    -
       message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) .* will always evaluate to#'
       path: '../../Tests/'
+
+  featureToggles:
+    rawMessageInBaseline: true
+
+  ergebnis:
+    declareStrictTypes:
+      enabled: true
+    final:
+      enabled: false
+    finalInAbstractClass:
+      enabled: true
+    noExtends:
+      enabled: false
+    noIsset:
+      enabled: false
+    noNullableReturnTypeDeclaration:
+      enabled: false
+    noParameterWithContainerTypeDeclaration:
+      enabled: false
+    noParameterWithNullableTypeDeclaration:
+      enabled: false
+    noParameterWithNullDefaultValue:
+      enabled: false

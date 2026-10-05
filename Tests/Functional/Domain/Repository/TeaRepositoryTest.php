@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TTN\Tea\Tests\Functional\Domain\Repository;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\Test;
 use TTN\Tea\Domain\Model\Tea;
 use TTN\Tea\Domain\Repository\TeaRepository;
@@ -39,6 +40,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function findAllForNoRecordsReturnsEmptyQueryResult(): void
     {
         $result = $this->subject->findAll();
@@ -47,6 +49,10 @@ final class TeaRepositoryTest extends FunctionalTestCase
     }
 
     #[Test]
+    // @todo The "Validate" attributes of the model trigger an Extbase
+    //   deprecation on TYPO3 14.3. This needs a dedicated investigation and is
+    //   unrelated to this change.
+    #[IgnoreDeprecations]
     public function findAllSortsByTitleInAscendingOrder(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/findAll/TwoUnsortedTeas.csv');
@@ -66,6 +72,10 @@ final class TeaRepositoryTest extends FunctionalTestCase
     }
 
     #[Test]
+    // @todo The "Validate" attributes of the model trigger an Extbase
+    //   deprecation on TYPO3 14.3. This needs a dedicated investigation and is
+    //   unrelated to this change.
+    #[IgnoreDeprecations]
     public function findByUidForExistingRecordReturnsModel(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/findByUid/Tea.csv');

@@ -58,6 +58,14 @@ jobs:
           composer show
       - name: Start MySQL
         run: "sudo /etc/init.d/mysql start"
+      - name: Install GraphicsMagick
+        # The testing framework configures GraphicsMagick as the image processor
+        # of every functional test instance, and the runner image does not ship
+        # it. Without it, image processing silently falls back to the original
+        # file, which then renders without any dimensions.
+        run: |
+          sudo apt-get --quiet update
+          sudo apt-get --quiet --yes --no-install-recommends install graphicsmagick
       - name: Run unit tests with coverage
         run: composer check:coverage:unit
       - name: Show generated coverage files

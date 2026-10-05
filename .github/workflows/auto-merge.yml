@@ -10,7 +10,7 @@ jobs:
   auto-merge:
     name: Dependabot auto-merge
 
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
 
     if: ${{ github.actor == 'dependabot[bot]' }}
 

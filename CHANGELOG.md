@@ -7,13 +7,27 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Add the image to the show action (#2303)
+- Add support for TYPO3 14LTS (#2254, #2266, #2267, #2301, #2302, #2304, #2308,
+  #2309, #2310)
+- Add a dedicated weekly CI workflow (#1903)
+
 ### Changed
+
+- Pin the unit and functional tests to the installed TYPO3 version (#2327)
 
 ### Cleanup
 
 ### Removed
 
+- Drop the `ListTypeToCTypeUpdate` upgrade wizard (#2211)
+- Drop support for TYPO3 12LTS (#2210)
+- Drop support for PHP 8.1 (#2207)
+
 ### Fixed
+
+- Keep `composer.json` unchanged when running
+  `runTests.sh -s composerUpdate(Min|Max)` (#2192)
 
 ### Documentation
 

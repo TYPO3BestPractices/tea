@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use Rector\PHPUnit\Set\PHPUnitSetList;
+use Rector\PHPUnit\PHPUnit60\Rector\ClassMethod\AddDoesNotPerformAssertionToNonAssertingTestRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
 use Ssch\TYPO3Rector\CodeQuality\General\ExtEmConfRector;
 use Ssch\TYPO3Rector\Configuration\Typo3Option;
@@ -19,6 +19,7 @@ return RectorConfig::configure()
         __DIR__ . '/../../ext_localconf.php',
     ])
     ->withPhpSets()
+    ->withComposerBased(phpunit: true)
     ->withSets([
         // Rector sets
 
@@ -32,12 +33,6 @@ return RectorConfig::configure()
         // SetList::STRICT_BOOLEANS,
         // SetList::TYPE_DECLARATION,
 
-        // PHPUnit sets
-
-        PHPUnitSetList::PHPUNIT_100,
-        // PHPUnitSetList::PHPUNIT_110,
-        // PHPUnitSetList::PHPUNIT_CODE_QUALITY,
-
         // TYPO3 Sets
         // https://github.com/sabbelasichon/typo3-rector/blob/main/src/Set/Typo3LevelSetList.php
         // https://github.com/sabbelasichon/typo3-rector/blob/main/src/Set/Typo3SetList.php
@@ -45,8 +40,7 @@ return RectorConfig::configure()
         Typo3SetList::CODE_QUALITY,
         Typo3SetList::GENERAL,
 
-        Typo3LevelSetList::UP_TO_TYPO3_12,
-        // Typo3LevelSetList::UP_TO_TYPO3_13,
+        Typo3LevelSetList::UP_TO_TYPO3_13,
     ])
     // To have a better analysis from PHPStan, we teach it here some more things
     ->withPHPStanConfigs([
@@ -57,9 +51,11 @@ return RectorConfig::configure()
     ])
     ->withImportNames(true, true, false)
     ->withConfiguredRule(ExtEmConfRector::class, [
-        ExtEmConfRector::PHP_VERSION_CONSTRAINT => '8.1.0-8.5.99',
-        ExtEmConfRector::TYPO3_VERSION_CONSTRAINT => '12.4.41-13.4.99',
+        ExtEmConfRector::PHP_VERSION_CONSTRAINT => '8.2.0-8.5.99',
+        ExtEmConfRector::TYPO3_VERSION_CONSTRAINT => '13.4.31-14.3.99',
         ExtEmConfRector::ADDITIONAL_VALUES_TO_BE_REMOVED => [],
     ])
     ->withSkip([
+        // This rule creates false positives as the TYPO3 testing framework always adds assertions.
+        AddDoesNotPerformAssertionToNonAssertingTestRector::class,
     ]);

@@ -17,10 +17,14 @@ final class ExtensionLoadedTest extends FunctionalTestCase
     protected bool $initializeDatabase = false;
 
     #[Test]
-    public function isLoaded(): void
+    public function isLoadedWithExtensionKey(): void
     {
-        self::assertTrue(
-            ExtensionManagementUtility::isLoaded('tea'),
-        );
+        self::assertTrue(ExtensionManagementUtility::isLoaded('tea'));
+    }
+
+    #[Test]
+    public function isLoadedWithComposerPackageName(): void
+    {
+        self::assertTrue(ExtensionManagementUtility::isLoaded('ttn/tea'));
     }
 }

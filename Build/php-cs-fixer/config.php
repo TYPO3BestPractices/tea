@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 use TYPO3\CodingStandards\CsFixerConfig;
 
@@ -8,14 +10,5 @@ $config = CsFixerConfig::create();
 // @TODO 4.0 no need to call this manually
 $config->setParallelConfig(ParallelConfigFactory::detect());
 
-$config->addRules(
-    [
-        'native_function_invocation' => [
-            'include' => [],
-            'scope' => 'all',
-            'strict' => true,
-        ],
-    ],
-);
 $config->getFinder()->in('Classes')->in('Configuration')->in('Tests');
 return $config;

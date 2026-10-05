@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace TTN\Tea\Tests\Functional\Controller;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
 use TTN\Tea\Controller\BackendModuleController;
 use TYPO3\CMS\Backend\Routing\Route;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
+use TYPO3\CMS\Core\Crypto\HashAlgo;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\FormProtection\AbstractFormProtection;
 use TYPO3\CMS\Core\Http\NormalizedParams;
@@ -18,7 +20,6 @@ use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Site\Entity\Site;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
@@ -32,12 +33,10 @@ final class BackendModuleControllerTest extends FunctionalTestCase
 
     private const FORM_PROTECTION_SESSION_TOKEN = 'testToken';
 
+    protected array $testExtensionsToLoad = ['ttn/tea'];
+
     protected function setUp(): void
     {
-        $this->testExtensionsToLoad = [
-            'ttn/tea',
-        ];
-
         parent::setUp();
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/BackendUser.csv');
@@ -50,6 +49,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function indexListsTeasFromMultiplePids(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeasForIndex.csv');
@@ -67,6 +67,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function indexProvidesCaptionForListing(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
@@ -83,6 +84,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function indexListsTeasFromSortedByUidInDescendingOrder(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeasForIndex.csv');
@@ -149,15 +151,22 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     }
 
     #[Test]
+    #[IgnoreDeprecations]
     public function indexLinksTeaValuesToEditForm(): void
     {
-        if ((new Typo3Version())->getMajorVersion() === 13) {
+        if (((new Typo3Version())->getMajorVersion() >= 14)) {
+            $token = $this->get(HashService::class)->hmac(
+                'routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN,
+                AbstractFormProtection::class,
+                HashAlgo::SHA3_256,
+            );
+            $moduleUrlParameter = '&module=';
+        } else {
+            $moduleUrlParameter = '';
             $token = $this->get(HashService::class)->hmac(
                 'routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN,
                 AbstractFormProtection::class,
             );
-        } else {
-            $token = GeneralUtility::hmac('routerecord_edit' . self::FORM_PROTECTION_SESSION_TOKEN);
         }
 
         $expectedUrlQuery = http_build_query([
@@ -167,7 +176,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
                     1 => 'edit',
                 ],
             ],
-        ]) . '&returnUrl=typo3/module/tea/index/BackendModule/index';
+        ]) . $moduleUrlParameter . '&returnUrl=typo3/module/tea/index/BackendModule/index';
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
 
@@ -180,7 +189,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
         $html = $response->getBody()->__toString();
 
         self::assertStringContainsString(
-            htmlspecialchars('/typo3/record/edit?' . $expectedUrlQuery, ENT_QUOTES),
+            htmlspecialchars('typo3/record/edit?' . $expectedUrlQuery, ENT_QUOTES),
             $html,
         );
     }
