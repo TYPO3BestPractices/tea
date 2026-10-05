@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TTN\Tea\Tests\Functional\Domain\Model;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\Test;
 use TTN\Tea\Domain\Model\Tea;
@@ -33,46 +34,65 @@ final class TeaTest extends FunctionalTestCase
 
     #[Test]
     #[IgnoreDeprecations]
-    public function titleWithMaximumLengthPassesValidation(): void
+    #[DataProvider('validTitles')]
+    public function validTitlePassesValidation(string $title): void
     {
-        $this->subject->setTitle(str_repeat('p', 255));
+        $this->subject->setTitle($title);
 
         $result = $this->validator->validate($this->subject);
 
         self::assertFalse($result->forProperty('title')->hasErrors());
     }
 
+    /**
+     * @return \Generator<non-empty-string, array{0: non-empty-string}>
+     */
+    public static function validTitles(): \Generator
+    {
+        yield 'one character' => ['p'];
+        yield 'maximum length' => [str_repeat('p', 255)];
+    }
+
     #[Test]
     #[IgnoreDeprecations]
-    public function titleLongerThanMaximumLengthDoesNotPassValidation(): void
+    #[DataProvider('invalidTitles')]
+    public function invalidTitleDoesNotPassValidation(string $title): void
     {
-        $this->subject->setTitle(str_repeat('p', 256));
+        $this->subject->setTitle($title);
 
         $result = $this->validator->validate($this->subject);
 
         self::assertTrue($result->forProperty('title')->hasErrors());
     }
 
-    #[Test]
-    #[IgnoreDeprecations]
-    public function emptyTitleDoesNotPassValidation(): void
+    /**
+     * @return \Generator<non-empty-string, array{0: string}>
+     */
+    public static function invalidTitles(): \Generator
     {
-        $this->subject->setTitle('');
-
-        $result = $this->validator->validate($this->subject);
-
-        self::assertTrue($result->forProperty('title')->hasErrors());
+        yield 'empty' => [''];
+        yield 'longer than maximum length' => [str_repeat('p', 256)];
     }
 
     #[Test]
     #[IgnoreDeprecations]
-    public function descriptionWithMaximumLengthPassesValidation(): void
+    #[DataProvider('validDescriptions')]
+    public function validDescriptionPassesValidation(string $description): void
     {
-        $this->subject->setDescription(str_repeat('d', 2000));
+        $this->subject->setDescription($description);
 
         $result = $this->validator->validate($this->subject);
 
         self::assertFalse($result->forProperty('description')->hasErrors());
+    }
+
+    /**
+     * @return \Generator<non-empty-string, array{0: string}>
+     */
+    public static function validDescriptions(): \Generator
+    {
+        yield 'empty' => [''];
+        yield 'maximum length' => [str_repeat('d', 2000)];
     }
 
     #[Test]
