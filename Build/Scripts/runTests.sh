@@ -238,7 +238,6 @@ Options:
             - lintYaml: YAML linting
             - normalizeXliff: Normalizes the formatting of all xlf files. Set -n for dry-run.
             - npm: "npm" with all remaining arguments dispatched.
-            - phpCsFixer fixes code to follow the standards. Set -n for dry-run.
             - phpmd: Checks code metrics in the PHP code using PHPMD.
             - phpstan: PHPStan tests
             - phpstanGenerateBaseline: regenerate PHPStan baseline, handy after PHPStan updates
@@ -342,7 +341,7 @@ Options:
         replay the unit tests in that order.
 
     -n
-        Only with -s cgl|composerNormalize|lintCss|lintJs|normalizeXliff|phpCsFixer|rector
+        Only with -s cgl|composerNormalize|lintCss|lintJs|normalizeXliff|rector
         Activate dry-run: do not modify files, only report issues.
 
     -m
@@ -470,14 +469,6 @@ normalizeXliff() {
         NORMALIZE_XLIFF_ARGS="-n"
     fi
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name normalize-xliff-${SUFFIX} ${IMAGE_PHP} php -dxdebug.mode=off Build/Scripts/xliffNormalizer.php ${NORMALIZE_XLIFF_ARGS} "$@"
-}
-
-phpCsFixer() {
-    if [ -n "${CGLCHECK_DRY_RUN}" ]; then
-        CGLCHECK_DRY_RUN="--dry-run --diff"
-    fi
-    COMMAND="php .Build/bin/php-cs-fixer fix -v ${CGLCHECK_DRY_RUN} --config=Build/php-cs-fixer/config.php"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name phpCsFixer-${SUFFIX} ${IMAGE_PHP} ${COMMAND}
 }
 
 phpstan() {
@@ -926,10 +917,6 @@ case ${TEST_SUITE} in
     npm)
         COMMAND=(npm "$@")
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name npm-command-${SUFFIX} -e npm_config_cache=${ROOT_DIR}/.cache/npm ${IMAGE_NODEJS} "${COMMAND[@]}"
-        SUITE_EXIT_CODE=$?
-        ;;
-    phpCsFixer)
-        phpCsFixer
         SUITE_EXIT_CODE=$?
         ;;
     phpmd)
