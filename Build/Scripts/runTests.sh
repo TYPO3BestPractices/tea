@@ -630,6 +630,14 @@ IMAGE_RSTRENDERING="ghcr.io/typo3-documentation/render-guides:0.41.0"
 IMAGE_MARIADB="docker.io/mariadb:${DBMS_VERSION}"
 IMAGE_MYSQL="docker.io/mysql:${DBMS_VERSION}"
 IMAGE_POSTGRES="docker.io/postgres:${DBMS_VERSION}-alpine"
+# PostgreSQL 18 moved `PGDATA` from `/var/lib/postgresql/data` to `/var/lib/postgresql/<major>/docker`
+# and refuses to start when a mount point is placed at the old location. Mounting one level above at
+# `/var/lib/postgresql` is the documented recommendation for that case. Earlier versions expect the
+# mount at the data directory itself, so the mount point is chosen based on the selected version.
+POSTGRES_TMPFS_MOUNT="/var/lib/postgresql/data"
+if [ "${DBMS}" = "postgres" ] && [ "${DBMS_VERSION}" -ge 18 ]; then
+    POSTGRES_TMPFS_MOUNT="/var/lib/postgresql"
+fi
 
 # Remove handled options and leaving the rest in the line, so it can be passed raw to commands
 shift $((OPTIND - 1))
@@ -758,7 +766,7 @@ case ${TEST_SUITE} in
                 SUITE_EXIT_CODE=$?
                 ;;
             postgres)
-                ${CONTAINER_BIN} run --rm ${CI_PARAMS} --name postgres-func-${SUFFIX} --network ${NETWORK} -d -e POSTGRES_PASSWORD=funcp -e POSTGRES_USER=funcu --tmpfs /var/lib/postgresql/data:rw,noexec,nosuid ${IMAGE_POSTGRES} >/dev/null
+                ${CONTAINER_BIN} run --rm ${CI_PARAMS} --name postgres-func-${SUFFIX} --network ${NETWORK} -d -e POSTGRES_PASSWORD=funcp -e POSTGRES_USER=funcu --tmpfs ${POSTGRES_TMPFS_MOUNT}:rw,noexec,nosuid ${IMAGE_POSTGRES} >/dev/null
                 waitFor postgres-func-${SUFFIX} 5432
                 CONTAINERPARAMS="-e typo3DatabaseDriver=pdo_pgsql -e typo3DatabaseName=bamboo -e typo3DatabaseUsername=funcu -e typo3DatabaseHost=postgres-func-${SUFFIX} -e typo3DatabasePassword=funcp"
                 ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name functional-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${CONTAINERPARAMS} ${IMAGE_PHP} "${COMMAND[@]}"
