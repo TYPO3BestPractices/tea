@@ -1,0 +1,13 @@
+"pages"
+,"uid","pid","title","slug"
+,2,1,"Storage","/storage"
+,3,1,"Show","/show"
+
+"tt_content"
+,"uid","pid","CType","header","pi_flexform"
+,2,3,"tea_teashow","Tea show",""
+
+"tx_tea_domain_model_tea"
+,"uid","pid","title"
+,1,2,"Godesberger Burgtee"
+,2,2,"Oolong"
