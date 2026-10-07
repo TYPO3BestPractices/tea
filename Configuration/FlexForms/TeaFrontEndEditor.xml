@@ -3,28 +3,24 @@
     <sheets>
         <pagesAndFolders>
             <ROOT>
-                <TCEforms>
-                    <sheetTitle>
-                        LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_frontend_editor.settings.tab.pagesAndFolders
-                    </sheetTitle>
-                </TCEforms>
+                <sheetTitle>
+                    LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_frontend_editor.settings.tab.pagesAndFolders
+                </sheetTitle>
                 <type>array</type>
                 <el>
                     <persistence.storagePid>
-                        <TCEforms>
-                            <label>
-                                LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_frontend_editor.settings.pagesAndFolders.storagePid
-                            </label>
-                            <config>
-                                <type>group</type>
-                                <internal_type>db</internal_type>
-                                <allowed>pages</allowed>
-                                <size>1</size>
-                                <minitems>1</minitems>
-                                <maxitems>1</maxitems>
-                                <hideSuggest>1</hideSuggest>
-                            </config>
-                        </TCEforms>
+                        <label>
+                            LLL:EXT:tea/Resources/Private/Language/locallang.xlf:plugin.tea_frontend_editor.settings.pagesAndFolders.storagePid
+                        </label>
+                        <config>
+                            <type>group</type>
+                            <internal_type>db</internal_type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <minitems>1</minitems>
+                            <maxitems>1</maxitems>
+                            <hideSuggest>1</hideSuggest>
+                        </config>
                     </persistence.storagePid>
                 </el>
             </ROOT>
