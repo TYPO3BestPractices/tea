@@ -53,7 +53,7 @@
 		"helmich/typo3-typoscript-lint": "3.3.0",
 		"icanhazstring/composer-unused": "0.9.6",
 		"php-parallel-lint/php-parallel-lint": "1.4.0",
-		"phpmd/phpmd": "2.15.0",
+		"phpmd/phpmd": "3.0.0",
 		"phpstan/extension-installer": "1.4.3",
 		"phpstan/phpstan": "2.2.16",
 		"phpstan/phpstan-phpunit": "2.0.21",
