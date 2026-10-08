@@ -33,7 +33,7 @@ call_user_func(
         foreach ($plugins as $key => $value) {
             $plugin = sprintf('tea_%1$s', $key);
             // This makes the plugin selectable in the BE.
-            $pluginSignature = ExtensionUtility::registerPlugin(
+            $ctypeKey = ExtensionUtility::registerPlugin(
                 // extension name, matching the PHP namespaces (but without the vendor)
                 'Tea',
                 // arbitrary, but unique plugin name (not visible in the BE)
@@ -53,14 +53,14 @@ call_user_func(
                 ExtensionManagementUtility::addToAllTCAtypes(
                     'tt_content',
                     '--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin, pi_flexform',
-                    $pluginSignature,
-                    'after:palette:headers',
+                    $ctypeKey,
+                    'after:subheader',
                 );
                 // Add the flexform configuration for the plugin.
                 ExtensionManagementUtility::addPiFlexFormValue(
                     '*',
                     sprintf('FILE:EXT:tea/Configuration/FlexForms/%1$s.xml', $value['flexformsConfiguration']),
-                    $pluginSignature,
+                    $ctypeKey,
                 );
             }
         }
