@@ -59,7 +59,7 @@
 		"phpstan/phpstan-phpunit": "2.0.21",
 		"phpstan/phpstan-strict-rules": "2.0.12",
 		"phpunit/phpcov": "10.0.1",
-		"phpunit/phpunit": "11.5.56",
+		"phpunit/phpunit": "11.5.57",
 		"rector/rector": "2.6.7",
 		"rector/type-perfect": "2.2.0",
 		"saschaegerer/phpstan-typo3": "2.2.0 || 3.1.0",
