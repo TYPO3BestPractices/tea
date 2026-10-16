@@ -15,6 +15,9 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 #[CoversClass(Tea::class)]
 final class TeaTest extends FunctionalTestCase
 {
+    private const FIXTURES_PATH = __DIR__ . '/Fixtures';
+    private const ASSERTIONS_PATH = __DIR__ . '/Assertions';
+
     protected array $testExtensionsToLoad = ['ttn/tea'];
 
     private PersistenceManagerInterface $persistenceManager;
@@ -31,9 +34,23 @@ final class TeaTest extends FunctionalTestCase
     // deprecation on TYPO3 14.3. This needs a dedicated investigation and is
     // unrelated to this change.
     #[IgnoreDeprecations]
+    public function canBeReadFromTheDatabase(): void
+    {
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/propertyMapping/TeaWithAllScalarData.csv');
+
+        $model = $this->persistenceManager->getObjectByIdentifier(1, Tea::class);
+
+        self::assertInstanceOf(Tea::class, $model);
+    }
+
+    #[Test]
+    // @todo The "Validate" attributes of the model trigger an Extbase
+    // deprecation on TYPO3 14.3. This needs a dedicated investigation and is
+    // unrelated to this change.
+    #[IgnoreDeprecations]
     public function mapsAllScalarData(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/propertyMapping/TeaWithAllScalarData.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/propertyMapping/TeaWithAllScalarData.csv');
 
         $model = $this->persistenceManager->getObjectByIdentifier(1, Tea::class);
         self::assertInstanceOf(Tea::class, $model);
@@ -50,7 +67,7 @@ final class TeaTest extends FunctionalTestCase
     #[IgnoreDeprecations]
     public function fillsImageRelation(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/propertyMapping/TeaWithImage.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/propertyMapping/TeaWithImage.csv');
 
         $model = $this->persistenceManager->getObjectByIdentifier(1, Tea::class);
         self::assertInstanceOf(Tea::class, $model);
@@ -67,7 +84,7 @@ final class TeaTest extends FunctionalTestCase
     #[IgnoreDeprecations]
     public function mapsDeletedImageRelationToNull(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/propertyMapping/TeaWithDeletedImage.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/propertyMapping/TeaWithDeletedImage.csv');
 
         $model = $this->persistenceManager->getObjectByIdentifier(1, Tea::class);
         self::assertInstanceOf(Tea::class, $model);
@@ -82,13 +99,12 @@ final class TeaTest extends FunctionalTestCase
     #[IgnoreDeprecations]
     public function canBePersisted(): void
     {
-        $title = 'Godesberger Burgtee';
         $model = new Tea();
-        $model->setTitle($title);
+        $model->setTitle('Godesberger Burgtee');
 
         $this->persistenceManager->add($model);
         $this->persistenceManager->persistAll();
 
-        $this->assertCSVDataSet(__DIR__ . '/Fixtures/persistence/PersistedTea.csv');
+        $this->assertCSVDataSet(self::ASSERTIONS_PATH . '/persistence/PersistedTea.csv');
     }
 }
