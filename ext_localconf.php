@@ -6,7 +6,7 @@ use TTN\Tea\Controller\FrontEndEditorController;
 use TTN\Tea\Controller\TeaController;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
-defined('TYPO3') or die('Access denied.');
+defined('TYPO3') || die('Access denied.');
 
 // This makes the plugin available for front-end rendering.
 ExtensionUtility::configurePlugin(
