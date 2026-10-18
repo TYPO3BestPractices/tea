@@ -32,7 +32,7 @@ class TeaController extends ActionController
      */
     public function showAction(?Tea $tea = null): ResponseInterface
     {
-        if ($tea === null) {
+        if (!($tea instanceof Tea)) {
             $this->trigger404('No tea given.');
         }
 
