@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
 use Rector\PHPUnit\PHPUnit60\Rector\ClassMethod\AddDoesNotPerformAssertionToNonAssertingTestRector;
-use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Ssch\TYPO3Rector\CodeQuality\General\ExtEmConfRector;
 use Ssch\TYPO3Rector\Configuration\Typo3Option;
 use Ssch\TYPO3Rector\Set\Typo3LevelSetList;
@@ -20,19 +20,14 @@ return RectorConfig::configure()
     ])
     ->withPhpSets()
     ->withComposerBased(phpunit: true)
+    ->withPreparedSets(
+        codeQuality: true,
+        deadCode: true,
+        privatization: true,
+        rectorPreset: true,
+        typeDeclarations: true,
+    )
     ->withSets([
-        // Rector sets
-
-        // SetList::CODE_QUALITY,
-        // SetList::CODING_STYLE,
-        // SetList::DEAD_CODE,
-        // SetList::EARLY_RETURN,
-        // SetList::INSTANCEOF,
-        // SetList::NAMING,
-        // SetList::PRIVATIZATION,
-        // SetList::STRICT_BOOLEANS,
-        // SetList::TYPE_DECLARATION,
-
         // TYPO3 Sets
         // https://github.com/sabbelasichon/typo3-rector/blob/main/src/Set/Typo3LevelSetList.php
         // https://github.com/sabbelasichon/typo3-rector/blob/main/src/Set/Typo3SetList.php
@@ -47,7 +42,6 @@ return RectorConfig::configure()
         Typo3Option::PHPSTAN_FOR_RECTOR_PATH,
     ])
     ->withRules([
-        AddVoidReturnTypeWhereNoReturnRector::class,
     ])
     ->withImportNames(true, true, false)
     ->withConfiguredRule(ExtEmConfRector::class, [
@@ -58,4 +52,7 @@ return RectorConfig::configure()
     ->withSkip([
         // This rule creates false positives as the TYPO3 testing framework always adds assertions.
         AddDoesNotPerformAssertionToNonAssertingTestRector::class,
+        SafeDeclareStrictTypesRector::class => [
+            __DIR__ . '/../../ext_emconf.php',
+        ],
     ]);
