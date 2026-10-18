@@ -188,7 +188,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
             'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
         ]);
 
-        self::assertForbiddenResponse($response);
+        $this->assertForbiddenResponse($response);
     }
 
     #[Test]
@@ -201,7 +201,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
             'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
         ]);
 
-        self::assertForbiddenResponse($response);
+        $this->assertForbiddenResponse($response);
     }
 
     #[Test]
@@ -271,7 +271,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
             'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
         ]);
 
-        self::assertForbiddenResponse($response);
+        $this->assertForbiddenResponse($response);
     }
 
     #[Test]
@@ -284,7 +284,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
             'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
         ]);
 
-        self::assertForbiddenResponse($response);
+        $this->assertForbiddenResponse($response);
     }
 
     #[Test]
@@ -363,7 +363,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
             2,
         );
 
-        self::assertForbiddenResponse($response);
+        $this->assertForbiddenResponse($response);
     }
 
     #[Test]
@@ -485,7 +485,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
         return html_entity_decode($matches[1]);
     }
 
-    private static function assertForbiddenResponse(ResponseInterface $response): void
+    private function assertForbiddenResponse(ResponseInterface $response): void
     {
         self::assertSame(403, $response->getStatusCode());
         self::assertSame('Forbidden', $response->getReasonPhrase());
