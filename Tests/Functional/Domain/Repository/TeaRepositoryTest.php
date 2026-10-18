@@ -66,8 +66,9 @@ final class TeaRepositoryTest extends FunctionalTestCase
 
         $result = $this->subject->findAll();
 
-        $result->rewind();
-        self::assertSame(2, $result->current()->getUid());
+        $model = $result->getFirst();
+        self::assertInstanceOf(Tea::class, $model);
+        self::assertSame('Assam', $model->getTitle());
     }
 
     #[Test]
@@ -117,10 +118,9 @@ final class TeaRepositoryTest extends FunctionalTestCase
 
         $result = $this->subject->findByOwnerUid(1);
 
-        $result->rewind();
-        $current = $result->current();
-        self::assertInstanceOf(Tea::class, $current);
-        self::assertSame('Assam', $current->getTitle());
+        $model = $result->getFirst();
+        self::assertInstanceOf(Tea::class, $model);
+        self::assertSame('Assam', $model->getTitle());
     }
 
     #[Test]
@@ -140,9 +140,8 @@ final class TeaRepositoryTest extends FunctionalTestCase
 
         $result = $this->subject->findAllFromAllPages();
 
-        $result->rewind();
-        $current = $result->current();
-        self::assertInstanceOf(Tea::class, $current);
-        self::assertSame(2, $current->getUid());
+        $model = $result->getFirst();
+        self::assertInstanceOf(Tea::class, $model);
+        self::assertSame(2, $model->getUid());
     }
 }
