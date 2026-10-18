@@ -13,7 +13,6 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 #[CoversClass(TeaRepository::class)]
-#[CoversClass(Tea::class)]
 final class TeaRepositoryTest extends FunctionalTestCase
 {
     protected array $testExtensionsToLoad = ['ttn/tea'];
