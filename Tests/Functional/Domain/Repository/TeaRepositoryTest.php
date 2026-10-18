@@ -34,6 +34,20 @@ final class TeaRepositoryTest extends FunctionalTestCase
     }
 
     #[Test]
+    // @todo The "Validate" attributes of the model trigger an Extbase
+    //   deprecation on TYPO3 14.3. This needs a dedicated investigation and is
+    //   unrelated to this change.
+    #[IgnoreDeprecations]
+    public function findByUidForExistingRecordReturnsModel(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/findByUid/Tea.csv');
+
+        $model = $this->subject->findByUid(1);
+
+        self::assertInstanceOf(Tea::class, $model);
+    }
+
+    #[Test]
     #[IgnoreDeprecations]
     public function findAllForNoRecordsReturnsEmptyQueryResult(): void
     {
@@ -55,28 +69,6 @@ final class TeaRepositoryTest extends FunctionalTestCase
 
         $result->rewind();
         self::assertSame(2, $result->current()->getUid());
-    }
-
-    #[Test]
-    public function findByUidForInexistentRecordReturnsNull(): void
-    {
-        $model = $this->subject->findByUid(1);
-
-        self::assertNull($model);
-    }
-
-    #[Test]
-    // @todo The "Validate" attributes of the model trigger an Extbase
-    //   deprecation on TYPO3 14.3. This needs a dedicated investigation and is
-    //   unrelated to this change.
-    #[IgnoreDeprecations]
-    public function findByUidForExistingRecordReturnsModel(): void
-    {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/findByUid/Tea.csv');
-
-        $model = $this->subject->findByUid(1);
-
-        self::assertInstanceOf(Tea::class, $model);
     }
 
     #[Test]
