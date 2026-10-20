@@ -92,7 +92,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     }
 
     #[Test]
-    public function findByOwnerUidFindsIgnoresTeaWithNonMatchingOwnerUid(): void
+    public function findByOwnerUidIgnoresTeaWithNonMatchingOwnerUid(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/findByOwnerUid/TeaWithOwner.csv');
 
@@ -102,7 +102,7 @@ final class TeaRepositoryTest extends FunctionalTestCase
     }
 
     #[Test]
-    public function findByOwnerUidFindsIgnoresTeaWithZeroOwnerUid(): void
+    public function findByOwnerUidIgnoresTeaWithZeroOwnerUid(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/findByOwnerUid/TeaWithoutOwner.csv');
 
