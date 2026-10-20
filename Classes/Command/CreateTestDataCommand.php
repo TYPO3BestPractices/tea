@@ -22,7 +22,7 @@ final class CreateTestDataCommand extends Command
     /**
      * @var list<array{title: non-empty-string, description: non-empty-string, sys_language_uid: int<0, max>}>
      */
-    protected array $teaData = [
+    private array $teaData = [
         [
             'title' => 'Darjeeling',
             'description' => 'I love that tea!',
