@@ -154,7 +154,7 @@ jobs:
           - "8.2"
         # For consistency, the TYPO3 version should match the default TYPO3 version in `runTests.sh`.
         typo3-version:
-          - "13.4"
+          - "14.3"
         composer-dependencies:
           - Max
   static-code-analysis:
@@ -191,7 +191,7 @@ jobs:
           - "8.2"
         # For consistency, the TYPO3 version should match the default TYPO3 version in `runTests.sh`.
         typo3-version:
-          - "13.4"
+          - "14.3"
         composer-dependencies:
           - Max
   check-fixers:
@@ -223,7 +223,7 @@ jobs:
           - "8.2"
         # For consistency, the TYPO3 version should match the default TYPO3 version in `runTests.sh`.
         typo3-version:
-          - "13.4"
+          - "14.3"
         composer-dependencies:
           - Max
   prepare-release:
