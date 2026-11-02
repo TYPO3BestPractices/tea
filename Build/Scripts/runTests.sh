@@ -886,6 +886,7 @@ case ${TEST_SUITE} in
                 SUITE_EXIT_CODE=$?
                 ;;
         esac
+        cleanTestFiles
         ;;
     lintCss)
         CGLCHECK_DRY_RUN="-n"
