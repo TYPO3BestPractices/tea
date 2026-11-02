@@ -16,7 +16,6 @@ example data and predefined plugins.
 
 The following commands expect that your SSH key is known by GitHub. If not, you need to use `https://`.
 
-.. index:: Clone TYPO3 Testing Distribution
 .. code-block:: bash
 
    git clone git@github.com:oliverklee/TYPO3-testing-distribution.git
@@ -28,7 +27,6 @@ Adjust link to your needed version.
 
 
 
-.. index:: Clone Tea Extension
 .. code-block:: bash
 
    git clone git@github.com:TYPO3BestPractices/tea.git
@@ -36,7 +34,6 @@ Adjust link to your needed version.
 You can organize the folder structure as you wish, but lets say your folder
 structure looks like this:
 
-.. index:: Folder structure
 .. code-block:: bash
 
     git\
@@ -47,7 +44,6 @@ structure looks like this:
 Inside the testing distribution there is a file
 :file:`docker-compose.extensions.yaml.template` which mounts the used extensions. This file need to be renamed and adjusted.
 
-.. index:: Create docker-compose.extensions.yaml
 .. code-block:: bash
 
     cp .ddev/docker-compose.extensions.yaml.template .ddev/docker-compose.extensions.yaml
@@ -57,7 +53,6 @@ that you use the correct paths here. You need to edit :file:`docker-compose.exte
 and add the following content:
 
 
-.. index:: Mount extension into testing distribution
 .. code-block:: yaml
 
     services:
@@ -73,7 +68,6 @@ and add the following content:
 
 After that you can start the testing distribution using ddev (inside the TYPO3-testion-distribution folder).
 
-.. index:: Start the testing distribution
 .. code-block:: bash
 
     ddev start
