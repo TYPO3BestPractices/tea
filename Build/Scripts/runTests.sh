@@ -514,7 +514,9 @@ TEST_SUITE="unit"
 CORE_VERSION="14.3"
 DBMS="sqlite"
 DBMS_VERSION=""
-PHP_VERSION="8.5"
+# The default PHP version needs to be the lowest PHP version we support. Otherwise, PHP-CS-Fixer might introduce
+# changes that are incompatible with lower PHP versions.
+PHP_VERSION="8.2"
 PHP_XDEBUG_ON=0
 PHP_XDEBUG_PORT=9003
 PHPUNIT_RANDOM=""
