@@ -22,6 +22,8 @@ updates:
         versions: [ ">= 11.0" ]
       - dependency-name: "phpunit/phpunit"
         versions: [ ">= 12.0" ]
+      - dependency-name: "symfony/*"
+        versions: [ ">= 8.0" ]
       - dependency-name: "typo3/cms-*"
     versioning-strategy: "increase"
     # adjust this number according to your own milestones if used.
