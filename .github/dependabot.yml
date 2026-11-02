@@ -7,7 +7,7 @@ updates:
     schedule:
       interval: "daily"
     # adjust this number according to your own milestones if used.
-    milestone: 12
+    milestone: 16
     commit-message:
       prefix: "[Dependabot] "
 
