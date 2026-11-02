@@ -19,6 +19,7 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 final class FrontEndEditorControllerTest extends FunctionalTestCase
 {
     private const UID_OF_PAGE = 1;
+
     private const UID_OF_TEA = 1;
 
     protected array $testExtensionsToLoad = ['ttn/tea'];

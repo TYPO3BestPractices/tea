@@ -72,10 +72,12 @@ final class CreateTestDataCommand extends Command
             $item = ['pid' => $pageUid, 'title' => $item['title'], 'description' => $item['description']];
             $query->insert($table, $item);
         }
+
         $output->writeln(sprintf('Test data in page %s created.', $pageUid));
 
         $referenceIndex = GeneralUtility::makeInstance(ReferenceIndex::class);
         $referenceIndex->updateIndex(false);
+
         $output->writeln('Reference index updated.');
 
         return Command::SUCCESS;
