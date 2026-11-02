@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 use Rector\PHPUnit\PHPUnit60\Rector\ClassMethod\AddDoesNotPerformAssertionToNonAssertingTestRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Ssch\TYPO3Rector\CodeQuality\General\ExtEmConfRector;
@@ -23,9 +24,14 @@ return RectorConfig::configure()
     ->withPreparedSets(
         deadCode: true,
         codeQuality: true,
+        codingStyle: true,
         typeDeclarations: true,
+        typeDeclarationDocblocks: true,
         privatization: true,
         rectorPreset: true,
+        phpunitCodeQuality: true,
+        phpunitNarrowAsserts: true,
+        phpunitMockToStub: true,
     )
     ->withSets([
         // TYPO3 Sets
@@ -52,6 +58,7 @@ return RectorConfig::configure()
     ->withSkip([
         // This rule creates false positives as the TYPO3 testing framework always adds assertions.
         AddDoesNotPerformAssertionToNonAssertingTestRector::class,
+        PreferPHPUnitThisCallRector::class,
         SafeDeclareStrictTypesRector::class => [
             __DIR__ . '/../../ext_emconf.php',
         ],
