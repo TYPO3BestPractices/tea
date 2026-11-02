@@ -47,7 +47,7 @@
 		"typo3/cms-frontend": "^13.4.35 || ^14.3.9"
 	},
 	"require-dev": {
-		"ergebnis/composer-normalize": "2.55.0",
+		"ergebnis/composer-normalize": "2.56.0",
 		"ergebnis/phpstan-rules": "2.17.0",
 		"friendsofphp/php-cs-fixer": "3.95.27",
 		"helmich/typo3-typoscript-lint": "3.3.0",
