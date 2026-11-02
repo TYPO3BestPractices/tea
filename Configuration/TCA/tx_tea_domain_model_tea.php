@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-return [
+use TYPO3\CMS\Core\Information\Typo3Version;
+
+$tca = [
     'ctrl' => [
         'title' => 'LLL:EXT:tea/Resources/Private/Language/locallang_db.xlf:tx_tea_domain_model_tea',
         'label' => 'title',
@@ -11,7 +13,6 @@ return [
         'delete' => 'deleted',
         'default_sortby' => 'title',
         'iconfile' => 'EXT:tea/Resources/Public/Icons/Record.svg',
-        'searchFields' => 'title, description',
         'enablecolumns' => [
             'fe_group' => 'fe_group',
             'disabled' => 'hidden',
@@ -170,3 +171,10 @@ return [
         ],
     ],
 ];
+
+$typo3Version = new Typo3Version();
+if ($typo3Version->getMajorVersion() <= 13) {
+    $tca['ctrl']['searchFields'] = 'title, description';
+}
+
+return $tca;
