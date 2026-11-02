@@ -7,11 +7,25 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+### Changed
+
+### Cleanup
+
+### Removed
+
+### Fixed
+
+### Documentation
+
+## 5.0.0: Support TYPO3 14LTS, drop TYPO3 12LTS and PHP 8.1
+
+### Added
+
 - Add `checkStatic` to `runTests.sh` (#2451)
 - Add functional tests for the recursive storage PID (#2366)
 - Add the image to the show action (#2303)
 - Add support for TYPO3 14LTS (#2254, #2266, #2267, #2301, #2302, #2304, #2308,
-  #2309, #2310)
+  #2309, #2310, #2499, #2450)
 - Add a dedicated weekly CI workflow (#1903)
 
 ### Changed
@@ -20,8 +34,6 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Pin the unit and functional tests to the installed TYPO3 version (#2327)
 - Collect the code coverage with `runTests.sh` (#1802)
 - Calculate the code coverage after the test suites (#1802)
-
-### Cleanup
 
 ### Removed
 
@@ -34,9 +46,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 - Keep `composer.json` unchanged when running
   `runTests.sh -s composerUpdate(Min|Max)` (#2192)
-- Pass the Coveralls GitHub action its inputs (#1802)
-
-### Documentation
+- Pass the Coveralls GitHub Action its inputs (#1802)
 
 ## V4.1.0: CI improvements, bugfixes and cleanup
 
