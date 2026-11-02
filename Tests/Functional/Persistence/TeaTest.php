@@ -16,6 +16,7 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 final class TeaTest extends FunctionalTestCase
 {
     private const FIXTURES_PATH = __DIR__ . '/Fixtures';
+
     private const ASSERTIONS_PATH = __DIR__ . '/Assertions';
 
     protected array $testExtensionsToLoad = ['ttn/tea'];
