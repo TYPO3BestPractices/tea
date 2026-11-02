@@ -417,12 +417,12 @@ composerNormalize() {
         CGLCHECK_DRY_RUN="--dry-run"
     fi
     COMMAND="composer normalize --no-check-lock ${CGLCHECK_DRY_RUN}"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-normalize-${SUFFIX} -e XDEBUG_MODE=off -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
 }
 
 composerUnused() {
     COMMAND=".Build/bin/composer-unused --configuration=./Build/composer-unused/composer-unused.php"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-unused-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-unused-${SUFFIX} -e XDEBUG_MODE=off -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
 }
 
 lintCss() {
@@ -450,7 +450,7 @@ lintJson() {
 
 lintPhp() {
     COMMAND="composer check:php:lint"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintPhp-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintPhp-${SUFFIX} -e XDEBUG_MODE=off -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
 }
 
 lintTypoScript() {
@@ -460,7 +460,7 @@ lintTypoScript() {
 
 lintYaml() {
     COMMAND="composer check:yaml:lint"
-    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintYaml-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
+    ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lintYaml-${SUFFIX} -e XDEBUG_MODE=off -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_HOME=${ROOT_DIR}/.cache/composer-home -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
 }
 
 normalizeXliff() {
