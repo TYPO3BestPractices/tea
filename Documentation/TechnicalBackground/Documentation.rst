@@ -8,7 +8,6 @@ Documentation rendering
 
 In order to render the documentation, please use the `runTests.sh` wrapper:
 
-.. index:: Commands; runTests.sh -s executeRstRendering
 .. code-block:: bash
 
    ./Build/Scripts/runTests.sh -s executeRstRendering

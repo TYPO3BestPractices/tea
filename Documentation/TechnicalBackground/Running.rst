@@ -55,35 +55,30 @@ Running code checks
 
 You can currently run these code checks on the command line:
 
-.. index:: Commands; composer check:composer:normalize
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -s composer check:composer:normalize
 
 Checks the composer.json.
 
-.. index:: Commands; composer check:json:lint
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -s composer check:json:lint
 
 Lints the JSON files.
 
-.. index:: Commands; composer check:php
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -s composer check:php
 
 Checks the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer).
 
-.. index:: Commands; composer check:php:lint
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -s composer check:php:lint
 
 Lints the PHP files for syntax errors.
 
-.. index:: Commands; phpstan
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -p 8.2 -t 13.4 -s phpstan
@@ -93,21 +88,18 @@ PHPStan configuration and baseline for the given TYPO3 version
 (:code:`13.4` or :code:`14.3`). Use the TYPO3 version the dependencies
 have been installed for.
 
-.. index:: Commands; composer check:typoscript:lint
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -s composer check:typoscript:lint
 
 Lints the TypoScript files.
 
-.. index:: Commands; composer check:xliff:normalize
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -s composer check:xliff:normalize
 
 Checks the formatting of the XLIFF files.
 
-.. index:: Commands; composer check:yaml:lint
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -s composer check:yaml:lint
@@ -120,28 +112,24 @@ Lints the YAML files.
 
 Runs all static code checks (syntax, style, types).
 
-.. index:: Commands; fix
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -s fix
 
 Runs all fixers (except for the ones that need JavaScript).
 
-.. index:: Commands; composer fix:php
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -s composer fix:php
 
 Runs all fixers for the PHP code.
 
-.. index:: Commands; cgl
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -s cgl
 
 Fixes the code style with PHP-CS-Fixer. Add -n to only check the code style without changing any files.
 
-.. index:: Commands; normalizeXliff
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -s normalizeXliff
@@ -149,7 +137,6 @@ Fixes the code style with PHP-CS-Fixer. Add -n to only check the code style with
 Normalizes the formatting of the XLIFF files. Add :code:`-n` to only check
 the formatting without changing any files.
 
-.. index:: Commands; phpstanGenerateBaseline
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -p 8.2 -t 13.4 -s phpstanGenerateBaseline
@@ -177,7 +164,6 @@ Running unit and functional tests
 
 You can currently run these tests on the command line:
 
-.. index:: Commands; functional
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -t 13.4 -s functional
@@ -190,7 +176,6 @@ Runs the functional tests using a database populated from the CSV files in
     For executing functional tests, a database connection is needed. Therefore,
     it is recommended to run the functional tests using :code:`runTests.sh`.
 
-.. index:: Commands; unit
 .. code-block:: bash
 
     ./Build/Scripts/runTests.sh -t 13.4 -s unit
