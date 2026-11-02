@@ -214,6 +214,7 @@ Options:
         Specifies the test suite to run
             - cgl: Fixes the code style with the PHP Coding Standards Fixer (PHP-CS-Fixer). Set -n for dry-run.
             - checkIntegrityXliff: checks for all xlf files for validity and deprecated usages
+            - checkStatic: Runs all static code checks (syntax, style, types).
             - clean: clean up build, cache and testing related files and folders
             - cleanCache: clean up cache related files and folders
             - cleanRenderedDocumentation: clean up rendered documentation files and folders (Documentation-GENERATED-temp)
@@ -753,6 +754,22 @@ case ${TEST_SUITE} in
     checkIntegrityXliff)
         checkIntegrityXliff
         SUITE_EXIT_CODE=$?
+        ;;
+    checkStatic)
+         CGLCHECK_DRY_RUN="1"
+         composerNormalize &&
+         composerUnused &&
+         lintJson &&
+         lintPhp &&
+         phpstan &&
+         psrVerify &&
+         rector &&
+         cgl &&
+         lintTypoScript &&
+         checkIntegrityXliff &&
+         normalizeXliff &&
+         lintYaml
+         SUITE_EXIT_CODE=$?
         ;;
     clean)
         cleanCacheFiles

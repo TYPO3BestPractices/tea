@@ -114,6 +114,12 @@ Checks the formatting of the XLIFF files.
 
 Lints the YAML files.
 
+.. code-block:: bash
+
+    ./Build/Scripts/runTests.sh -s checkStatic
+
+Runs all static code checks (syntax, style, types).
+
 .. index:: Commands; fix
 .. code-block:: bash
 
