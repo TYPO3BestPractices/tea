@@ -21,11 +21,11 @@ return RectorConfig::configure()
     ->withPhpSets()
     ->withComposerBased(phpunit: true)
     ->withPreparedSets(
-        codeQuality: true,
         deadCode: true,
+        codeQuality: true,
+        typeDeclarations: true,
         privatization: true,
         rectorPreset: true,
-        typeDeclarations: true,
     )
     ->withSets([
         // TYPO3 Sets
