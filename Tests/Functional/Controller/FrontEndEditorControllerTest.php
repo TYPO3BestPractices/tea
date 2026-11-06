@@ -18,9 +18,9 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 #[CoversClass(FrontEndEditorController::class)]
 final class FrontEndEditorControllerTest extends FunctionalTestCase
 {
-    private const UID_OF_PAGE = 1;
+    private const PAGE_UID = 1;
 
-    private const UID_OF_TEA = 1;
+    private const TEA_UID = 1;
 
     protected array $testExtensionsToLoad = ['ttn/tea'];
 
@@ -63,7 +63,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[IgnoreDeprecations]
     public function indexActionForNoLoggedInUserRendersErrorMessage(): void
     {
-        $request = (new InternalRequest())->withPageId(self::UID_OF_PAGE);
+        $request = (new InternalRequest())->withPageId(self::PAGE_UID);
 
         $html = (string)$this->executeFrontendSubRequest($request)->getBody();
 
@@ -173,7 +173,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
 
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
-            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::TEA_UID,
         ]);
 
         $this->assertCSVDataSet(__DIR__ . '/Assertions/Database/FrontEndEditorController/Delete/SoftDeletedTea.csv');
@@ -186,7 +186,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
 
         $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
-            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::TEA_UID,
         ]);
 
         $this->assertForbiddenResponse($response);
@@ -199,7 +199,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
 
         $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
-            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::TEA_UID,
         ]);
 
         $this->assertForbiddenResponse($response);
@@ -212,7 +212,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
 
         $html = $this->getHtmlWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea]' => (string)self::TEA_UID,
         ]);
 
         self::assertStringContainsString(
@@ -231,7 +231,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
 
         $html = $this->getHtmlWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea]' => (string)self::TEA_UID,
         ]);
 
         self::assertStringContainsString('name="tx_tea_teafrontendeditor[tea][' . $fieldName . ']"', $html);
@@ -253,7 +253,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
 
         $html = $this->getHtmlWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea]' => (string)self::TEA_UID,
         ]);
 
         $expected = 'action="/'
@@ -269,7 +269,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
 
         $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea]' => (string)self::TEA_UID,
         ]);
 
         $this->assertForbiddenResponse($response);
@@ -282,7 +282,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
 
         $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
-            'tx_tea_teafrontendeditor[tea]' => (string)self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea]' => (string)self::TEA_UID,
         ]);
 
         $this->assertForbiddenResponse($response);
@@ -295,10 +295,10 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
 
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
-                self::UID_OF_TEA,
+                self::TEA_UID,
             ),
             'tx_tea_teafrontendeditor[action]' => 'update',
-            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::TEA_UID,
             'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
         ]);
 
@@ -316,10 +316,10 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
 
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
-                self::UID_OF_TEA,
+                self::TEA_UID,
             ),
             'tx_tea_teafrontendeditor[action]' => 'update',
-            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::TEA_UID,
             'tx_tea_teafrontendeditor[tea][title]' => 'Godesberger Burgtee',
         ]);
 
@@ -335,10 +335,10 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
 
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
-                self::UID_OF_TEA,
+                self::TEA_UID,
             ),
             'tx_tea_teafrontendeditor[action]' => 'update',
-            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
+            'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::TEA_UID,
             'tx_tea_teafrontendeditor[tea][description]' => 'The new description.',
         ]);
 
@@ -355,10 +355,10 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
         $response = $this->executeRequestWithLoggedInUser(
             [
                 'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
-                    self::UID_OF_TEA,
+                    self::TEA_UID,
                 ),
                 'tx_tea_teafrontendeditor[action]' => 'update',
-                'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::UID_OF_TEA,
+                'tx_tea_teafrontendeditor[tea][__identity]' => (string)self::TEA_UID,
                 'tx_tea_teafrontendeditor[tea][title]' => 'Darjeeling',
             ],
             2,
@@ -445,7 +445,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     private function executeRequestWithLoggedInUser(array $queryParameters = [], int $userUid = 1): ResponseInterface
     {
         $request = (new InternalRequest())
-            ->withPageId(self::UID_OF_PAGE)
+            ->withPageId(self::PAGE_UID)
             ->withQueryParameters($queryParameters);
 
         $context = (new InternalRequestContext())->withFrontendUserId($userUid);
