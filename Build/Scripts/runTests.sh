@@ -318,12 +318,13 @@ Options:
         Use the version the dependencies have been installed for. A different one lets the
         tests fail with a hint about the mismatch.
 
-    -p <8.2|8.3|8.4|8.5>
+    -p <8.2|8.3|8.4|8.5|8.6>
         Specifies the PHP minor version to be used
-            - 8.2: use PHP 8.2
+            - 8.2 (default): use PHP 8.2
             - 8.3: use PHP 8.3
             - 8.4: use PHP 8.4
-            - 8.5 (default): use PHP 8.5
+            - 8.5: use PHP 8.5
+            - 8.6: use PHP 8.6
 
     -x
         Only with -s functional|unit|unitRandom
@@ -361,7 +362,7 @@ Options:
         Show this help.
 
 Examples:
-    # Run all core unit tests using PHP 8.5
+    # Run all core unit tests using PHP 8.2
     ./Build/Scripts/runTests.sh
     ./Build/Scripts/runTests.sh -s unit
 
@@ -581,7 +582,7 @@ while getopts ":a:b:s:d:i:p:t:xy:o:nmhu" OPT; do
             ;;
         p)
             PHP_VERSION=${OPTARG}
-            if ! [[ ${PHP_VERSION} =~ ^(8.2|8.3|8.4|8.5)$ ]]; then
+            if ! [[ ${PHP_VERSION} =~ ^(8.2|8.3|8.4|8.5|8.6)$ ]]; then
                 INVALID_OPTIONS+=("${OPTARG}")
             fi
             ;;
