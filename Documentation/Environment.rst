@@ -10,7 +10,7 @@ You can run the code quality checks and automated tests locally (using a
 local PHP, Composer, and database) or using runTests.sh.
 
 To kickstart the project, we suggest the usage of the
-`TYPO3-testing-distribution <https://github.com/oliverklee/TYPO3-testing-distribution/>`__
+`TYPO3-testing-distribution <https://github.com/oliverklee-de/TYPO3-testing-distribution>`__
 by Oliver Klee as development environment. The distribution comes with a frontend,
 example data and predefined plugins.
 
@@ -22,10 +22,7 @@ The following commands expect that your SSH key is known by GitHub. If not, you 
 
 Please checkout the branch for the TYPO3 version you need. e.g. `12.x`.
 For more information about the TYPO3-testing-distribution (e.g. backend user credentials), use the documentation:
-https://github.com/oliverklee-de/TYPO3-testing-distribution/blob/13.x/README.md (TYPO3 13)
-Adjust link to your needed version.
-
-
+https://github.com/oliverklee-de/TYPO3-testing-distribution
 
 .. code-block:: bash
 
