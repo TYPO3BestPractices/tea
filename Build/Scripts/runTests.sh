@@ -758,18 +758,18 @@ case ${TEST_SUITE} in
         ;;
     checkStatic)
          CGLCHECK_DRY_RUN="1"
-         composerNormalize &&
-         composerUnused &&
-         lintJson &&
          lintPhp &&
-         phpstan &&
-         psrVerify &&
-         rector &&
          cgl &&
+         phpstan &&
+         rector &&
+         composerNormalize &&
          lintTypoScript &&
+         lintYaml &&
+         lintJson &&
          checkIntegrityXliff &&
          normalizeXliff &&
-         lintYaml
+         psrVerify &&
+         composerUnused
          SUITE_EXIT_CODE=$?
         ;;
     clean)
