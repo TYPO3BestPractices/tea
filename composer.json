@@ -132,17 +132,17 @@
 		"check:php:lint": "parallel-lint *.php Build Classes Configuration Tests",
 		"check:php:rector": "rector process --dry-run --config=./Build/rector/config.php",
 		"check:static": [
-			"@check:composer:normalize",
-			"@check:composer:unused",
-			"@check:json:lint",
 			"@check:php:lint",
-			"@check:composer:psr-verify",
-			"@check:php:rector",
 			"@check:php:cs-fixer",
+			"@check:php:rector",
+			"@check:composer:normalize",
 			"@check:typoscript:lint",
+			"@check:yaml:lint",
+			"@check:json:lint",
 			"@check:xliff:lint",
 			"@check:xliff:normalize",
-			"@check:yaml:lint"
+			"@check:composer:psr-verify",
+			"@check:composer:unused"
 		],
 		"check:tests:create-directories": "mkdir -p .Build/public/typo3temp/var/tests",
 		"check:tests:unit": "phpunit -c Build/phpunit/UnitTests.xml --exclude-group not-core-13.4 --exclude-group not-core-14.3",
