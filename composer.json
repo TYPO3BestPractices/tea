@@ -63,7 +63,7 @@
 		"rector/rector": "2.8.4",
 		"saschaegerer/phpstan-typo3": "2.2.0 || 3.1.0",
 		"seld/jsonlint": "1.12.2",
-		"spaze/phpstan-disallowed-calls": "4.15.0",
+		"spaze/phpstan-disallowed-calls": "4.15.1",
 		"ssch/typo3-rector": "3.17.0",
 		"ssch/typo3-rector-testing-framework": "3.0.0",
 		"symfony/config": "^7.4",
