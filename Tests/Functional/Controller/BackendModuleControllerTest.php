@@ -29,6 +29,8 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 #[CoversClass(BackendModuleController::class)]
 final class BackendModuleControllerTest extends FunctionalTestCase
 {
+    private const FIXTURES_PATH = __DIR__ . '/Fixtures/Database/BackendModuleController';
+
     private const TRANSLATE_KEY_PREFIX = 'LLL:EXT:tea/Resources/Private/Language/locallang_index_mod.xlf:';
 
     private const FORM_PROTECTION_SESSION_TOKEN = 'testToken';
@@ -39,7 +41,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/BackendUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/BackendUser.csv');
         $this
             ->setUpBackendUser(1)
             ->getSession()
@@ -52,7 +54,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     #[IgnoreDeprecations]
     public function indexListsTeasFromMultiplePids(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeasForIndex.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeasForIndex.csv');
 
         $response = $this->executeRequest(
             '/module/tea/index/BackendModule/index',
@@ -70,7 +72,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     #[IgnoreDeprecations]
     public function indexProvidesCaptionForListing(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaForIndex.csv');
 
         $response = $this->executeRequest(
             '/module/tea/index/BackendModule/index',
@@ -87,7 +89,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     #[IgnoreDeprecations]
     public function indexListsTeasFromSortedByUidInDescendingOrder(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeasForIndex.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeasForIndex.csv');
 
         $response = $this->executeRequest(
             '/module/tea/index/BackendModule/index',
@@ -123,7 +125,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
     #[Test]
     public function indexDoesNotShowFlashMessageIfTeaExists(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaForIndex.csv');
 
         $response = $this->executeRequest(
             '/module/tea/index/BackendModule/index',
@@ -178,7 +180,7 @@ final class BackendModuleControllerTest extends FunctionalTestCase
             ],
         ]) . $moduleUrlParameter . '&returnUrl=typo3/module/tea/index/BackendModule/index';
 
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/BackendModuleController/TeaForIndex.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaForIndex.csv');
 
         $response = $this->executeRequest(
             '/module/tea/index/BackendModule/index',
