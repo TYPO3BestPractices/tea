@@ -15,6 +15,8 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 #[CoversClass(CreateTestDataCommand::class)]
 final class CreateTestDataCommandTest extends FunctionalTestCase
 {
+    private const FIXTURES_PATH = __DIR__ . '/Fixtures';
+
     private const COMMAND_NAME = 'tea:create-test-data';
 
     protected array $testExtensionsToLoad = ['ttn/tea'];
@@ -26,7 +28,7 @@ final class CreateTestDataCommandTest extends FunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/Pages.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/Database/Pages.csv');
         $this->subject = new CreateTestDataCommand(self::COMMAND_NAME);
         $application = new Application();
         $application->add($this->subject);
@@ -74,13 +76,13 @@ final class CreateTestDataCommandTest extends FunctionalTestCase
             'pageUid' => 1,
         ]);
 
-        $this->assertCSVDataSet(__DIR__ . '/Fixtures/Database/Teas.csv');
+        $this->assertCSVDataSet(self::FIXTURES_PATH . '/Database/Teas.csv');
     }
 
     #[Test]
     public function deletesExistingDataOnGivenPidBeforeCreatingNewData(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/ExistingTeas.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/Database/ExistingTeas.csv');
         $this->commandTester->execute(
             [
                 'pageUid' => 1,
@@ -88,13 +90,13 @@ final class CreateTestDataCommandTest extends FunctionalTestCase
             ],
         );
 
-        $this->assertCSVDataSet(__DIR__ . '/Fixtures/Database/TeasAfterDelete.csv');
+        $this->assertCSVDataSet(self::FIXTURES_PATH . '/Database/TeasAfterDelete.csv');
     }
 
     #[Test]
     public function doesNotDeleteDataOnOtherPid(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/OtherExistingTeas.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/Database/OtherExistingTeas.csv');
         $this->commandTester->execute(
             [
                 'pageUid' => 1,
@@ -102,6 +104,6 @@ final class CreateTestDataCommandTest extends FunctionalTestCase
             ],
         );
 
-        $this->assertCSVDataSet(__DIR__ . '/Fixtures/Database/TeasAfterDeleteOtherExistingTeas.csv');
+        $this->assertCSVDataSet(self::FIXTURES_PATH . '/Database/TeasAfterDeleteOtherExistingTeas.csv');
     }
 }

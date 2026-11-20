@@ -14,6 +14,8 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 #[CoversClass(TeaController::class)]
 final class TeaControllerTest extends FunctionalTestCase
 {
+    private const FIXTURES_PATH = __DIR__ . '/Fixtures/Database/TeaController';
+
     protected array $testExtensionsToLoad = ['ttn/tea'];
 
     protected array $coreExtensionsToLoad = ['typo3/cms-fluid-styled-content'];
@@ -56,7 +58,7 @@ final class TeaControllerTest extends FunctionalTestCase
     #[IgnoreDeprecations]
     public function indexActionShowsMessageWhenNoTeasAreAvailable(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/indexAction/IndexWithoutTeas.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/indexAction/IndexWithoutTeas.csv');
 
         $request = (new InternalRequest())->withPageId(1);
 
@@ -68,7 +70,7 @@ final class TeaControllerTest extends FunctionalTestCase
     #[Test]
     public function indexActionShowsNoTableMarkupWhenNoTeasAreAvailable(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/indexAction/IndexWithoutTeas.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/indexAction/IndexWithoutTeas.csv');
 
         $request = (new InternalRequest())->withPageId(1);
 
@@ -81,7 +83,7 @@ final class TeaControllerTest extends FunctionalTestCase
     #[IgnoreDeprecations]
     public function indexActionRendersAllAvailableTeasOnStoragePage(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/indexAction/IndexWithTeasOnStoragePage.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/indexAction/IndexWithTeasOnStoragePage.csv');
 
         $request = (new InternalRequest())->withPageId(1);
 
@@ -94,7 +96,7 @@ final class TeaControllerTest extends FunctionalTestCase
     #[Test]
     public function indexActionWithRecursionCanRenderTeaInStoragePageSubfolder(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/indexAction/IndexWithTeaInStoragePageSubfolder.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/indexAction/IndexWithTeaInStoragePageSubfolder.csv');
 
         $request = (new InternalRequest())->withPageId(1);
 
@@ -106,7 +108,9 @@ final class TeaControllerTest extends FunctionalTestCase
     #[Test]
     public function indexActionWithoutRecursionDoesNotRenderTeaInStoragePageSubfolder(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/indexAction/IndexWithoutRecursionAndTeaInStoragePageSubfolder.csv');
+        $this->importCSVDataSet(
+            self::FIXTURES_PATH . '/indexAction/IndexWithoutRecursionAndTeaInStoragePageSubfolder.csv',
+        );
 
         $request = (new InternalRequest())->withPageId(1);
 
@@ -119,7 +123,9 @@ final class TeaControllerTest extends FunctionalTestCase
     #[Test]
     public function indexActionWithRecursionDepthOneRendersTeaInDirectSubfolder(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/indexAction/IndexWithRecursionDepthOneAndTeasInNestedSubfolders.csv');
+        $this->importCSVDataSet(
+            self::FIXTURES_PATH . '/indexAction/IndexWithRecursionDepthOneAndTeasInNestedSubfolders.csv',
+        );
 
         $request = (new InternalRequest())->withPageId(1);
 
@@ -131,7 +137,9 @@ final class TeaControllerTest extends FunctionalTestCase
     #[Test]
     public function indexActionWithRecursionDepthOneDoesNotRenderTeaInNestedSubfolder(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/indexAction/IndexWithRecursionDepthOneAndTeasInNestedSubfolders.csv');
+        $this->importCSVDataSet(
+            self::FIXTURES_PATH . '/indexAction/IndexWithRecursionDepthOneAndTeasInNestedSubfolders.csv',
+        );
 
         $request = (new InternalRequest())->withPageId(1);
 
@@ -144,7 +152,7 @@ final class TeaControllerTest extends FunctionalTestCase
     #[Test]
     public function showActionRendersTheGivenTeas(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/showAction/ShowWithTwoTeas.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/showAction/ShowWithTwoTeas.csv');
 
         $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
 
@@ -157,7 +165,7 @@ final class TeaControllerTest extends FunctionalTestCase
     #[Test]
     public function showActionRendersImageOfTea(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/showAction/ShowWithTeaWithImage.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/showAction/ShowWithTeaWithImage.csv');
 
         $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
 
@@ -171,7 +179,7 @@ final class TeaControllerTest extends FunctionalTestCase
     #[Test]
     public function showActionRendersAltTextFromImageOfTea(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/showAction/ShowWithTeaWithAltTextOfImage.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/showAction/ShowWithTeaWithAltTextOfImage.csv');
 
         $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
 
@@ -183,7 +191,7 @@ final class TeaControllerTest extends FunctionalTestCase
     #[Test]
     public function showActionRendersMaxWidthFromImageOfTea(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/showAction/ShowWithTeaWithImage.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/showAction/ShowWithTeaWithImage.csv');
 
         $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
 
@@ -195,7 +203,7 @@ final class TeaControllerTest extends FunctionalTestCase
     #[Test]
     public function showActionForTeaWithoutImageDoesNotRenderFigure(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/showAction/ShowWithTwoTeas.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/showAction/ShowWithTwoTeas.csv');
 
         $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
 
@@ -207,7 +215,7 @@ final class TeaControllerTest extends FunctionalTestCase
     #[Test]
     public function showActionTriggers404ForMissingTeaArgument(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/showAction/ShowWithoutTeas.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/showAction/ShowWithoutTeas.csv');
 
         $request = (new InternalRequest())->withPageId(3);
 
@@ -219,7 +227,7 @@ final class TeaControllerTest extends FunctionalTestCase
     #[Test]
     public function showActionTriggers404ForUnavailableTea(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/showAction/ShowWithoutTeas.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/showAction/ShowWithoutTeas.csv');
 
         $request = (new InternalRequest())->withPageId(3)->withQueryParameters(['tx_tea_teashow[tea]' => 1]);
 
@@ -231,7 +239,7 @@ final class TeaControllerTest extends FunctionalTestCase
     #[Test]
     public function showActionFor404RendersReasonFor404(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/TeaController/showAction/ShowWithoutTeas.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/showAction/ShowWithoutTeas.csv');
 
         $request = (new InternalRequest())->withPageId(3);
 

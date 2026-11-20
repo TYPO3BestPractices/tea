@@ -18,6 +18,8 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 #[CoversClass(FrontEndEditorController::class)]
 final class FrontEndEditorControllerTest extends FunctionalTestCase
 {
+    private const FIXTURES_PATH = __DIR__ . '/Fixtures/Database/FrontEndEditorController';
+
     private const PAGE_UID = 1;
 
     private const TEA_UID = 1;
@@ -55,8 +57,8 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
             ],
         ]);
 
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/ContentElement.csv');
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/FrontendUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/ContentElement.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/FrontendUser.csv');
     }
 
     #[Test]
@@ -77,7 +79,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[IgnoreDeprecations]
     public function indexActionForLoggedInUserRendersTeaOwnedByTheLoggedInUser(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToLoggedInUser.csv');
 
         $html = $this->getHtmlWithLoggedInUser();
 
@@ -87,7 +89,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function indexActionForLoggedInUserDoesNotRenderTeaOwnedByOtherUser(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToOtherUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToOtherUser.csv');
 
         $html = $this->getHtmlWithLoggedInUser();
 
@@ -97,7 +99,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function indexActionForLoggedInUserDoesNotRenderTeaWithoutOwner(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToNoUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToNoUser.csv');
 
         $html = $this->getHtmlWithLoggedInUser();
 
@@ -107,7 +109,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function indexActionHasHeadline(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToLoggedInUser.csv');
 
         $html = $this->getHtmlWithLoggedInUser();
 
@@ -119,7 +121,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function indexActionByDefaultHasLinkToNewAction(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToLoggedInUser.csv');
 
         $html = $this->getHtmlWithLoggedInUser();
 
@@ -132,7 +134,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     public function indexActionRendersTeaUid(): void
     {
         $this->importCSVDataSet(
-            __DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUserWithHigherUid.csv',
+            self::FIXTURES_PATH . '/TeaAssignedToLoggedInUserWithHigherUid.csv',
         );
 
         $html = $this->getHtmlWithLoggedInUser();
@@ -143,7 +145,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function indexActionWithHasEditTeaLink(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToLoggedInUser.csv');
 
         $html = $this->getHtmlWithLoggedInUser();
 
@@ -156,7 +158,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function indexActionWithHasDeleteTeaForm(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToLoggedInUser.csv');
 
         $html = $this->getHtmlWithLoggedInUser();
 
@@ -169,7 +171,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function deleteActionWithOwnTeaRemovesProvidedTea(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToLoggedInUser.csv');
 
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
@@ -182,7 +184,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function deleteActionWithTeaFromOtherUserReturnsForbiddenResponse(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToOtherUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToOtherUser.csv');
 
         $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
@@ -195,7 +197,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function deleteActionWithTeaWithoutOwnerReturnsForbiddenResponse(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToNoUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToNoUser.csv');
 
         $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'delete',
@@ -208,7 +210,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function editActionWithOwnTeaAssignsProvidedTeaToView(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToLoggedInUser.csv');
 
         $html = $this->getHtmlWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
@@ -227,7 +229,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[DataProvider('formFieldNames')]
     public function editActionWithOwnTeaHasAllFormFields(string $fieldName): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToLoggedInUser.csv');
 
         $html = $this->getHtmlWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
@@ -249,7 +251,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function editActionWithOwnTeaHasUpdateFormAction(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToLoggedInUser.csv');
 
         $html = $this->getHtmlWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
@@ -265,7 +267,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function editActionWithTeaFromOtherUserReturnsForbiddenResponse(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToOtherUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToOtherUser.csv');
 
         $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
@@ -278,7 +280,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function editActionWithTeaWithoutOwnerReturnsForbiddenResponse(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToNoUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToNoUser.csv');
 
         $response = $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[action]' => 'edit',
@@ -291,7 +293,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function updateActionWithOwnTeaPersistsNewTitle(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToLoggedInUser.csv');
 
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
@@ -311,7 +313,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     public function updateActionWithOwnTeaKeepsPidUnchanged(): void
     {
         $this->importCSVDataSet(
-            __DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUserWithDifferentPid.csv',
+            self::FIXTURES_PATH . '/TeaAssignedToLoggedInUserWithDifferentPid.csv',
         );
 
         $this->executeRequestWithLoggedInUser([
@@ -331,7 +333,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function updateActionWithOwnTeaPersistsNewDescription(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToLoggedInUser.csv');
 
         $this->executeRequestWithLoggedInUser([
             'tx_tea_teafrontendeditor[__trustedProperties]' => $this->getTrustedPropertiesFromEditForm(
@@ -350,7 +352,7 @@ final class FrontEndEditorControllerTest extends FunctionalTestCase
     #[Test]
     public function updateActionWithTeaFromOtherUserReturnsForbiddenResponse(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/FrontEndEditorController/TeaAssignedToLoggedInUser.csv');
+        $this->importCSVDataSet(self::FIXTURES_PATH . '/TeaAssignedToLoggedInUser.csv');
 
         $response = $this->executeRequestWithLoggedInUser(
             [
