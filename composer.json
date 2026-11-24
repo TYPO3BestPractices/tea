@@ -51,7 +51,7 @@
 		"ergebnis/phpstan-rules": "2.18.0",
 		"friendsofphp/php-cs-fixer": "3.95.32",
 		"helmich/typo3-typoscript-lint": "3.3.0",
-		"icanhazstring/composer-unused": "0.9.8",
+		"icanhazstring/composer-unused": "0.9.9",
 		"php-parallel-lint/php-parallel-lint": "1.4.0",
 		"phpmd/phpmd": "3.0.0",
 		"phpstan/extension-installer": "1.4.3",
